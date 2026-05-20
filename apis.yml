@@ -42,6 +42,8 @@ apis:
       (communicate with the order team), and Webhooks (receive notifications
       for order milestones).
 common:
+  - type: LinkedIn
+    url: https://www.linkedin.com/company/first-american
   - type: Website
     url: https://www.firstam.com
   - type: DeveloperPortal
