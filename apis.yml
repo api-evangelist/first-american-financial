@@ -49,7 +49,7 @@ common:
     url: https://www.firstam.com
   - type: DeveloperPortal
     url: https://developer.firstam.com
-  - type: LLMsTxt
+  - type: LlmsText
     url: https://developer.firstam.com/llms.txt
 maintainers:
   - FN: Kin Lane
