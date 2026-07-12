@@ -43,6 +43,8 @@ apis:
       (communicate with the order team), and Webhooks (receive notifications
       for order milestones).
 common:
+  - type: DomainSecurity
+    url: security/first-american-financial-domain-security.yml
   - type: LinkedIn
     url: https://www.linkedin.com/company/first-american
   - type: Website
@@ -51,6 +53,8 @@ common:
     url: https://developer.firstam.com
   - type: LlmsText
     url: https://developer.firstam.com/llms.txt
+  - type: Blog
+    url: https://www.firstam.com/news/
 maintainers:
   - FN: Kin Lane
     email: kin@apievangelist.com
