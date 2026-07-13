@@ -1,0 +1,21 @@
+{
+  "repo": "first-american-financial",
+  "feeds": [
+    {
+      "source": "https://www.firstam.com/news/",
+      "feed_url": "https://www.firstam.com/news/",
+      "title": "",
+      "saved": 0,
+      "method": "none"
+    },
+    {
+      "source": "https://developer.firstam.com/llms.txt",
+      "feed_url": "https://developer.firstam.com/llms.txt",
+      "title": "",
+      "saved": 0,
+      "method": "none"
+    }
+  ],
+  "fetched": "2026-07-11T11:50:51Z",
+  "post_count": 5
+}
