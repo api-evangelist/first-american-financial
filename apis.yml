@@ -32,7 +32,7 @@ tags:
   - Fortune 1000
 url: >-
   https://raw.githubusercontent.com/api-evangelist/first-american-financial/refs/heads/main/apis.yml
-specificationVersion: '0.19'
+specificationVersion: '0.23'
 apis:
   - aid: first-american-financial:first-american-financial
     name: First American Financial
