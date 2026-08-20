@@ -26,6 +26,12 @@ modified: '2026-04-28'
 position: Consumer
 tags:
   - Title Insurance
+  - Real-Estate
+  - Settlement Services
+  - Financial-Services
+  - Fortune 1000
+tags_raw:
+  - Title Insurance
   - Real Estate
   - Settlement Services
   - Financial Services
@@ -37,6 +43,10 @@ apis:
   - aid: first-american-financial:first-american-financial
     name: First American Financial
     tags:
+      - Title Insurance
+      - Real-Estate
+      - Settlement Services
+    tags_raw:
       - Title Insurance
       - Real Estate
       - Settlement Services
