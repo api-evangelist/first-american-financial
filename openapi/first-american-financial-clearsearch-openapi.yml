@@ -1,0 +1,423 @@
+swagger: '2.0'
+info:
+  description: ClearSearch API
+  version: 1.0.0
+  title: ClearSearch API
+  contact:
+    email: clearsearch@firstam.com
+schemes:
+- https
+paths:
+  /order:
+    post:
+      tags:
+      - order
+      summary: Submits a new order
+      operationId: addOrder
+      consumes:
+      - application/json
+      produces:
+      - application/json
+      responses:
+        '200':
+          description: Order successfully submitted
+          schema:
+            $ref: '#/definitions/OrderStatus'
+        '400':
+          description: Bad request
+      parameters:
+      - in: body
+        name: order
+        schema:
+          $ref: '#/definitions/Order'
+        description: Order request
+  /status:
+    get:
+      tags:
+      - status
+      summary: Retrieve status of submitted ClearSearch order
+      operationId: getStatus
+      produces:
+      - application/json
+      parameters:
+      - in: query
+        name: transactionID
+        description: Transaction ID of submitted order
+        type: string
+      responses:
+        '200':
+          description: Order status found
+          schema:
+            $ref: '#/definitions/OrderStatus'
+  /report:
+    get:
+      tags:
+      - report
+      summary: Retrieve a completed ClearSearch report
+      operationId: getReport
+      produces:
+      - application/json
+      parameters:
+      - in: query
+        name: transactionID
+        description: Transaction ID of order
+        type: string
+      responses:
+        '200':
+          description: Report found
+          schema:
+            $ref: '#/definitions/Report'
+        '400':
+          description: Missing/Invalid TransactionID
+definitions:
+  Order:
+    type: object
+    properties:
+      RequestorID:
+        type: string
+        example: ABC4321
+      SearchType:
+        type: string
+        enum:
+        - SE-24 MO - Current Owner with 24 MO Chain
+        - ALTA - Current Owner Search
+        - ESP-P - Current Owner Search
+        - Search Plus - Current Owner Search
+        - Super Eagle - Current Owner Search
+        - ASP-24 MO - Current Owner Search w/24 mo Chain
+        - SE-EXT 24 - Current Owner Search w/24 mo Chain
+        - SP-24 MO - Current Owner Search w/24 mo Chain
+        - EPO No Close - Legal and Vesting Search
+        - SP-EXT-24 - Current Owner Search w/24 mo Chain
+      ProductType:
+        type: string
+        enum:
+        - ALTA Short Form Expanded Coverage Residential Loan Policy
+        - ALTA Short Form Residential Loan Policy
+        - ALTA Short Form Residential Loan Policy - 2006
+        - ALTA Short Form Residential Loan Policy - Extended
+        - Short Form Commitment
+        - Super Eagle
+        - Super Eagle-24 mo
+        - Texas Short Form Mortgagee Policy (T2R)
+      ClientName:
+        type: string
+        example: ABC Mortgage
+      ClientCode:
+        type: string
+        example: AbcMortCo
+      ClientReference:
+        type: string
+        example: ABC1234
+      Consumers:
+        type: array
+        items:
+          $ref: '#/definitions/Consumer'
+      SubjectProperty:
+        allOf:
+        - $ref: '#/definitions/Address'
+        - type: object
+          properties:
+            ParcelNumbers:
+              type: array
+              items:
+                type: string
+                example: '12345'
+            PropertyType:
+              $ref: '#/definitions/PropertyType'
+      Loan:
+        $ref: '#/definitions/Loan'
+      TitleOptions:
+        $ref: '#/definitions/TitleOptions'
+  Report:
+    type: object
+    properties:
+      OrderStatus:
+        $ref: '#/definitions/OrderStatus'
+      TransactionID:
+        type: string
+        example: c8f345c7-7757-4076-a2ca-e0483cef3d1f
+      RequestorID:
+        type: string
+        example: ABC123
+      ComplexityIndicator:
+        $ref: '#/definitions/ComplexityIndicator'
+      SubmittedData:
+        type: object
+        properties:
+          ClientName:
+            type: string
+            example: ABC Mortgage
+          Consumers:
+            type: array
+            items:
+              $ref: '#/definitions/Consumer'
+          Loan:
+            $ref: '#/definitions/Loan'
+          TitleOptions:
+            $ref: '#/definitions/TitleOptions'
+      PropertyInfo:
+        type: object
+        properties:
+          MailingAddress:
+            $ref: '#/definitions/Address'
+          LegalDescriptions:
+            type: array
+            items:
+              type: object
+              properties:
+                Source:
+                  type: string
+                  example: PublicRecord
+                  enum:
+                  - PublicRecord
+                  - FAST
+                Text:
+                  type: string
+                  example: REC SURV 22LSM12 POR PCL 4 & TR ADJ
+                IsMetesAndBounds:
+                  type: boolean
+                  example: false
+                LegalPropertyAddress:
+                  allOf:
+                  - $ref: '#/definitions/Address'
+                  - type: object
+                    properties:
+                      Municipality:
+                        type: string
+                      PropertyType:
+                        $ref: '#/definitions/PropertyType'
+      Documents:
+        type: array
+        items:
+          type: object
+          properties:
+            Type:
+              $ref: '#/definitions/DocumentType'
+            Description:
+              type: string
+              example: Affidavit
+            RecordedDate:
+              type: string
+              format: date
+            Url:
+              type: string
+              format: uri
+      AddOns:
+        type: array
+        items:
+          type: object
+          properties:
+            AlertName:
+              type: string
+              example: DNA Clear
+            AlertCode:
+              type: string
+              example: GI.28A
+            AlertDescription:
+              type: string
+              example: The DNA-Clear add-on will be added to workflow results when there is no hit on
+                a consumer name in the do not associate list.
+  OrderStatus:
+    type: object
+    properties:
+      StatusCode:
+        type: string
+        enum:
+        - Complete
+        - Failed
+        - Processing
+        - Queued
+      Description:
+        type: string
+        example: Order successfully processed
+      Errors:
+        type: array
+        items:
+          type: object
+          properties:
+            Code:
+              type: string
+            Description:
+              type: string
+  Address:
+    type: object
+    properties:
+      StreetAddress1:
+        type: string
+        example: 1234 Main Street
+      StreetAddress2:
+        type: string
+        example: Unit 5
+      City:
+        type: string
+        example: AnyTown
+      State:
+        type: string
+        example: CA
+      ZipCode:
+        type: string
+        example: 12345
+      County:
+        type: string
+        example: Some County
+  ComplexityIndicator:
+    type: object
+    properties:
+      Result:
+        type: string
+        example: Streamlined
+        enum:
+        - Streamlined
+        - Traditional
+        - Exam
+        - Curative
+        - Search
+      Level:
+        type: integer
+        example: 1
+        minimum: 1
+      RequiresDocPull:
+        type: boolean
+        example: false
+      RequiresPlatMap:
+        type: boolean
+        example: true
+  Consumer:
+    type: object
+    properties:
+      IndividualName:
+        type: object
+        properties:
+          First:
+            type: string
+            example: John
+          Middle:
+            type: string
+            example: R
+          Last:
+            type: string
+            example: Doe
+          Suffix:
+            type: string
+            example: IV
+      CompanyName:
+        type: string
+        example: ABC Mortgage
+      MailingAddress:
+        $ref: '#/definitions/Address'
+      TaxId:
+        type: string
+        example: '999999990'
+      ConsumerId:
+        type: integer
+        minimum: 1
+        example: 1
+      ConsumerType:
+        type: string
+        enum:
+        - Individual
+        - Company
+        - Trust
+  DocumentType:
+    type: string
+    enum:
+    - Affidavit
+    - Agreement
+    - AgreementContractForDeed
+    - Assignment
+    - Bond
+    - Certificate
+    - CertifiedCopyOfJudgment
+    - CondominiumDeclarationOf
+    - CourtPaper
+    - DeathCertificate
+    - Deed
+    - DeedTransfer
+    - Easement
+    - FinancingStatementUCC
+    - GovernmentRelated
+    - Judgment
+    - Lien
+    - LisPendens
+    - MarriageRecord
+    - MilitaryDischarge
+    - Modification
+    - Mortgage
+    - Notice
+    - NoticeOfCommencement
+    - NoticeOfContestOfLien
+    - NoticeOfDefault
+    - NoticeOfSale
+    - NoticeOfTrusteeSale
+    - Order
+    - Other
+    - PartialRelease
+    - Plat
+    - PlatMap
+    - PlatRelated
+    - PowerOfAttorney
+    - ProbateDocuments
+    - RecisionOfLisPendensNoticeOfSaleNoticeOfDefault
+    - RescissionOfNoticeOfDefault
+    - RescissionOfNoticeOfTrusteeSale
+    - Rescission
+    - Release
+    - ReleaseOrSatisfaction
+    - Restrictions
+    - Subordination
+    - Termination
+    - Transfer
+    - TrustDeedMortgage
+    - Unknown
+  Loan:
+    type: object
+    properties:
+      LoanNumber:
+        type: string
+        example: ABD123
+      LoanAmount:
+        type: number
+        format: double
+        example: 300000
+      CashOutAmount:
+        type: number
+        format: double
+        example: 300000
+      LoanType:
+        type: string
+        enum:
+        - Refinance
+  PropertyType:
+    type: string
+    enum:
+    - SingleFamilyResidential
+    - Condo
+    - Townhouse
+    - Rowhouse
+    - PlannedUnitDevelopment
+    - MultiFamilyResidential24
+    - Duplex
+    - Triplex
+    - Quadraplex
+    - Cabin
+    - VacantLand
+    - MobileHome
+    - Commercial
+    - MultiFamilyResidential
+    - CoOp
+    - Unimproved
+    - Apartment
+    - Agriculture
+    - Other
+  TitleOptions:
+    type: object
+    properties:
+      AttorneyTitleOpinion:
+        type: boolean
+        example: false
+      TwentyFourMonthChain:
+        type: boolean
+        example: true
+host: api.firstam.io
+basePath: /v1/clearsearch

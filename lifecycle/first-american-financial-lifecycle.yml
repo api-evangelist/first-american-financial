@@ -1,0 +1,51 @@
+generated: '2026-09-09'
+method: searched
+source: >-
+  https://developer.firstam.io/api/docs, https://developer.firstam.io/api_docs/services.json and
+  the 16 harvested specifications
+versioning:
+  scheme: uri-path
+  current:
+    - {api: title-settlement, version: '1.5.0', base: https://settlement.stageapi.firstam.com}
+    - {api: liens-judgments-non-fcra, version: v2, base: https://api.dgw.firstam.io/v2}
+    - {api: property, version: v1, base: https://api.firstam.io/v1}
+    - {api: ownership, version: v1, base: https://api-w2.firstam.io/v1}
+    - {api: occupancy, version: v1, base: https://solutions.dgw.firstam.io/v1}
+  note: >-
+    Every data service carries the major version in the base path (/v1, with Liens & Judgments
+    Non-FCRA on /v2). Title & Settlement versions in info.version (1.5.0) rather than the path.
+    No published version-support or upgrade policy was found.
+deprecation:
+  policy_url: null
+  sunset_header: false
+  note: >-
+    NO deprecation policy published. No Sunset or Deprecation response header appears in any of the
+    16 harvested contracts, and no operation is flagged deprecated. Searched the documentation
+    overview and the portal - nothing. NO Deprecation pointer is emitted.
+deprecated_operations: []
+sla:
+  url: null
+  uptime_target: null
+  note: >-
+    No public SLA. The documentation states that quality-of-service policies are attached to a
+    license term negotiated per contract ("A QoS policy defines the level of service being offered
+    to an app that is accessing an API"), so service levels are contractual and not published.
+status_page: null
+status_page_note: >-
+  NO status page. status.firstam.com does not resolve; firstam.statuspage.io redirects to Atlassian's
+  own marketing page rather than a First American page. NO StatusPage pointer is emitted.
+environments:
+  - name: sandbox
+    note: >-
+      Requested through the Request API Access wizard; the sandbox endpoint URL is issued per App
+      after approval. Some APIs require accepting terms for sandbox access.
+  - name: production
+    note: >-
+      Same portal process as sandbox, but additionally requires the First American relationship team
+      and may require a formal contract and/or SOW before access is granted.
+  - name: mock
+    note: Static request/response "Try Me" console available without creating an App.
+lifecycle_evidence:
+  - {url: 'https://developer.firstam.io/api/docs', status: 200}
+  - {url: 'https://status.firstam.com/', status: 0, note: does not resolve}
+  - {url: 'https://firstam.statuspage.io/', status: 200, note: redirects to atlassian.com/software/statuspage - not a First American page}

@@ -1,0 +1,125 @@
+generated: '2026-09-09'
+method: searched
+source: https://developer.firstam.io/api/docs
+also_derived_from: openapi/ — 93 operations across 16 harvested specifications
+authentication:
+  style: >-
+    x-app-id / x-app-key header pair on the fifteen Digital Gateway data services; bearer JWT from an
+    OAuth 2.0 client-credentials token endpoint on Title & Settlement.
+  see: authentication/first-american-financial-authentication.yml
+http_style:
+  documented: >-
+    "Are organized around REST", "predictable, resource-oriented URLs", "designed to use HTTP
+    response codes to indicate API errors", CORS supported.
+  post_for_reads: true
+  post_for_reads_note: >-
+    A deliberate and unusual convention, stated in the docs - the APIs "commonly rely on HTTP POST
+    methods due to the sensitive nature of most data that is exchanged, where you may have otherwise
+    expected to find either GET or DELETE methods used. The primary purpose is to prevent sensitive
+    search criteria from being used in the Query string, moving it instead to the Body." Measured
+    across the harvested contracts: 63 of 93 operations are POST, including pure searches.
+  media_types: [application/json, application/xml]
+  media_note: JSON is the standard payload; several data services also accept and return XML.
+request_response_pattern:
+  name: order-then-retrieve
+  description: >-
+    Every Digital Gateway data service is asynchronous by shape - POST /<service>/order submits the
+    request and returns a transaction identifier, then GET /<service>/report retrieves the result.
+    An agent must hold the transaction id between the two calls; there is no single synchronous call.
+  examples:
+    - openapi/first-american-financial-property-openapi.yml#reqPropertyBasic -> #retrieveProperty
+    - openapi/first-american-financial-watchlist-openapi.yml#post -> #get
+    - openapi/first-american-financial-4506c-openapi.yml#postOrder -> #getStatus -> #getTranscript
+idempotency:
+  coverage: none
+  mechanism: null
+  header: null
+  retention: null
+  note: >-
+    NO idempotency contract. There is no Idempotency-Key header or parameter in any of the 16
+    harvested specifications and none in the documentation. The closest thing is a UNIQUENESS
+    CONSTRAINT, not replay protection: the Title & Settlement order operation states "Property
+    address and external tracking ID has to be unique per transaction", so a repeated POST /orders
+    with the same externalTrackingId is rejected rather than deduplicated. That protects First
+    American's books; it does not tell a client whether a timed-out write landed. The 63 POST
+    operations across the data services have no replay protection at all.
+  see: openapi/first-american-financial-title-settlement-openapi.yml#OrdersPost
+reversibility:
+  grade: documented
+  note: >-
+    One reversal path exists and is documented; NO window is stated anywhere, so this is
+    `documented` and not `verified`. Never assume a cancellation window for a real-estate closing -
+    it is governed by the escrow file, not by the API.
+  reversals:
+    - write_operation: OrdersPost
+      write_path: POST /orders
+      reversal_operation: Orders_Cancel
+      reversal_path: POST /orders/{externalTrackingId}/cancel
+      summary: Cancel an Order previously created
+      window: null
+      window_note: >-
+        The specification states only "Cancel an Order previously created". No time limit, no
+        milestone limit, and no statement of what happens if cancellation is attempted after
+        funding or recording. Confirm with the escrow officer before relying on it.
+      source: openapi/first-american-financial-title-settlement-openapi.yml#Orders_Cancel
+    - write_operation: Webhooks_Post
+      write_path: POST /webhooks
+      reversal_operation: Webhooks_Del
+      reversal_path: DELETE /webhooks/{id}
+      summary: Delete a webhook subscription
+      window: none-required
+      window_note: Subscription management is fully reversible - single and bulk delete both exist.
+      source: openapi/first-american-financial-title-settlement-openapi.yml#Webhooks_Del
+  irreversible:
+    - operation: Orders_UploadDocument
+      note: No delete or replace operation for an uploaded document.
+    - operation: Orders_PostMessage
+      note: No retraction or edit operation for a sent message.
+    - operations: the 63 data-service order operations (property, ownership, identity, watchlist, bankruptcy, 4506-C, SCRA, NMLS, liens & judgments, occupancy, reverse phone/address, income estimate, ClearSearch)
+      note: >-
+        No cancel, void or refund operation exists for ANY data-service order. Once submitted, a
+        consumer report order is placed and billable. Treat every /order call as irreversible.
+dry_run_mode:
+  available: partial
+  note: >-
+    A mock "Try Me" console returns static request/response pairs without an App, and a sandbox
+    environment exists per App - but neither is reachable through the API contract itself (no
+    dry_run parameter, no test-mode header), so an agent cannot rehearse a call in-band.
+pagination:
+  style: none
+  note: >-
+    No pagination parameters in any harvested contract. The surface is order/retrieve rather than
+    collection listing; the two collection-shaped operations (GET /offices, GET /employees/*) return
+    unpaged arrays filtered by query parameter.
+field_expansion: {supported: false}
+sparse_fieldsets: {supported: false}
+metadata:
+  supported: true
+  note: >-
+    externalTrackingId on Title & Settlement is a client-supplied correlation key carried through
+    orders, documents, messages, cancel and every webhook event. It is the closest thing this API
+    has to a client-owned metadata field, and it must be unique per transaction.
+request_tracing:
+  header: null
+  note: >-
+    No request-id or correlation header documented or declared. The data services return a
+    service-specific transaction identifier in the order response body, which is the only handle a
+    client has on a request.
+versioning:
+  style: uri-path
+  see: lifecycle/first-american-financial-lifecycle.yml
+error_envelope:
+  format: http-status-codes
+  problem_json: false
+  see: errors/first-american-financial-problem-types.yml
+rate_limit_signaling:
+  headers_published: false
+  exhaustion_status: 503
+  note: >-
+    503 "Exceed usage limit" is the documented exhaustion signal - not 429. No RateLimit-* or
+    X-RateLimit-* headers are documented or declared, and no Retry-After. An agent gets a bare 503
+    and cannot tell a quota exhaustion from a genuine outage without reading the body.
+  see: rate-limits/first-american-financial-rate-limits.yml
+webhooks:
+  supported: true
+  see: asyncapi/first-american-financial-title-settlement-webhooks.yml

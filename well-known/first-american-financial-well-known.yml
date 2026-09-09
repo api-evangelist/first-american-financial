@@ -1,0 +1,199 @@
+generated: '2026-09-09'
+method: probed
+source: live GET of the named /.well-known/ path list on every host this record knows
+note: >-
+  ZERO HITS. Every named path was probed on all ten hosts the record knows — the registrable
+  domain and www, the two developer portals, and every OpenAPI host harvested from the Digital
+  Gateway ActiveDocs catalogue. Nothing returned a real document, so NO WellKnown and NO
+  SecurityTxt pointer is emitted. Three hosts are catch-alls whose negative control also
+  returned the same non-404 response, so nothing served by them can be trusted as a document:
+  developer.firstam.com answers HTTP 200 with a 28-byte "<h2>Not Authorized!!!!</h2>" body for
+  every path including the control; api.firstam.io answers HTTP 200 with the 7-byte load-balancer
+  string "HEALTHY" for every path including the control; settlement.stageapi.firstam.com answers
+  401 for every path including the control. api-w2.firstam.io does not answer on port 443 from
+  this network at all.
+hit_count: 0
+path_echo_control: failed
+soft_404_control:
+  - host: developer.firstam.com
+    verdict: catch-all
+    status: 200
+    bytes: 28
+    body: '<h2>Not Authorized!!!!</h2>'
+  - host: api.firstam.io
+    verdict: catch-all
+    status: 200
+    bytes: 7
+    body: HEALTHY
+  - host: settlement.stageapi.firstam.com
+    verdict: catch-all
+    status: 401
+    bytes: 1
+hosts:
+  - host: https://firstam.com
+    documents:
+      - {path: /.well-known/security.txt, status: 404}
+      - {path: /.well-known/openid-configuration, status: 404}
+      - {path: /.well-known/oauth-authorization-server, status: 404}
+      - {path: /.well-known/oauth-protected-resource, status: 404}
+      - {path: /.well-known/api-catalog, status: 404}
+      - {path: /.well-known/ai-plugin.json, status: 404}
+      - {path: /.well-known/ucp.json, status: 404}
+      - {path: /.well-known/acp.json, status: 404}
+      - {path: /.well-known/aauth-resource.json, status: 404}
+      - {path: /.well-known/apis.json, status: 404}
+      - {path: /apis.json, status: 404}
+      - {path: /apis.yml, status: 404}
+      - {path: /.well-known/agent-card.json, status: 404}
+      - {path: /.well-known/agent.json, status: 404}
+  - host: https://www.firstam.com
+    documents:
+      - {path: /.well-known/security.txt, status: 404}
+      - {path: /.well-known/openid-configuration, status: 404}
+      - {path: /.well-known/oauth-authorization-server, status: 404}
+      - {path: /.well-known/oauth-protected-resource, status: 404}
+      - {path: /.well-known/api-catalog, status: 404}
+      - {path: /.well-known/ai-plugin.json, status: 404}
+      - {path: /.well-known/ucp.json, status: 404}
+      - {path: /.well-known/acp.json, status: 404}
+      - {path: /.well-known/aauth-resource.json, status: 404}
+      - {path: /.well-known/apis.json, status: 404}
+      - {path: /apis.json, status: 404}
+      - {path: /apis.yml, status: 404}
+      - {path: /.well-known/agent-card.json, status: 404}
+      - {path: /.well-known/agent.json, status: 404}
+  - host: https://developer.firstam.com
+    note: catch-all — HTTP 200 "<h2>Not Authorized!!!!</h2>" on every path INCLUDING the negative control; no path counts
+    documents:
+      - {path: /.well-known/security.txt, status: 200, verdict: catch-all-not-a-document}
+      - {path: /.well-known/openid-configuration, status: 200, verdict: catch-all-not-a-document}
+      - {path: /.well-known/oauth-authorization-server, status: 200, verdict: catch-all-not-a-document}
+      - {path: /.well-known/oauth-protected-resource, status: 200, verdict: catch-all-not-a-document}
+      - {path: /.well-known/api-catalog, status: 200, verdict: catch-all-not-a-document}
+      - {path: /.well-known/ai-plugin.json, status: 200, verdict: catch-all-not-a-document}
+      - {path: /.well-known/ucp.json, status: 200, verdict: catch-all-not-a-document}
+      - {path: /.well-known/acp.json, status: 200, verdict: catch-all-not-a-document}
+      - {path: /.well-known/aauth-resource.json, status: 200, verdict: catch-all-not-a-document}
+      - {path: /.well-known/apis.json, status: 200, verdict: catch-all-not-a-document}
+      - {path: /apis.json, status: 200, verdict: catch-all-not-a-document}
+      - {path: /apis.yml, status: 200, verdict: catch-all-not-a-document}
+      - {path: /.well-known/agent-card.json, status: 200, verdict: catch-all-not-a-document}
+      - {path: /.well-known/agent.json, status: 200, verdict: catch-all-not-a-document}
+  - host: https://developer.firstam.io
+    documents:
+      - {path: /.well-known/security.txt, status: 404}
+      - {path: /.well-known/openid-configuration, status: 404}
+      - {path: /.well-known/oauth-authorization-server, status: 404}
+      - {path: /.well-known/oauth-protected-resource, status: 404}
+      - {path: /.well-known/api-catalog, status: 404}
+      - {path: /.well-known/ai-plugin.json, status: 404}
+      - {path: /.well-known/ucp.json, status: 404}
+      - {path: /.well-known/acp.json, status: 404}
+      - {path: /.well-known/aauth-resource.json, status: 404}
+      - {path: /.well-known/apis.json, status: 404}
+      - {path: /apis.json, status: 404}
+      - {path: /apis.yml, status: 404}
+      - {path: /.well-known/agent-card.json, status: 404}
+      - {path: /.well-known/agent.json, status: 0, note: connection failed}
+  - host: https://api.firstam.io
+    note: catch-all — HTTP 200 "HEALTHY" (7 bytes) on every path INCLUDING the negative control; no path counts
+    documents:
+      - {path: /.well-known/security.txt, status: 200, verdict: catch-all-not-a-document}
+      - {path: /.well-known/openid-configuration, status: 200, verdict: catch-all-not-a-document}
+      - {path: /.well-known/oauth-authorization-server, status: 200, verdict: catch-all-not-a-document}
+      - {path: /.well-known/oauth-protected-resource, status: 200, verdict: catch-all-not-a-document}
+      - {path: /.well-known/api-catalog, status: 200, verdict: catch-all-not-a-document}
+      - {path: /.well-known/ai-plugin.json, status: 200, verdict: catch-all-not-a-document}
+      - {path: /.well-known/ucp.json, status: 200, verdict: catch-all-not-a-document}
+      - {path: /.well-known/acp.json, status: 200, verdict: catch-all-not-a-document}
+      - {path: /.well-known/aauth-resource.json, status: 200, verdict: catch-all-not-a-document}
+      - {path: /.well-known/apis.json, status: 200, verdict: catch-all-not-a-document}
+      - {path: /apis.json, status: 200, verdict: catch-all-not-a-document}
+      - {path: /apis.yml, status: 200, verdict: catch-all-not-a-document}
+      - {path: /.well-known/agent-card.json, status: 200, verdict: catch-all-not-a-document}
+      - {path: /.well-known/agent.json, status: 200, verdict: catch-all-not-a-document}
+  - host: https://api-w2.firstam.io
+    note: no TLS response on port 443 from this network; every probe returned a connection failure
+    documents:
+      - {path: /.well-known/security.txt, status: 0}
+      - {path: /.well-known/openid-configuration, status: 0}
+      - {path: /.well-known/oauth-authorization-server, status: 0}
+      - {path: /.well-known/oauth-protected-resource, status: 0}
+      - {path: /.well-known/api-catalog, status: 0}
+      - {path: /.well-known/ai-plugin.json, status: 0}
+      - {path: /.well-known/ucp.json, status: 0}
+      - {path: /.well-known/acp.json, status: 0}
+      - {path: /.well-known/aauth-resource.json, status: 0}
+      - {path: /.well-known/apis.json, status: 0}
+      - {path: /apis.json, status: 0}
+      - {path: /apis.yml, status: 0}
+      - {path: /.well-known/agent-card.json, status: 0}
+      - {path: /.well-known/agent.json, status: 0}
+  - host: https://api.dgw.firstam.io
+    note: gateway answers HTTP 500 (85-byte JSON) on every path including the negative control
+    documents:
+      - {path: /.well-known/security.txt, status: 500}
+      - {path: /.well-known/openid-configuration, status: 500}
+      - {path: /.well-known/oauth-authorization-server, status: 500}
+      - {path: /.well-known/oauth-protected-resource, status: 500}
+      - {path: /.well-known/api-catalog, status: 500}
+      - {path: /.well-known/ai-plugin.json, status: 500}
+      - {path: /.well-known/ucp.json, status: 500}
+      - {path: /.well-known/acp.json, status: 500}
+      - {path: /.well-known/aauth-resource.json, status: 500}
+      - {path: /.well-known/apis.json, status: 500}
+      - {path: /apis.json, status: 500}
+      - {path: /apis.yml, status: 500}
+      - {path: /.well-known/agent-card.json, status: 500}
+      - {path: /.well-known/agent.json, status: 500}
+  - host: https://solutions.dgw.firstam.io
+    note: gateway answers HTTP 500 (85-byte JSON) on every path including the negative control
+    documents:
+      - {path: /.well-known/security.txt, status: 500}
+      - {path: /.well-known/openid-configuration, status: 500}
+      - {path: /.well-known/oauth-authorization-server, status: 500}
+      - {path: /.well-known/oauth-protected-resource, status: 500}
+      - {path: /.well-known/api-catalog, status: 500}
+      - {path: /.well-known/ai-plugin.json, status: 500}
+      - {path: /.well-known/ucp.json, status: 500}
+      - {path: /.well-known/acp.json, status: 500}
+      - {path: /.well-known/aauth-resource.json, status: 500}
+      - {path: /.well-known/apis.json, status: 500}
+      - {path: /apis.json, status: 500}
+      - {path: /apis.yml, status: 500}
+      - {path: /.well-known/agent-card.json, status: 500}
+      - {path: /.well-known/agent.json, status: 500}
+  - host: https://settlement.stageapi.firstam.com
+    note: catch-all — HTTP 401 on every path including the negative control
+    documents:
+      - {path: /.well-known/security.txt, status: 401}
+      - {path: /.well-known/openid-configuration, status: 401}
+      - {path: /.well-known/oauth-authorization-server, status: 401}
+      - {path: /.well-known/oauth-protected-resource, status: 401}
+      - {path: /.well-known/api-catalog, status: 401}
+      - {path: /.well-known/ai-plugin.json, status: 401}
+      - {path: /.well-known/ucp.json, status: 401}
+      - {path: /.well-known/acp.json, status: 401}
+      - {path: /.well-known/aauth-resource.json, status: 401}
+      - {path: /.well-known/apis.json, status: 401}
+      - {path: /apis.json, status: 401}
+      - {path: /apis.yml, status: 401}
+      - {path: /.well-known/agent-card.json, status: 401}
+      - {path: /.well-known/agent.json, status: 401}
+  - host: https://dna.firstam.com
+    note: edge answers HTTP 403 on every path including the negative control
+    documents:
+      - {path: /.well-known/security.txt, status: 403}
+      - {path: /.well-known/openid-configuration, status: 403}
+      - {path: /.well-known/oauth-authorization-server, status: 403}
+      - {path: /.well-known/oauth-protected-resource, status: 403}
+      - {path: /.well-known/api-catalog, status: 403}
+      - {path: /.well-known/ai-plugin.json, status: 403}
+      - {path: /.well-known/ucp.json, status: 403}
+      - {path: /.well-known/acp.json, status: 403}
+      - {path: /.well-known/aauth-resource.json, status: 403}
+      - {path: /.well-known/apis.json, status: 403}
+      - {path: /apis.json, status: 403}
+      - {path: /apis.yml, status: 403}
+      - {path: /.well-known/agent-card.json, status: 403}
+      - {path: /.well-known/agent.json, status: 403}

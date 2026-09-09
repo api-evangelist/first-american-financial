@@ -1,0 +1,399 @@
+swagger: '2.0'
+info:
+  description: ''
+  version: v1
+  title: 4506-C API
+host: api.firstam.io
+basePath: /v1
+schemes:
+- https
+paths:
+  /4506t/order:
+    post:
+      tags:
+      - Request
+      summary: Request tax transcript
+      description: 'Required fields: Name, TaxID, TaxYears, FormType, TaxReturnType, RequestorID'
+      operationId: postOrder
+      consumes:
+      - application/json
+      produces:
+      - application/json
+      parameters:
+      - in: header
+        name: x-app-id
+        description: Application ID
+        required: true
+        type: string
+      - in: header
+        name: x-app-key
+        description: Application Key
+        required: true
+        type: string
+      - in: body
+        name: body
+        description: Request to the Service
+        required: true
+        schema:
+          $ref: '#/definitions/order'
+      responses:
+        '200':
+          description: Success
+          schema:
+            $ref: '#/definitions/confirmation'
+        '400':
+          description: Bad Request
+        '401':
+          description: Invalid App ID or Key
+        '500':
+          description: Internal Server Error
+        '503':
+          description: Usage Limit Exceeded
+  /4506t/consentForm:
+    post:
+      tags:
+      - Request
+      summary: Upload consent form for previously submitted tax transcript request
+      description: 'Required fields: TransactionID, IsEsigned, File, FileType.'
+      operationId: postConsentForm
+      consumes:
+      - application/json
+      produces:
+      - application/json
+      parameters:
+      - in: header
+        name: x-app-id
+        description: Application ID
+        required: true
+        type: string
+      - in: header
+        name: x-app-key
+        description: Application Key
+        required: true
+        type: string
+      - in: body
+        name: body
+        description: Upload consent form
+        required: true
+        schema:
+          $ref: '#/definitions/consentform'
+      responses:
+        '200':
+          description: Success
+          schema:
+            $ref: '#/definitions/confirmation'
+        '400':
+          description: Bad Request
+        '401':
+          description: Invalid App ID or Key
+        '500':
+          description: Internal Server Error
+        '503':
+          description: Usage Limit Exceeded
+  /4506t/transcript:
+    get:
+      tags:
+      - Request
+      summary: Retrieve transcript.
+      description: Retrieve transcript.
+      operationId: getTranscript
+      consumes:
+      - application/json
+      produces:
+      - application/json
+      parameters:
+      - in: header
+        name: x-app-id
+        description: Application ID
+        required: true
+        type: string
+      - in: header
+        name: x-app-key
+        description: Application Key
+        required: true
+        type: string
+      - name: transactionID
+        in: query
+        description: Unique Identifier Tied to Order
+        required: true
+        type: string
+      responses:
+        '200':
+          description: Success
+          schema:
+            $ref: '#/definitions/transcript'
+        '400':
+          description: Bad Request (Missing/Invalid TransactionID)
+        '401':
+          description: Invalid App ID or Key
+        '404':
+          description: Not Found (No Report Found by TransactionID)
+        '500':
+          description: Internal Server Error
+        '503':
+          description: Usage Limit Exceeded
+  /4506t/transcriptpdf:
+    get:
+      tags:
+      - Request
+      summary: Retrieve transcript pdf
+      description: Retrieve transcript pdf
+      operationId: getTranscriptPDF
+      consumes:
+      - application/json
+      produces:
+      - application/json
+      parameters:
+      - in: header
+        name: x-app-id
+        description: Application ID
+        required: true
+        type: string
+      - in: header
+        name: x-app-key
+        description: Application Key
+        required: true
+        type: string
+      - name: transactionID
+        in: query
+        description: Unique Identifier Tied to Order
+        required: true
+        type: string
+      responses:
+        '200':
+          description: Success
+          schema:
+            type: object
+            properties:
+              TransactionID:
+                type: string
+              RequestorID:
+                type: string
+              OrderStatus:
+                $ref: '#/definitions/orderstatus'
+              TranscriptPDF:
+                type: string
+                description: Base64 encoded PDF file
+        '400':
+          description: Bad Request (Missing TransactionID)
+        '401':
+          description: Invalid App ID or Key
+        '404':
+          description: Not Found (No Report Found by TransactionID)
+        '500':
+          description: Internal Server Error
+        '503':
+          description: Usage Limit Exceeded
+  /4506t/status:
+    get:
+      tags:
+      - Request
+      summary: Retrieve status of order.
+      description: Retrieve status of order.
+      operationId: getStatus
+      consumes:
+      - application/json
+      produces:
+      - application/json
+      parameters:
+      - in: header
+        name: x-app-id
+        description: Application ID
+        required: true
+        type: string
+      - in: header
+        name: x-app-key
+        description: Application Key
+        required: true
+        type: string
+      - name: transactionID
+        in: query
+        description: Unique Identifier Tied to Order
+        required: true
+        type: string
+      responses:
+        '200':
+          description: Success
+          schema:
+            $ref: '#/definitions/confirmation'
+        '400':
+          description: Bad Request (Missing/Invalid TransactionID)
+        '401':
+          description: Invalid App ID or Key
+        '404':
+          description: Not Found (No Report Found by TransactionID)
+        '500':
+          description: Internal Server Error
+        '503':
+          description: Usage Limit Exceeded
+definitions:
+  order:
+    title: Order
+    description: New order request
+    type: object
+    properties:
+      TaxReturnType:
+        type: string
+        enum:
+        - Personal
+        - Corporate
+      TaxYears:
+        type: array
+        items:
+          type: integer
+      Name:
+        type: object
+        properties:
+          First:
+            type: string
+            example: John
+          Middle:
+            type: string
+          Last:
+            type: string
+            example: Doe
+          Company:
+            type: string
+      RequestorID:
+        type: string
+        minLength: 1
+      TaxID:
+        type: string
+        pattern: '[0-9]{9}'
+      ConsentForm:
+        type: object
+        properties:
+          File:
+            type: string
+          FileType:
+            type: string
+            enum:
+            - PDF
+            - TIFF
+          IsEsigned:
+            type: boolean
+        required:
+        - IsEsigned
+        - File
+        - FileType
+      FormType:
+        $ref: '#/definitions/formtype'
+      TranscriptsToInclude:
+        type: object
+        properties:
+          Return:
+            type: boolean
+          Account:
+            type: boolean
+          RecordOfAccount:
+            type: boolean
+    required:
+    - Name
+    - TaxYears
+    - FormType
+    - TaxReturnType
+    - TaxID
+    - RequestorID
+  consentform:
+    title: ConsentForm
+    description: Upload Consent form
+    type: object
+    properties:
+      TransactionID:
+        type: string
+        minLength: 1
+      File:
+        type: string
+        minLength: 1
+        description: Base64 encoded file
+        format: byte
+      FileType:
+        type: string
+        enum:
+        - PDF
+        - TIFF
+      IsEsigned:
+        type: boolean
+    required:
+    - TransactionID
+    - IsEsigned
+    - File
+    - FileType
+  confirmation:
+    type: object
+    title: Confirmation
+    description: Order confirmation response
+    properties:
+      TransactionID:
+        type: string
+        description: A GUID
+        minLength: 1
+        example: 2885a98e-79e7-4c6b-b431-f3849fd58e93
+      OrderStatus:
+        $ref: '#/definitions/orderstatus'
+    required:
+    - TransactionID
+    - OrderStatus
+  transcript:
+    type: object
+    title: Transcript
+    description: Tax Transcript
+    properties:
+      TransactionID:
+        type: string
+        description: A GUID
+        minLength: 1
+        example: 2885a98e-79e7-4c6b-b431-f3849fd58e93
+      RequestorID:
+        type: string
+        minLength: 1
+      OrderStatus:
+        $ref: '#/definitions/orderstatus'
+      RequestedForm:
+        $ref: '#/definitions/formtype'
+      RequestedTranscript:
+        type: string
+      Transcripts:
+        type: array
+        items:
+          type: object
+          properties:
+            TranscriptType:
+              type: string
+            TaxYear:
+              type: integer
+            Rows:
+              type: array
+              items:
+                type: object
+                properties:
+                  Description:
+                    type: string
+                  Value:
+                    type: string
+                  FormSection:
+                    type: string
+                  LineNumber:
+                    type: string
+  orderstatus:
+    title: OrderStatus
+    type: string
+    enum:
+    - Received
+    - Falied
+    - Rejected
+    - Completed
+    - Cancelled
+    - PendingSignature
+    - InProgress
+    - WaitingForConsentForm
+  formtype:
+    title: FormType
+    type: string
+    enum:
+    - W2
+    - '1040'
+    - '1099'
+    - '1065'
+    - '1120'
+    - 1120S

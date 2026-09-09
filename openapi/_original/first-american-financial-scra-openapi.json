@@ -1,0 +1,261 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "description": "",
+    "version": "v1",
+    "title": "SCRA API"
+  },
+  "host": "api.firstam.io",
+  "basePath": "\/v1",
+  "tags": [
+    {
+      "name": "developers",
+      "description": "Operations available to regular developers"
+    }
+  ],
+  "schemes": [
+    "https"
+  ],
+  "paths": {
+    "\/scra\/order": {
+      "post": {
+        "tags": [
+          "Request"
+        ],
+        "summary": "Make a new SCRA service call",
+        "description": "Required fields: RequestorID, FirstName, LastName, SSN, DOB",
+        "operationId": "post",
+        "consumes": [
+          "application\/json",
+          "application\/xml"
+        ],
+        "produces": [
+          "application\/json",
+          "application\/xml"
+        ],
+        "parameters": [
+          {
+            "in": "header",
+            "name": "x-app-id",
+            "description": "Application ID",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "in": "header",
+            "name": "x-app-key",
+            "description": "Application Key",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "in": "body",
+            "name": "ServiceRequest",
+            "description": "Request to the Service",
+            "required": true,
+            "schema": {
+              "$ref": "#\/definitions\/ServiceRequest"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "schema": {
+              "$ref": "#\/definitions\/ServiceResponse"
+            }
+          },
+          "400": {
+            "description": "Bad Request"
+          },
+          "401": {
+            "description": "Invalid App ID or Key"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          },
+          "503": {
+            "description": "Usage Limit Exceeded"
+          }
+        }
+      }
+    },
+    "\/scra\/report": {
+      "get": {
+        "tags": [
+          "Get Response"
+        ],
+        "summary": "Retrieve existing SCRA report by transactionID",
+        "description": "Add a transactionID to the query string to retrieve an existing report.",
+        "operationId": "get",
+        "consumes": [
+          "application\/json",
+          "application\/xml"
+        ],
+        "produces": [
+          "application\/json",
+          "application\/xml"
+        ],
+        "parameters": [
+          {
+            "in": "header",
+            "name": "x-app-id",
+            "description": "Application ID",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "in": "header",
+            "name": "x-app-key",
+            "description": "Application Key",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "transactionID",
+            "in": "query",
+            "description": "Unique Identifier Tied To a Report",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "schema": {
+              "$ref": "#\/definitions\/ServiceResponse"
+            }
+          },
+          "400": {
+            "description": "Bad Request (Missing\/Invalid TransactionID)"
+          },
+          "401": {
+            "description": "Invalid App ID or Key"
+          },
+          "404": {
+            "description": "Not Found (No Report Found by TransactionID)"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          },
+          "503": {
+            "description": "Usage Limit Exceeded"
+          }
+        }
+      }
+    }
+  },
+  "definitions": {
+    "ServiceRequest": {
+      "type": "object",
+      "required": [
+        "RequestorID",
+        "Employer"
+      ],
+      "properties": {
+        "RequestorID": {
+          "type": "string"
+        },
+        "Person": {
+          "$ref": "#\/definitions\/PersonRequest"
+        },
+        "ServiceDay": {
+          "$ref": "#\/definitions\/DateRequest"
+        }
+      },
+      "example":{
+  "RequestorID": "123",
+  "Person": {
+    "Name": {
+      "First": "harry",
+      "Last": "dune"
+    },
+    "SSN": "000905188",
+    "DOB": {
+      "Year": "1963",
+      "Month": "10",
+      "Day": "25"
+    }
+  },
+  "ServiceDay": {
+      "Year": "2016",
+      "Month": "01",
+      "Day": "01"
+    }
+  }
+    },
+    "ServiceResponse": {
+      "type": "object",
+      "properties": {
+        "TransactionID": {
+          "type": "string"
+        },
+        "RequestorID": {
+          "type": "string"
+        },
+        "Error": {
+          "$ref": "#\/definitions\/ErrorResponse"
+        },
+        "External": {
+          "type": "boolean"
+        },
+        "Verified": {
+          "type": "boolean"
+        },
+        "Affiliation": {
+          "$ref": "#\/definitions\/AffiliationResponse"
+        }
+      }
+    },
+    "AffiliationResponse": {
+      "type": "object",
+      "properties": {
+        "Name": {
+          "type": "string"
+        },
+        "Description": {
+          "type": "string"
+        }
+      }
+    },
+    "PersonRequest": {
+      "type": "object",
+      "properties": {
+        "Name": {
+          "$ref": "#\/definitions\/NameRequest"
+        },
+        "SSN": {
+          "type": "string"
+        },
+        "DOB": {
+          "$ref": "#\/definitions\/DateRequest"
+        }
+      }
+    },
+    "NameRequest": {
+      "type": "object",
+      "properties": {
+        "First": {
+          "type": "string"
+        },
+        "Last": {
+          "type": "string"
+        },
+        "Middle": {
+          "type": "string"
+        }
+      }
+    },
+    "ErrorResponse": {
+      "type": "object",
+      "properties": {
+        "Code": {
+          "type": "string"
+        },
+        "Message": {
+          "type": "string"
+        }
+      }
+    }
+  }
+}

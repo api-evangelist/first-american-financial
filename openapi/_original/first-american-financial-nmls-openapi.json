@@ -1,0 +1,1302 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "description": "",
+    "version": "v1",
+    "title": "NMLS API"
+  },
+  "host": "api-w2.firstam.io",
+  "basePath": "/v1",
+  "tags": [
+    {
+      "name": "developers",
+      "description": "Operations available to regular developers."
+    }
+  ],
+  "schemes": [
+    "https"
+  ],
+  "paths": {
+    "/nmls/lookup": {
+      "get": {
+        "tags": [
+          "Get NMLS data by NMLS ID"
+        ],
+        "summary": "Retrieve NMLS data by NMLS ID.",
+        "description": "Add a NMLS ID to the query string to retrieve NMLS data. Optional alert analytics can be performed by appending '&includeanalytics=true' to the query string.",
+        "operationId": "get",
+        "produces": [
+          "application/json",
+          "application/xml"
+        ],
+        "parameters": [
+          {
+            "in": "header",
+            "name": "x-app-id",
+            "description": "Application ID",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "in": "header",
+            "name": "x-app-key",
+            "description": "Application Key",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "nmlsid",
+            "in": "query",
+            "description": "NMLS ID",
+            "required": true,
+            "type": "string",
+            "default": 857740
+          },
+          {
+            "in": "query",
+            "name": "includeanalytics",
+            "description": "Analytics Flag",
+            "required": false,
+            "type": "string",
+            "default": "false"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "schema": {
+              "$ref": "#/definitions/ServiceResponse"
+            }
+          },
+          "400": {
+            "description": "Bad Request (Missing/Invalid NMLS ID)"
+          },
+          "401": {
+            "description": "Invalid App ID or Key"
+          },
+          "404": {
+            "description": "Not Found (No NMLS Data Found by NMLS ID)"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          },
+          "503": {
+            "description": "Usage Limit Exceeded"
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "Get NMLS data by NMLS ID"
+        ],
+        "summary": "Retrieve NMLS data by NMLS ID with added parameters for alert analytics.",
+        "description": "Add a NMLS ID to the query string and add additional parameters in the request body for alert analytics. Must set \"IncludeAnalytics\" flag to true in the request body.",
+        "operationId": "post",
+        "produces": [
+          "application/json",
+          "application/xml"
+        ],
+        "parameters": [
+          {
+            "in": "header",
+            "name": "x-app-id",
+            "description": "Application ID",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "in": "header",
+            "name": "x-app-key",
+            "description": "Application Key",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "nmlsid",
+            "in": "query",
+            "description": "NMLS ID",
+            "required": true,
+            "type": "string",
+            "default": 857740
+          },
+          {
+            "in": "body",
+            "name": "Request",
+            "description": "Request for NMLS",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/ServiceRequest"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "schema": {
+              "$ref": "#/definitions/ServiceResponse"
+            }
+          },
+          "400": {
+            "description": "Bad Request (Missing/Invalid NMLS ID)"
+          },
+          "401": {
+            "description": "Invalid App ID or Key"
+          },
+          "404": {
+            "description": "Not Found (No NMLS Data Found by NMLS ID)"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          },
+          "503": {
+            "description": "Usage Limit Exceeded"
+          }
+        }
+      }
+    },
+    "/nmls/lookup/company": {
+      "get": {
+        "tags": [
+          "Get NMLS data by NMLS ID"
+        ],
+        "summary": "Retrieve company NMLS data by NMLS ID.",
+        "description": "Add a NMLS ID to the query string to retrieve NMLS data for a company. Optional alert analytics can be performed by appending '&includeanalytics=true' to the query string.",
+        "operationId": "get",
+        "produces": [
+          "application/json",
+          "application/xml"
+        ],
+        "parameters": [
+          {
+            "in": "header",
+            "name": "x-app-id",
+            "description": "Application ID",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "in": "header",
+            "name": "x-app-key",
+            "description": "Application Key",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "nmlsid",
+            "in": "query",
+            "description": "Company NMLS ID",
+            "required": true,
+            "type": "string",
+            "default": 275189
+          },
+          {
+            "in": "query",
+            "name": "includeanalytics",
+            "description": "Analytics Flag",
+            "required": false,
+            "type": "string",
+            "default": "false"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "schema": {
+              "$ref": "#/definitions/CompanyResponse"
+            }
+          },
+          "400": {
+            "description": "Bad Request (Missing/Invalid NMLS ID)"
+          },
+          "401": {
+            "description": "Invalid App ID or Key"
+          },
+          "404": {
+            "description": "Not Found (No NMLS Data Found by NMLS ID)"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          },
+          "503": {
+            "description": "Usage Limit Exceeded"
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "Get NMLS data by NMLS ID"
+        ],
+        "summary": "Retrieve NMLS company data by NMLS ID with added parameters for alert analytics.",
+        "description": "Add a NMLS ID to the query string and add additional parameters in the request body for alert analytics. Must set \"IncludeAnalytics\" flag to true in the request body.",
+        "operationId": "post",
+        "produces": [
+          "application/json",
+          "application/xml"
+        ],
+        "parameters": [
+          {
+            "in": "header",
+            "name": "x-app-id",
+            "description": "Application ID",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "in": "header",
+            "name": "x-app-key",
+            "description": "Application Key",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "nmlsid",
+            "in": "query",
+            "description": "NMLS ID",
+            "required": true,
+            "type": "string",
+            "default": 275189
+          },
+          {
+            "in": "body",
+            "name": "Request",
+            "description": "Request for NMLS",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/ServiceRequest"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "schema": {
+              "$ref": "#/definitions/ServiceResponse"
+            }
+          },
+          "400": {
+            "description": "Bad Request (Missing/Invalid NMLS ID)"
+          },
+          "401": {
+            "description": "Invalid App ID or Key"
+          },
+          "404": {
+            "description": "Not Found (No NMLS Data Found by NMLS ID)"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          },
+          "503": {
+            "description": "Usage Limit Exceeded"
+          }
+        }
+      }
+    },
+    "/nmls/lookup/individual": {
+      "get": {
+        "tags": [
+          "Get NMLS data by NMLS ID"
+        ],
+        "summary": "Retrieve individual NMLS data by NMLS ID.",
+        "description": "Add a NMLS ID to the query string to retrieve NMLS data for an individual. Optional alert analytics can be performed by appending '&includeanalytics=true' to the query string.",
+        "operationId": "get",
+        "produces": [
+          "application/json",
+          "application/xml"
+        ],
+        "parameters": [
+          {
+            "in": "header",
+            "name": "x-app-id",
+            "description": "Application ID",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "in": "header",
+            "name": "x-app-key",
+            "description": "Application Key",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "nmlsid",
+            "in": "query",
+            "description": "Individual NMLS ID",
+            "required": true,
+            "type": "string",
+            "default": 1559549
+          },
+          {
+            "in": "query",
+            "name": "includeanalytics",
+            "description": "Analytics Flag",
+            "required": false,
+            "type": "string",
+            "default": "false"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "schema": {
+              "$ref": "#/definitions/IndividualResponse"
+            }
+          },
+          "400": {
+            "description": "Bad Request (Missing/Invalid NMLS ID)"
+          },
+          "401": {
+            "description": "Invalid App ID or Key"
+          },
+          "404": {
+            "description": "Not Found (No NMLS Data Found by NMLS ID)"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          },
+          "503": {
+            "description": "Usage Limit Exceeded"
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "Get NMLS data by NMLS ID"
+        ],
+        "summary": "Retrieve NMLS  individual data by NMLS ID with added parameters for alert analytics.",
+        "description": "Add a NMLS ID to the query string and add additional parameters in the request body for alert analytics. Must set \"IncludeAnalytics\" flag to true in the request body.",
+        "operationId": "post",
+        "produces": [
+          "application/json",
+          "application/xml"
+        ],
+        "parameters": [
+          {
+            "in": "header",
+            "name": "x-app-id",
+            "description": "Application ID",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "in": "header",
+            "name": "x-app-key",
+            "description": "Application Key",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "nmlsid",
+            "in": "query",
+            "description": "NMLS ID",
+            "required": true,
+            "type": "string",
+            "default": 857740
+          },
+          {
+            "in": "body",
+            "name": "Request",
+            "description": "Request for NMLS",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/ServiceRequest"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "schema": {
+              "$ref": "#/definitions/ServiceResponse"
+            }
+          },
+          "400": {
+            "description": "Bad Request (Missing/Invalid NMLS ID)"
+          },
+          "401": {
+            "description": "Invalid App ID or Key"
+          },
+          "404": {
+            "description": "Not Found (No NMLS Data Found by NMLS ID)"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          },
+          "503": {
+            "description": "Usage Limit Exceeded"
+          }
+        }
+      }
+    },
+    "/nmls/search": {
+      "post": {
+        "tags": [
+          "Search NMLS data"
+        ],
+        "summary": "Search NMLS data.",
+        "description": "Search NMLS data based on NMLS ID, name, or license number. Only returns a subset of the NMLS data. Use the /lookup GET endpoints for the full dataset.",
+        "operationId": "post",
+        "produces": [
+          "application/json",
+          "application/xml"
+        ],
+        "parameters": [
+          {
+            "in": "header",
+            "name": "x-app-id",
+            "description": "Application ID",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "in": "header",
+            "name": "x-app-key",
+            "description": "Application Key",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "in": "body",
+            "name": "Request",
+            "description": "Request for NMLS",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/ServiceRequest"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "schema": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/SearchResponse"
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request (Missing/Invalid NMLS ID)"
+          },
+          "401": {
+            "description": "Invalid App ID or Key"
+          },
+          "404": {
+            "description": "Not Found (No NMLS Data Found by NMLS ID)"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          },
+          "503": {
+            "description": "Usage Limit Exceeded"
+          }
+        }
+      }
+    },
+    "/nmls/search/company": {
+      "post": {
+        "tags": [
+          "Search NMLS data"
+        ],
+        "summary": "Search NMLS company data.",
+        "description": "Search NMLS company data based on NMLS ID, name, or license number. Only returns a subset of the NMLS data. Use the /lookup GET endpoints for the full dataset.",
+        "operationId": "post",
+        "produces": [
+          "application/json",
+          "application/xml"
+        ],
+        "parameters": [
+          {
+            "in": "header",
+            "name": "x-app-id",
+            "description": "Application ID",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "in": "header",
+            "name": "x-app-key",
+            "description": "Application Key",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "in": "body",
+            "name": "Request",
+            "description": "Request for NMLS",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/ServiceRequest"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "schema": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/CompanySearchResponse"
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request (Missing/Invalid NMLS ID)"
+          },
+          "401": {
+            "description": "Invalid App ID or Key"
+          },
+          "404": {
+            "description": "Not Found (No NMLS Data Found by NMLS ID)"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          },
+          "503": {
+            "description": "Usage Limit Exceeded"
+          }
+        }
+      }
+    },
+    "/nmls/search/individual": {
+      "post": {
+        "tags": [
+          "Search NMLS data"
+        ],
+        "summary": "Search NMLS individual data.",
+        "description": "Search individual NMLS data based on NMLS ID, name, or license number. Only returns a subset of the NMLS data. Use the /lookup GET endpoints for the full dataset.",
+        "operationId": "post",
+        "produces": [
+          "application/json",
+          "application/xml"
+        ],
+        "parameters": [
+          {
+            "in": "header",
+            "name": "x-app-id",
+            "description": "Application ID",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "in": "header",
+            "name": "x-app-key",
+            "description": "Application Key",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "in": "body",
+            "name": "Request",
+            "description": "Request for NMLS",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/ServiceRequest"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "schema": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/IndividualSearchResponse"
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request (Missing/Invalid NMLS ID)"
+          },
+          "401": {
+            "description": "Invalid App ID or Key"
+          },
+          "404": {
+            "description": "Not Found (No NMLS Data Found by NMLS ID)"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          },
+          "503": {
+            "description": "Usage Limit Exceeded"
+          }
+        }
+      }
+    }
+  },
+  "definitions": {
+    "ServiceRequest": {
+      "type": "object",
+      "properties": {
+        "Name": {
+          "$ref": "#/definitions/Name"
+        },
+        "Address": {
+          "$ref": "#/definitions/Address"
+        },
+        "NMLSID": {
+          "type": "integer"
+        },
+        "ConfidenceScore": {
+          "type": "integer"
+        },
+        "IncludeAnalytics": {
+          "type": "boolean"
+        }
+      },
+      "example": {
+        "RequestorID": "ID123",
+        "IncludeAnalytics": false,
+        "NMLSID": 349974,
+        "Name": {
+          "First": "John",
+          "Middle": "Travis",
+          "LastOrCompanyName": "Harrison"
+        },
+        "Address": {
+          "State": "CO"
+        },
+        "ConfidenceScore": 90
+      }
+    },
+    "ServiceResponse": {
+      "type": "object",
+      "properties": {
+        "Company": {
+          "$ref": "#/definitions/CompanyResponse"
+        },
+        "Individual": {
+          "$ref": "#/definitions/IndividualResponse"
+        }
+      }
+    },
+    "CompanyResponse": {
+      "type": "object",
+      "properties": {
+        "Name": {
+          "type": "string"
+        },
+        "Address": {
+          "$ref": "#/definitions/Address"
+        },
+        "DBAs": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "ParentCompanyNMLSID": {
+          "type": "integer"
+        },
+        "IsAuthorizedToConductBusiness": {
+          "type": "boolean"
+        },
+        "BranchManager": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/BranchManager"
+          }
+        },
+        "NMLSID": {
+          "type": "integer"
+        },
+        "EntityType": {
+          "type": "string"
+        },
+        "IsFederallyRegulated": {
+          "type": "boolean"
+        },
+        "PrimaryFederalRegulator": {
+          "type": "string"
+        },
+        "RegistrationStatus": {
+          "type": "string"
+        },
+        "BusinessStructure": {
+          "type": "string"
+        },
+        "FiscalYearEnd": {
+          "type": "string"
+        },
+        "FormedIn": {
+          "type": "string"
+        },
+        "DateFormed": {
+          "type": "string"
+        },
+        "StockSymbol": {
+          "type": "string"
+        },
+        "SponsoredMLOCount": {
+          "type": "integer"
+        },
+        "RegisteredMLOCount": {
+          "type": "string"
+        },
+        "Licenses": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/License"
+          }
+        },
+        "OtherNames": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/OtherTradeName"
+          }
+        },
+        "CompanyWebsites": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "RegulatoryActions": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/RegulatoryAction"
+          }
+        }
+      }
+    },
+    "IndividualResponse": {
+      "type": "object",
+      "properties": {
+        "Name": {
+          "$ref": "#/definitions/Name"
+        },
+        "IndividualAgencyRegistrations": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/IndividualAgencyRegistration"
+          }
+        },
+        "DisciplinaryActions": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/IndividualDisciplinaryActions"
+          }
+        },
+        "Licenses": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/NMLSIndividualLicense"
+          }
+        },
+        "Locations": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/Location"
+          }
+        },
+        "OtherNames": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/NMLSName"
+          }
+        },
+        "IndividualRegistration": {
+          "$ref": "#/definitions/IndividualRegistration"
+        },
+        "IndividualRegistrationDetails": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/IndividualRegistrationDetail"
+          }
+        },
+        "RegulatoryActions": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/RegulatoryAction"
+          }
+        }
+      }
+    },
+    "BranchManager": {
+      "type": "object",
+      "properties": {
+        "NMLSID": {
+          "type": "integer"
+        },
+        "Name": {
+          "type": "string"
+        },
+        "Industry": {
+          "type": "string"
+        },
+        "States": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        }
+      }
+    },
+    "State": {
+      "type": "object",
+      "properties": {
+        "State": {
+          "type": "string"
+        }
+      }
+    },
+    "License": {
+      "type": "object",
+      "properties": {
+        "Regulator": {
+          "type": "string"
+        },
+        "RegulatorStateCode": {
+          "type": "string"
+        },
+        "LicenseNumber": {
+          "type": "string"
+        },
+        "LicenseType": {
+          "type": "string"
+        },
+        "IssueDate": {
+          "type": "string"
+        },
+        "Status": {
+          "type": "string"
+        },
+        "StatusDate": {
+          "type": "string"
+        },
+        "IsAuthorizedToConductBusiness": {
+          "type": "boolean"
+        },
+        "RenewedThrough": {
+          "type": "string"
+        },
+        "IsLatest": {
+          "type": "boolean"
+        },
+        "LicenseHistory": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/LicenseHistory"
+          }
+        }
+      }
+    },
+    "LicenseHistory": {
+      "type": "object",
+      "properties": {
+        "StartDate": {
+          "type": "string"
+        },
+        "EndDate": {
+          "type": "string"
+        },
+        "IsAuthorized": {
+          "type": "boolean"
+        }
+      }
+    },
+    "OtherTradeName": {
+      "type": "object",
+      "properties": {
+        "Regulator": {
+          "type": "string"
+        },
+        "Name": {
+          "type": "string"
+        },
+        "NameType": {
+          "type": "string"
+        }
+      }
+    },
+    "RegulatoryAction": {
+      "type": "object",
+      "properties": {
+        "EntityType": {
+          "type": "string"
+        },
+        "Regulator": {
+          "type": "string"
+        },
+        "ActionType": {
+          "type": "string"
+        },
+        "DateOfAction": {
+          "type": "string"
+        },
+        "MultiStateActionID": {
+          "type": "string"
+        },
+        "DocketNumber": {
+          "type": "string"
+        },
+        "AssociatedDocumentURL": {
+          "type": "string"
+        }
+      }
+    },
+    "Address": {
+      "type": "object",
+      "properties": {
+        "APN": {
+          "type": "string"
+        },
+        "Longitude": {
+          "type": "string"
+        },
+        "Latitude": {
+          "type": "string"
+        },
+        "StateCityZip": {
+          "type": "string"
+        },
+        "PostalCode": {
+          "type": "string"
+        },
+        "Country": {
+          "type": "string"
+        },
+        "County": {
+          "type": "string"
+        },
+        "ZipFour": {
+          "type": "string"
+        },
+        "ZipCode": {
+          "type": "string"
+        },
+        "Hash": {
+          "type": "string"
+        },
+        "State": {
+          "type": "string"
+        },
+        "StreetAddress2": {
+          "type": "string"
+        },
+        "StreetAddress1": {
+          "type": "string"
+        },
+        "UnitNumber": {
+          "type": "string"
+        },
+        "UnitDesignation": {
+          "type": "string"
+        },
+        "StreetPostDirection": {
+          "type": "string"
+        },
+        "StreetSuffix": {
+          "type": "string"
+        },
+        "StreetName": {
+          "type": "string"
+        },
+        "StreetPreDirection": {
+          "type": "string"
+        },
+        "StreetNumber": {
+          "type": "string"
+        },
+        "City": {
+          "type": "string"
+        },
+        "FullAddress": {
+          "type": "string"
+        }
+      }
+    },
+    "DBA": {
+      "type": "object",
+      "properties": {
+        "DBA": {
+          "type": "string"
+        }
+      }
+    },
+    "Name": {
+      "type": "object",
+      "properties": {
+        "Full": {
+          "type": "string"
+        },
+        "First": {
+          "type": "string"
+        },
+        "Middle": {
+          "type": "string"
+        },
+        "Last": {
+          "type": "string"
+        },
+        "Suffix": {
+          "type": "string"
+        },
+        "Prefix": {
+          "type": "string"
+        },
+        "LastOrCompanyName": {
+          "type": "string"
+        },
+        "FirstAndMiddleName": {
+          "type": "string"
+        }
+      }
+    },
+    "IndividualAgencyRegistration": {
+      "type": "object",
+      "properties": {
+        "PrimaryFederalRegulator": {
+          "type": "string"
+        },
+        "Status": {
+          "type": "string"
+        },
+        "StatusDate": {
+          "type": "string"
+        },
+        "RegistrationHistory": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/IndividualAgencyRegistrationHistory"
+          }
+        }
+      }
+    },
+    "IndividualAgencyRegistrationHistory": {
+      "type": "object",
+      "properties": {
+        "PrimaryFederalRegulator": {
+          "type": "string"
+        },
+        "StartDate": {
+          "type": "string"
+        },
+        "EndDate": {
+          "type": "string"
+        },
+        "IsAuthorized": {
+          "type": "boolean"
+        }
+      }
+    },
+    "IndividualDisciplinaryActions": {
+      "type": "object",
+      "properties": {
+        "AuthorityType": {
+          "type": "string"
+        },
+        "ActionType": {
+          "type": "string"
+        },
+        "DateOfAction": {
+          "type": "string"
+        },
+        "NameOfAuthority": {
+          "type": "string"
+        },
+        "DisciplinaryActionDetail": {
+          "type": "string"
+        },
+        "AssociatedDocumentURL": {
+          "type": "string"
+        }
+      }
+    },
+    "NMLSIndividualLicense": {
+      "type": "object",
+      "properties": {
+        "License": {
+          "$ref": "#/definitions/License"
+        },
+        "Sponsorships": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/Sponsor"
+          }
+        }
+      }
+    },
+    "Sponsor": {
+      "type": "object",
+      "properties": {
+        "NMLSID": {
+          "type": "string"
+        },
+        "Name": {
+          "type": "string"
+        },
+        "Regulator": {
+          "type": "string"
+        },
+        "RegulatorStateCode": {
+          "type": "string"
+        },
+        "LicenseType": {
+          "type": "string"
+        },
+        "StartDate": {
+          "type": "string"
+        },
+        "EndDate": {
+          "type": "string"
+        }
+      }
+    },
+    "Location": {
+      "type": "object",
+      "properties": {
+        "CompanyName": {
+          "type": "string"
+        },
+        "LocationNMLSID": {
+          "type": "string"
+        },
+        "LocationType": {
+          "type": "string"
+        },
+        "Street": {
+          "type": "string"
+        },
+        "StartDate": {
+          "type": "string"
+        },
+        "Address": {
+          "$ref": "#/definitions/Address"
+        }
+      }
+    },
+    "NMLSName": {
+      "type": "object",
+      "properties": {
+        "NameType": {
+          "type": "string"
+        },
+        "Name": {
+          "$ref": "#/definitions/Name"
+        }
+      }
+    },
+    "IndividualRegistration": {
+      "type": "object",
+      "properties": {
+        "RegistrationName": {
+          "type": "string"
+        },
+        "RegistrationStatus": {
+          "type": "string"
+        },
+        "IsAuthorizedToConductBusiness": {
+          "type": "boolean"
+        }
+      }
+    },
+    "IndividualRegistrationDetail": {
+      "type": "object",
+      "properties": {
+        "EmployerName": {
+          "type": "string"
+        },
+        "InstitutionName": {
+          "type": "string"
+        },
+        "InstitutionNMLSID": {
+          "type": "integer"
+        },
+        "PrimaryFederalRegulator": {
+          "type": "string"
+        },
+        "StartDate": {
+          "type": "string"
+        },
+        "EndDate": {
+          "type": "string"
+        }
+      }
+    },
+    "SearchResponse": {
+      "type": "object",
+      "properties": {
+        "ConfidenceScore": {
+          "type": "integer"
+        },
+        "IsAuthorizedToConductBusiness": {
+          "type": "boolean"
+        },
+        "IsFederallyRegulated": {
+          "type": "boolean"
+        },
+        "EntityType": {
+          "type": "string"
+        },
+        "Name": {
+          "$ref": "#/definitions/Name"
+        },
+        "NMLSID": {
+          "type": "integer"
+        },
+        "Address": {
+          "$ref": "#/definitions/Address"
+        },
+        "Locations": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/Location"
+          }
+        }
+      }
+    },
+    "IndividualSearchResponse": {
+      "type": "object",
+      "properties": {
+        "ConfidenceScore": {
+          "type": "integer"
+        },
+        "IsFederallyRegulated": {
+          "type": "boolean"
+        },
+        "EntityType": {
+          "type": "string"
+        },
+        "Name": {
+          "$ref": "#/definitions/Name"
+        },
+        "NMLSID": {
+          "type": "integer"
+        },
+        "Locations": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/Location"
+          }
+        }
+      }
+    },
+    "CompanySearchResponse": {
+      "type": "object",
+      "properties": {
+        "ConfidenceScore": {
+          "type": "integer"
+        },
+        "IsAuthorizedToConductBusiness": {
+          "type": "boolean"
+        },
+        "IsFederallyRegulated": {
+          "type": "boolean"
+        },
+        "EntityType": {
+          "type": "string"
+        },
+        "Name": {
+          "$ref": "#/definitions/Name"
+        },
+        "NMLSID": {
+          "type": "integer"
+        },
+        "Address": {
+          "$ref": "#/definitions/Address"
+        }
+      }
+    }
+  }
+}

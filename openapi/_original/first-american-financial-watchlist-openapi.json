@@ -1,0 +1,1618 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "description": "",
+    "version": "v1",
+    "title": "Watchlist API"
+  },
+  "host": "api-w2.firstam.io",
+  "basePath": "/v1",
+  "tags": [
+    {
+      "name": "developers",
+      "description": "Operations available to regular developers"
+    }
+  ],
+  "schemes": [
+    "https"
+  ],
+  "paths": {
+    "/watchlist/order/ofac": {
+      "post": {
+        "tags": [
+          "Request"
+        ],
+        "summary": "Make a new Watchlist service call",
+        "description": "Required fields: EntityType (Company or Individual) and Name. If searching for company, submit EntityType as 'Company' and input company name under 'LastOrCompanyName'. Alerts and Analytics can be added by setting the \"IncludeAnalytics\" flag in the request body to true.",
+        "operationId": "post",
+        "consumes": [
+          "application/json",
+          "application/xml"
+        ],
+        "produces": [
+          "application/json",
+          "application/xml"
+        ],
+        "parameters": [
+          {
+            "in": "header",
+            "name": "x-app-id",
+            "description": "Application ID",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "in": "header",
+            "name": "x-app-key",
+            "description": "Application Key",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "in": "body",
+            "name": "ServiceRequest",
+            "description": "Request to the Service",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/ServiceRequestOfac"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "schema": {
+              "$ref": "#/definitions/ServiceResponseOFAC"
+            }
+          },
+          "400": {
+            "description": "Bad Request"
+          },
+          "401": {
+            "description": "Invalid App ID or Key"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          },
+          "503": {
+            "description": "Usage Limit Exceeded"
+          }
+        }
+      }
+    },
+    "/watchlist/order/freddiemac": {
+      "post": {
+        "tags": [
+          "Request"
+        ],
+        "summary": "Make a new Watchlist service call",
+        "description": "Required fields: EntityType (Company or Individual) and Name. If searching for company, submit EntityType as 'Company' and input company name under 'LastOrCompanyName'. Alerts and Analytics can be added by setting the \"IncludeAnalytics\" flag in the request body to true.",
+        "operationId": "post",
+        "consumes": [
+          "application/json",
+          "application/xml"
+        ],
+        "produces": [
+          "application/json",
+          "application/xml"
+        ],
+        "parameters": [
+          {
+            "in": "header",
+            "name": "x-app-id",
+            "description": "Application ID",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "in": "header",
+            "name": "x-app-key",
+            "description": "Application Key",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "in": "body",
+            "name": "ServiceRequest",
+            "description": "Request to the Service",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/ServiceRequestFreddieMac"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "schema": {
+              "$ref": "#/definitions/ServiceResponseFreddieMac"
+            }
+          },
+          "400": {
+            "description": "Bad Request"
+          },
+          "401": {
+            "description": "Invalid App ID or Key"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          },
+          "503": {
+            "description": "Usage Limit Exceeded"
+          }
+        }
+      }
+    },
+    "/watchlist/order/fhfascp": {
+      "post": {
+        "tags": [
+          "Request"
+        ],
+        "summary": "Make a new Watchlist service call",
+        "description": "Required fields: EntityType (Company or Individual) and Name. If searching for company, submit EntityType as 'Company' and input company name under 'LastOrCompanyName'. Alerts and Analytics can be added by setting the \"IncludeAnalytics\" flag in the request body to true.",
+        "operationId": "post",
+        "consumes": [
+          "application/json",
+          "application/xml"
+        ],
+        "produces": [
+          "application/json",
+          "application/xml"
+        ],
+        "parameters": [
+          {
+            "in": "header",
+            "name": "x-app-id",
+            "description": "Application ID",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "in": "header",
+            "name": "x-app-key",
+            "description": "Application Key",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "in": "body",
+            "name": "ServiceRequest",
+            "description": "Request to the Service",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/ServiceRequestFHFASCP"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "schema": {
+              "$ref": "#/definitions/ServiceResponseFHFASCP"
+            }
+          },
+          "400": {
+            "description": "Bad Request"
+          },
+          "401": {
+            "description": "Invalid App ID or Key"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          },
+          "503": {
+            "description": "Usage Limit Exceeded"
+          }
+        }
+      }
+    },
+    "/watchlist/order/hudepls": {
+      "post": {
+        "tags": [
+          "Request"
+        ],
+        "summary": "Make a new Watchlist service call",
+        "description": "Required fields: EntityType (Company or Individual) and Name. If searching for company, submit EntityType as 'Company' and input company name under 'LastOrCompanyName'. Alerts and Analytics can be added by setting the \"IncludeAnalytics\" flag in the request body to true.",
+        "operationId": "post",
+        "consumes": [
+          "application/json",
+          "application/xml"
+        ],
+        "produces": [
+          "application/json",
+          "application/xml"
+        ],
+        "parameters": [
+          {
+            "in": "header",
+            "name": "x-app-id",
+            "description": "Application ID",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "in": "header",
+            "name": "x-app-key",
+            "description": "Application Key",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "in": "body",
+            "name": "ServiceRequest",
+            "description": "Request to the Service",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/ServiceRequestHUDEPLS"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "schema": {
+              "$ref": "#/definitions/ServiceResponseHUDEPLS"
+            }
+          },
+          "400": {
+            "description": "Bad Request"
+          },
+          "401": {
+            "description": "Invalid App ID or Key"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          },
+          "503": {
+            "description": "Usage Limit Exceeded"
+          }
+        }
+      }
+    },
+    "/watchlist/order/hudldp": {
+      "post": {
+        "tags": [
+          "Request"
+        ],
+        "summary": "Make a new Watchlist service call",
+        "description": "Required fields: EntityType (Company or Individual) and Name. If searching for company, submit EntityType as 'Company' and input company name under 'LastOrCompanyName'. Alerts and Analytics can be added by setting the \"IncludeAnalytics\" flag in the request body to true.",
+        "operationId": "post",
+        "consumes": [
+          "application/json",
+          "application/xml"
+        ],
+        "produces": [
+          "application/json",
+          "application/xml"
+        ],
+        "parameters": [
+          {
+            "in": "header",
+            "name": "x-app-id",
+            "description": "Application ID",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "in": "header",
+            "name": "x-app-key",
+            "description": "Application Key",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "in": "body",
+            "name": "ServiceRequest",
+            "description": "Request to the Service",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/ServiceRequestHUDLDP"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "schema": {
+              "$ref": "#/definitions/ServiceResponseHUDLDP"
+            }
+          },
+          "400": {
+            "description": "Bad Request"
+          },
+          "401": {
+            "description": "Invalid App ID or Key"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          },
+          "503": {
+            "description": "Usage Limit Exceeded"
+          }
+        }
+      }
+    },
+    "/watchlist/order/nfpd": {
+      "post": {
+        "tags": [
+          "Request"
+        ],
+        "summary": "Make a new Watchlist service call",
+        "description": "Required fields: EntityType (Company or Individual) and Name. If searching for company, submit EntityType as 'Company' and input company name under 'LastOrCompanyName'. Alerts and Analytics can be added by setting the \"IncludeAnalytics\" flag in the request body to true.",
+        "operationId": "post",
+        "consumes": [
+          "application/json",
+          "application/xml"
+        ],
+        "produces": [
+          "application/json",
+          "application/xml"
+        ],
+        "parameters": [
+          {
+            "in": "header",
+            "name": "x-app-id",
+            "description": "Application ID",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "in": "header",
+            "name": "x-app-key",
+            "description": "Application Key",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "in": "body",
+            "name": "ServiceRequest",
+            "description": "Request to the Service",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/ServiceRequestNFPD"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "schema": {
+              "$ref": "#/definitions/ServiceResponseNFPD"
+            }
+          },
+          "400": {
+            "description": "Bad Request"
+          },
+          "401": {
+            "description": "Invalid App ID or Key"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          },
+          "503": {
+            "description": "Usage Limit Exceeded"
+          }
+        }
+      }
+    },
+    "/watchlist/order/ineligiblelist": {
+      "post": {
+        "tags": [
+          "Request"
+        ],
+        "summary": "Make a new Watchlist service call",
+        "description": "Required fields: EntityType (Company or Individual) and Name. If searching for company, submit EntityType as 'Company' and input company name under 'LastOrCompanyName'. Alerts and Analytics can be added by setting the \"IncludeAnalytics\" flag in the request body to true.",
+        "operationId": "post",
+        "consumes": [
+          "application/json",
+          "application/xml"
+        ],
+        "produces": [
+          "application/json",
+          "application/xml"
+        ],
+        "parameters": [
+          {
+            "in": "header",
+            "name": "x-app-id",
+            "description": "Application ID",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "in": "header",
+            "name": "x-app-key",
+            "description": "Application Key",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "in": "body",
+            "name": "ServiceRequest",
+            "description": "Request to the Service",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/ServiceRequestIneligible"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "schema": {
+              "$ref": "#/definitions/ServiceResponseIneligible"
+            }
+          },
+          "400": {
+            "description": "Bad Request"
+          },
+          "401": {
+            "description": "Invalid App ID or Key"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          },
+          "503": {
+            "description": "Usage Limit Exceeded"
+          }
+        }
+      }
+    },
+    "/watchlist/report": {
+      "get": {
+        "tags": [
+          "Get Response"
+        ],
+        "summary": "Retrieve existing watchlist report by transactionID",
+        "description": "Add a transactionID to the query string to retrieve an existing report.",
+        "operationId": "get",
+        "consumes": [
+          "application/json",
+          "application/xml"
+        ],
+        "produces": [
+          "application/json",
+          "application/xml"
+        ],
+        "parameters": [
+          {
+            "in": "header",
+            "name": "x-app-id",
+            "description": "Application ID",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "in": "header",
+            "name": "x-app-key",
+            "description": "Application Key",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "transactionID",
+            "in": "query",
+            "description": "Unique Identifier Tied To a Report",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "schema": {
+              "$ref": "#/definitions/ServiceResponseFull"
+            }
+          },
+          "400": {
+            "description": "Bad Request (Missing/Invalid TransactionID)"
+          },
+          "401": {
+            "description": "Invalid App ID or Key"
+          },
+          "404": {
+            "description": "Not Found (No Report Found by TransactionID)"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          },
+          "503": {
+            "description": "Usage Limit Exceeded"
+          }
+        }
+      }
+    }
+  },
+  "definitions": {
+    "SearchRequest": {
+      "type": "object",
+      "required": [
+        "EntityType",
+        "Name",
+        "RequestorID"
+      ],
+      "properties": {
+        "Name": {
+          "$ref": "#/definitions/Name"
+        },
+        "ConfidenceScore": {
+          "type": "integer"
+        },
+        "EntityType": {
+          "type": "string",
+          "enum": [
+            "Company",
+            "Individual"
+          ]
+        },
+        "State": {
+          "type": "string"
+        }
+      }
+    },
+    "ServiceRequestOfac": {
+      "type": "object",
+      "required": [
+        "RequestorID",
+        "Search"
+      ],
+      "properties": {
+        "RequestorID": {
+          "type": "string"
+        },
+        "IncludeAnalytics": {
+          "type": "boolean"
+        },
+        "Search": {
+          "$ref": "#/definitions/SearchRequest"
+        }
+      },
+      "example": {
+        "RequestorID": "ID123",
+        "IncludeAnalytics": false,
+        "Search": {
+          "EntityType": "Individual",
+          "Name": {
+            "First": "Faquir",
+            "Middle": "",
+            "LastOrCompanyName": "Muhammed"
+          },
+          "ConfidenceScore": 80
+        }
+      }
+    },
+    "ServiceRequestFreddieMac": {
+      "type": "object",
+      "required": [
+        "EntityType",
+        "Name",
+        "RequestorID"
+      ],
+      "properties": {
+        "RequestorID": {
+          "type": "string"
+        },
+        "IncludeAnalytics": {
+          "type": "boolean"
+        },
+        "Search": {
+          "$ref": "#/definitions/SearchRequest"
+        }
+      },
+      "example": {
+        "RequestorID": "ID123",
+        "Search": {
+          "EntityType": "Individual",
+          "Name": {
+            "First": "Khatra",
+            "Middle": "",
+            "LastOrCompanyName": "Muhammed"
+          },
+          "ConfidenceScore": 80
+        }
+      }
+    },
+    "ServiceRequestFHFASCP": {
+      "type": "object",
+      "required": [
+        "EntityType",
+        "Name",
+        "RequestorID"
+      ],
+      "properties": {
+        "RequestorID": {
+          "type": "string"
+        },
+        "IncludeAnalytics": {
+          "type": "boolean"
+        },
+        "Search": {
+          "$ref": "#/definitions/SearchRequest"
+        }
+      },
+      "example": {
+        "RequestorID": "ID123",
+        "Search": {
+          "EntityType": "Individual",
+          "Name": {
+            "First": "Lee Bentley",
+            "Middle": "",
+            "LastOrCompanyName": "Farkas"
+          },
+          "ConfidenceScore": 80
+        }
+      }
+    },
+    "ServiceRequestHUDEPLS": {
+      "type": "object",
+      "required": [
+        "EntityType",
+        "Name",
+        "RequestorID"
+      ],
+      "properties": {
+        "RequestorID": {
+          "type": "string"
+        },
+        "IncludeAnalytics": {
+          "type": "boolean"
+        },
+        "Search": {
+          "$ref": "#/definitions/SearchRequest"
+        }
+      },
+      "example": {
+        "RequestorID": "ID123",
+        "Search": {
+          "EntityType": "Individual",
+          "Name": {
+            "First": "John",
+            "Middle": "",
+            "LastOrCompanyName": "Smith"
+          },
+          "ConfidenceScore": 80
+        }
+      }
+    },
+    "ServiceRequestHUDLDP": {
+      "type": "object",
+      "required": [
+        "EntityType",
+        "Name",
+        "RequestorID"
+      ],
+      "properties": {
+        "RequestorID": {
+          "type": "string"
+        },
+        "IncludeAnalytics": {
+          "type": "boolean"
+        },
+        "Search": {
+          "$ref": "#/definitions/SearchRequest"
+        }
+      },
+      "example": {
+        "RequestorID": "ID123",
+        "Search": {
+          "EntityType": "Individual",
+          "Name": {
+            "First": "John",
+            "Middle": "",
+            "LastOrCompanyName": "Smith"
+          },
+          "ConfidenceScore": 80
+        }
+      }
+    },
+    "ServiceRequestNFPD": {
+      "type": "object",
+      "required": [
+        "EntityType",
+        "Name",
+        "RequestorID"
+      ],
+      "properties": {
+        "RequestorID": {
+          "type": "string"
+        },
+        "IncludeAnalytics": {
+          "type": "boolean"
+        },
+        "Search": {
+          "$ref": "#/definitions/SearchRequest"
+        }
+      },
+      "example": {
+        "RequestorID": "ID123",
+        "Search": {
+          "EntityType": "Individual",
+          "Name": {
+            "First": "John",
+            "Middle": "",
+            "LastOrCompanyName": "Smith"
+          },
+          "ConfidenceScore": 80
+        }
+      }
+    },
+    "ServiceRequestIneligible": {
+      "type": "object",
+      "required": [
+        "EntityType",
+        "Name",
+        "RequestorID"
+      ],
+      "properties": {
+        "RequestorID": {
+          "type": "string"
+        },
+        "IncludeAnalytics": {
+          "type": "boolean"
+        },
+        "Search": {
+          "$ref": "#/definitions/SearchRequest"
+        }
+      },
+      "example": {
+        "RequestorID": "ID123",
+        "Search": {
+          "EntityType": "Individual",
+          "Name": {
+            "First": "John",
+            "Middle": "",
+            "LastOrCompanyName": "Smith"
+          },
+          "ConfidenceScore": 80
+        }
+      }
+    },
+    "ServiceResponseFull": {
+      "type": "object",
+      "properties": {
+        "TransactionID": {
+          "type": "string"
+        },
+        "RequestorID": {
+          "type": "string"
+        },
+        "Result": {
+          "type": "string",
+          "enum": [
+            "RecordsFound",
+            "NoRecordsFound"
+          ]
+        },
+        "OFAC": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/OFAC"
+          }
+        },
+        "FreddieMac": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/FreddieMac"
+          }
+        },
+        "Ineligible": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/Ineligible"
+          }
+        },
+        "HUDLDP": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/HUDLDP"
+          }
+        },
+        "HUDEPLS": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/HUDEPLS"
+          }
+        },
+        "FHFASCP": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/FHFASCP"
+          }
+        },
+        "NFPD": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/NFPD"
+          }
+        },
+        "Alerts": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/AlertType"
+          }
+        }
+      }
+    },
+    "ServiceResponseOFAC": {
+      "type": "object",
+      "properties": {
+        "TransactionID": {
+          "type": "string"
+        },
+        "RequestorID": {
+          "type": "string"
+        },
+        "Result": {
+          "type": "string",
+          "enum": [
+            "RecordsFound",
+            "NoRecordsFound"
+          ]
+        },
+        "OFAC": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/OFAC"
+          }
+        },
+        "Alerts": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/AlertType"
+          }
+        }
+      }
+    },
+    "ServiceResponseFreddieMac": {
+      "type": "object",
+      "properties": {
+        "TransactionID": {
+          "type": "string"
+        },
+        "RequestorID": {
+          "type": "string"
+        },
+        "Result": {
+          "type": "string",
+          "enum": [
+            "RecordsFound",
+            "NoRecordsFound"
+          ]
+        },
+        "FreddieMac": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/FreddieMac"
+          }
+        },
+        "Alerts": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/AlertType"
+          }
+        }
+      }
+    },
+    "ServiceResponseFHFASCP": {
+      "type": "object",
+      "properties": {
+        "TransactionID": {
+          "type": "string"
+        },
+        "RequestorID": {
+          "type": "string"
+        },
+        "Result": {
+          "type": "string",
+          "enum": [
+            "RecordsFound",
+            "NoRecordsFound"
+          ]
+        },
+        "FHFASCP": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/FHFASCP"
+          }
+        },
+        "Alerts": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/AlertType"
+          }
+        }
+      }
+    },
+    "ServiceResponseHUDEPLS": {
+      "type": "object",
+      "properties": {
+        "TransactionID": {
+          "type": "string"
+        },
+        "RequestorID": {
+          "type": "string"
+        },
+        "Result": {
+          "type": "string",
+          "enum": [
+            "RecordsFound",
+            "NoRecordsFound"
+          ]
+        },
+        "HUDEPLS": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/HUDEPLS"
+          }
+        },
+        "Alerts": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/AlertType"
+          }
+        }
+      }
+    },
+    "ServiceResponseHUDLDP": {
+      "type": "object",
+      "properties": {
+        "TransactionID": {
+          "type": "string"
+        },
+        "RequestorID": {
+          "type": "string"
+        },
+        "Result": {
+          "type": "string",
+          "enum": [
+            "RecordsFound",
+            "NoRecordsFound"
+          ]
+        },
+        "HUDLDP": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/HUDLDP"
+          }
+        },
+        "Alerts": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/AlertType"
+          }
+        }
+      }
+    },
+    "ServiceResponseNFPD": {
+      "type": "object",
+      "properties": {
+        "TransactionID": {
+          "type": "string"
+        },
+        "RequestorID": {
+          "type": "string"
+        },
+        "Result": {
+          "type": "string",
+          "enum": [
+            "RecordsFound",
+            "NoRecordsFound"
+          ]
+        },
+        "NFPD": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/NFPD"
+          }
+        },
+        "Alerts": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/AlertType"
+          }
+        }
+      }
+    },
+    "ServiceResponseIneligible": {
+      "type": "object",
+      "properties": {
+        "TransactionID": {
+          "type": "string"
+        },
+        "RequestorID": {
+          "type": "string"
+        },
+        "Result": {
+          "type": "string",
+          "enum": [
+            "RecordsFound",
+            "NoRecordsFound"
+          ]
+        },
+        "Ineligible": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/Ineligible"
+          }
+        },
+        "Alerts": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/AlertType"
+          }
+        }
+      }
+    },
+    "OFAC": {
+      "type": "object",
+      "properties": {
+        "ConfidenceScore": {
+          "type": "integer"
+        },
+        "Name": {
+          "$ref": "#/definitions/Name"
+        },
+        "EntryNumber": {
+          "type": "string"
+        },
+        "SdnType": {
+          "type": "string"
+        },
+        "Program": {
+          "type": "string"
+        },
+        "Title": {
+          "type": "string"
+        },
+        "CallSign": {
+          "type": "string"
+        },
+        "VesselType": {
+          "type": "string"
+        },
+        "Tonnage": {
+          "type": "string"
+        },
+        "GRT": {
+          "type": "string"
+        },
+        "VesselFlag": {
+          "type": "string"
+        },
+        "VesselOwner": {
+          "type": "string"
+        },
+        "Remarks": {
+          "type": "string"
+        },
+        "AlternateNames": {
+          "type": "string"
+        },
+        "AddresssList": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        }
+      }
+    },
+    "FreddieMac": {
+      "type": "object",
+      "properties": {
+        "ConfidenceScore": {
+          "type": "integer"
+        },
+        "Name": {
+          "$ref": "#/definitions/Name"
+        },
+        "EntityType": {
+          "type": "string"
+        },
+        "AKAorDBA": {
+          "type": "string"
+        },
+        "DateofInclusion": {
+          "type": "string"
+        },
+        "DateofLastUpdate": {
+          "type": "string"
+        },
+        "AddressType": {
+          "type": "string"
+        },
+        "Address": {
+          "$ref": "#/definitions/Address"
+        },
+        "Comments": {
+          "type": "string"
+        },
+        "License": {
+          "$ref": "#/definitions/License"
+        },
+        "IssuingState": {
+          "type": "string"
+        },
+        "DateRemoved": {
+          "type": "string"
+        }
+      }
+    },
+    "FHFASCP": {
+      "type": "object",
+      "properties": {
+        "ConfidenceScore": {
+          "type": "integer"
+        },
+        "Name": {
+          "$ref": "#/definitions/Name"
+        },
+        "Address": {
+          "$ref": "#/definitions/Address"
+        },
+        "EffectiveDate": {
+          "type": "string"
+        },
+        "SuspensionEndDate": {
+          "$ref": "#/definitions/License"
+        },
+        "OrderLink": {
+          "type": "string"
+        }
+      }
+    },
+    "HUDEPLS": {
+      "type": "object",
+      "properties": {
+        "ConfidenceScore": {
+          "type": "integer"
+        },
+        "EntityType": {
+          "type": "string"
+        },
+        "Name": {
+          "$ref": "#/definitions/Name"
+        },
+        "Address": {
+          "$ref": "#/definitions/Address"
+        },
+        "DUNS": {
+          "type": "string"
+        },
+        "ExclusionProgram": {
+          "type": "string"
+        },
+        "ExcludingAgency": {
+          "type": "string"
+        },
+        "CTCode": {
+          "type": "string"
+        },
+        "ExclusionType": {
+          "type": "string"
+        },
+        "AdditionalComments": {
+          "type": "string"
+        },
+        "ActiveDate": {
+          "type": "string"
+        },
+        "TerminationDate": {
+          "type": "string"
+        },
+        "CrossReference": {
+          "type": "string"
+        },
+        "SAMNumber": {
+          "type": "string"
+        },
+        "RecordStatus": {
+          "type": "string"
+        },
+        "Cage": {
+          "type": "string"
+        },
+        "NPI": {
+          "type": "string"
+        },
+        "CreationDate": {
+          "type": "string"
+        }
+      }
+    },
+    "HUDLDP": {
+      "type": "object",
+      "properties": {
+        "ConfidenceScore": {
+          "type": "integer"
+        },
+        "EntityType": {
+          "type": "string"
+        },
+        "Name": {
+          "$ref": "#/definitions/Name"
+        },
+        "OtherNames": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/Name"
+          }
+        },
+        "EffectiveStartDate": {
+          "type": "string"
+        },
+        "EffectiveEndDate": {
+          "type": "string"
+        },
+        "ListDate": {
+          "type": "string"
+        },
+        "Comments": {
+          "type": "string"
+        },
+        "AddressInfo": {
+          "$ref": "#/definitions/Address"
+        }
+      }
+    },
+    "NFPD": {
+      "type": "object",
+      "properties": {
+        "ConfidenceScore": {
+          "type": "integer"
+        },
+        "EntityType": {
+          "type": "string"
+        },
+        "Name": {
+          "$ref": "#/definitions/Name"
+        },
+        "CompanyName": {
+          "type": "string"
+        },
+        "Title": {
+          "type": "string"
+        },
+        "Address": {
+          "$ref": "#/definitions/Address"
+        },
+        "SSN": {
+          "type": "string"
+        },
+        "RefDate": {
+          "type": "string"
+        },
+        "Document": {
+          "type": "string"
+        },
+        "Source": {
+          "type": "string"
+        },
+        "Party": {
+          "$ref": "#/definitions/NFPDParty"
+        },
+        "Incident": {
+          "$ref": "#/definitions/NFPDIncident"
+        }
+      }
+    },
+    "NFPDParty": {
+      "type": "object",
+      "properties": {
+        "BatchNumber": {
+          "type": "string"
+        },
+        "IncNumber": {
+          "type": "string"
+        },
+        "PartyNumber": {
+          "type": "string"
+        },
+        "OrderNumber": {
+          "type": "string"
+        },
+        "PNameField": {
+          "type": "string"
+        },
+        "PositionField": {
+          "type": "string"
+        },
+        "VocationField": {
+          "type": "string"
+        },
+        "FirmField": {
+          "type": "string"
+        },
+        "AddressField": {
+          "type": "string"
+        },
+        "CityField": {
+          "type": "string"
+        },
+        "StateField": {
+          "type": "string"
+        },
+        "FinesField": {
+          "type": "string"
+        },
+        "RestitutionField": {
+          "type": "string"
+        },
+        "OkForFcField": {
+          "type": "string"
+        },
+        "LastNameField": {
+          "type": "string"
+        },
+        "FirstNameField": {
+          "type": "string"
+        },
+        "MiddleNameField": {
+          "type": "string"
+        },
+        "SuffixField": {
+          "type": "string"
+        },
+        "PartyText": {
+          "type": "string"
+        }
+      }
+    },
+    "NFPDIncident": {
+      "type": "object",
+      "properties": {
+        "BatchNumber": {
+          "type": "string"
+        },
+        "IncNumber": {
+          "type": "string"
+        },
+        "PartyNumber": {
+          "type": "string"
+        },
+        "OrderNumber": {
+          "type": "string"
+        },
+        "AgencyCodeField": {
+          "type": "string"
+        },
+        "CaseNumberField": {
+          "type": "string"
+        },
+        "IncidentDateField": {
+          "type": "string"
+        },
+        "JurisductionField": {
+          "type": "string"
+        },
+        "SrcDocField": {
+          "type": "string"
+        },
+        "AdditionalInfoField": {
+          "type": "string"
+        },
+        "AgencyField": {
+          "type": "string"
+        },
+        "AllamtField": {
+          "type": "string"
+        },
+        "EstimatedLossField": {
+          "type": "string"
+        },
+        "FcrDateField": {
+          "type": "string"
+        },
+        "OkForFcrField": {
+          "type": "string"
+        },
+        "IncidentText": {
+          "type": "string"
+        }
+      }
+    },
+    "Ineligible": {
+      "type": "object",
+      "properties": {
+        "ConfidenceScore": {
+          "type": "integer"
+        },
+        "EntityType": {
+          "type": "string"
+        },
+        "Name": {
+          "$ref": "#/definitions/Name"
+        },
+        "SSN": {
+          "type": "string"
+        },
+        "Role": {
+          "type": "string"
+        },
+        "Address": {
+          "$ref": "#/definitions/Address"
+        },
+        "MPNumber": {
+          "type": "string"
+        },
+        "Comments": {
+          "type": "string"
+        },
+        "DateRecorded": {
+          "type": "string"
+        },
+        "EffectiveStartDate": {
+          "type": "string"
+        },
+        "EffectiveEndDate": {
+          "type": "string"
+        },
+        "LicenseNumber": {
+          "type": "string"
+        },
+        "LenderIdentifier": {
+          "type": "string"
+        },
+        "BrokerID": {
+          "type": "string"
+        },
+        "NMLSID": {
+          "type": "string"
+        }
+      }
+    },
+    "Name": {
+      "type": "object",
+      "required": [
+        "LastOrCompanyName"
+      ],
+      "properties": {
+        "First": {
+          "type": "string"
+        },
+        "Middle": {
+          "type": "string"
+        },
+        "LastOrCompanyName": {
+          "type": "string"
+        }
+      }
+    },
+    "Address": {
+      "properties": {
+        "Type": {
+          "type": "string"
+        },
+        "StreetAddress1": {
+          "type": "string"
+        },
+        "StreetAddress2": {
+          "type": "string"
+        },
+        "StreetAddress3": {
+          "type": "string"
+        },
+        "StreetAddress4": {
+          "type": "string"
+        },
+        "UnitNumber": {
+          "type": "string"
+        },
+        "UnitDesignation": {
+          "type": "string"
+        },
+        "StreetPostDirection": {
+          "type": "string"
+        },
+        "StreetSuffix": {
+          "type": "string"
+        },
+        "StreetName": {
+          "type": "string"
+        },
+        "StreetPreDirection": {
+          "type": "string"
+        },
+        "StreetNumber": {
+          "type": "string"
+        },
+        "City": {
+          "type": "string"
+        },
+        "FullAddress": {
+          "type": "string"
+        },
+        "APN": {
+          "type": "string"
+        },
+        "Longitude": {
+          "type": "string"
+        },
+        "Latitude": {
+          "type": "string"
+        },
+        "StateCityZip": {
+          "type": "string"
+        },
+        "PostalCode": {
+          "type": "string"
+        },
+        "Country": {
+          "type": "string"
+        },
+        "County": {
+          "type": "string"
+        },
+        "ZipFour": {
+          "type": "string"
+        },
+        "ZipCode": {
+          "type": "string"
+        },
+        "Hash": {
+          "type": "string"
+        },
+        "State": {
+          "type": "string"
+        },
+        "Province": {
+          "type": "string"
+        }
+      }
+    },
+    "License": {
+      "properties": {
+        "LicenseNumber": {
+          "type": "string"
+        },
+        "LicenseState": {
+          "type": "string"
+        },
+        "LicenseType": {
+          "type": "string"
+        },
+        "ExpirationDate": {
+          "type": "string"
+        },
+        "IssuedDate": {
+          "type": "string"
+        }
+      }
+    },
+    "AlertType": {
+      "type": "object",
+      "properties": {
+        "Code": {
+          "example": "AlertCode",
+          "type": "string"
+        },
+        "Description": {
+          "example": "ALERT - This is an alert description.",
+          "type": "string"
+        },
+        "Status": {
+          "example": "Fired",
+          "type": "string"
+        },
+        "Evidence": {
+          "description": "Collection of evidence fields that caused the alert to fire.",
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/EvidenceType"
+          }
+        }
+      }
+    },
+    "EvidenceType": {
+      "type": "object",
+      "example": {
+        "Key": "Value"
+      }
+    },
+    "AnalyticsInputType": {
+      "type": "object",
+      "example": {
+        "Key": "Value"
+      }
+    }
+  }
+}

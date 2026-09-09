@@ -1,0 +1,738 @@
+swagger: '2.0'
+info:
+  description: ''
+  version: v1
+  title: Liens & Judgments Non-FCRA API
+host: api.dgw.firstam.io
+basePath: /v2
+schemes:
+- https
+tags:
+- name: developers
+  description: Operations available to regular developers
+paths:
+  /lnj/order:
+    post:
+      tags:
+      - Request
+      summary: Make a new Liens & Judgments Non-FCRA service call
+      description: 'Required fields: First Name, Last Name, SSN'
+      operationId: post
+      consumes:
+      - application/json
+      - application/xml
+      produces:
+      - application/json
+      - application/xml
+      parameters:
+      - in: header
+        name: x-app-id
+        description: Application ID
+        required: true
+        type: string
+      - in: header
+        name: x-app-key
+        description: Application Key
+        required: true
+        type: string
+      - in: body
+        name: Request
+        description: Request to the service
+        required: false
+        schema:
+          $ref: '#/definitions/LiensJudgmentsServiceRequest'
+      responses:
+        '200':
+          description: OK
+          schema:
+            $ref: '#/definitions/LiensJudgmentsServiceResponse'
+        '400':
+          description: Bad Request
+        '500':
+          description: Internal Server Error
+  /lnj/report:
+    get:
+      tags:
+      - Get Response
+      summary: Retrieve existing report by transactionID
+      description: Add a transactionID to the query string to retrieve an existing report
+      operationId: get
+      consumes:
+      - application/json
+      - application/xml
+      produces:
+      - application/json
+      - application/xml
+      parameters:
+      - in: header
+        name: x-app-id
+        description: Application ID
+        required: true
+        type: string
+      - in: header
+        name: x-app-key
+        description: Application Key
+        required: true
+        type: string
+      - name: transactionID
+        in: query
+        required: true
+        type: string
+      responses:
+        '200':
+          description: OK
+          schema:
+            $ref: '#/definitions/LiensJudgmentsServiceResponse'
+        '400':
+          description: Bad Request (missing/invalid transactionID)
+        '404':
+          description: Not Found (no response found by transactionID)
+        '500':
+          description: Internal Server Error
+definitions:
+  LiensJudgmentsServiceRequest:
+    type: object
+    required:
+    - Person
+    - RequestorID
+    properties:
+      RequestorID:
+        type: string
+        example: '123456'
+      Person:
+        $ref: '#/definitions/Person'
+    example:
+      RequestorID: '123456'
+      Person:
+        Name:
+          First: JOE
+          Last: TEST
+        SSN: '999111111'
+  Person:
+    type: object
+    properties:
+      Name:
+        $ref: '#/definitions/Name'
+      Address:
+        $ref: '#/definitions/Address'
+      DOB:
+        $ref: '#/definitions/ParsedDate'
+      SSN:
+        type: string
+        example: '999999990'
+      HomePhone:
+        type: string
+        example: '8058675309'
+    example:
+      Address:
+        StreetNumber: '123'
+        City: Agoura Hills
+        StreetPostDirection: E
+        StreetAddress1: 123 Main St
+        County: Los Angeles
+        UnitNumber: '110'
+        StreetAddress2: Apt 504
+        ZipFour: '1212'
+        ZipCode: '91301'
+        StreetPreDirection: S
+        StreetName: Main
+        UnitDesignation: APT
+        StreetSuffix: St
+        State: CA
+      DOB:
+        Month: 1
+        Year: 2017
+        Day: 1
+      HomePhone: '8058675309'
+      Name:
+        Middle: C
+        Last: Doe
+        Prefix: Mr.
+        Suffix: Sr.
+        First: John
+        Full: John C Doe.
+      SSN: '999999990'
+  Company:
+    type: object
+    properties:
+      Name:
+        type: string
+        example: ABC Company
+      Address:
+        $ref: '#/definitions/Address'
+      FEIN:
+        type: string
+        example: '999999990'
+    example:
+      Address:
+        StreetNumber: '123'
+        City: Agoura Hills
+        StreetPostDirection: E
+        StreetAddress1: 123 Main St
+        County: Los Angeles
+        UnitNumber: '110'
+        StreetAddress2: Apt 504
+        ZipFour: '1212'
+        ZipCode: '91301'
+        StreetPreDirection: S
+        StreetName: Main
+        UnitDesignation: APT
+        StreetSuffix: St
+        State: CA
+      Name: ABC Company
+      FEIN: '999999990'
+  Name:
+    type: object
+    properties:
+      Full:
+        type: string
+        example: John C Doe.
+      First:
+        type: string
+        example: John
+      Middle:
+        type: string
+        example: C
+      Last:
+        type: string
+        example: Doe
+      Suffix:
+        type: string
+        example: Sr.
+      Prefix:
+        type: string
+        example: Mr.
+    example:
+      Middle: C
+      Last: Doe
+      Prefix: Mr.
+      Suffix: Sr.
+      First: John
+      Full: John C Doe.
+  Address:
+    type: object
+    properties:
+      StreetNumber:
+        type: string
+        example: '123'
+      StreetPreDirection:
+        type: string
+        example: S
+      StreetName:
+        type: string
+        example: Main
+      StreetSuffix:
+        type: string
+        example: St
+      StreetPostDirection:
+        type: string
+        example: E
+      UnitDesignation:
+        type: string
+        example: APT
+      UnitNumber:
+        type: string
+        example: '110'
+      StreetAddress1:
+        type: string
+        example: 123 Main St
+      StreetAddress2:
+        type: string
+        example: Apt 504
+      City:
+        type: string
+        example: Agoura Hills
+      State:
+        type: string
+        example: CA
+      ZipCode:
+        type: string
+        example: '91301'
+      ZipFour:
+        type: string
+        example: '1212'
+      County:
+        type: string
+        example: Los Angeles
+    example:
+      StreetNumber: '123'
+      City: Agoura Hills
+      StreetPostDirection: E
+      StreetAddress1: 123 Main St
+      County: Los Angeles
+      UnitNumber: '110'
+      StreetAddress2: Apt 504
+      ZipFour: '1212'
+      ZipCode: '91301'
+      StreetPreDirection: S
+      StreetName: Main
+      UnitDesignation: APT
+      StreetSuffix: St
+      State: CA
+  LiensJudgmentsServiceResponse:
+    type: object
+    required:
+    - RequestorID
+    - TransactionID
+    - Result
+    properties:
+      TransactionID:
+        type: string
+        example: d49c3068-eaad-4f13-88f5-9cd94e65f516
+        description: Unique identifier for the transaction
+      RequestorID:
+        type: string
+        example: '1234567'
+      Result:
+        type: string
+        example: ResultsFound
+        enum:
+        - NoRecordsFound
+        - RecordsFound
+      Records:
+        type: array
+        items:
+          $ref: '#/definitions/Record'
+    example:
+      RequestorID: '1234567'
+      TransactionID: d49c3068-eaad-4f13-88f5-9cd94e65f516
+      Result: RecordsFound
+      Records:
+      - Amount: 0.0
+        FilingJurisdictionName: CALIFORNIA
+        MultipleDefendant: false
+        Debtors:
+        - Name:
+            Full: JOE K TEST
+            First: JOE
+            Middle: K
+            Last: TEST
+            Prefix: MR
+          SSN: 99911xxxx
+          Addresses:
+          - StreetNumber: '123'
+            StreetName: MAIN
+            StreetSuffix: AVE
+            StreetAddress1: 123 MAIN AVE
+            City: LOS ANGELES
+            State: CA
+            ZipCode: '90001'
+            ZipFour: '1234'
+            County: OAKLAND
+            FullAddress: 123 MAIN AVE LOS ANGELES, CA 90001-1234
+        Filings:
+        - Number: BK40499PG874
+          Type: STATE TAX LIEN
+          OriginalFilingDate:
+            Year: 2008
+            Month: 12
+            Day: 9
+          Book: '40499'
+          Page: '874'
+          Agency: OAKLAND COUNTY REGISTER OF DEEDS
+          AgencyState: CA
+          AgencyCounty: OAKLAND
+      - Amount: 2039.0
+        FilingJurisdictionName: CALIFORNIA
+        MultipleDefendant: false
+        Debtors:
+        - Name:
+            Full: JOE ABC
+            First: JOE
+            Last: ABC
+            Prefix: MR
+          SSN: 99911xxxx
+          Addresses:
+          - StreetNumber: '2598'
+            StreetName: BJHJHKL
+            StreetSuffix: DR
+            StreetAddress1: 2598 BJHJHKL DR
+            City: BKHJHKJ
+            State: CA
+            ZipCode: '38071'
+            ZipFour: '2671'
+            County: OAKLAND
+            FullAddress: 2598 BJHJHKL DR BKHJHKJ, CA 38071-2671
+        Filings:
+        - Number: BK40554PG505
+          Type: FEDERAL TAX LIEN
+          OriginalFilingDate:
+            Year: 2008
+            Month: 5
+            Day: 26
+          Book: '40554'
+          Page: '505'
+          Agency: OAKLAND COUNTY REGISTER OF DEEDS
+          AgencyState: CA
+          AgencyCounty: OAKLAND
+      - Amount: 2039.0
+        FilingJurisdictionName: CALIFORNIA
+        MultipleDefendant: false
+        Debtors:
+        - Name:
+            Full: JOE D ABC
+            First: JOE
+            Middle: D
+            Last: ABC
+            Prefix: MR
+          SSN: 99911xxxx
+          Addresses:
+          - StreetNumber: '2598'
+            StreetName: GJVBJHGJH
+            StreetSuffix: DR
+            StreetAddress1: 2598 GJVBJHGJH DR
+            City: BJKGFFFGH
+            State: CA
+            ZipCode: '38071'
+            ZipFour: '2671'
+            County: OAKLAND
+            FullAddress: 2598 GJVBJHGJH DR BJKGFFFGH, CA 38071-2671
+        Filings:
+        - Number: BK40554PG506
+          Type: FEDERAL TAX LIEN
+          OriginalFilingDate:
+            Year: 2008
+            Month: 5
+            Day: 26
+          Book: '40554'
+          Page: '506'
+          Agency: OAKLAND COUNTY REGISTER OF DEEDS
+          AgencyState: CA
+          AgencyCounty: OAKLAND
+      - Amount: 19249.0
+        FilingJurisdictionName: CALIFORNIA
+        MultipleDefendant: false
+        Debtors:
+        - Name:
+            Full: JOE K TEST
+            First: JOE
+            Middle: K
+            Last: TEST
+            Prefix: MR
+          SSN: 99911xxxx
+          Addresses:
+          - StreetNumber: '123'
+            StreetName: MAIN
+            StreetSuffix: AVE
+            StreetAddress1: 123 MAIN AVE
+            City: LOS ANGELES
+            State: CA
+            ZipCode: '90001'
+            ZipFour: '1234'
+            County: OAKLAND
+            FullAddress: 123 MAIN AVE LOS ANGELES, CA 90001-1234
+        Filings:
+        - Type: FEDERAL TAX LIEN
+          OriginalFilingDate:
+            Year: 2008
+            Month: 2
+            Day: 12
+          Book: '40335'
+          Page: '494'
+          Agency: OAKLAND COUNTY REGISTER OF DEEDS
+          AgencyState: CA
+          AgencyCounty: OAKLAND
+      - Amount: 6190.0
+        FilingJurisdictionName: CALIFORNIA
+        CertificateNumber: '298070606'
+        MultipleDefendant: false
+        ReleaseDate:
+          Year: 2008
+          Month: 8
+          Day: 7
+        Debtors:
+        - Name:
+            Full: JOE K TEST
+            First: JOE
+            Middle: K
+            Last: TEST
+            Prefix: MR
+          SSN: 99911xxxx
+          Addresses:
+          - StreetNumber: '123'
+            StreetName: MAIN
+            StreetSuffix: AVE
+            StreetAddress1: 123 MAIN AVE
+            City: LOS ANGELES
+            State: CA
+            ZipCode: '90001'
+            ZipFour: '1234'
+            County: OAKLAND
+            FullAddress: 123 MAIN AVE LOS ANGELES, CA 90001-1234
+        Filings:
+        - Number: BK40695PG534
+          Type: FEDERAL TAX LIEN RELEASE
+          OriginalFilingDate:
+            Year: 2006
+            Month: 7
+            Day: 5
+          Book: '40695'
+          Page: '534'
+          AgencyState: CA
+      - Amount: 6190.0
+        FilingJurisdictionName: CALIFORNIA
+        MultipleDefendant: false
+        Debtors:
+        - Name:
+            Full: JOE K TEST
+            First: JOE
+            Middle: K
+            Last: TEST
+            Prefix: MR
+          SSN: 99911xxxx
+          Addresses:
+          - StreetNumber: '123'
+            StreetName: MAIN
+            StreetSuffix: AVE
+            StreetAddress1: 123 MAIN AVE
+            City: LOS ANGELES
+            State: CA
+            ZipCode: '90001'
+            ZipFour: '1234'
+            County: OAKLAND
+            FullAddress: 123 MAIN AVE LOS ANGELES, CA 90001-1234
+        Filings:
+        - Type: FEDERAL TAX LIEN
+          OriginalFilingDate:
+            Year: 2006
+            Month: 7
+            Day: 5
+          Book: '37773'
+          Page: '453'
+          Agency: OAKLAND COUNTY REGISTER OF DEEDS
+          AgencyState: CA
+          AgencyCounty: OAKLAND
+      - Amount: 21544.0
+        FilingJurisdictionName: CALIFORNIA
+        MultipleDefendant: false
+        Debtors:
+        - Name:
+            Full: JOE ABC
+            First: JOE
+            Last: ABC
+            Prefix: MR
+          SSN: 99911xxxx
+          Addresses:
+          - StreetNumber: '809'
+            StreetName: PAULA
+            StreetSuffix: ST
+            StreetAddress1: 809 PAULA ST
+            City: GAGLEPARK
+            State: CA
+            ZipCode: '96939'
+            ZipFour: '4114'
+            County: OAKLAND
+            FullAddress: 809 PAULA ST GAGLEPARK, CA 96939-4114
+        Filings:
+        - Number: '343833'
+          Type: STATE TAX LIEN RELEASE
+          OriginalFilingDate:
+            Year: 1999
+            Month: 11
+            Day: 22
+          Book: '43855'
+          Page: '764'
+          Agency: OAKLAND COUNTY REGISTER OF DEEDS
+          AgencyState: CA
+          AgencyCounty: OAKLAND
+  Record:
+    properties:
+      Amount:
+        type: number
+        example: 0.0
+      FilingJurisdictionName:
+        type: string
+        example: Name
+      FilingStatus:
+        type: string
+        example: Filed
+      CertificateNumber:
+        type: string
+        example: ABC123
+      MultipleDefendant:
+        type: boolean
+      JudgeSatisfiedDate:
+        $ref: '#/definitions/ParsedDate'
+      JudgeVacatedDate:
+        $ref: '#/definitions/ParsedDate'
+      ReleaseDate:
+        $ref: '#/definitions/ParsedDate'
+      Debtors:
+        type: array
+        items:
+          $ref: '#/definitions/Party'
+      Creditors:
+        type: array
+        items:
+          $ref: '#/definitions/Party'
+      Filings:
+        type: array
+        items:
+          $ref: '#/definitions/Filing'
+    example:
+      Amount: 0.0
+      FilingJurisdictionName: CALIFORNIA
+      MultipleDefendant: false
+      Debtors:
+      - Name:
+          Full: JOE K TEST
+          First: JOE
+          Middle: K
+          Last: TEST
+          Prefix: MR
+        SSN: 99911xxxx
+        Addresses:
+        - StreetNumber: '123'
+          StreetName: MAIN
+          StreetSuffix: AVE
+          StreetAddress1: 123 MAIN AVE
+          City: LOS ANGELES
+          State: CA
+          ZipCode: '90001'
+          ZipFour: '1234'
+          County: OAKLAND
+          FullAddress: 123 MAIN AVE LOS ANGELES, CA 90001-1234
+      Filings:
+      - Number: BK40499PG874
+        Type: STATE TAX LIEN
+        OriginalFilingDate:
+          Year: 2008
+          Month: 12
+          Day: 9
+        Book: '40499'
+        Page: '874'
+        Agency: OAKLAND COUNTY REGISTER OF DEEDS
+        AgencyState: CA
+        AgencyCounty: OAKLAND
+  Party:
+    properties:
+      Name:
+        $ref: '#/definitions/Name'
+      SSN:
+        type: string
+        example: '999999990'
+      Company:
+        $ref: '#/definitions/Company'
+      Addresses:
+        type: array
+        items:
+          $ref: '#/definitions/Address'
+      Phones:
+        type: array
+        items:
+          $ref: '#/definitions/PhoneTimeZone'
+    example:
+      Addresses:
+      - StreetNumber: '123'
+        City: Agoura Hills
+        StreetPostDirection: E
+        StreetAddress1: 123 Main St
+        County: Los Angeles
+        UnitNumber: '110'
+        StreetAddress2: Apt 504
+        ZipFour: '1212'
+        ZipCode: '91301'
+        StreetPreDirection: S
+        StreetName: Main
+        UnitDesignation: APT
+        StreetSuffix: St
+        State: CA
+      Phones:
+      - TimeZone: PST
+        Phone10: '8058675309'
+        Fax: '8055672341'
+      Name:
+        Full: JOE K TEST
+        First: JOE
+        Middle: K
+        Last: TEST
+        Prefix: MR
+  Filing:
+    properties:
+      Number:
+        type: string
+        example: BK131312
+      Type:
+        type: string
+        example: FEDERAL TAX LIEN
+      Date:
+        $ref: '#/definitions/ParsedDate'
+      OriginalFilingDate:
+        $ref: '#/definitions/ParsedDate'
+      Book:
+        type: string
+        example: '567657'
+      Page:
+        type: string
+        example: '43545'
+      Agency:
+        type: string
+        example: REGISTER OF DEEDS
+      AgencyCity:
+        type: string
+        example: LOS ANGELES
+      AgencyState:
+        type: string
+        example: CA
+      AgencyCounty:
+        type: string
+        example: LOS ANGELES
+      Status:
+        type: string
+        example: In Progress
+      Description:
+        type: string
+        example: This is a description.
+      Time:
+        type: string
+        example: 01082008
+    example:
+      Date:
+        Month: 1
+        Year: 2017
+        Day: 1
+      Agency: REGISTER OF DEEDS
+      Book: '567657'
+      AgencyCity: LOS ANGELES
+      type: FEDERAL TAX LIEN
+      AgencyState: CA
+      AgencyCounty: LOS ANGELES
+      FilingTime: 01082008
+      Number: BK131312
+      Status: In Progress
+      Description: This is a description.
+      OriginalFilingDate:
+        Month: 1
+        Year: 2017
+        Day: 1
+      Page: '43545'
+  PhoneTimeZone:
+    properties:
+      Phone10:
+        type: string
+        example: '8058675309'
+      Fax:
+        type: string
+        example: '8055672341'
+      TimeZone:
+        type: string
+        example: PST
+    example:
+      TimeZone: PST
+      Phone10: '8058675309'
+      Fax: '8055672341'
+  ParsedDate:
+    properties:
+      Year:
+        type: number
+        example: 2017
+      Month:
+        type: number
+        example: 1
+      Day:
+        type: number
+        example: 1
+    example:
+      Month: 1
+      Year: 2017
+      Day: 1

@@ -4,88 +4,64 @@ schema: https://raw.githubusercontent.com/api-evangelist/interface-research/main
 provider: First American Financial
 providerId: first-american-financial
 created: '2026-05-04'
-# Provenance stamped 2026-08-11: this artifact was written by the API Evangelist
-# bulk sweep dated 2026-05-04, not harvested from the provider. See roadmap#35.
-method: generated
-modified: '2026-05-04'
-tags:
-  - Title Insurance
-  - Real Estate
-  - Settlement Services
-  - Financial Services
-  - Rate Limiting
-  - Quotas
-  - Throttling
-description: Machine-readable rate limit definitions for the First American Financial API surface. Captures
-  per-tier quotas, burst behavior, response signaling, and recovery semantics. Defaults are scaffold values
-  to be replaced with published provider limits.
+modified: '2026-09-09'
+generated: '2026-09-09'
+method: searched
+source: >-
+  https://developer.firstam.io/api/docs plus the 16 Digital Gateway specifications harvested
+  2026-09-09
+limit_count: 0
+note: >-
+  NO PUBLISHED RATE LIMITS. This file previously carried invented per-minute and per-month numbers
+  for three invented tiers, written by the 2026-05-04 bulk sweep; none of it came from First
+  American and it has been removed. What IS documented is the exhaustion behaviour and the
+  governance model, both recorded below. Rate limits are real on this platform but they are
+  contractual: the documentation defines a QoS (quality of service) policy as defining "the level
+  of service being offered to an app that is accessing an API; for example, the number of
+  transactions per minute that are allowed for the app", attached to a License Term negotiated per
+  customer. No default, no published ceiling, and no self-service tier.
 headers:
-  limit: X-RateLimit-Limit
-  remaining: X-RateLimit-Remaining
-  reset: X-RateLimit-Reset
-  retryAfter: Retry-After
-  policy: RateLimit-Policy
+  published: false
+  note: >-
+    NO rate-limit response headers are documented and none is declared in any of the 16 harvested
+    contracts. There is no RateLimit-*, no X-RateLimit-*, and no Retry-After. An agent hitting the
+    ceiling receives a bare 503 and cannot compute a backoff or see remaining budget - the runtime
+    signal an agent actually needs is absent even though the limit itself exists.
 responseCodes:
-  throttled: 429
-  quotaExceeded: 429
-  serviceUnavailable: 503
-limits:
-  - tier: free
-    name: Free Tier Default
-    scope: api-key
-    metric: requests_per_minute
-    limit: 10
-    burst: 20
-    timeFrame: minute
-    applies:
-      - First American Financial
-  - tier: free
-    name: Free Tier Monthly Quota
-    scope: api-key
-    metric: requests_per_month
-    limit: 1000
-    timeFrame: month
-    applies:
-      - First American Financial
-  - tier: professional
-    name: Professional Tier Default
-    scope: api-key
-    metric: requests_per_minute
-    limit: 100
-    burst: 200
-    timeFrame: minute
-    applies:
-      - First American Financial
-  - tier: professional
-    name: Professional Tier Monthly Quota
-    scope: api-key
-    metric: requests_per_month
-    limit: 100000
-    timeFrame: month
-    applies:
-      - First American Financial
-  - tier: enterprise
-    name: Enterprise Negotiated Limit
-    scope: contract
-    metric: requests_per_minute
-    limit: 1000
-    burst: 5000
-    timeFrame: minute
-    applies:
-      - First American Financial
+  quotaExceeded: 503
+  quotaExceededTitle: Exceed usage limit
+  quotaExceededDetail: Maximum amount of usage limit has been reached for API calls.
+  throttled: null
+  note: >-
+    503, NOT 429. This is unusual and load-bearing for a client: a naive retry policy that only
+    treats 429 as throttling will read quota exhaustion as a server outage, and one that treats 503
+    as always-retryable will hammer an exhausted quota. 503 is declared on 34 of the 93 harvested
+    operations.
+  source: https://developer.firstam.io/api/docs
+limits: []
+governance:
+  model: per-contract QoS policy
+  unit: transactions per minute (documented as the example unit; actual values are not published)
+  attached_to: License Term
+  set_by: First American API administrator, as part of a License offered to the App developer
+  scope: per App
+  source: https://developer.firstam.io/api/docs
+  quotes:
+    - >-
+      "A QoS policy defines the level of service being offered to an app that is accessing an API;
+      for example, the number of transactions per minute that are allowed for the app. In the
+      platform, QoS policies are tied to license terms."
+    - >-
+      "Restricted access for an app means that the app's access to the API is restricted to a subset
+      of the API, as defined by scope mapping, or to a specified, agreed-upon quota as defined by a
+      QoS policy."
 policies:
-  - name: Backoff Strategy
-    description: Clients should implement exponential backoff with jitter, honoring the Retry-After header
-      when present.
-  - name: Burst Handling
-    description: Short bursts above the steady-state limit are tolerated up to the documented burst ceiling
-      before throttling engages.
-  - name: Quota Reset
-    description: Monthly quotas reset at the start of each calendar month in UTC. Per-minute and per-second
-      windows reset on a sliding-window basis.
-  - name: Fair Use
-    description: Even on uncapped enterprise tiers, sustained usage that materially impacts shared infrastructure
-      may be subject to fair-use throttling.
+  - name: Quota governance
+    description: >-
+      Quotas are negotiated, not published. Raising one is a conversation with the First American
+      relationship team, not a plan upgrade.
+evidence:
+  - {url: 'https://developer.firstam.io/api/docs', status: 200, finding: '503 "Exceed usage limit" documented in the API Errors table; QoS/License Term model documented in the glossary; no numbers'}
 maintainers:
   - FN: Kin Lane
     email: kin@apievangelist.com

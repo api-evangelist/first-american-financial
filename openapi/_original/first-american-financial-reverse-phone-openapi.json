@@ -1,0 +1,466 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "description": "Reverse phone number search for borrower(s) that delivers data for the applicant's phone number.",
+    "version": "1.0.0",
+    "title": "Reverse Phone Search"
+  },
+  "host": "api.firstam.io",
+  "basePath": "/v1",
+  "schemes": [
+    "https"
+  ],
+  "paths": {
+    "/reversephone/order": {
+      "post": {
+        "tags": [
+          "RequestReversePhone"
+        ],
+        "summary": "Place request for Reverse Phone Service",
+        "operationId": "order",
+        "description": "Required field(s): PhoneNumber.",
+        "consumes": [
+          "application/json",
+          "application/xml"
+        ],
+        "produces": [
+          "application/json",
+          "application/xml"
+        ],
+        "parameters": [
+          {
+            "in": "header",
+            "name": "x-app-id",
+            "description": "Application ID",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "in": "header",
+            "name": "x-app-key",
+            "description": "Application Key",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "in": "body",
+            "name": "Request",
+            "description": "Request for Reverse Phone",
+            "schema": {
+              "$ref": "#/definitions/ReversePhoneServiceRequest"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/ReversePhoneServiceResponse"
+            }
+          },
+          "400": {
+            "description": "invalid input, object invalid"
+          },
+          "404": {
+            "description": "No data found"
+          }
+        }
+      }
+    },
+    "/reversephone/report": {
+      "get": {
+        "tags": [
+          "GetReversePhoneResponse"
+        ],
+        "summary": "Retrieve existing report by Transaction ID.",
+        "operationId": "retrieveReversePhone",
+        "description": "Retrieve existing Reverse Phone Response by Transaction ID.",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json",
+          "application/xml"
+        ],
+        "parameters": [
+          {
+            "in": "header",
+            "name": "x-app-id",
+            "description": "Application ID",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "in": "header",
+            "name": "x-app-key",
+            "description": "Application Key",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "in": "query",
+            "name": "TransactionID",
+            "description": "Transaction ID number provided",
+            "required": true,
+            "default": "",
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/ReversePhoneServiceResponse"
+            }
+          },
+          "400": {
+            "description": "invalid Request, object invalid."
+          },
+          "404": {
+            "description": "No data found."
+          }
+        }
+      }
+    }
+  },
+  "definitions": {
+    "ReversePhoneServiceRequest": {
+      "type": "object",
+      "properties": {
+        "RequestorID": {
+          "type": "string"
+        },
+        "PhoneNumber": {
+          "type": "string"
+        },
+        "IncludeAnalytics": {
+          "type": "boolean"
+        }
+      },
+      "example": {
+        "RequestorID": "ID123",
+        "PhoneNumber": "0001234567"
+      }
+    },
+    "ReversePhoneServiceResponse": {
+      "type": "object",
+      "properties": {
+        "TransactionID": {
+          "example": "82d9762b-70c3-4801-bd4b-8ffc8d358f77",
+          "type": "string",
+          "description": "TransactionID can be used to fetch data at later stage"
+        },
+        "RequestorID": {
+          "example": "loannumber1234",
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 100,
+          "description": "LoanNumber or TransactionID"
+        },
+        "StatusCode": {
+          "type": "string"
+        },
+        "PhoneNumber": {
+          "type": "string"
+        },
+        "IsValid": {
+          "type": "string"
+        },
+        "CountryCallingCode": {
+          "type": "string"
+        },
+        "LineType": {
+          "format": "int32",
+          "enum": [
+            "Landline",
+            "FixedVOIP",
+            "Mobile",
+            "Voicemail",
+            "TollFree",
+            "Premium",
+            "NonFixedVOIP",
+            "Other"
+          ],
+          "type": "integer"
+        },
+        "Carrier": {
+          "type": "string"
+        },
+        "IsPrepaid": {
+          "type": "string"
+        },
+        "IsCommercial": {
+          "type": "string"
+        },
+        "Subscribers": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/Subscriber"
+          }
+        },
+        "CurrentAddresses": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/SubscriberAddress"
+          }
+        },
+        "PreviousAddresses": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/SubscriberAddress"
+          }
+        },
+        "AssociatedPeople": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/AssociatedPerson"
+          }
+        },
+        "AlternatePhones": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "Warnings": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "Alerts": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/Alert"
+          }
+        }
+      }
+    },
+    "Subscriber": {
+      "type": "object",
+      "properties": {
+        "AgeRange": {
+          "type": "string"
+        },
+        "Gender": {
+          "type": "string"
+        },
+        "Type": {
+          "type": "string"
+        },
+        "Industry": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "example": "Securities,Commodity Contracts"
+          }
+        },
+        "SubscriberStartDate": {
+          "$ref": "#/definitions/ParsedDate"
+        },
+        "Full": {
+          "type": "string"
+        },
+        "First": {
+          "type": "string"
+        },
+        "Middle": {
+          "type": "string"
+        },
+        "Last": {
+          "type": "string"
+        },
+        "Suffix": {
+          "type": "string"
+        },
+        "Prefix": {
+          "type": "string"
+        },
+        "LastOrCompanyName": {
+          "type": "string"
+        },
+        "FirstAndMiddleName": {
+          "type": "string"
+        }
+      }
+    },
+    "SubscriberAddress": {
+      "type": "object",
+      "properties": {
+        "IsActive": {
+          "type": "string"
+        },
+        "DeliveryPoint": {
+          "type": "string"
+        },
+        "Accuracy": {
+          "type": "string"
+        },
+        "AddressStartDate": {
+          "$ref": "#/definitions/ParsedDate"
+        },
+        "AddressEndDate": {
+          "$ref": "#/definitions/ParsedDate"
+        },
+        "FullAddress": {
+          "type": "string"
+        },
+        "Hash": {
+          "type": "string"
+        },
+        "APN": {
+          "type": "string"
+        },
+        "Longitude": {
+          "type": "string"
+        },
+        "Latitude": {
+          "type": "string"
+        },
+        "StateCityZip": {
+          "type": "string"
+        },
+        "PostalCode": {
+          "type": "string"
+        },
+        "Country": {
+          "type": "string"
+        },
+        "County": {
+          "type": "string"
+        },
+        "ZipFour": {
+          "type": "string"
+        },
+        "CountyFIPSCode": {
+          "type": "string"
+        },
+        "ZipCode": {
+          "type": "string"
+        },
+        "City": {
+          "type": "string"
+        },
+        "StreetAddress2": {
+          "type": "string"
+        },
+        "StreetAddress1": {
+          "type": "string"
+        },
+        "UnitNumber": {
+          "type": "string"
+        },
+        "UnitDesignation": {
+          "type": "string"
+        },
+        "StreetPostDirection": {
+          "type": "string"
+        },
+        "StreetSuffix": {
+          "type": "string"
+        },
+        "StreetName": {
+          "type": "string"
+        },
+        "StreetPreDirection": {
+          "type": "string"
+        },
+        "StreetNumber": {
+          "type": "string"
+        },
+        "State": {
+          "type": "string"
+        },
+        "StateFIPSCode": {
+          "type": "string"
+        }
+      }
+    },
+    "AssociatedPerson": {
+      "type": "object",
+      "properties": {
+        "Relationship": {
+          "type": "string"
+        },
+        "Full": {
+          "type": "string",
+          "example": "Mark M Marsupial"
+        },
+        "First": {
+          "type": "string",
+          "example": "Mark"
+        },
+        "Middle": {
+          "type": "string",
+          "example": "M"
+        },
+        "Last": {
+          "type": "string",
+          "example": "Marsupial"
+        },
+        "Suffix": {
+          "type": "string"
+        },
+        "Prefix": {
+          "type": "string"
+        },
+        "LastOrCompanyName": {
+          "type": "string"
+        },
+        "FirstAndMiddleName": {
+          "type": "string"
+        }
+      }
+    },
+    "Alert": {
+      "type": "object",
+      "properties": {
+        "Code": {
+          "type": "string"
+        },
+        "Description": {
+          "type": "string"
+        },
+        "Status": {
+          "format": "int32",
+          "enum": [
+            "NotEvaluated",
+            "Fired",
+            "NotFired"
+          ],
+          "type": "integer"
+        },
+        "Evidence": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/SerializableDictionary[String,Object]"
+          }
+        }
+      }
+    },
+    "ParsedDate": {
+      "type": "object",
+      "properties": {
+        "Year": {
+          "format": "int32",
+          "type": "integer",
+          "example": 2017
+        },
+        "Month": {
+          "format": "int32",
+          "type": "integer",
+          "example": 10
+        },
+        "Day": {
+          "format": "int32",
+          "type": "integer",
+          "example": 21
+        }
+      }
+    },
+    "SerializableDictionary[String,Object]": {
+      "type": "object",
+      "properties": {}
+    }
+  }
+}

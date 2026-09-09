@@ -1,0 +1,100 @@
+generated: '2026-09-09'
+method: searched
+source: openapi/ — 16 harvested Digital Gateway specifications
+docs: https://developer.firstam.io/api/docs
+note: >-
+  Upgraded from the mechanical derive. The derive found only the one declared securityScheme
+  (Title & Settlement's bearer JWT) because the fifteen Swagger 2.0 data-service specs carry no
+  `securityDefinitions` block at all — they express credentials as REQUIRED HEADER PARAMETERS on
+  every operation instead. That is a real, documented API-key scheme (140 header-parameter
+  declarations across 70 operations) and it would have scored as "no authentication" had it been
+  left to the spec's own security block.
+summary:
+  types: [apiKey, http, oauth2]
+  api_key_in: [header]
+  oauth2_flows: [clientCredentials]
+schemes:
+  - name: x-app-id
+    type: apiKey
+    in: header
+    parameter: x-app-id
+    aliases: [X-App-Id]
+    description: >-
+      Application ID. Issued per App in the Digital Gateway portal after an access request is
+      approved. Sent on EVERY Digital Gateway data-service call.
+    declared_as: required header parameter (not a securityDefinition)
+    operations: 70
+    sources:
+      - openapi/first-american-financial-4506c-openapi.yml
+      - openapi/first-american-financial-bankruptcy-openapi.yml
+      - openapi/first-american-financial-clearsearch-openapi.yml
+      - openapi/first-american-financial-identity-openapi.yml
+      - openapi/first-american-financial-income-estimate-openapi.yml
+      - openapi/first-american-financial-liens-judgments-fcra-openapi.yml
+      - openapi/first-american-financial-liens-judgments-non-fcra-openapi.yml
+      - openapi/first-american-financial-nmls-openapi.yml
+      - openapi/first-american-financial-occupancy-openapi.yml
+      - openapi/first-american-financial-ownership-openapi.yml
+      - openapi/first-american-financial-property-openapi.yml
+      - openapi/first-american-financial-reverse-address-openapi.yml
+      - openapi/first-american-financial-reverse-phone-openapi.yml
+      - openapi/first-american-financial-scra-openapi.yml
+      - openapi/first-american-financial-watchlist-openapi.yml
+  - name: x-app-key
+    type: apiKey
+    in: header
+    parameter: x-app-key
+    aliases: [X-App-Key]
+    description: >-
+      Application Key, the secret half of the App credential pair. Paired with x-app-id on every
+      data-service call. An invalid pair returns HTTP 401 "Invalid App ID or App Key".
+    declared_as: required header parameter (not a securityDefinition)
+    operations: 70
+    sources: [see x-app-id]
+  - name: bearerAuth
+    type: http
+    scheme: bearer
+    bearerFormat: JWT
+    description: >-
+      OAuth (a.k.a JWT) Authentication is mandatory. Applied to all 16 non-token operations of the
+      Title & Settlement (Mortgage Services) API.
+    sources:
+      - openapi/first-american-financial-title-settlement-openapi.yml
+  - name: oauth2-client-credentials
+    type: oauth2
+    flow: clientCredentials
+    token_endpoint: POST /api/token
+    token_endpoint_note: >-
+      The demonstration host in the spec is https://lvis-oauth-swagger.lvisqa.firstam.com and is
+      explicitly marked "THIS ENDPOINT IS FOR DEMONSTRATION PURPOSES ONLY". The real authentication
+      URL is issued privately - the spec says to contact LVIS.support@firstam.com to obtain the URL
+      along with client_id, client_secret, scope and grant_type.
+    request_fields: [client_id, client_secret, scope, grant_type]
+    scopes_published: false
+    scopes_note: >-
+      `scope` is a REQUIRED form field on the token request but no scope values are published
+      anywhere. No scopes/ artifact is written rather than invent one.
+    sources:
+      - openapi/first-american-financial-title-settlement-openapi.yml
+onboarding:
+  self_service: false
+  steps:
+    - Sign up at https://developer.firstam.io/signup (two-factor by email).
+    - Account reviewed by a Digital Gateway administrator; access granted within 1-2 business days.
+    - Create an App, then request access to specific APIs; approval may be automatic or administrator-gated.
+    - App ID and App Key appear in the App's Credentials section once approved.
+    - Production access additionally requires the First American relationship team and may require a contract and/or SOW.
+  contact: DigitalGateway@firstam.io
+additional:
+  shared_secret:
+    documented: true
+    description: >-
+      The glossary documents a Shared Secret Key used for message-level symmetric cryptography on
+      some APIs, assigned in the portal. Not expressed in any harvested contract.
+    source: https://developer.firstam.io/api/docs
+  app_source_header:
+    documented: true
+    description: >-
+      'AppSource' is required for customers using source-level credentials on the Title & Settlement
+      document, message and cancel operations.
+    source: openapi/first-american-financial-title-settlement-openapi.yml

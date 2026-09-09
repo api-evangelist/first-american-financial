@@ -1,0 +1,63 @@
+generated: '2026-09-09'
+method: searched
+source: https://developer.firstam.io/api/docs
+note: >-
+  First American runs a real three-environment model (mock / sandbox / production) but publishes NO
+  test values. There are no test card numbers, no magic identifiers, no seeded fixtures and no test
+  clock. Every credential is issued per App after an approval workflow, so nothing here can be
+  exercised anonymously. Nothing below is invented; where the provider publishes no value the field
+  says so.
+environments:
+  - name: mock
+    self_service: true
+    credentials_required: false
+    description: >-
+      A static request/response console. "Test an API via Mock Up Test (static request and response)
+      without creating an APP" - open the Dynamic Documents menu, select the operation, click
+      "Try Me", complete the required fields (most are prepopulated for the mock test) and Execute.
+    test_values_published: false
+  - name: sandbox
+    self_service: false
+    credentials_required: true
+    description: >-
+      A per-App gateway endpoint. The Sandbox Endpoint URL "becomes available after requesting access
+      an API using the Request API Access Wizard". Some APIs require accepting terms and conditions
+      before sandbox access is granted; depending on the endpoint's approval settings a request may
+      be auto-approved or may require an administrator.
+    endpoint_published: false
+    endpoint_note: The sandbox base URL is issued per App and is not published.
+    test_values_published: false
+  - name: production
+    self_service: false
+    credentials_required: true
+    description: >-
+      "The Portal Process for Production Access is the same as Sandbox access", but additionally
+      requires contacting the First American relationship team and completing the go-live process,
+      "which may include formal Contract and/or SOW".
+    endpoint_published: false
+credentials:
+  model: per-App, environment-scoped
+  fields: [App ID, App Key]
+  key_prefixes_published: false
+  test_vs_live_separation: >-
+    Separation is by environment-specific gateway URL and by the API contract attached to the App,
+    not by a key prefix. The documentation defines a "Sandbox Endpoint URL" and a "Production
+    Environment URL" as distinct per-App gateway URLs.
+test_data:
+  cards: []
+  accounts: []
+  identifiers: []
+  note: >-
+    No test values of any kind are published. This matters for this surface in particular: the data
+    services take SSNs, names and property addresses, so there is no anonymous way to exercise them
+    and no published safe-to-use test subject.
+tooling:
+  rest_clients_suggested: [Postman, Fiddler]
+  caveat: >-
+    The documentation warns that off-the-shelf clients may be difficult to use because "many of our
+    APIs require certain headers and API Tokens to be populated for our security schemes to work",
+    and points developers at writing their own App instead.
+  fixtures: none
+  triggers: none
+  time_simulation: none
+contact: DigitalGateway@firstam.io

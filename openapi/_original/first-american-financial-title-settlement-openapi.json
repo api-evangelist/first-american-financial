@@ -1,0 +1,2878 @@
+{
+    "openapi": "3.0.0",
+    "info": {
+      "title": "Mortgage Services",
+      "version": "1.5.0"
+    },
+    "servers": [
+      {
+        "url": "https://settlement.stageapi.firstam.com",
+        "description": "Stage Environment",
+        "variables": {}
+      }
+    ],
+    "paths": {
+      "/api/token": {
+        "servers": [
+          {
+            "url": "https://lvis-oauth-swagger.lvisqa.firstam.com",
+            "description": "THIS ENDPOINT IS FOR DEMONSTRATION PURPOSES ONLY"
+          }
+        ],
+        "post": {
+          "tags": [
+            "OAuth Token"
+          ],
+          "summary": "Get a Token",
+          "description": "First American utilizes OAuth 2.0 authorization protocol for authentication. \n\n Please contact **LVIS.support@firstam.com** to initiate the request for the URL and the values below.\n\n \n\n  `client_id ` \n\n `client_secret `\n\n `scope ` \n\n `grant_type ` \n\n To generate a token, make a call to the First American authentication URL with these values.",
+          "operationId": "AAuthz_GetToken",
+          "requestBody": {
+            "required": true,
+            "content": {
+              "application/x-www-form-urlencoded": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "client_id": {
+                      "type": "string"
+                    },
+                    "client_secret": {
+                      "type": "string"
+                    },
+                    "scope": {
+                      "type": "string"
+                    },
+                    "grant_type": {
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "client_id",
+                    "client_secret",
+                    "grant_type",
+                    "scope"
+                  ]
+                }
+              }
+            }
+          },
+          "responses": {
+            "200": {
+              "description": "Success",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "$ref": "#/components/schemas/TokenResult"
+                  },
+                  "example": {
+                    "token_type": "Bearer",
+                    "expires_in": 3599,
+                    "ext_expires_in": 3599,
+                    "access_token": "eyJ0eXAiOiJKV1"
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "/orders": {
+        "post": {
+          "security": [
+            {
+              "bearerAuth": []
+            }
+          ],
+          "tags": [
+            "Orders"
+          ],
+          "summary": "Open an Order",
+          "description": "Open Title and Escrow orders with First American. Please discuss your business objectives with First American in order to determine which service(s) to order to support your needs.\n\n **Note: Property address and external tracking ID has to be unique per transaction.**",
+          "operationId": "OrdersPost",
+          "requestBody": {
+            "description": "Order Request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/OrderRequest"
+                },
+                "example": {
+                  "appSource": "Replace with FA Provided ID",
+                  "service": "EscrowTitle",
+                  "parties": [
+                    {
+                      "legalEntity": "BusinessEntity",
+                      "contacts": [
+                        {
+                          "firstName": "Joe",
+                          "lastName": "BusinessEntity",
+                          "contactPoints": [
+                            {
+                              "contactPointType": "Work",
+                              "emailAccount": "sample@firstam.com",
+                              "phoneNumber": "1234571425"
+                            }
+                          ],
+                          "role": "Other"
+                        }
+                      ],
+                      "primaryName": "Sample Business Entity",
+                      "role": "Lender"
+                    },
+                    {
+                      "firstName": "Joe",
+                      "lastName": "REAgent",
+                      "contactPoints": [
+                        {
+                          "contactPointType": "Work",
+                          "emailAccount": "sample@firstam.com",
+                          "phoneNumber": "9876571425"
+                        }
+                      ],
+                      "role": "SellerRealEstateAgent"
+                    },
+                    {
+                      "firstName": "Joe",
+                      "lastName": "Seller",
+                      "maritalStatus": "aSingleMan",
+                      "contactPoints": [
+                        {
+                          "contactPointType": "Work",
+                          "emailAccount": "sample@firstam.com",
+                          "phoneNumber": "7142568467"
+                        }
+                      ],
+                      "role": "Seller"
+                    },
+                    {
+                      "firstName": "Joe",
+                      "lastName": "Buyer",
+                      "maritalStatus": "aSinglePerson",
+                      "contactPoints": [
+                        {
+                          "contactPointType": "Work",
+                          "emailAccount": "sample@firstam.com",
+                          "phoneNumber": "7142584685"
+                        }
+                      ],
+                      "role": "BuyerBorrower"
+                    },
+                    {
+                      "firstName": "Joe",
+                      "lastName": "CoBuyer",
+                      "maritalStatus": "aSingleWoman",
+                      "contactPoints": [
+                        {
+                          "contactPointType": "Work",
+                          "emailAccount": "sample@firstam.com",
+                          "phoneNumber": "8468577142"
+                        }
+                      ],
+                      "role": "CoBuyerBorrower"
+                    },
+                    {
+                      "firstName": "Joe",
+                      "lastName": "LoanOfficer",
+                      "contactPoints": [
+                        {
+                          "contactPointType": "Work",
+                          "emailAccount": "sample@firstam.com",
+                          "phoneNumber": "7142571425"
+                        }
+                      ],
+                      "role": "LoanOfficer"
+                    },
+                    {
+                      "firstName": "Michel",
+                      "lastName": "LoanProcessor",
+                      "contactPoints": [
+                        {
+                          "contactPointType": "Work",
+                          "emailAccount": "sample@firstam.com",
+                          "phoneNumber": "7142500000"
+                        }
+                      ],
+                      "role": "LoanProcessor"
+                    }
+                  ],
+                  "propertyAddress": {
+                    "addressLine1": "replace with street address",
+                    "cityName": "Santa Ana",
+                    "postalCode": "92706",
+                    "stateCode": "CA",
+                    "countyName": "Orange",
+                    "propertyType": "Condominium",
+                    "APN": ""
+                  },
+                  "transactionType": "SaleWithMortgage",
+                  "externalTrackingId": "replace with a unique transaction ID",
+                  "officeId": "replace with Office Id",
+                  "escrowOfficerCode": "replace with Escrow Officer Code",
+                  "titleOfficerCode": "replace with Title Officer Code",
+                  "loan": {
+                    "loanNumber": "Loan12345-345",
+                    "loanAmount": "1234",
+                    "loanType": "FHA"
+                  },
+                  "transactionDetails": {
+                    "contractSignedDate": "2020-02-03T00:00:00.000Z",
+                    "earnestMoneyDeposit": "234",
+                    "inspectionEndDate": "2020-02-05T00:00:00.000Z",
+                    "homeOwnersAssociation": "false",
+                    "closeOfEscrowDate": "2020-02-11T00:00:00.000Z",
+                    "acquisitionPrice": "1290",
+                    "payoffInformations": [
+                      {
+                        "payoffType": "LenderOrderSubordinate",
+                        "loanNumber": "787782232",
+                        "loanAmount": "70000",
+                        "lienPosition": "1",
+                        "liabilityType": "MortgageLoan",
+                        "lenderName": "Wells Fargo",
+                        "lenderPhone": "1112223333"
+                      }
+                    ]
+                  },
+                  "Documents": [
+                    {
+                      "Name": "TestDocInOrderRequest",
+                      "PageCount": "1",
+                      "IsFinalized": "true",
+                      "FileExtension": "pdf",
+                      "EmbeddedContent": "Base64 content here"
+                    }
+                  ]
+                }
+              }
+            }
+          },
+          "responses": {
+            "200": {
+              "description": "Success",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "$ref": "#/components/schemas/ResourceResponse"
+                  },
+                  "example": {
+                    "ID": "e54227d6-27f9-43dd-9dae-0c3c8a370ddd",
+                    "externalReferenceId": "same value provided in request.",
+                    "DateTime": "2020-05-06T20:53:25",
+                    "Status": 1,
+                    "Message": "Successful"
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "/orders/{externalTrackingId}/documents": {
+        "post": {
+          "summary": "Upload a Document",
+          "description": "Upload a document for a specific order. \n\n'AppSource' is required for the customer using the source level credentials.",
+          "security": [
+            {
+              "bearerAuth": []
+            }
+          ],
+          "tags": [
+            "Orders"
+          ],
+          "operationId": "Orders_UploadDocument",
+          "parameters": [
+            {
+              "name": "externalTrackingId",
+              "in": "path",
+              "required": true,
+              "description": "Client provided transaction ID used when opening order.",
+              "schema": {
+                "type": "string"
+              }
+            }
+          ],
+          "requestBody": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/DocumentPayload"
+                },
+                "example": {
+                  "appSource": "Replace with FA Provided ID",
+                  "name": "Sample Document",
+                  "fileExtension": "pdf",
+                  "embeddedContent": "Base64 content here",
+                  "serviceType": "Escrow"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/DocumentPayload"
+                }
+              },
+              "application/xml": {
+                "schema": {
+                  "$ref": "#/components/schemas/DocumentPayload"
+                }
+              },
+              "text/xml": {
+                "schema": {
+                  "$ref": "#/components/schemas/DocumentPayload"
+                }
+              },
+              "application/x-www-form-urlencoded": {
+                "schema": {
+                  "$ref": "#/components/schemas/DocumentPayload"
+                }
+              }
+            },
+            "required": true
+          },
+          "responses": {
+            "200": {
+              "description": "Success",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "$ref": "#/components/schemas/ResourceResponse"
+                  },
+                  "example": {
+                    "ID": "e54227d6-27f9-43dd-9dae-0c3c8a370ddd",
+                    "externalReferenceId": "same value provided in request.",
+                    "DateTime": "2020-05-06T20:53:25",
+                    "Status": 1,
+                    "Message": "Successful"
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "/orders/{externalTrackingId}/messages": {
+        "post": {
+          "summary": "Send a Message",
+          "description": "Send a message to the escrow officer of the order. \n\n'AppSource' is required for the customer using the source level credentials.",
+          "security": [
+            {
+              "bearerAuth": []
+            }
+          ],
+          "tags": [
+            "Orders"
+          ],
+          "operationId": "Orders_PostMessage",
+          "parameters": [
+            {
+              "name": "externalTrackingId",
+              "in": "path",
+              "required": true,
+              "description": "Client provided transaction ID used when opening order.",
+              "schema": {
+                "type": "string"
+              }
+            }
+          ],
+          "requestBody": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/MessagePayload"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/MessagePayload"
+                }
+              },
+              "application/xml": {
+                "schema": {
+                  "$ref": "#/components/schemas/MessagePayload"
+                }
+              },
+              "text/xml": {
+                "schema": {
+                  "$ref": "#/components/schemas/MessagePayload"
+                }
+              },
+              "application/x-www-form-urlencoded": {
+                "schema": {
+                  "$ref": "#/components/schemas/MessagePayload"
+                }
+              }
+            },
+            "required": true
+          },
+          "responses": {
+            "200": {
+              "description": "Success",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "$ref": "#/components/schemas/ResourceResponse"
+                  },
+                  "example": {
+                    "ID": "e54227d6-27f9-43dd-9dae-0c3c8a370ddd",
+                    "externalReferenceId": "same value provided in request.",
+                    "DateTime": "2020-05-06T20:53:25",
+                    "Status": 1,
+                    "Message": "Successful"
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "/orders/{externalTrackingId}/cancel": {
+        "post": {
+          "summary": "Cancel an Order",
+          "description": "Cancel an Order previously created\n\n **Note:'AppSource' is required for the customer using the source level credentials.**",
+          "security": [
+            {
+              "bearerAuth": []
+            }
+          ],
+          "tags": [
+            "Orders"
+          ],
+          "operationId": "Orders_Cancel",
+          "parameters": [
+            {
+              "name": "externalTrackingId",
+              "in": "path",
+              "required": true,
+              "description": "Client provided transaction ID used when opening order.",
+              "schema": {
+                "type": "string"
+              }
+            }
+          ],
+          "requestBody": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/OrderCancelRequest"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/OrderCancelRequest"
+                }
+              },
+              "application/xml": {
+                "schema": {
+                  "$ref": "#/components/schemas/OrderCancelRequest"
+                }
+              },
+              "text/xml": {
+                "schema": {
+                  "$ref": "#/components/schemas/OrderCancelRequest"
+                }
+              },
+              "application/x-www-form-urlencoded": {
+                "schema": {
+                  "$ref": "#/components/schemas/OrderCancelRequest"
+                }
+              }
+            },
+            "required": true
+          },
+          "responses": {
+            "200": {
+              "description": "Success",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "$ref": "#/components/schemas/OrderCancelResponse"
+                  },
+                  "example": {
+                    "ID": "e54227d6-27f9-43dd-9dae-0c3c8a370ddd",
+                    "externalReferenceId": "same value provided in request.",
+                    "DateTime": "2020-05-06T20:53:25",
+                    "Status": 1,
+                    "Message": "Successful"
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "/offices": {
+        "get": {
+          "security": [
+            {
+              "bearerAuth": []
+            }
+          ],
+          "tags": [
+            "Offices"
+          ],
+          "summary": "Find an Office",
+          "operationId": "FAoffices",
+          "parameters": [
+            {
+              "in": "query",
+              "name": "appSource",
+              "required": true,
+              "schema": {
+                "type": "string"
+              },
+              "description": "A required unique application ID provided by First American Title to identify clients.",
+              "example": "Source"
+            },
+            {
+              "in": "query",
+              "name": "state",
+              "required": true,
+              "schema": {
+                "type": "string"
+              },
+              "description": "the specific state",
+              "example": "CA"
+            },
+            {
+              "in": "query",
+              "name": "county",
+              "required": true,
+              "schema": {
+                "type": "string"
+              },
+              "description": "the specific county",
+              "example": "Orange"
+            },
+            {
+              "in": "query",
+              "name": "transactionType",
+              "required": true,
+              "schema": {
+                "type": "string"
+              },
+              "description": "A required value that specifies the purpose for the transaction service request.",
+              "example": "SaleWithMortgage"
+            },
+            {
+              "in": "query",
+              "name": "zip",
+              "schema": {
+                "type": "string"
+              },
+              "example": "92707"
+            },
+            {
+              "in": "query",
+              "name": "city",
+              "schema": {
+                "type": "string"
+              },
+              "example": "Santa Ana"
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "Success",
+              "content": {
+                "application/json; charset=utf-8": {
+                  "schema": {
+                    "$ref": "#/components/schemas/Offices"
+                  },
+                  "examples": {
+                    "offices": {
+                      "value": "[\n  {\n    \"officeId\": 545,\n    \"companyName\": \"First American Title Company\",\n    \"officeAddressLine1\": \"4 First American Way\",\n    \"officeCity\": \"Santa Ana\",\n    \"officeState\": \"CA\",\n    \"officeZipCode\": \"92702\"\n  },\n  {\n    \"officeId\": 11065,\n    \"companyName\": \"First American Title Company\",\n    \"officeAddressLine1\": \"3 First American Way\",\n    \"officeCity\": \"Santa Ana\",\n    \"officeState\": \"CA\",\n    \"officeZipCode\": \"92702\"\n  }\n]\n"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "/employees/escrowOfficers": {
+        "get": {
+          "security": [
+            {
+              "bearerAuth": []
+            }
+          ],
+          "tags": [
+            "Employees"
+          ],
+          "summary": "Get  Escrow Officers by Office",
+          "description": "Get multiple escrow officer employees by office id with First American",
+          "operationId": "EscrowOfficers_Get",
+          "parameters": [
+            {
+              "in": "query",
+              "name": "officeId",
+              "required": true,
+              "schema": {
+                "type": "string"
+              },
+              "description": "the specific office id",
+              "example": "191"
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "Success",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "$ref": "#/components/schemas/Employee"
+                  },
+                  "example": [
+                    {
+                      "Code": "DHTOM",
+                      "FirstName": "Tom",
+                      "LastName": "Dick",
+                      "MiddleName": "Harry"
+                    },
+                    {
+                      "Code": "JSMARY",
+                      "FirstName": "Jane",
+                      "LastName": "Mary",
+                      "MiddleName": "Sue"
+                    }
+                  ]
+                }
+              }
+            }
+          }
+        }
+      },
+      "/employees/titleOfficers": {
+        "get": {
+          "security": [
+            {
+              "bearerAuth": []
+            }
+          ],
+          "tags": [
+            "Employees"
+          ],
+          "summary": "Get  Title Officers by Office",
+          "description": "Get multiple title officer employees by office id with First American",
+          "operationId": "TitleOfficers_Get",
+          "parameters": [
+            {
+              "in": "query",
+              "name": "officeId",
+              "required": true,
+              "schema": {
+                "type": "string"
+              },
+              "description": "the specific office id",
+              "example": "191"
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "Success",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "$ref": "#/components/schemas/Employee"
+                  },
+                  "example": [
+                    {
+                      "Code": "DHTOM",
+                      "FirstName": "Tom",
+                      "LastName": "Dick",
+                      "MiddleName": "Harry"
+                    },
+                    {
+                      "Code": "JSMARY",
+                      "FirstName": "Jane",
+                      "LastName": "Mary",
+                      "MiddleName": "Sue"
+                    }
+                  ]
+                }
+              }
+            }
+          }
+        }
+      },
+      "/webhooks": {
+        "post": {
+          "security": [
+            {
+              "bearerAuth": []
+            }
+          ],
+          "tags": [
+            "Webhooks"
+          ],
+          "summary": "Register a Webhook",
+          "description": "The following events may be published during the life of an order and can be subscribed to by registering a webhook.\n\n **Notes:** \n\n Domain whitelisting required.  Please contact LVIS.support@firstam.com for assistance. \n\n \n\n Event Type           | Description\n -------------------  |-------------\n OrderCreated         | Status event indicating that the order has been created. Event will contain message detail such as file number and contacts. \n CurativeCleared      | Status event indicating title clearance, will include message detail.\n DocumentDelivery&nbsp;&nbsp;&nbsp; | Delivery of a document as Base64-encoded pdf.\n FundsDisbursed     | Status event indicating that proceeds have been distributed to all parties, will include message detail. \n MessageAdded       | Status event indicating that a message has been sent. Message container holds up to 1048576 characters.\n FundingApproved       | Status event indicating that approval has been given to fund the loan, will include message detail.\n Curative Pending       | Status event indicating that there are outstanding items to be cleared on Title. The status can come before or after Title is cleared.\n DisburseHold       | Status event indicating that disbursement of funds has been delayed, will include message detail. \n OrderRejected      | Status event indicating that an order has been rejected for failing to meet business rules.\n OrderCancelled     | Status event indicating that an order has been cancelled.\n OrderClosed        | Status event indicating that an order has been closed.\nTitleProductDelivered     | Delivery of a requested title product, such as Title Commitment or Preliminary Report as a Base64-encoded pdf.\nFinalPolicyDelivered     | Delivery of a final title product, such as  Owner's Policy or Lender's Policy as a Base64-encoded pdf.\nCDDraft     | Delivery of a draft Closing Disclosure as a Base64-encoded pdf.\n AppointmentScheduled&nbsp;&nbsp;&nbsp; | Status event indicating that a signing has been scheduled.\n CDBalanced       | Status event indicating that this is the final Closing Disclosure from First American.\n RecordingCompleted       | Status event indicating that a document (example: Mortgage Deed of Trust) has been recorded.\n SigningOrdered     | Status event indicating that the signing request has been received by First American.\n SigningBorrowerNotified   | Status event indicating that a notary or signing agent has confirmed the signing appointment with the borrower.\n SigningCompleted   | Status event indicating that the borrower has completed the signing appointment with the notary or signing agent.\n SigningFailed   | Status event indicating the notary or signing agent was not able to complete the signing with the borrower on the scheduled date/ time due to an unforeseen event.\n \nThe example below shows a MessageAdded event notification. Events will be published in the format defined by the EventNotification schema described in the schemas section. The Notifications array will contain at least one Event instance with one of the above event type values in its Action field. This indicates the type of event that has occurred.\nThe Message field will contain a Message instance relevant to the event that has occurred. Once the integration partner system responds with a HTTP 200 status code, the EventNotification will be considered to have been successfully published. \n\nExample of an event notification: \n```fa-sample \n{ \n  \"id\": \"2daf73766c29459997d7c46bf2019af7\", \n  \"retryCount\": 1, \n  \"notifications\": [ \n      { \n          \"action\": \"MessageAdded\", \n          \"externalTrackingId\": \"Client provided transaction ID used when opening order\", \n          \"message\": { \n              \"serviceType\": \"escrowTitle\", \n              \"message\": \"Sample Message Content\" \n          } \n      } \n  ] \n} \n```\n",
+          "operationId": "Webhooks_Post",
+          "requestBody": {
+            "description": "Register a Webhook",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Webhook"
+                },
+                "example": {
+                  "AppSource": "OpenAPI",
+                  "Uri": "notification endpoint URL",
+                  "Secret": "integrator's secret",
+                  "Description": "Subscription to DocumentDelivery event",
+                  "IsPaused": false,
+                  "Filter": "DocumentDelivery",
+                  "Headers": {
+                    "x-api-key": "integrator's key"
+                  },
+                  "Properties": {
+                    "retryCount": 2
+                  }
+                }
+              }
+            }
+          },
+          "responses": {
+            "200": {
+              "description": "Success",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "$ref": "#/components/schemas/Webhook"
+                  },
+                  "example": {
+                    "Uri": "notification endpoint URL",
+                    "Secret": "integrator's secret",
+                    "Description": "Subscription endpoint for DocumentDelivery published event",
+                    "IsPaused": false,
+                    "Filter": "DocumentDelivery",
+                    "Headers": {
+                      "x-api-key": "integrator's key"
+                    },
+                    "Properties": {
+                      "retryCount": 2
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "put": {
+          "security": [
+            {
+              "bearerAuth": []
+            }
+          ],
+          "tags": [
+            "Webhooks"
+          ],
+          "summary": "Update a Webhook",
+          "description": "Update a webhook with First American",
+          "operationId": "Webhooks_Put",
+          "requestBody": {
+            "description": "Webhook Request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Webhook"
+                },
+                "example": {
+                  "AppSource": "OpenAPI",
+                  "Uri": "notification endpoint URL",
+                  "Id": "c869db8136f24634bbf3ba6d92c4e8ff",
+                  "Secret": "integrator's secret",
+                  "Description": "Subscription to DocumentDelivery event",
+                  "IsPaused": false,
+                  "Filter": "DocumentDelivery",
+                  "Headers": {
+                    "x-api-key": "integrator's key"
+                  },
+                  "Properties": {
+                    "retryCount": 2
+                  }
+                }
+              }
+            }
+          },
+          "responses": {
+            "200": {
+              "description": "Success",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "$ref": "#/components/schemas/Webhook"
+                  },
+                  "example": {
+                    "Uri": "notification endpoint URL",
+                    "Id": "c869db8136f24634bbf3ba6d92c4e8ff",
+                    "Secret": "integrator's secret",
+                    "Description": "Subscription endpoint for DocumentDelivery published event",
+                    "IsPaused": false,
+                    "Filter": "DocumentDelivery",
+                    "Headers": {
+                      "x-api-key": "integrator's key"
+                    },
+                    "Properties": {
+                      "retryCount": 2
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "get": {
+          "security": [
+            {
+              "bearerAuth": []
+            }
+          ],
+          "tags": [
+            "Webhooks"
+          ],
+          "summary": "Get all Webhooks",
+          "description": "Get all webhooks with First American",
+          "operationId": "Webhooks_GetAll",
+          "parameters": [
+            {
+              "in": "query",
+              "name": "appSource",
+              "required": false,
+              "schema": {
+                "type": "string"
+              },
+              "description": "the subscription group",
+              "example": "OpenAPI"
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "Success",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "$ref": "#/components/schemas/Webhooks"
+                  },
+                  "example": {
+                    "Uri": "notification endpoint URL",
+                    "Id": "c869db8136f24634bbf3ba6d92c4e8ff",
+                    "Secret": "integrator's secret",
+                    "Description": "Subscription endpoint for DocumentDelivery published event",
+                    "IsPaused": false,
+                    "Filter": "DocumentDelivery",
+                    "Headers": {
+                      "x-api-key": "integrator's key"
+                    },
+                    "Properties": {
+                      "retryCount": 2
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "delete": {
+          "security": [
+            {
+              "bearerAuth": []
+            }
+          ],
+          "tags": [
+            "Webhooks"
+          ],
+          "summary": "Delete all Webhooks",
+          "description": "Delete all webhooks with First American",
+          "operationId": "Webhooks_DelAll",
+          "parameters": [
+            {
+              "in": "query",
+              "name": "appSource",
+              "required": false,
+              "schema": {
+                "type": "string"
+              },
+              "description": "the subscription group",
+              "example": "OpenAPI"
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "Success",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "type": "string"
+                  },
+                  "example": "Success"
+                }
+              }
+            }
+          }
+        }
+      },
+      "/webhooks/{id}": {
+        "get": {
+          "security": [
+            {
+              "bearerAuth": []
+            }
+          ],
+          "tags": [
+            "Webhooks"
+          ],
+          "summary": "Get  Webhook",
+          "description": "Get single webhook with First American",
+          "operationId": "Webhooks_Get",
+          "parameters": [
+            {
+              "in": "path",
+              "name": "id",
+              "required": true,
+              "schema": {
+                "type": "string"
+              },
+              "description": "the specific webhook id",
+              "example": "c869db8136f24634bbf3ba6d92c4e8ff"
+            },
+            {
+              "in": "query",
+              "name": "appSource",
+              "required": false,
+              "schema": {
+                "type": "string"
+              },
+              "description": "the subscription group",
+              "example": "OpenAPI"
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "Success",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "$ref": "#/components/schemas/Webhook"
+                  },
+                  "example": {
+                    "Uri": "notification endpoint URL",
+                    "Id": "c869db8136f24634bbf3ba6d92c4e8ff",
+                    "Secret": "testsecretccc",
+                    "Description": "Subscription endpoint for DocumentDelivery published event",
+                    "IsPaused": false,
+                    "Filter": "DocumentDelivery",
+                    "Headers": {
+                      "x-api-key": "integrator's key"
+                    },
+                    "Properties": {
+                      "retryCount": 2
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "delete": {
+          "security": [
+            {
+              "bearerAuth": []
+            }
+          ],
+          "tags": [
+            "Webhooks"
+          ],
+          "summary": "Delete Webhook",
+          "description": "Delete webhook with First American",
+          "operationId": "Webhooks_Del",
+          "parameters": [
+            {
+              "in": "path",
+              "name": "id",
+              "required": true,
+              "schema": {
+                "type": "string"
+              },
+              "description": "the specific webhook id",
+              "example": "c869db8136f24634bbf3ba6d92c4e8ff"
+            },
+            {
+              "in": "query",
+              "name": "appSource",
+              "required": false,
+              "schema": {
+                "type": "string"
+              },
+              "description": "the subscription group",
+              "example": "OpenAPI"
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "Success",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "type": "string"
+                  },
+                  "example": "Success"
+                }
+              }
+            }
+          }
+        }
+      },
+      "/webhooks/registerWebhooks": {
+        "post": {
+          "security": [
+            {
+              "bearerAuth": []
+            }
+          ],
+          "tags": [
+            "Webhooks"
+          ],
+          "summary": "Register mutiple Webhooks",
+          "description": "Register mutiple Webhooks with First American",
+          "operationId": "Webhooks_Post_Multiple",
+          "requestBody": {
+            "description": "Webhook Request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Webhooks"
+                },
+                "example": [
+                  {
+                    "AppSource": "Offerpad",
+                    "Uri": "https://pdl.com/v1/FirstAmerican/order_different",
+                    "Secret": "integrator's secret",
+                    "Description": "Register multiple webhook 1",
+                    "IsPaused": true,
+                    "Filter": "OrderClosed",
+                    "Headers": {
+                      "x-api-key": "integrator's key"
+                    },
+                    "Properties": {
+                      "retryCount": 2
+                    }
+                  },
+                  {
+                    "AppSource": "Offerpad",
+                    "Uri": "https://pdl.com/v1/FirstAmerican/order_different",
+                    "Secret": "integrator's secret",
+                    "Description": "Register multiple webhook 1",
+                    "IsPaused": false,
+                    "Filter": "FundingApproved",
+                    "Headers": {
+                      "x-api-key": "integrator's key"
+                    },
+                    "Properties": {
+                      "retryCount": 2
+                    }
+                  },
+                  {
+                    "AppSource": "Offerpad",
+                    "Uri": "https://pdl.com/v1/FirstAmerican/order_different",
+                    "Secret": "integrator's secret",
+                    "Description": "Register multiple webhook 1",
+                    "IsPaused": true,
+                    "Filter": "OrderClosed",
+                    "Headers": {
+                      "x-api-key": "integrator's key"
+                    },
+                    "Properties": {
+                      "retryCount": 2
+                    }
+                  }
+                ]
+              }
+            }
+          },
+          "responses": {
+            "200": {
+              "description": "Success",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "$ref": "#/components/schemas/Webhooks"
+                  },
+                  "example": [
+                    {
+                      "AppSource": "Offerpad",
+                      "Uri": "https://pdl.com/v1/FirstAmerican/order_different",
+                      "Id": "9aaead9f0e2c4ca8af6d67be87a10272",
+                      "Secret": "integrator's secret",
+                      "Description": "Register multiple webhook 1",
+                      "IsPaused": true,
+                      "Filter": "OrderClosed",
+                      "Headers": {
+                        "x-api-key": "integrator's key"
+                      },
+                      "Properties": {
+                        "retryCount": 2
+                      }
+                    },
+                    {
+                      "Status": "Failed",
+                      "Message": "Filter:(FundingApproved) already exist."
+                    },
+                    {
+                      "Status": "Failed",
+                      "Message": "Invalid AppSource"
+                    }
+                  ]
+                }
+              }
+            }
+          }
+        }
+      },
+      "/webhooks/webhooksList": {
+        "post": {
+          "security": [
+            {
+              "bearerAuth": []
+            }
+          ],
+          "tags": [
+            "Webhooks"
+          ],
+          "summary": "Delete multiple Webhooks",
+          "description": "Delete multiple Webhooks with First American",
+          "operationId": "Webhooks_Delete_Multiple",
+          "parameters": [
+            {
+              "in": "query",
+              "name": "appSource",
+              "required": false,
+              "schema": {
+                "type": "string"
+              },
+              "description": "the subscription group",
+              "example": "OpenAPI"
+            }
+          ],
+          "requestBody": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "type": "string"
+                  }
+                },
+                "example": [
+                  "c869db8136f24634bbf3ba6d92c4e8ff",
+                  "09048da2bb08499b9b5052e16907ba7c",
+                  "da117c76-jhd3-4ee5-a1c1-8fa5ccf1fd51"
+                ]
+              },
+              "text/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "type": "string"
+                  }
+                },
+                "example": [
+                  "c869db8136f24634bbf3ba6d92c4e8ff",
+                  "09048da2bb08499b9b5052e16907ba7c",
+                  "da117c76-jhd3-4ee5-a1c1-8fa5ccf1fd51"
+                ]
+              },
+              "application/xml": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "type": "string"
+                  }
+                },
+                "example": [
+                  "c869db8136f24634bbf3ba6d92c4e8ff",
+                  "09048da2bb08499b9b5052e16907ba7c",
+                  "da117c76-jhd3-4ee5-a1c1-8fa5ccf1fd51"
+                ]
+              },
+              "text/xml": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "type": "string"
+                  }
+                },
+                "example": [
+                  "c869db8136f24634bbf3ba6d92c4e8ff",
+                  "09048da2bb08499b9b5052e16907ba7c",
+                  "da117c76-jhd3-4ee5-a1c1-8fa5ccf1fd51"
+                ]
+              },
+              "application/x-www-form-urlencoded": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "type": "string"
+                  }
+                },
+                "example": [
+                  "c869db8136f24634bbf3ba6d92c4e8ff",
+                  "09048da2bb08499b9b5052e16907ba7c",
+                  "da117c76-jhd3-4ee5-a1c1-8fa5ccf1fd51"
+                ]
+              }
+            },
+            "required": true
+          },
+          "responses": {
+            "200": {
+              "description": "Success",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "type": "string"
+                  },
+                  "example": [
+                    {
+                      "id": "c869db8136f24634bbf3ba6d92c4e8ff",
+                      "status": "Success"
+                    },
+                    {
+                      "id": "09048da2bb08499b9b5052e16907ba7c",
+                      "status": "Success"
+                    },
+                    {
+                      "id": "da117c76-jhd3-4ee5-a1c1-8fa5ccf1fd51",
+                      "status": "Not found"
+                    }
+                  ]
+                }
+              }
+            }
+          }
+        }
+      },
+      "/webhooks/webhookRequests": {
+        "put": {
+          "security": [
+            {
+              "bearerAuth": []
+            }
+          ],
+          "tags": [
+            "Webhooks"
+          ],
+          "summary": "Update mutiple Webhooks",
+          "description": "Update mutiple Webhooks with First American",
+          "operationId": "Webhooks_MultipulePUT",
+          "requestBody": {
+            "description": "Webhook Request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Webhooks"
+                },
+                "example": [
+                  {
+                    "AppSource": "OpenAPI",
+                    "Uri": "notification endpoint URL",
+                    "Id": "c869db8136f24634bbf3ba6d92c4e8ff",
+                    "Secret": "integrator's secret",
+                    "Description": "Subscription to OrderCreated event",
+                    "IsPaused": false,
+                    "Filter": "OrderCreated",
+                    "Headers": {
+                      "x-api-key": "integrator's key"
+                    },
+                    "Properties": {
+                      "retryCount": 5
+                    }
+                  },
+                  {
+                    "AppSource": "OpenAPI",
+                    "Uri": "notification endpoint URL",
+                    "Id": "09048da2bb08499b9b5052e16907ba7c",
+                    "Secret": "integrator's secret",
+                    "Description": "Subscription to CurativeCleared event",
+                    "IsPaused": false,
+                    "Filter": "CurativeCleared",
+                    "Headers": {
+                      "x-api-key": "integrator's key"
+                    },
+                    "Properties": {
+                      "retryCount": 2
+                    }
+                  },
+                  {
+                    "AppSource": "OpenAPI",
+                    "Uri": "notification endpoint URL",
+                    "Id": "da117c76-jhd3-4ee5-a1c1-8fa5ccf1fd51",
+                    "Secret": "integrator's secret",
+                    "Description": "Subscription to DocumentDelivery event",
+                    "IsPaused": false,
+                    "Filter": "DocumentDelivery",
+                    "Headers": {
+                      "x-api-key": "integrator's key"
+                    },
+                    "Properties": {
+                      "retryCount": 3
+                    }
+                  }
+                ]
+              }
+            }
+          },
+          "responses": {
+            "200": {
+              "description": "Success",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "$ref": "#/components/schemas/Webhooks"
+                  },
+                  "example": [
+                    {
+                      "Id": "c869db8136f24634bbf3ba6d92c4e8ff",
+                      "Status": "Success"
+                    },
+                    {
+                      "Id": "09048da2bb08499b9b5052e16907ba7c",
+                      "Status": "Uri/Domain Unauthorized"
+                    },
+                    {
+                      "Id": "da117c76-jhd3-4ee5-a1c1-8fa5ccf1fd51",
+                      "Status": "integrator's secret"
+                    }
+                  ]
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "components": {
+      "securitySchemes": {
+        "bearerAuth": {
+          "type": "http",
+          "scheme": "bearer",
+          "bearerFormat": "JWT",
+          "description": "OAuth (a.k.a JWT) Authentication is **mandatory**. Please enter a valid access token"
+        }
+      },
+      "schemas": {
+        "TokenResult": {
+          "type": "object",
+          "properties": {
+            "token_type": {
+              "type": "string"
+            },
+            "expires_in": {
+              "type": "integer"
+            },
+            "ext_expires_in": {
+              "type": "integer"
+            },
+            "access_token": {
+              "type": "string"
+            }
+          }
+        },
+        "OrderRequest": {
+          "type": "object",
+          "properties": {
+            "appSource": {
+              "type": "string",
+              "description": "A required unique application ID provided by First American Title to identify clients."
+            },
+            "service": {
+              "enum": [
+                "Escrow",
+                "Title",
+                "EscrowTitle"
+              ],
+              "type": "string",
+              "description": "A required value of available service options provided by First American Title.",
+              "example": "TitleEscrow"
+            },
+            "parties": {
+              "uniqueItems": false,
+              "type": "array",
+              "items": {
+                "anyOf": [
+                  {
+                    "$ref": "#/components/schemas/IndividualParty"
+                  },
+                  {
+                    "$ref": "#/components/schemas/LegalEntityParty"
+                  }
+                ]
+              },
+              "description": "List of parties involved in the transaction. Party type can be either LegalEntityParty or IndividualParty"
+            },
+            "propertyAddress": {
+              "$ref": "#/components/schemas/PropertyAddress"
+            },
+            "officeId": {
+              "type": "string",
+              "description": "An optional field that can be provided if a preference of service location exists. An officeId can be obtained via the Offices resource.",
+              "example": 4356
+            },
+            "escrowOfficerCode": {
+              "type": "string",
+              "description": "An optional field that can be provided for escrow officer.  An escrowOfficerCode can be obtained via the employees/escrowOfficers resource.",
+              "example": "CJCLEMENS"
+            },
+            "titleOfficerCode": {
+              "type": "string",
+              "description": "An optional field that can be provided for title officer.  A titleOfficerCode can be obtained via the employees/titleOfficers resource.",
+              "example": "CJCLEMENS"
+            },
+            "transactionType": {
+              "enum": [
+                "SaleWithMortgage",
+                "SaleCash",
+                "Refinance",
+                "EquityLoan",
+                "SaleWithConstructionLoan",
+                "ConstructionFinance",
+                "SearchPackage",
+                "Other"
+              ],
+              "type": "string",
+              "description": "A required value that specifies the purpose for the transaction service request.",
+              "example": "SaleWithMortgage"
+            },
+            "notes": {
+              "type": "string",
+              "description": "An optional free text field for additional service request information."
+            },
+            "externalTrackingId": {
+              "type": "string",
+              "description": "Client provided transaction ID used to communicate inbound and outbound."
+            },
+            "loan": {
+              "$ref": "#/components/schemas/Loan"
+            },
+            "Documents": {
+              "type": "array",
+              "items": {
+                "$ref": "#/components/schemas/Document"
+              },
+              "description": "List of documents involved in the transaction."
+            },
+            "transactionDetails": {
+              "$ref": "#/components/schemas/TransactionDetails"
+            }
+          },
+          "required": [
+            "appSource",
+            "service",
+            "parties",
+            "propertyAddress",
+            "transactionType",
+            "externalTrackingId"
+          ]
+        },
+        "Party": {
+          "type": "object",
+          "properties": {
+            "PrimaryName": {
+              "type": "string"
+            },
+            "TaxId": {
+              "type": "string"
+            },
+            "OtherRole": {
+              "enum": [
+                "NotApplicable",
+                "BuyerBorrower",
+                "Seller",
+                "BuyerRealEstateAgent",
+                "SellerRealEstateAgent",
+                "Lender",
+                "PayoffLender",
+                "MortgageBroker"
+              ],
+              "type": "string"
+            },
+            "Addresses": {
+              "type": "array",
+              "items": {
+                "$ref": "#/components/schemas/Address"
+              }
+            }
+          },
+          "required": [
+            "Role",
+            "stateCode"
+          ]
+        },
+        "IndividualParty": {
+          "type": "object",
+          "properties": {
+            "firstName": {
+              "type": "string",
+              "description": "The first name of the party in the transaction. "
+            },
+            "lastName": {
+              "type": "string",
+              "description": "The last name of the party in the transaction. "
+            },
+            "maritalStatus": {
+              "enum": [
+                "aSingleMan",
+                "aSingleWoman",
+                "aSinglePerson",
+                "HusbandAndWife",
+                "aMarriedMan",
+                "aMarriedWoman",
+                "anUnmarriedPerson",
+                "aRegisteredDomesticPartner",
+                "NotApplicable",
+                "Other"
+              ],
+              "type": "string",
+              "description": "The marital status of the party in the transaction.",
+              "example": "HusbandAndWife"
+            },
+            "middleName": {
+              "type": "string",
+              "description": "The middle name of the party in the transaction."
+            },
+            "salutation": {
+              "type": "string",
+              "description": "The salutation of the party in the transaction."
+            },
+            "suffix": {
+              "type": "string",
+              "description": "The suffix of the party in the transaction."
+            },
+            "spouseName": {
+              "type": "string",
+              "description": "The spouse name of the party in the transaction."
+            },
+            "contactPoints": {
+              "uniqueItems": false,
+              "type": "array",
+              "items": {
+                "$ref": "#/components/schemas/ContactPoint"
+              },
+              "description": "A list of contact points."
+            },
+            "primaryName": {
+              "type": "string",
+              "description": "The primary name of the party in the transaction."
+            },
+            "taxId": {
+              "type": "string",
+              "description": "The tax ID of the party in the transaction."
+            },
+            "role": {
+              "$ref": "#/components/schemas/IndividualPartyRole"
+            },
+            "otherrole": {
+              "enum": [
+                "NotApplicable",
+                "BuyerBorrower",
+                "Seller",
+                "BuyerRealEstateAgent",
+                "SellerRealEstateAgent",
+                "CoBuyerBorrower",
+                "Other",
+                "MortgageBroker",
+                "BuyerRealEstateBroker",
+                "BuyerAttorney",
+                "BuyerTransactionCoordinator",
+                "NewLender",
+                "SellerAttorney",
+                "SellerRealEstateBroker",
+                "SellerTransactionCoordinator",
+                "OutsideTitle",
+                "OutsideEscrow",
+                "Builder",
+                "Investor"
+              ],
+              "type": "string",
+              "description": "Only use this when RequestingSource is provided as the role. Consult with First American before using."
+            },
+            "addresses": {
+              "uniqueItems": false,
+              "type": "array",
+              "items": {
+                "$ref": "#/components/schemas/Address"
+              }
+            }
+          },
+          "required": [
+            "role",
+            "firstName",
+            "lastName"
+          ]
+        },
+        "LegalEntityParty": {
+          "type": "object",
+          "properties": {
+            "legalEntity": {
+              "enum": [
+                "Trust",
+                "BusinessEntity"
+              ],
+              "type": "string"
+            },
+            "contacts": {
+              "uniqueItems": false,
+              "type": "array",
+              "items": {
+                "$ref": "#/components/schemas/PartyContact"
+              }
+            },
+            "primaryName": {
+              "type": "string",
+              "description": "The primary name of the legal entity in the transaction."
+            },
+            "taxId": {
+              "type": "string",
+              "description": "The tax ID of the legal entity in the transaction."
+            },
+            "role": {
+              "$ref": "#/components/schemas/LegalEntityPartyRole"
+            },
+            "otherRole": {
+              "$ref": "#/components/schemas/OtherRole"
+            },
+            "addresses": {
+              "uniqueItems": false,
+              "type": "array",
+              "items": {
+                "$ref": "#/components/schemas/Address"
+              }
+            },
+            "hoiAccount": {
+              "type": "string",
+              "description": "The unique identifier assigned by a homeowner's insurance company to a customer's policy or account."
+            },
+            "hoaAccount": {
+              "type": "string",
+              "description": "The unique identifier assigned by a homeowner's association to the owner(s) of a property within the association."
+            }
+          },
+          "required": [
+            "role",
+            "primaryName",
+            "legalEntity"
+          ]
+        },
+        "PartyContact": {
+          "type": "object",
+          "properties": {
+            "firstName": {
+              "type": "string",
+              "description": "The first name of the party contact. "
+            },
+            "lastName": {
+              "type": "string",
+              "description": "The last name of the party contact. "
+            },
+            "contactPoints": {
+              "uniqueItems": false,
+              "type": "array",
+              "items": {
+                "$ref": "#/components/schemas/ContactPoint"
+              },
+              "description": "A list of contact points."
+            },
+            "role": {
+              "$ref": "#/components/schemas/LegalEntityPartyContactRole"
+            }
+          }
+        },
+        "IndividualPartyRole": {
+          "enum": [
+            "LoanOfficer",
+            "LoanProcessor",
+            "RequestingSource",
+            "BuyerBorrower",
+            "CoBuyerBorrower",
+            "Seller",
+            "BuyerRealEstateAgent",
+            "SellerRealEstateAgent",
+            "Other",
+            "MortgageBroker",
+            "BuyerRealEstateBroker",
+            "BuyerAttorney",
+            "BuyerTransactionCoordinator",
+            "NewLender",
+            "SellerAttorney",
+            "SellerRealEstateBroker",
+            "SellerTransactionCoordinator"
+          ],
+          "type": "string",
+          "description": "The role of the party in the transaction.  BuyerBorrower required. \n\nRequestingSource is a special case for supporting iBuyers. Consult with First American before using."
+        },
+        "LegalEntityPartyRole": {
+          "enum": [
+            "RequestingSource",
+            "BuyerBorrower",
+            "Seller",
+            "BuyerRealEstateAgent",
+            "SellerRealEstateAgent",
+            "Lender",
+            "PayoffLender",
+            "MortgageBroker",
+            "HomeOwnerAssociation",
+            "HomeOwnerInsurance",
+            "Other",
+            "BuyerRealEstateBroker",
+            "BuyerAttorney",
+            "BuyerTransactionCoordinator",
+            "NewLender",
+            "SellerAttorney",
+            "SellerRealEstateBroker",
+            "SellerTransactionCoordinator"
+          ],
+          "type": "string",
+          "description": "The role of the party in the transaction.  BuyerBorrower required. \n\nRequestingSource is a special case for supporting iBuyers. Consult with First American before using."
+        },
+        "LegalEntityPartyContactRole": {
+          "enum": [
+            "BuyerBorrower",
+            "Seller",
+            "BuyerRealEstateAgent",
+            "SellerRealEstateAgent",
+            "Lender",
+            "PayoffLender",
+            "LoanOfficer",
+            "LoanProcessor",
+            "LoanCloser",
+            "MortgageBroker",
+            "HomeOwnerAssociation",
+            "HomeOwnerInsurance",
+            "Other",
+            "BuyerRealEstateBroker",
+            "BuyerAttorney",
+            "BuyerTransactionCoordinator",
+            "NewLender",
+            "SellerAttorney",
+            "SellerRealEstateBroker",
+            "SellerTransactionCoordinator"
+          ],
+          "type": "string",
+          "description": "The role of the party in the transaction.  BuyerBorrower required."
+        },
+        "OtherRole": {
+          "enum": [
+            "NotApplicable",
+            "BuyerBorrower",
+            "Seller",
+            "BuyerRealEstateAgent",
+            "SellerRealEstateAgent",
+            "Lender",
+            "PayoffLender",
+            "MortgageBroker",
+            "Other",
+            "BuyerRealEstateBroker",
+            "BuyerAttorney",
+            "BuyerTransactionCoordinator",
+            "NewLender",
+            "SellerAttorney",
+            "SellerRealEstateBroker",
+            "SellerTransactionCoordinator",
+            "OutsideTitle",
+            "OutsideEscrow",
+            "Builder",
+            "Investor"
+          ],
+          "type": "string",
+          "description": "Only use this when RequestingSource is provided as the role. Consult with First American before using.",
+          "example": "BuyerBorrower"
+        },
+        "PropertyAddress": {
+          "description": "A required field providing the site location of the property in question.",
+          "type": "object",
+          "properties": {
+            "addressLine1": {
+              "type": "string",
+              "description": "Address Line 1",
+              "example": "2 First American Way"
+            },
+            "addressLine2": {
+              "type": "string",
+              "description": "Address Line 2",
+              "example": "Unit 123"
+            },
+            "cityName": {
+              "type": "string",
+              "description": "City of an Address",
+              "example": "Santa Ana"
+            },
+            "countyName": {
+              "type": "string",
+              "description": "County Name",
+              "example": "Orange"
+            },
+            "countyFips": {
+              "type": "string",
+              "description": "County FIPS",
+              "example": "059"
+            },
+            "postalCode": {
+              "type": "string",
+              "pattern": "^[0-9]{5}(-[0-9]{4})?$",
+              "description": "Postal Code",
+              "example": 92706
+            },
+            "stateCode": {
+              "type": "string",
+              "description": "State Code",
+              "example": "CA"
+            },
+            "PropertyType": {
+              "enum": [
+                "SingleFamilyResidence",
+                "MultiResidential",
+                "Townhouse",
+                "Condominium",
+                "ManufacturedHome",
+                "VacantLand"
+              ],
+              "type": "string",
+              "description": "Property Type",
+              "example": "SingleFamilyResidence"
+            },
+            "APN": {
+              "type": "string",
+              "description": "Property APN",
+              "example": "006-007-001-000"
+            }
+          },
+          "required": [
+            "countyName",
+            "postalCode",
+            "stateCode"
+          ]
+        },
+        "Address": {
+          "type": "object",
+          "properties": {
+            "addressType": {
+              "enum": [
+                "Other",
+                "Billing",
+                "Business",
+                "CurrentAddress",
+                "ForwardingAddress",
+                "Home",
+                "Mailing",
+                "NotaryAddress",
+                "SigningLocation",
+                "SubjectProperty"
+              ],
+              "type": "string",
+              "description": "Address Type",
+              "example": "CurrentAddress"
+            },
+            "addressLine1": {
+              "type": "string",
+              "description": "Address Line 1",
+              "example": "2 First American Way"
+            },
+            "addressLine2": {
+              "type": "string",
+              "description": "Address Line 2",
+              "example": "Unit 123"
+            },
+            "cityName": {
+              "type": "string",
+              "description": "City of an address",
+              "example": "Santa Ana"
+            },
+            "countyName": {
+              "type": "string",
+              "description": "County Name",
+              "example": "Orange"
+            },
+            "postalCode": {
+              "type": "string",
+              "description": "Postal Code",
+              "example": 92706
+            },
+            "stateCode": {
+              "type": "string",
+              "description": "State Code",
+              "example": "CA"
+            }
+          },
+          "description": "Address Definition",
+          "required": [
+            "postalCode",
+            "stateCode"
+          ]
+        },
+        "ContactPoint": {
+          "type": "object",
+          "properties": {
+            "contactPointType": {
+              "enum": [
+                "Work",
+                "Mobile",
+                "Home",
+                "Other"
+              ],
+              "type": "string",
+              "description": "Type of Contact Point",
+              "example": "Work"
+            },
+            "emailAccount": {
+              "type": "string",
+              "description": "Contact's email address."
+            },
+            "faxNumber": {
+              "type": "string",
+              "description": "Contact's Fax Number.",
+              "example": "714-250-0000"
+            },
+            "faxNumberExt": {
+              "type": "string",
+              "description": "Fax Number Extension"
+            },
+            "phoneNumber": {
+              "type": "string",
+              "description": "Contact's phone number",
+              "example": "714-250-0000"
+            },
+            "phoneNumberExt": {
+              "type": "string",
+              "description": "Phone Number Extension"
+            }
+          },
+          "description": "Contact Point Definition",
+          "required": [
+            "contactPointType"
+          ]
+        },
+        "Loan": {
+          "type": "object",
+          "properties": {
+            "loanNumber": {
+              "type": "string",
+              "description": "An optional field that contains a  unique loan identifier",
+              "example": "Loan12345-345"
+            },
+            "loanAmount": {
+              "type": "number",
+              "format": "decimal",
+              "description": "An optional field for the total dollar amount of the mortgage note that is being requested by the borrower",
+              "example": 1234
+            },
+            "LoanType": {
+              "enum": [
+                "Conventional",
+                "FHA",
+                "VA"
+              ],
+              "type": "string",
+              "description": "An optional field that contains a unique different loan types",
+              "example": "Conventional"
+            }
+          }
+        },
+        "TransactionDetails": {
+          "type": "object",
+          "properties": {
+            "contractSignedDate": {
+              "type": "string",
+              "format": "date",
+              "description": "An optional field for the date on which the purchase agreement was signed",
+              "example": "2020-02-03T00:00:00.000Z"
+            },
+            "earnestMoneyDeposit": {
+              "type": "number",
+              "format": "decimal",
+              "description": "An optional field for the amount of earnest money specified in the purchase agreement",
+              "example": 234
+            },
+            "inspectionEndDate": {
+              "type": "string",
+              "format": "date",
+              "description": "An optional field for the buyer's inspection deadline as specified in the purchase agreement",
+              "example": "2020-02-05T00:00:00.000Z"
+            },
+            "homeOwnersAssociation": {
+              "type": "boolean",
+              "description": "An optional field to indicate whether the subject property is part of an HOA",
+              "example": false
+            },
+            "closeOfEscrowDate": {
+              "type": "string",
+              "format": "date",
+              "description": "An optional field for estimated settlement date for the transaction",
+              "example": "2020-02-11T00:00:00.000Z"
+            },
+            "acquisitionPrice": {
+              "type": "number",
+              "format": "decimal",
+              "description": "An optional field for sale price of the subject property",
+              "example": 1290
+            },
+            "payoffInformations": {
+              "type": "array",
+              "items": {
+                "$ref": "#/components/schemas/PayoffInformation"
+              }
+            }
+          }
+        },
+        "PayoffInformation": {
+          "type": "object",
+          "properties": {
+            "payoffType": {
+              "enum": [
+                "LenderOrderBothPayoffSubordinate",
+                "LenderOrderPayoff",
+                "LenderOrderSubordinate",
+                "Other",
+                "TitleCompanyOrderBothPayoffSubordinate",
+                "TitleCompanyOrderPayoff",
+                "TitleCompanyOrderSubordinate"
+              ],
+              "type": "string",
+              "description": "Payoff Type",
+              "example": "LenderOrderSubordinate"
+            },
+            "loanNumber": {
+              "type": "string",
+              "description": "Loan Number",
+              "example": "787782232"
+            },
+            "loanAmount": {
+              "type": "number",
+              "format": "decimal",
+              "description": "Loan Amount",
+              "example": "70000"
+            },
+            "lienPosition": {
+              "type": "number",
+              "format": "integer",
+              "description": "Lien Position",
+              "example": "1"
+            },
+            "liabilityType": {
+              "enum": [
+                "BorrowerEstimatedTotalMonthlyLiabilityPayment",
+                "CollectionsJudgementsAndLiens",
+                "DeferredStudentLoan",
+                "DelinquentTaxes",
+                "FirstPositionMortgageLien",
+                "Garnishments",
+                "HELOC",
+                "HomeownersAssociationLien",
+                "Installment",
+                "LeasePayment",
+                "MonetaryJudgment",
+                "MortgageLoan",
+                "Open30DayChargeAccount",
+                "Other",
+                "PersonalLoan",
+                "Revolving",
+                "SecondPositionMortgageLien",
+                "Taxes",
+                "TaxLien",
+                "ThirdPositionMortgageLien",
+                "UnsecuredHomeImprovementLoanInstallment",
+                "UnsecuredHomeImprovementLoanRevolving"
+              ],
+              "type": "string",
+              "description": "Payoff Type",
+              "example": "MortgageLoan"
+            },
+            "lenderName": {
+              "type": "string",
+              "description": "Lender Name",
+              "example": "Wells Fargo"
+            },
+            "lenderPhone": {
+              "type": "string",
+              "description": "Lender Phone",
+              "example": "123-123-1234"
+            }
+          }
+        },
+        "DocumentPayload": {
+          "type": "object",
+          "properties": {
+            "VestingInformation": {
+              "type": "string",
+              "description": "Optional data that describes the way an owner (or owners) of property takes title to their real estate."
+            },
+            "LegalDescription": {
+              "type": "string",
+              "description": "Optional data that offers a description of real estate that is sufficient to identify it for legal purposes."
+            },
+            "Name": {
+              "type": "string",
+              "maxLength": 256,
+              "description": "The required document name used by the appSource."
+            },
+            "Description": {
+              "type": "string",
+              "description": "Optional descriptive name used by the appSource."
+            },
+            "DocumentType": {
+              "enum": [
+                "TitleSearch",
+                "TitleCommitment",
+                "EMDReceipt",
+                "PayOff",
+                "FinalPolicy",
+                "LenderPolicy",
+                "TrailingDocuments",
+                "ExecutedClosingPackage-Piggyback",
+                "DisbursementSummaryReport",
+                "FeeSheet",
+                "ClosingProtectionLetter",
+                "TaxDocument",
+                "SettlementStatement",
+                "RecordedPackage",
+                "ClosingDisclosure",
+                "FundingTransmittal",
+                "ClosingDisclosureDraft",
+                "ExecutedClosingPackage",
+                "WiringInstructions"
+              ],
+              "type": "string",
+              "description": "An optional value used to identify the type of document."
+            },
+            "PageCount": {
+              "format": "int32",
+              "type": "integer",
+              "description": "An optional field used to provide the total number of pages included in a document upload."
+            },
+            "IsFinalized": {
+              "type": "boolean",
+              "description": "An optional value that can be used to state the status of a document version."
+            },
+            "FileExtension": {
+              "enum": [
+                "pdf",
+                "doc",
+                "tiff",
+                "jpg",
+                "jpeg",
+                "docx",
+                "xls",
+                "xlsx"
+              ],
+              "type": "string",
+              "description": "A required field used to identify the format of the document. "
+            },
+            "Version": {
+              "type": "string",
+              "description": "An optional numeric value to identify the version of a document."
+            },
+            "EmbeddedContent": {
+              "type": "string",
+              "description": "A required Base64 encoded file within a max size of 20 MB.",
+              "maxLength": 20971520
+            },
+            "ServiceType": {
+              "$ref": "#/components/schemas/ServiceType"
+            },
+            "Message": {
+              "type": "string",
+              "description": "Optional free form text provided by the application source."
+            }
+          },
+          "required": [
+            "Name",
+            "ServiceType",
+            "FileExtension",
+            "EmbeddedContent"
+          ]
+        },
+        "Document": {
+          "type": "object",
+          "properties": {
+            "Name": {
+              "type": "string",
+              "maxLength": 256,
+              "description": "The required document name used by the appSource."
+            },
+            "Description": {
+              "type": "string",
+              "description": "Optional descriptive name used by the appSource."
+            },
+            "DocumentType": {
+              "enum": [
+                "TitleSearch",
+                "TitleCommitment",
+                "EMDReceipt",
+                "PayOff",
+                "FinalPolicy",
+                "LenderPolicy",
+                "TrailingDocuments",
+                "ExecutedClosingPackage-Piggyback",
+                "DisbursementSummaryReport",
+                "FeeSheet",
+                "ClosingProtectionLetter",
+                "TaxDocument",
+                "SettlementStatement",
+                "RecordedPackage",
+                "ClosingDisclosure",
+                "FundingTransmittal",
+                "ClosingDisclosureDraft",
+                "ExecutedClosingPackage",
+                "WiringInstructions"
+              ],
+              "type": "string",
+              "description": "An optional value used to identify the type of document."
+            },
+            "PageCount": {
+              "format": "int32",
+              "type": "integer",
+              "description": "An optional field used to provide the total number of pages included in a document upload."
+            },
+            "IsFinalized": {
+              "type": "boolean",
+              "description": "An optional value that can be used to state the status of a document version."
+            },
+            "FileExtension": {
+              "enum": [
+                "pdf",
+                "doc",
+                "tiff",
+                "jpg",
+                "jpeg",
+                "docx",
+                "xls",
+                "xlsx"
+              ],
+              "type": "string",
+              "description": "A required field used to identify the format of the document. "
+            },
+            "EmbeddedContent": {
+              "type": "string",
+              "description": "A required Base64 encoded file within a max size of 20 MB.",
+              "maxLength": 20971520
+            }
+          },
+          "required": [
+            "Name",
+            "FileExtension",
+            "EmbeddedContent"
+          ]
+        },
+        "ResourceResponse": {
+          "type": "object",
+          "properties": {
+            "ID": {
+              "format": "uuid",
+              "type": "string",
+              "example": "00000000-0000-0000-0000-000000000000",
+              "description": "A unique message ID used for troubleshooting."
+            },
+            "externalReferenceId": {
+              "type": "string",
+              "description": "An echo of the externalReferenceId provided in the request."
+            },
+            "DateTime": {
+              "$ref": "#/components/schemas/UtcDateTime"
+            },
+            "Status": {
+              "format": "int32",
+              "type": "integer",
+              "description": "1 indicates success. 0 indicates failure. Review Message field for details."
+            },
+            "Message": {
+              "type": "string",
+              "description": "Provides a detailed desciption of the Status field."
+            }
+          }
+        },
+        "ServiceResponse": {
+          "type": "object",
+          "properties": {
+            "ID": {
+              "format": "uuid",
+              "type": "string",
+              "example": "00000000-0000-0000-0000-000000000000"
+            },
+            "externalReferenceId": {
+              "type": "string"
+            },
+            "FileNumber": {
+              "type": "string"
+            },
+            "Services": {
+              "type": "array",
+              "items": {
+                "$ref": "#/components/schemas/Service"
+              }
+            }
+          }
+        },
+        "Service": {
+          "type": "object",
+          "properties": {
+            "Type": {
+              "$ref": "#/components/schemas/ServiceType"
+            },
+            "Officer": {
+              "$ref": "#/components/schemas/Contact"
+            },
+            "Assistant": {
+              "$ref": "#/components/schemas/Contact"
+            }
+          }
+        },
+        "Contact": {
+          "type": "object",
+          "properties": {
+            "Name": {
+              "type": "string"
+            },
+            "PhoneNumber": {
+              "type": "string"
+            }
+          }
+        },
+        "EventNotification": {
+          "title": "EventNotification",
+          "type": "object",
+          "properties": {
+            "Id": {
+              "type": "string",
+              "description": "A unique message ID used for troubleshooting."
+            },
+            "RetryCount": {
+              "type": "integer",
+              "format": "int32",
+              "description": "The number of times we have attempted to deliver this message."
+            },
+            "Notifications": {
+              "type": "array",
+              "items": {
+                "$ref": "#/components/schemas/Event"
+              },
+              "description": "A collection of events. Currently only one event is provided per notification."
+            }
+          }
+        },
+        "Event": {
+          "title": "Event",
+          "type": "object",
+          "properties": {
+            "Action": {
+              "$ref": "#/components/schemas/EventType"
+            },
+            "ExternalTrackingId": {
+              "type": "string"
+            },
+            "Message": {
+              "oneOf": [
+                {
+                  "$ref": "#/components/schemas/MessagePayload"
+                },
+                {
+                  "$ref": "#/components/schemas/FundsDisbursedMessagePayload"
+                },
+                {
+                  "$ref": "#/components/schemas/CurativeClearedMessagePayload"
+                },
+                {
+                  "$ref": "#/components/schemas/DocumentPayload"
+                },
+                {
+                  "$ref": "#/components/schemas/ServiceResponse"
+                }
+              ]
+            }
+          },
+          "description": "Action to Message mapping:\n \nAction | Message\n ------|-------------\n OrderCreated | ServiceResponse\n DocumentDelivery | DocumentPayload\n CurativeCleared | CurativeClearedMessagePayload\n FundsDisbursed | FundsDisbursedMessagePayload\n MessageAdded | MessagePayload\n FundingApproved | MessagePayload\n CurativePending | MessagePayload\n DisburseHold | MessagePayload\n OrderRejected | MessagePayload\n OrderCancelled | MessagePayload\n OrderClosed | MessagePayload\n AppointmentScheduled | MessagePayload\n TitleProductDelivered | DocumentPayload\n FinalPolicyDelivered | DocumentPayload\n CDDraft | DocumentPayload\n CDBalanced | MessagePayload\n RecordingCompleted | MessagePayload\n SigningOrdered | MessagePayload\n SigningBorrowerNotified | MessagePayload\n SigningCompleted | MessagePayload\n . | .\n"
+        },
+        "MessagePayload": {
+          "title": "MessagePayload",
+          "type": "object",
+          "properties": {
+            "appSource": {
+              "type": "string",
+              "example": "Replace with FA Provided ID"
+            },
+            "ServiceType": {
+              "$ref": "#/components/schemas/ServiceType"
+            },
+            "Message": {
+              "type": "string",
+              "description": "The required message content."
+            },
+            "MessageType": {
+              "type": "string",
+              "description": "The required message type."
+            }
+          },
+          "required": [
+            "AppSource",
+            "ServiceType",
+            "Message"
+          ]
+        },
+        "ClientContactUpdate": {
+          "title": "ClientContactUpdate",
+          "type": "object",
+          "properties": {
+            "AppSource": {
+              "type": "string",
+              "example": "Replace with FA Provided ID"
+            },
+            "ServiceType": {
+              "$ref": "#/components/schemas/ServiceType"
+            },
+            "MessageType": {
+              "type": "string",
+              "description": "The required message type."
+            },
+            "Message": {
+              "type": "string",
+              "description": "The required message."
+            },
+            "IndividualParty": {
+              "type": "object",
+              "properties": {
+                "firstName": {
+                  "type": "string",
+                  "description": "The first name of the party in the transaction. "
+                },
+                "middleName": {
+                  "type": "string",
+                  "description": "The middle name of the party in the transaction."
+                },
+                "lastName": {
+                  "type": "string",
+                  "description": "The last name of the party in the transaction. "
+                },
+                "role": {
+                  "$ref": "#/components/schemas/IndividualPartyRole"
+                },
+                "contactPoints": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "ContactPointType": {
+                        "enum": [
+                          "Work",
+                          "Mobile",
+                          "Home",
+                          "Other"
+                        ],
+                        "type": "string",
+                        "description": "Contact Point Type"
+                      },
+                      "EmailAccount": {
+                        "type": "string",
+                        "description": "Email Account"
+                      },
+                      "PhoneNumber": {
+                        "type": "string",
+                        "description": "Phone Number"
+                      }
+                    }
+                  },
+                  "description": "List of Contact Points."
+                }
+              }
+            },
+            "AddressType": {
+              "enum": [
+                "Other",
+                "Billing",
+                "Business",
+                "CurrentAddress",
+                "ForwardingAddress",
+                "Home",
+                "Mailing",
+                "NotaryAddress",
+                "SigningLocation",
+                "SubjectProperty"
+              ],
+              "type": "string",
+              "description": "Address Type"
+            },
+            "PropertyAddress": {
+              "type": "object",
+              "properties": {
+                "AddressLine1": {
+                  "type": "string",
+                  "description": "Address Line1"
+                },
+                "AddressLine2": {
+                  "type": "string",
+                  "description": "Address Line2"
+                },
+                "CityName": {
+                  "type": "string",
+                  "description": "City Name"
+                },
+                "CountyName": {
+                  "type": "string",
+                  "description": "County Name"
+                },
+                "PostalCode": {
+                  "type": "string",
+                  "description": "Postal Code"
+                },
+                "StateCode": {
+                  "type": "string",
+                  "description": "State Code"
+                }
+              }
+            }
+          },
+          "required": [
+            "AppSource",
+            "ServiceType"
+          ]
+        },
+        "FundsDisbursedMessagePayload": {
+          "title": "FundsDisbursedMessagePayload",
+          "type": "object",
+          "properties": {
+            "ServiceType": {
+              "$ref": "#/components/schemas/ServiceType"
+            },
+            "Comments": {
+              "type": "string"
+            },
+            "FundedAmount": {
+              "type": "number",
+              "format": "decimal"
+            },
+            "FundedType": {
+              "type": "string"
+            },
+            "DisbursementDate": {
+              "$ref": "#/components/schemas/UtcDateTime"
+            }
+          }
+        },
+        "CurativeClearedMessagePayload": {
+          "title": "CurativeClearedMessagePayload",
+          "type": "object",
+          "properties": {
+            "ServiceType": {
+              "$ref": "#/components/schemas/ServiceType"
+            },
+            "Comments": {
+              "type": "string"
+            },
+            "ClearedDate": {
+              "$ref": "#/components/schemas/UtcDateTime"
+            }
+          }
+        },
+        "ServiceType": {
+          "title": "ServiceType",
+          "enum": [
+            "Escrow",
+            "Title",
+            "EscrowTitle",
+            "Other"
+          ],
+          "type": "string",
+          "description": "The required service type associated with the payload.",
+          "example": "Escrow"
+        },
+        "UtcDateTime": {
+          "type": "string",
+          "format": "date-time",
+          "example": "2018-03-20T09:12:28Z"
+        },
+        "Office": {
+          "properties": {
+            "officeSource": {
+              "type": "string",
+              "description": "Internal FA System from which data is extracted",
+              "example": "FAST"
+            },
+            "officeId": {
+              "type": "string",
+              "description": "Internal FA Office Identifier",
+              "example": "11065"
+            },
+            "officeAltauniversalId": {
+              "type": "string",
+              "description": "ALTA (American Land Title Association) Identifier",
+              "example": "1164687"
+            },
+            "officeName": {
+              "type": "string",
+              "description": "Name of Title/Escrow Office",
+              "example": "FA Mortgage Solutions"
+            },
+            "officeDoingBusinessAsName": {
+              "type": "string",
+              "description": "DBA (Doing Business As) Name",
+              "example": "Order Fulfillment Solutions (RLA)"
+            },
+            "officeStatus": {
+              "type": "string",
+              "description": "Current status of the of the office",
+              "example": "ACTIVE"
+            },
+            "officeStatusDate": {
+              "type": "string",
+              "description": "Date of current status",
+              "example": "2018-11-02T16:00:01.47"
+            },
+            "companyName": {
+              "type": "string",
+              "description": "Name of Company",
+              "example": "First American Title Insurance Company"
+            },
+            "officeAddressLine1": {
+              "type": "string",
+              "description": "Company’s Office Address Line 1",
+              "example": "3 First American Way"
+            },
+            "officeAddressLine2": {
+              "type": "string",
+              "description": "Company’s Office Address Line 2",
+              "example": ""
+            },
+            "officeCity": {
+              "type": "string",
+              "description": "Company’s City",
+              "example": "Santa Ana"
+            },
+            "officeCounty": {
+              "type": "string",
+              "description": "Company’s County",
+              "example": "Orange"
+            },
+            "officeState": {
+              "type": "string",
+              "description": "Company’s State",
+              "example": "CA"
+            },
+            "officeZipCode": {
+              "type": "string",
+              "description": "Company’s Zip Code",
+              "example": "92707"
+            },
+            "officeLatitude": {
+              "type": "string",
+              "description": "Latitude of company’s location",
+              "example": "33.7010837702385"
+            },
+            "officeLongitude": {
+              "type": "string",
+              "description": "Longitude of company’s location",
+              "example": "-117.861241175957"
+            },
+            "officePhoneAreaCode": {
+              "type": "string",
+              "description": "Office Phone Number Area Code",
+              "example": "714"
+            },
+            "officePhoneNumber": {
+              "type": "string",
+              "description": "Office Phone Number",
+              "example": "250-3000"
+            },
+            "officeFaxAreaCode": {
+              "type": "string",
+              "description": "Office Fax Area Code",
+              "example": "null"
+            },
+            "officeFaxNumber": {
+              "type": "string",
+              "description": "Office Fax Number",
+              "example": "null"
+            },
+            "officeUnderwriters": {
+              "type": "string",
+              "description": "Underwriter(s) available to specific agent",
+              "example": "First American Title Insurance Company"
+            },
+            "officeClientTypes": {
+              "type": "string",
+              "description": "Type of office/services allowed/approved of by First American",
+              "example": ""
+            }
+          }
+        },
+        "Offices": {
+          "type": "array",
+          "items": {
+            "$ref": "#/components/schemas/Office"
+          }
+        },
+        "EventType": {
+          "enum": [
+            "OrderCreated",
+            "DocumentDelivery",
+            "CurativeCleared",
+            "FundsDisbursed",
+            "MessageAdded",
+            "OrderRejected",
+            "OrderCancelled",
+            "OrderClosed",
+            "AppointmentScheduled",
+            "TitleProductDelivered",
+            "FinalPolicyDelivered",
+            "CDDraft",
+            "FundingApproved",
+            "DisburseHold",
+            "CurativePending",
+            "RecordingCompleted",
+            "SigningOrdered",
+            "SigningBorrowerNotified",
+            "SigningCompleted",
+            "CDBalanced"
+          ],
+          "type": "string"
+        },
+        "Webhook": {
+          "type": "object",
+          "properties": {
+            "AppSource": {
+              "type": "string",
+              "description": "Subscription grouping"
+            },
+            "Uri": {
+              "type": "string",
+              "description": "Subscription endpoint"
+            },
+            "Id": {
+              "type": "string",
+              "description": "Webhook unique identifier"
+            },
+            "Secret": {
+              "type": "string",
+              "description": "secret to be used when generating a message hash"
+            },
+            "Description": {
+              "type": "string",
+              "description": "string describing the webhook"
+            },
+            "IsPaused": {
+              "type": "boolean",
+              "description": "determines if the subscription is paused"
+            },
+            "Filter": {
+              "$ref": "#/components/schemas/EventType"
+            },
+            "Headers": {
+              "type": "object",
+              "properties": {
+                "x-api-key": {
+                  "type": "string",
+                  "description": "x-api-key header property/value pair"
+                }
+              },
+              "description": "list of header key/value pairs"
+            },
+            "Properties": {
+              "type": "object",
+              "properties": {
+                "retryCount": {
+                  "type": "integer",
+                  "enum": [
+                    1,
+                    2,
+                    3,
+                    4,
+                    5
+                  ],
+                  "description": "retry count properties property/value pair"
+                }
+              },
+              "description": "list of properties key/value pairs"
+            }
+          }
+        },
+        "Webhooks": {
+          "type": "array",
+          "items": {
+            "$ref": "#/components/schemas/Webhook"
+          }
+        },
+        "Employee": {
+          "type": "object",
+          "properties": {
+            "Id": {
+              "type": "integer",
+              "description": "Field that contains a unique employee identifier",
+              "example": "123455"
+            },
+            "Code": {
+              "type": "string",
+              "description": "Field that contains a unique employee identifier",
+              "example": "ARGUMA"
+            },
+            "FirstName": {
+              "type": "string",
+              "description": "Field that contains employee first name",
+              "example": "Tom"
+            },
+            "LastName": {
+              "type": "string",
+              "description": "Field that contains employee last name",
+              "example": "Dick"
+            },
+            "MiddleName": {
+              "type": "string",
+              "description": "Field that contains employee middle name",
+              "example": "Harry"
+            }
+          }
+        },
+        "OrderCancelRequest": {
+          "type": "object",
+          "properties": {
+            "AppSource": {
+              "type": "string",
+              "example": "Replace with FA Provide ID",
+              "description": "Subscription grouping"
+            },
+            "ServiceType": {
+              "$ref": "#/components/schemas/ServiceType"
+            },
+            "ReasonForCancel": {
+              "type": "string",
+              "description": "Reason for cancel"
+            }
+          },
+          "required": [
+            "ServiceType"
+          ]
+        },
+        "OrderCancelResponse": {
+          "type": "object",
+          "properties": {
+            "ID": {
+              "format": "uuid",
+              "type": "string",
+              "example": "00000000-0000-0000-0000-000000000000",
+              "description": "A unique message ID used for troubleshooting."
+            },
+            "externalReferenceId": {
+              "type": "string",
+              "description": "An echo of the externalReferenceId provided in the request."
+            },
+            "DateTime": {
+              "$ref": "#/components/schemas/UtcDateTime"
+            },
+            "Status": {
+              "format": "int32",
+              "type": "integer",
+              "description": "1 indicates success. 0 indicates failure. Review Message field for details."
+            },
+            "Message": {
+              "type": "string",
+              "description": "Provides a detailed desciption of the Status field."
+            }
+          }
+        }
+      }
+    }
+  }

@@ -1,0 +1,1605 @@
+swagger: '2.0'
+info:
+  description: ''
+  version: v1
+  title: ReverseAddress API
+host: api-w2.firstam.io
+basePath: /v1
+tags:
+- name: developers
+  description: Operations available to regular developers
+schemes:
+- https
+paths:
+  /revaddress/orderbasic:
+    post:
+      tags:
+      - Request
+      summary: Make a new Reverse Address service call
+      description: 'Required fields: RequestorID, Employer.'
+      operationId: post
+      consumes:
+      - application/json
+      - application/xml
+      produces:
+      - application/json
+      - application/xml
+      parameters:
+      - in: header
+        name: x-app-id
+        description: Application ID
+        required: true
+        type: string
+      - in: header
+        name: x-app-key
+        description: Application Key
+        required: true
+        type: string
+      - in: body
+        name: ServiceRequest
+        description: Request to the Service
+        required: true
+        schema:
+          $ref: '#/definitions/ServiceRequest'
+      responses:
+        '200':
+          description: Success
+          schema:
+            $ref: '#/definitions/ServiceResponse'
+        '400':
+          description: Bad Request
+        '401':
+          description: Invalid App ID or Key
+        '500':
+          description: Internal Server Error
+        '503':
+          description: Usage Limit Exceeded
+  /revaddress/orderdetailed:
+    post:
+      tags:
+      - Request
+      summary: Make a new Reverse Address service call
+      description: 'Required fields: RequestorID, Employer.'
+      operationId: post
+      consumes:
+      - application/json
+      - application/xml
+      produces:
+      - application/json
+      - application/xml
+      parameters:
+      - in: header
+        name: x-app-id
+        description: Application ID
+        required: true
+        type: string
+      - in: header
+        name: x-app-key
+        description: Application Key
+        required: true
+        type: string
+      - in: body
+        name: ServiceRequest
+        description: Request to the Service
+        required: true
+        schema:
+          $ref: '#/definitions/ServiceRequest'
+      responses:
+        '200':
+          description: Success
+          schema:
+            $ref: '#/definitions/ServiceResponse'
+        '400':
+          description: Bad Request
+        '401':
+          description: Invalid App ID or Key
+        '500':
+          description: Internal Server Error
+        '503':
+          description: Usage Limit Exceeded
+  /revaddress/report:
+    get:
+      tags:
+      - Get Response
+      summary: Retrieve existing ReverseAddress report by transactionID
+      description: Add a transactionID to the query string to retrieve an existing report.
+      operationId: get
+      consumes:
+      - application/json
+      - application/xml
+      produces:
+      - application/json
+      - application/xml
+      parameters:
+      - in: header
+        name: x-app-id
+        description: Application ID
+        required: true
+        type: string
+      - in: header
+        name: x-app-key
+        description: Application Key
+        required: true
+        type: string
+      - name: transactionID
+        in: query
+        description: Unique Identifier Tied To a Report
+        required: true
+        type: string
+      responses:
+        '200':
+          description: Success
+          schema:
+            $ref: '#/definitions/ServiceResponse'
+        '400':
+          description: Bad Request (Missing/Invalid TransactionID)
+        '401':
+          description: Invalid App ID or Key
+        '404':
+          description: Not Found (No Report Found by TransactionID)
+        '500':
+          description: Internal Server Error
+        '503':
+          description: Usage Limit Exceeded
+definitions:
+  ServiceRequest:
+    type: object
+    required:
+    - RequestorID
+    - Employer
+    properties:
+      RequestorID:
+        $id: '#/properties/RequestorID'
+        type: string
+        title: The Requestorid Schema
+        default: ''
+        examples:
+        - fasfafssssafsa
+        pattern: ^(.*)$
+      CompanyName:
+        $id: '#/properties/CompanyName'
+        type: string
+        title: The Companyname Schema
+        default: ''
+        examples:
+        - McDonald's
+        pattern: ^(.*)$
+      PhoneNumber:
+        $id: '#/properties/PhoneNumber'
+        type: string
+        title: The Phonenumber Schema
+        default: ''
+        examples:
+        - ''
+        pattern: ^(.*)$
+      Address:
+        $id: '#/properties/Address'
+        type: object
+        title: The Address Schema
+        required:
+        - FullAddress
+        - Hash
+        - APN
+        - Longitude
+        - Latitude
+        - StateCityZip
+        - PostalCode
+        - Country
+        - County
+        - ZipFour
+        - CountyFIPSCode
+        - ZipCode
+        - City
+        - StreetAddress2
+        - StreetAddress1
+        - UnitNumber
+        - UnitDesignation
+        - StreetPostDirection
+        - StreetSuffix
+        - StreetName
+        - StreetPreDirection
+        - StreetNumber
+        - State
+        - StateFIPSCode
+        properties:
+          FullAddress:
+            $id: '#/properties/Address/properties/FullAddress'
+            type: string
+            title: The Fulladdress Schema
+            default: ''
+            examples:
+            - ''
+            pattern: ^(.*)$
+          Hash:
+            $id: '#/properties/Address/properties/Hash'
+            type: string
+            title: The Hash Schema
+            default: ''
+            examples:
+            - ''
+            pattern: ^(.*)$
+          APN:
+            $id: '#/properties/Address/properties/APN'
+            type: string
+            title: The Apn Schema
+            default: ''
+            examples:
+            - ''
+            pattern: ^(.*)$
+          Longitude:
+            $id: '#/properties/Address/properties/Longitude'
+            type: string
+            title: The Longitude Schema
+            default: ''
+            examples:
+            - ''
+            pattern: ^(.*)$
+          Latitude:
+            $id: '#/properties/Address/properties/Latitude'
+            type: string
+            title: The Latitude Schema
+            default: ''
+            examples:
+            - ''
+            pattern: ^(.*)$
+          StateCityZip:
+            $id: '#/properties/Address/properties/StateCityZip'
+            type: string
+            title: The Statecityzip Schema
+            default: ''
+            examples:
+            - ''
+            pattern: ^(.*)$
+          PostalCode:
+            $id: '#/properties/Address/properties/PostalCode'
+            type: string
+            title: The Postalcode Schema
+            default: ''
+            examples:
+            - ''
+            pattern: ^(.*)$
+          Country:
+            $id: '#/properties/Address/properties/Country'
+            type: string
+            title: The Country Schema
+            default: ''
+            examples:
+            - USA
+            pattern: ^(.*)$
+          County:
+            $id: '#/properties/Address/properties/County'
+            type: string
+            title: The County Schema
+            default: ''
+            examples:
+            - ''
+            pattern: ^(.*)$
+          ZipFour:
+            $id: '#/properties/Address/properties/ZipFour'
+            type: string
+            title: The Zipfour Schema
+            default: ''
+            examples:
+            - ''
+            pattern: ^(.*)$
+          CountyFIPSCode:
+            $id: '#/properties/Address/properties/CountyFIPSCode'
+            type: string
+            title: The Countyfipscode Schema
+            default: ''
+            examples:
+            - ''
+            pattern: ^(.*)$
+          ZipCode:
+            $id: '#/properties/Address/properties/ZipCode'
+            type: string
+            title: The Zipcode Schema
+            default: ''
+            examples:
+            - '30342'
+            pattern: ^(.*)$
+          City:
+            $id: '#/properties/Address/properties/City'
+            type: string
+            title: The City Schema
+            default: ''
+            examples:
+            - Atlanta
+            pattern: ^(.*)$
+          StreetAddress2:
+            $id: '#/properties/Address/properties/StreetAddress2'
+            type: string
+            title: The Streetaddress2 Schema
+            default: ''
+            examples:
+            - ''
+            pattern: ^(.*)$
+          StreetAddress1:
+            $id: '#/properties/Address/properties/StreetAddress1'
+            type: string
+            title: The Streetaddress1 Schema
+            default: ''
+            examples:
+            - 4362 Roswell Rd NE
+            pattern: ^(.*)$
+          UnitNumber:
+            $id: '#/properties/Address/properties/UnitNumber'
+            type: string
+            title: The Unitnumber Schema
+            default: ''
+            examples:
+            - ''
+            pattern: ^(.*)$
+          UnitDesignation:
+            $id: '#/properties/Address/properties/UnitDesignation'
+            type: string
+            title: The Unitdesignation Schema
+            default: ''
+            examples:
+            - ''
+            pattern: ^(.*)$
+          StreetPostDirection:
+            $id: '#/properties/Address/properties/StreetPostDirection'
+            type: string
+            title: The Streetpostdirection Schema
+            default: ''
+            examples:
+            - ''
+            pattern: ^(.*)$
+          StreetSuffix:
+            $id: '#/properties/Address/properties/StreetSuffix'
+            type: string
+            title: The Streetsuffix Schema
+            default: ''
+            examples:
+            - ''
+            pattern: ^(.*)$
+          StreetName:
+            $id: '#/properties/Address/properties/StreetName'
+            type: string
+            title: The Streetname Schema
+            default: ''
+            examples:
+            - ''
+            pattern: ^(.*)$
+          StreetPreDirection:
+            $id: '#/properties/Address/properties/StreetPreDirection'
+            type: string
+            title: The Streetpredirection Schema
+            default: ''
+            examples:
+            - ''
+            pattern: ^(.*)$
+          StreetNumber:
+            $id: '#/properties/Address/properties/StreetNumber'
+            type: string
+            title: The Streetnumber Schema
+            default: ''
+            examples:
+            - ''
+            pattern: ^(.*)$
+          State:
+            $id: '#/properties/Address/properties/State'
+            type: string
+            title: The State Schema
+            default: ''
+            examples:
+            - GAL
+            pattern: ^(.*)$
+          StateFIPSCode:
+            $id: '#/properties/Address/properties/StateFIPSCode'
+            type: string
+            title: The Statefipscode Schema
+            default: ''
+            examples:
+            - ''
+            pattern: ^(.*)$
+      ConfidenceScore:
+        $id: '#/properties/ConfidenceScore'
+        type: string
+        title: The Confidencescore Schema
+        default: ''
+        examples:
+        - '90'
+        pattern: ^(.*)$
+    example:
+      RequestorID: test1
+      CompanyName: McDonald's
+      PhoneNumber: ''
+      Address:
+        FullAddress: ''
+        Hash: ''
+        APN: ''
+        Longitude: ''
+        Latitude: ''
+        StateCityZip: ''
+        PostalCode: ''
+        Country: USA
+        County: ''
+        ZipFour: ''
+        CountyFIPSCode: ''
+        ZipCode: '30342'
+        City: Atlanta
+        StreetAddress2: ''
+        StreetAddress1: 4362 Roswell Rd NE
+        UnitNumber: ''
+        UnitDesignation: ''
+        StreetPostDirection: ''
+        StreetSuffix: ''
+        StreetName: ''
+        StreetPreDirection: ''
+        StreetNumber: ''
+        State: GAL
+        StateFIPSCode: ''
+      ConfidenceScore: '90'
+  ServiceResponse:
+    type: object
+    properties:
+      TransactionID:
+        $id: '#/properties/TransactionID'
+        type: string
+        title: The Transactionid Schema
+        default: ''
+        examples:
+        - 18a6dfe5-c465-43b5-9426-34cad478ee3c
+        pattern: ^(.*)$
+      RequestorID:
+        $id: '#/properties/RequestorID'
+        type: string
+        title: The Requestorid Schema
+        default: ''
+        examples:
+        - fasfafssssafsa
+        pattern: ^(.*)$
+      Status:
+        $id: '#/properties/Status'
+        type: object
+        title: The Status Schema
+        required:
+        - StatusCode
+        properties:
+          StatusCode:
+            $id: '#/properties/Status/properties/StatusCode'
+            type: string
+            title: The Statuscode Schema
+            default: ''
+            examples:
+            - Success
+            pattern: ^(.*)$
+      RecordsReturned:
+        $id: '#/properties/RecordsReturned'
+        type: integer
+        title: The Recordsreturned Schema
+        default: 0
+        examples:
+        - 1
+      RecordsFound:
+        $id: '#/properties/RecordsFound'
+        type: integer
+        title: The Recordsfound Schema
+        default: 0
+        examples:
+        - 1
+      Matchcode:
+        $id: '#/properties/Matchcode'
+        type: string
+        title: The Matchcode Schema
+        default: ''
+        examples:
+        - '2'
+        pattern: ^(.*)$
+      Companies:
+        $id: '#/properties/Companies'
+        type: array
+        title: The Companies Schema
+        items:
+          $id: '#/properties/Companies/items'
+          type: object
+          title: The Items Schema
+          required:
+          - Name
+          - Address
+          - Phones
+          - Demographics
+          - ParentCompany
+          - SICCodes
+          - Executives
+          - PublicFilingInformation
+          - AreaCompanies
+          - ListMatchConfidenceScore
+          - YearEstablished
+          properties:
+            Name:
+              $id: '#/properties/Companies/items/properties/Name'
+              type: string
+              title: The Name Schema
+              default: ''
+              examples:
+              - MC DONALD'S
+              pattern: ^(.*)$
+            Address:
+              $id: '#/properties/Companies/items/properties/Address'
+              type: object
+              title: The Address Schema
+              required:
+              - StreetAddress1
+              - City
+              - State
+              - ZipCode
+              - ZipFour
+              - County
+              - Country
+              - Latitude
+              - Longitude
+              - FullAddress
+              properties:
+                StreetAddress1:
+                  $id: '#/properties/Companies/items/properties/Address/properties/StreetAddress1'
+                  type: string
+                  title: The Streetaddress1 Schema
+                  default: ''
+                  examples:
+                  - 4362 ROSWELL RD NE
+                  pattern: ^(.*)$
+                City:
+                  $id: '#/properties/Companies/items/properties/Address/properties/City'
+                  type: string
+                  title: The City Schema
+                  default: ''
+                  examples:
+                  - ATLANTA
+                  pattern: ^(.*)$
+                State:
+                  $id: '#/properties/Companies/items/properties/Address/properties/State'
+                  type: string
+                  title: The State Schema
+                  default: ''
+                  examples:
+                  - GA
+                  pattern: ^(.*)$
+                ZipCode:
+                  $id: '#/properties/Companies/items/properties/Address/properties/ZipCode'
+                  type: string
+                  title: The Zipcode Schema
+                  default: ''
+                  examples:
+                  - '30342'
+                  pattern: ^(.*)$
+                ZipFour:
+                  $id: '#/properties/Companies/items/properties/Address/properties/ZipFour'
+                  type: string
+                  title: The Zipfour Schema
+                  default: ''
+                  examples:
+                  - '3317'
+                  pattern: ^(.*)$
+                County:
+                  $id: '#/properties/Companies/items/properties/Address/properties/County'
+                  type: string
+                  title: The County Schema
+                  default: ''
+                  examples:
+                  - FULTON
+                  pattern: ^(.*)$
+                Country:
+                  $id: '#/properties/Companies/items/properties/Address/properties/Country'
+                  type: string
+                  title: The Country Schema
+                  default: ''
+                  examples:
+                  - ''
+                  pattern: ^(.*)$
+                Latitude:
+                  $id: '#/properties/Companies/items/properties/Address/properties/Latitude'
+                  type: string
+                  title: The Latitude Schema
+                  default: ''
+                  examples:
+                  - 033873958
+                  pattern: ^(.*)$
+                Longitude:
+                  $id: '#/properties/Companies/items/properties/Address/properties/Longitude'
+                  type: string
+                  title: The Longitude Schema
+                  default: ''
+                  examples:
+                  - 084381464
+                  pattern: ^(.*)$
+                FullAddress:
+                  $id: '#/properties/Companies/items/properties/Address/properties/FullAddress'
+                  type: string
+                  title: The Fulladdress Schema
+                  default: ''
+                  examples:
+                  - 4362 ROSWELL RD NE ATLANTA, GA 30342-3317
+                  pattern: ^(.*)$
+            Phones:
+              $id: '#/properties/Companies/items/properties/Phones'
+              type: array
+              title: The Phones Schema
+              items:
+                $id: '#/properties/Companies/items/properties/Phones/items'
+                type: object
+                title: The Items Schema
+                required:
+                - PhoneType
+                - PhoneNumber
+                properties:
+                  PhoneType:
+                    $id: '#/properties/Companies/items/properties/Phones/items/properties/PhoneType'
+                    type: string
+                    title: The Phonetype Schema
+                    default: ''
+                    examples:
+                    - Work
+                    pattern: ^(.*)$
+                  PhoneNumber:
+                    $id: '#/properties/Companies/items/properties/Phones/items/properties/PhoneNumber'
+                    type: string
+                    title: The Phonenumber Schema
+                    default: ''
+                    examples:
+                    - (404) 257-9440
+                    pattern: ^(.*)$
+            Demographics:
+              $id: '#/properties/Companies/items/properties/Demographics'
+              type: object
+              title: The Demographics Schema
+              required:
+              - ABINumber
+              - EmployeeSize
+              - SalesVolume
+              - BusinessStatusCode
+              - ProfessionalCode
+              - CreditRatingCode
+              - CreditAlphaScore
+              - CreditNumericScore
+              - CreditLimit
+              - CompanyHoldingStatus
+              - StockExchangeName
+              - StockTickerSymbol
+              - BankAssetFlag
+              - PrimarySICDesignator
+              - WebAddress
+              - Latitude
+              - Longitude
+              - MatchLevel
+              properties:
+                ABINumber:
+                  $id: '#/properties/Companies/items/properties/Demographics/properties/ABINumber'
+                  type: string
+                  title: The Abinumber Schema
+                  default: ''
+                  examples:
+                  - 69-877-9717
+                  pattern: ^(.*)$
+                EmployeeSize:
+                  $id: '#/properties/Companies/items/properties/Demographics/properties/EmployeeSize'
+                  type: string
+                  title: The Employeesize Schema
+                  default: ''
+                  examples:
+                  - 20 to 49
+                  pattern: ^(.*)$
+                SalesVolume:
+                  $id: '#/properties/Companies/items/properties/Demographics/properties/SalesVolume'
+                  type: string
+                  title: The Salesvolume Schema
+                  default: ''
+                  examples:
+                  - $2.5 - 5 MILLION
+                  pattern: ^(.*)$
+                BusinessStatusCode:
+                  $id: '#/properties/Companies/items/properties/Demographics/properties/BusinessStatusCode'
+                  type: string
+                  title: The Businessstatuscode Schema
+                  default: ''
+                  examples:
+                  - BRANCH
+                  pattern: ^(.*)$
+                ProfessionalCode:
+                  $id: '#/properties/Companies/items/properties/Demographics/properties/ProfessionalCode'
+                  type: string
+                  title: The Professionalcode Schema
+                  default: ''
+                  examples:
+                  - BUSINESS FIRM
+                  pattern: ^(.*)$
+                CreditRatingCode:
+                  $id: '#/properties/Companies/items/properties/Demographics/properties/CreditRatingCode'
+                  type: string
+                  title: The Creditratingcode Schema
+                  default: ''
+                  examples:
+                  - EXCELLENT
+                  pattern: ^(.*)$
+                CreditAlphaScore:
+                  $id: '#/properties/Companies/items/properties/Demographics/properties/CreditAlphaScore'
+                  type: string
+                  title: The Creditalphascore Schema
+                  default: ''
+                  examples:
+                  - A+
+                  pattern: ^(.*)$
+                CreditNumericScore:
+                  $id: '#/properties/Companies/items/properties/Demographics/properties/CreditNumericScore'
+                  type: string
+                  title: The Creditnumericscore Schema
+                  default: ''
+                  examples:
+                  - '100'
+                  pattern: ^(.*)$
+                CreditLimit:
+                  $id: '#/properties/Companies/items/properties/Demographics/properties/CreditLimit'
+                  type: string
+                  title: The Creditlimit Schema
+                  default: ''
+                  examples:
+                  - '010000'
+                  pattern: ^(.*)$
+                CompanyHoldingStatus:
+                  $id: '#/properties/Companies/items/properties/Demographics/properties/CompanyHoldingStatus'
+                  type: string
+                  title: The Companyholdingstatus Schema
+                  default: ''
+                  examples:
+                  - BRN
+                  pattern: ^(.*)$
+                StockExchangeName:
+                  $id: '#/properties/Companies/items/properties/Demographics/properties/StockExchangeName'
+                  type: string
+                  title: The Stockexchangename Schema
+                  default: ''
+                  examples:
+                  - ''
+                  pattern: ^(.*)$
+                StockTickerSymbol:
+                  $id: '#/properties/Companies/items/properties/Demographics/properties/StockTickerSymbol'
+                  type: string
+                  title: The Stocktickersymbol Schema
+                  default: ''
+                  examples:
+                  - ''
+                  pattern: ^(.*)$
+                BankAssetFlag:
+                  $id: '#/properties/Companies/items/properties/Demographics/properties/BankAssetFlag'
+                  type: string
+                  title: The Bankassetflag Schema
+                  default: ''
+                  examples:
+                  - ''
+                  pattern: ^(.*)$
+                PrimarySICDesignator:
+                  $id: '#/properties/Companies/items/properties/Demographics/properties/PrimarySICDesignator'
+                  type: string
+                  title: The Primarysicdesignator Schema
+                  default: ''
+                  examples:
+                  - L
+                  pattern: ^(.*)$
+                WebAddress:
+                  $id: '#/properties/Companies/items/properties/Demographics/properties/WebAddress'
+                  type: string
+                  title: The Webaddress Schema
+                  default: ''
+                  examples:
+                  - MCDONALDS.COM
+                  pattern: ^(.*)$
+                Latitude:
+                  $id: '#/properties/Companies/items/properties/Demographics/properties/Latitude'
+                  type: integer
+                  title: The Latitude Schema
+                  default: 0
+                  examples:
+                  - 33873958
+                Longitude:
+                  $id: '#/properties/Companies/items/properties/Demographics/properties/Longitude'
+                  type: integer
+                  title: The Longitude Schema
+                  default: 0
+                  examples:
+                  - 84381464
+                MatchLevel:
+                  $id: '#/properties/Companies/items/properties/Demographics/properties/MatchLevel'
+                  type: string
+                  title: The Matchlevel Schema
+                  default: ''
+                  examples:
+                  - P
+                  pattern: ^(.*)$
+            ParentCompany:
+              $id: '#/properties/Companies/items/properties/ParentCompany'
+              type: object
+              title: The Parentcompany Schema
+              required:
+              - ABINumber
+              - CompanyName
+              - Address
+              - City
+              - State
+              - ZIPCode
+              - ZIP4
+              - PublicFilingCount
+              properties:
+                ABINumber:
+                  $id: '#/properties/Companies/items/properties/ParentCompany/properties/ABINumber'
+                  type: string
+                  title: The Abinumber Schema
+                  default: ''
+                  examples:
+                  - 00-168-2400
+                  pattern: ^(.*)$
+                CompanyName:
+                  $id: '#/properties/Companies/items/properties/ParentCompany/properties/CompanyName'
+                  type: string
+                  title: The Companyname Schema
+                  default: ''
+                  examples:
+                  - MC DONALD'S
+                  pattern: ^(.*)$
+                Address:
+                  $id: '#/properties/Companies/items/properties/ParentCompany/properties/Address'
+                  type: string
+                  title: The Address Schema
+                  default: ''
+                  examples:
+                  - 110 N CARPENTER ST
+                  pattern: ^(.*)$
+                City:
+                  $id: '#/properties/Companies/items/properties/ParentCompany/properties/City'
+                  type: string
+                  title: The City Schema
+                  default: ''
+                  examples:
+                  - CHICAGO
+                  pattern: ^(.*)$
+                State:
+                  $id: '#/properties/Companies/items/properties/ParentCompany/properties/State'
+                  type: string
+                  title: The State Schema
+                  default: ''
+                  examples:
+                  - IL
+                  pattern: ^(.*)$
+                ZIPCode:
+                  $id: '#/properties/Companies/items/properties/ParentCompany/properties/ZIPCode'
+                  type: string
+                  title: The Zipcode Schema
+                  default: ''
+                  examples:
+                  - '60607'
+                  pattern: ^(.*)$
+                ZIP4:
+                  $id: '#/properties/Companies/items/properties/ParentCompany/properties/ZIP4'
+                  type: string
+                  title: The Zip4 Schema
+                  default: ''
+                  examples:
+                  - '4106'
+                  pattern: ^(.*)$
+                PublicFilingCount:
+                  $id: '#/properties/Companies/items/properties/ParentCompany/properties/PublicFilingCount'
+                  type: string
+                  title: The Publicfilingcount Schema
+                  default: ''
+                  examples:
+                  - '00000'
+                  pattern: ^(.*)$
+            SICCodes:
+              $id: '#/properties/Companies/items/properties/SICCodes'
+              type: array
+              title: The Siccodes Schema
+              items:
+                $id: '#/properties/Companies/items/properties/SICCodes/items'
+                type: object
+                title: The Items Schema
+                required:
+                - Code
+                - Description
+                - Franchise
+                - IndustrySpecificCode
+                - IndustrySpecificDescription
+                - AdSizeCode
+                - YearFirstAppeared
+                properties:
+                  Code:
+                    $id: '#/properties/Companies/items/properties/SICCodes/items/properties/Code'
+                    type: string
+                    title: The Code Schema
+                    default: ''
+                    examples:
+                    - 5812-08
+                    pattern: ^(.*)$
+                  Description:
+                    $id: '#/properties/Companies/items/properties/SICCodes/items/properties/Description'
+                    type: string
+                    title: The Description Schema
+                    default: ''
+                    examples:
+                    - RESTAURANTS
+                    pattern: ^(.*)$
+                  Franchise:
+                    $id: '#/properties/Companies/items/properties/SICCodes/items/properties/Franchise'
+                    type: object
+                    title: The Franchise Schema
+                    required:
+                    - Code
+                    - Description
+                    properties:
+                      Code:
+                        $id: '#/properties/Companies/items/properties/SICCodes/items/properties/Franchise/properties/Code'
+                        type: string
+                        title: The Code Schema
+                        default: ''
+                        examples:
+                        - K
+                        pattern: ^(.*)$
+                      Description:
+                        $id: '#/properties/Companies/items/properties/SICCodes/items/properties/Franchise/properties/Description'
+                        type: array
+                        title: The Description Schema
+                        items:
+                          $id: '#/properties/Companies/items/properties/SICCodes/items/properties/Franchise/properties/Description/items'
+                          type: string
+                          title: The Items Schema
+                          default: ''
+                          examples:
+                          - MC DONALD'S
+                          - MC DONALD'S
+                          - ''
+                          pattern: ^(.*)$
+                  IndustrySpecificCode:
+                    $id: '#/properties/Companies/items/properties/SICCodes/items/properties/IndustrySpecificCode'
+                    type: string
+                    title: The Industryspecificcode Schema
+                    default: ''
+                    examples:
+                    - e
+                    pattern: ^(.*)$
+                  IndustrySpecificDescription:
+                    $id: '#/properties/Companies/items/properties/SICCodes/items/properties/IndustrySpecificDescription'
+                    type: string
+                    title: The Industryspecificdescription Schema
+                    default: ''
+                    examples:
+                    - BURGERS
+                    pattern: ^(.*)$
+                  AdSizeCode:
+                    $id: '#/properties/Companies/items/properties/SICCodes/items/properties/AdSizeCode'
+                    type: string
+                    title: The Adsizecode Schema
+                    default: ''
+                    examples:
+                    - REGULAR
+                    pattern: ^(.*)$
+                  YearFirstAppeared:
+                    $id: '#/properties/Companies/items/properties/SICCodes/items/properties/YearFirstAppeared'
+                    type: string
+                    title: The Yearfirstappeared Schema
+                    default: ''
+                    examples:
+                    - 15+
+                    pattern: ^(.*)$
+            Executives:
+              $id: '#/properties/Companies/items/properties/Executives'
+              type: array
+              title: The Executives Schema
+              items:
+                $id: '#/properties/Companies/items/properties/Executives/items'
+                type: object
+                title: The Items Schema
+                required:
+                - LastName
+                - FirstName
+                - ProfessionalTitle
+                - Title
+                - Gender
+                properties:
+                  LastName:
+                    $id: '#/properties/Companies/items/properties/Executives/items/properties/LastName'
+                    type: string
+                    title: The Lastname Schema
+                    default: ''
+                    examples:
+                    - FARIAS
+                    pattern: ^(.*)$
+                  FirstName:
+                    $id: '#/properties/Companies/items/properties/Executives/items/properties/FirstName'
+                    type: string
+                    title: The Firstname Schema
+                    default: ''
+                    examples:
+                    - JIM
+                    pattern: ^(.*)$
+                  ProfessionalTitle:
+                    $id: '#/properties/Companies/items/properties/Executives/items/properties/ProfessionalTitle'
+                    type: string
+                    title: The Professionaltitle Schema
+                    default: ''
+                    examples:
+                    - ''
+                    pattern: ^(.*)$
+                  Title:
+                    $id: '#/properties/Companies/items/properties/Executives/items/properties/Title'
+                    type: string
+                    title: The Title Schema
+                    default: ''
+                    examples:
+                    - General Mgr
+                    pattern: ^(.*)$
+                  Gender:
+                    $id: '#/properties/Companies/items/properties/Executives/items/properties/Gender'
+                    type: string
+                    title: The Gender Schema
+                    default: ''
+                    examples:
+                    - MALE
+                    pattern: ^(.*)$
+            PublicFilingInformation:
+              $id: '#/properties/Companies/items/properties/PublicFilingInformation'
+              type: array
+              title: The Publicfilinginformation Schema
+              items:
+                $id: '#/properties/Companies/items/properties/PublicFilingInformation/items'
+                type: object
+                title: The Items Schema
+                required:
+                - AddDeleteFlag
+                - EntityIdentifier
+                - AssociationCode
+                - HISCourtID
+                - StateOfFiling
+                - CountyOfFiling
+                - CourtType
+                - FilingType
+                - CaseNumber
+                - Book
+                - Page
+                - FilingDate
+                - ReleaseDate
+                - AmountOrLiability
+                - Assets
+                - PlaintiffOrLawFirm
+                - Attorney
+                - AttorneyPhone
+                - Schedule341Date
+                - JudgesInitials
+                - OtherCaseNumber
+                - SSNOrTaxIDNumber
+                - DefendantName
+                - GenerationCode
+                - DateOfUpload
+                - UnlawfulDetainerFlag
+                - OriginalCase
+                - OriginalBook
+                - OriginalPage
+                - AttorneyAddress
+                - AttorneyCity
+                - AttorneyState
+                - AttorneyZIPCode
+                - AssetsAvailableForDistribution
+                - ActionType
+                - Schedule341Time
+                - CountyOfResidency
+                - OriginatingDepartment
+                - BankruptcyDismissalFlag
+                - RMSID
+                properties:
+                  AddDeleteFlag:
+                    $id: '#/properties/Companies/items/properties/PublicFilingInformation/items/properties/AddDeleteFlag'
+                    type: string
+                    title: The Adddeleteflag Schema
+                    default: ''
+                    examples:
+                    - ''
+                    pattern: ^(.*)$
+                  EntityIdentifier:
+                    $id: '#/properties/Companies/items/properties/PublicFilingInformation/items/properties/EntityIdentifier'
+                    type: string
+                    title: The Entityidentifier Schema
+                    default: ''
+                    examples:
+                    - ''
+                    pattern: ^(.*)$
+                  AssociationCode:
+                    $id: '#/properties/Companies/items/properties/PublicFilingInformation/items/properties/AssociationCode'
+                    type: string
+                    title: The Associationcode Schema
+                    default: ''
+                    examples:
+                    - ''
+                    pattern: ^(.*)$
+                  HISCourtID:
+                    $id: '#/properties/Companies/items/properties/PublicFilingInformation/items/properties/HISCourtID'
+                    type: string
+                    title: The Hiscourtid Schema
+                    default: ''
+                    examples:
+                    - ''
+                    pattern: ^(.*)$
+                  StateOfFiling:
+                    $id: '#/properties/Companies/items/properties/PublicFilingInformation/items/properties/StateOfFiling'
+                    type: string
+                    title: The Stateoffiling Schema
+                    default: ''
+                    examples:
+                    - ''
+                    pattern: ^(.*)$
+                  CountyOfFiling:
+                    $id: '#/properties/Companies/items/properties/PublicFilingInformation/items/properties/CountyOfFiling'
+                    type: string
+                    title: The Countyoffiling Schema
+                    default: ''
+                    examples:
+                    - ''
+                    pattern: ^(.*)$
+                  CourtType:
+                    $id: '#/properties/Companies/items/properties/PublicFilingInformation/items/properties/CourtType'
+                    type: string
+                    title: The Courttype Schema
+                    default: ''
+                    examples:
+                    - ''
+                    pattern: ^(.*)$
+                  FilingType:
+                    $id: '#/properties/Companies/items/properties/PublicFilingInformation/items/properties/FilingType'
+                    type: string
+                    title: The Filingtype Schema
+                    default: ''
+                    examples:
+                    - ''
+                    pattern: ^(.*)$
+                  CaseNumber:
+                    $id: '#/properties/Companies/items/properties/PublicFilingInformation/items/properties/CaseNumber'
+                    type: string
+                    title: The Casenumber Schema
+                    default: ''
+                    examples:
+                    - ''
+                    pattern: ^(.*)$
+                  Book:
+                    $id: '#/properties/Companies/items/properties/PublicFilingInformation/items/properties/Book'
+                    type: string
+                    title: The Book Schema
+                    default: ''
+                    examples:
+                    - ''
+                    pattern: ^(.*)$
+                  Page:
+                    $id: '#/properties/Companies/items/properties/PublicFilingInformation/items/properties/Page'
+                    type: string
+                    title: The Page Schema
+                    default: ''
+                    examples:
+                    - ''
+                    pattern: ^(.*)$
+                  FilingDate:
+                    $id: '#/properties/Companies/items/properties/PublicFilingInformation/items/properties/FilingDate'
+                    type: string
+                    title: The Filingdate Schema
+                    default: ''
+                    examples:
+                    - ''
+                    pattern: ^(.*)$
+                  ReleaseDate:
+                    $id: '#/properties/Companies/items/properties/PublicFilingInformation/items/properties/ReleaseDate'
+                    type: string
+                    title: The Releasedate Schema
+                    default: ''
+                    examples:
+                    - ''
+                    pattern: ^(.*)$
+                  AmountOrLiability:
+                    $id: '#/properties/Companies/items/properties/PublicFilingInformation/items/properties/AmountOrLiability'
+                    type: string
+                    title: The Amountorliability Schema
+                    default: ''
+                    examples:
+                    - ''
+                    pattern: ^(.*)$
+                  Assets:
+                    $id: '#/properties/Companies/items/properties/PublicFilingInformation/items/properties/Assets'
+                    type: string
+                    title: The Assets Schema
+                    default: ''
+                    examples:
+                    - ''
+                    pattern: ^(.*)$
+                  PlaintiffOrLawFirm:
+                    $id: '#/properties/Companies/items/properties/PublicFilingInformation/items/properties/PlaintiffOrLawFirm'
+                    type: string
+                    title: The Plaintifforlawfirm Schema
+                    default: ''
+                    examples:
+                    - ''
+                    pattern: ^(.*)$
+                  Attorney:
+                    $id: '#/properties/Companies/items/properties/PublicFilingInformation/items/properties/Attorney'
+                    type: string
+                    title: The Attorney Schema
+                    default: ''
+                    examples:
+                    - ''
+                    pattern: ^(.*)$
+                  AttorneyPhone:
+                    $id: '#/properties/Companies/items/properties/PublicFilingInformation/items/properties/AttorneyPhone'
+                    type: string
+                    title: The Attorneyphone Schema
+                    default: ''
+                    examples:
+                    - ''
+                    pattern: ^(.*)$
+                  Schedule341Date:
+                    $id: '#/properties/Companies/items/properties/PublicFilingInformation/items/properties/Schedule341Date'
+                    type: string
+                    title: The Schedule341date Schema
+                    default: ''
+                    examples:
+                    - ''
+                    pattern: ^(.*)$
+                  JudgesInitials:
+                    $id: '#/properties/Companies/items/properties/PublicFilingInformation/items/properties/JudgesInitials'
+                    type: string
+                    title: The Judgesinitials Schema
+                    default: ''
+                    examples:
+                    - ''
+                    pattern: ^(.*)$
+                  OtherCaseNumber:
+                    $id: '#/properties/Companies/items/properties/PublicFilingInformation/items/properties/OtherCaseNumber'
+                    type: string
+                    title: The Othercasenumber Schema
+                    default: ''
+                    examples:
+                    - ''
+                    pattern: ^(.*)$
+                  SSNOrTaxIDNumber:
+                    $id: '#/properties/Companies/items/properties/PublicFilingInformation/items/properties/SSNOrTaxIDNumber'
+                    type: string
+                    title: The Ssnortaxidnumber Schema
+                    default: ''
+                    examples:
+                    - ''
+                    pattern: ^(.*)$
+                  DefendantName:
+                    $id: '#/properties/Companies/items/properties/PublicFilingInformation/items/properties/DefendantName'
+                    type: string
+                    title: The Defendantname Schema
+                    default: ''
+                    examples:
+                    - ''
+                    pattern: ^(.*)$
+                  GenerationCode:
+                    $id: '#/properties/Companies/items/properties/PublicFilingInformation/items/properties/GenerationCode'
+                    type: string
+                    title: The Generationcode Schema
+                    default: ''
+                    examples:
+                    - ''
+                    pattern: ^(.*)$
+                  DateOfUpload:
+                    $id: '#/properties/Companies/items/properties/PublicFilingInformation/items/properties/DateOfUpload'
+                    type: string
+                    title: The Dateofupload Schema
+                    default: ''
+                    examples:
+                    - ''
+                    pattern: ^(.*)$
+                  UnlawfulDetainerFlag:
+                    $id: '#/properties/Companies/items/properties/PublicFilingInformation/items/properties/UnlawfulDetainerFlag'
+                    type: string
+                    title: The Unlawfuldetainerflag Schema
+                    default: ''
+                    examples:
+                    - ''
+                    pattern: ^(.*)$
+                  OriginalCase:
+                    $id: '#/properties/Companies/items/properties/PublicFilingInformation/items/properties/OriginalCase'
+                    type: string
+                    title: The Originalcase Schema
+                    default: ''
+                    examples:
+                    - ''
+                    pattern: ^(.*)$
+                  OriginalBook:
+                    $id: '#/properties/Companies/items/properties/PublicFilingInformation/items/properties/OriginalBook'
+                    type: string
+                    title: The Originalbook Schema
+                    default: ''
+                    examples:
+                    - ''
+                    pattern: ^(.*)$
+                  OriginalPage:
+                    $id: '#/properties/Companies/items/properties/PublicFilingInformation/items/properties/OriginalPage'
+                    type: string
+                    title: The Originalpage Schema
+                    default: ''
+                    examples:
+                    - ''
+                    pattern: ^(.*)$
+                  AttorneyAddress:
+                    $id: '#/properties/Companies/items/properties/PublicFilingInformation/items/properties/AttorneyAddress'
+                    type: string
+                    title: The Attorneyaddress Schema
+                    default: ''
+                    examples:
+                    - ''
+                    pattern: ^(.*)$
+                  AttorneyCity:
+                    $id: '#/properties/Companies/items/properties/PublicFilingInformation/items/properties/AttorneyCity'
+                    type: string
+                    title: The Attorneycity Schema
+                    default: ''
+                    examples:
+                    - ''
+                    pattern: ^(.*)$
+                  AttorneyState:
+                    $id: '#/properties/Companies/items/properties/PublicFilingInformation/items/properties/AttorneyState'
+                    type: string
+                    title: The Attorneystate Schema
+                    default: ''
+                    examples:
+                    - ''
+                    pattern: ^(.*)$
+                  AttorneyZIPCode:
+                    $id: '#/properties/Companies/items/properties/PublicFilingInformation/items/properties/AttorneyZIPCode'
+                    type: string
+                    title: The Attorneyzipcode Schema
+                    default: ''
+                    examples:
+                    - ''
+                    pattern: ^(.*)$
+                  AssetsAvailableForDistribution:
+                    $id: '#/properties/Companies/items/properties/PublicFilingInformation/items/properties/AssetsAvailableForDistribution'
+                    type: string
+                    title: The Assetsavailablefordistribution Schema
+                    default: ''
+                    examples:
+                    - ''
+                    pattern: ^(.*)$
+                  ActionType:
+                    $id: '#/properties/Companies/items/properties/PublicFilingInformation/items/properties/ActionType'
+                    type: string
+                    title: The Actiontype Schema
+                    default: ''
+                    examples:
+                    - ''
+                    pattern: ^(.*)$
+                  Schedule341Time:
+                    $id: '#/properties/Companies/items/properties/PublicFilingInformation/items/properties/Schedule341Time'
+                    type: string
+                    title: The Schedule341time Schema
+                    default: ''
+                    examples:
+                    - ''
+                    pattern: ^(.*)$
+                  CountyOfResidency:
+                    $id: '#/properties/Companies/items/properties/PublicFilingInformation/items/properties/CountyOfResidency'
+                    type: string
+                    title: The Countyofresidency Schema
+                    default: ''
+                    examples:
+                    - ''
+                    pattern: ^(.*)$
+                  OriginatingDepartment:
+                    $id: '#/properties/Companies/items/properties/PublicFilingInformation/items/properties/OriginatingDepartment'
+                    type: string
+                    title: The Originatingdepartment Schema
+                    default: ''
+                    examples:
+                    - ''
+                    pattern: ^(.*)$
+                  BankruptcyDismissalFlag:
+                    $id: '#/properties/Companies/items/properties/PublicFilingInformation/items/properties/BankruptcyDismissalFlag'
+                    type: string
+                    title: The Bankruptcydismissalflag Schema
+                    default: ''
+                    examples:
+                    - ''
+                    pattern: ^(.*)$
+                  RMSID:
+                    $id: '#/properties/Companies/items/properties/PublicFilingInformation/items/properties/RMSID'
+                    type: string
+                    title: The Rmsid Schema
+                    default: ''
+                    examples:
+                    - ''
+                    pattern: ^(.*)$
+            AreaCompanies:
+              $id: '#/properties/Companies/items/properties/AreaCompanies'
+              type: array
+              title: The Areacompanies Schema
+              items:
+                $id: '#/properties/Companies/items/properties/AreaCompanies/items'
+                type: object
+                title: The Items Schema
+                required:
+                - Name
+                - Address
+                - PhoneNumber
+                - ABINumber
+                - FortuneRanking
+                - TeleresearchDate
+                - ContactInformation
+                properties:
+                  Name:
+                    $id: '#/properties/Companies/items/properties/AreaCompanies/items/properties/Name'
+                    type: string
+                    title: The Name Schema
+                    default: ''
+                    examples:
+                    - ARBY'S
+                    pattern: ^(.*)$
+                  Address:
+                    $id: '#/properties/Companies/items/properties/AreaCompanies/items/properties/Address'
+                    type: object
+                    title: The Address Schema
+                    required:
+                    - StreetAddress1
+                    - City
+                    - State
+                    - ZipCode
+                    - ZipFour
+                    - FullAddress
+                    properties:
+                      StreetAddress1:
+                        $id: '#/properties/Companies/items/properties/AreaCompanies/items/properties/Address/properties/StreetAddress1'
+                        type: string
+                        title: The Streetaddress1 Schema
+                        default: ''
+                        examples:
+                        - 4415 ROSWELL RD NE
+                        pattern: ^(.*)$
+                      City:
+                        $id: '#/properties/Companies/items/properties/AreaCompanies/items/properties/Address/properties/City'
+                        type: string
+                        title: The City Schema
+                        default: ''
+                        examples:
+                        - ATLANTA
+                        pattern: ^(.*)$
+                      State:
+                        $id: '#/properties/Companies/items/properties/AreaCompanies/items/properties/Address/properties/State'
+                        type: string
+                        title: The State Schema
+                        default: ''
+                        examples:
+                        - GA
+                        pattern: ^(.*)$
+                      ZipCode:
+                        $id: '#/properties/Companies/items/properties/AreaCompanies/items/properties/Address/properties/ZipCode'
+                        type: string
+                        title: The Zipcode Schema
+                        default: ''
+                        examples:
+                        - '30342'
+                        pattern: ^(.*)$
+                      ZipFour:
+                        $id: '#/properties/Companies/items/properties/AreaCompanies/items/properties/Address/properties/ZipFour'
+                        type: string
+                        title: The Zipfour Schema
+                        default: ''
+                        examples:
+                        - '3316'
+                        pattern: ^(.*)$
+                      FullAddress:
+                        $id: '#/properties/Companies/items/properties/AreaCompanies/items/properties/Address/properties/FullAddress'
+                        type: string
+                        title: The Fulladdress Schema
+                        default: ''
+                        examples:
+                        - 4415 ROSWELL RD NE ATLANTA, GA 30342-3316
+                        pattern: ^(.*)$
+                  PhoneNumber:
+                    $id: '#/properties/Companies/items/properties/AreaCompanies/items/properties/PhoneNumber'
+                    type: object
+                    title: The Phonenumber Schema
+                    required:
+                    - PhoneType
+                    - PhoneNumber
+                    properties:
+                      PhoneType:
+                        $id: '#/properties/Companies/items/properties/AreaCompanies/items/properties/PhoneNumber/properties/PhoneType'
+                        type: string
+                        title: The Phonetype Schema
+                        default: ''
+                        examples:
+                        - Work
+                        pattern: ^(.*)$
+                      PhoneNumber:
+                        $id: '#/properties/Companies/items/properties/AreaCompanies/items/properties/PhoneNumber/properties/PhoneNumber'
+                        type: string
+                        title: The Phonenumber Schema
+                        default: ''
+                        examples:
+                        - (404) 843-2729
+                        pattern: ^(.*)$
+                  ABINumber:
+                    $id: '#/properties/Companies/items/properties/AreaCompanies/items/properties/ABINumber'
+                    type: string
+                    title: The Abinumber Schema
+                    default: ''
+                    examples:
+                    - '661884049'
+                    pattern: ^(.*)$
+                  FortuneRanking:
+                    $id: '#/properties/Companies/items/properties/AreaCompanies/items/properties/FortuneRanking'
+                    type: string
+                    title: The Fortuneranking Schema
+                    default: ''
+                    examples:
+                    - '0000'
+                    pattern: ^(.*)$
+                  TeleresearchDate:
+                    $id: '#/properties/Companies/items/properties/AreaCompanies/items/properties/TeleresearchDate'
+                    type: string
+                    title: The Teleresearchdate Schema
+                    default: ''
+                    examples:
+                    - '201904'
+                    pattern: ^(.*)$
+                  ContactInformation:
+                    $id: '#/properties/Companies/items/properties/AreaCompanies/items/properties/ContactInformation'
+                    type: object
+                    title: The Contactinformation Schema
+                    required:
+                    - LastName
+                    - FirstName
+                    - Title
+                    - ProfessionalTitle
+                    - Gender
+                    properties:
+                      LastName:
+                        $id: '#/properties/Companies/items/properties/AreaCompanies/items/properties/ContactInformation/properties/LastName'
+                        type: string
+                        title: The Lastname Schema
+                        default: ''
+                        examples:
+                        - ''
+                        pattern: ^(.*)$
+                      FirstName:
+                        $id: '#/properties/Companies/items/properties/AreaCompanies/items/properties/ContactInformation/properties/FirstName'
+                        type: string
+                        title: The Firstname Schema
+                        default: ''
+                        examples:
+                        - ''
+                        pattern: ^(.*)$
+                      Title:
+                        $id: '#/properties/Companies/items/properties/AreaCompanies/items/properties/ContactInformation/properties/Title'
+                        type: string
+                        title: The Title Schema
+                        default: ''
+                        examples:
+                        - ''
+                        pattern: ^(.*)$
+                      ProfessionalTitle:
+                        $id: '#/properties/Companies/items/properties/AreaCompanies/items/properties/ContactInformation/properties/ProfessionalTitle'
+                        type: string
+                        title: The Professionaltitle Schema
+                        default: ''
+                        examples:
+                        - ''
+                        pattern: ^(.*)$
+                      Gender:
+                        $id: '#/properties/Companies/items/properties/AreaCompanies/items/properties/ContactInformation/properties/Gender'
+                        type: string
+                        title: The Gender Schema
+                        default: ''
+                        examples:
+                        - ''
+                        pattern: ^(.*)$
+            ListMatchConfidenceScore:
+              $id: '#/properties/Companies/items/properties/ListMatchConfidenceScore'
+              type: integer
+              title: The Listmatchconfidencescore Schema
+              default: 0
+              examples:
+              - 0
+            YearEstablished:
+              $id: '#/properties/Companies/items/properties/YearEstablished'
+              type: integer
+              title: The Yearestablished Schema
+              default: 0
+              examples:
+              - 0

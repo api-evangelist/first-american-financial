@@ -2,23 +2,21 @@
   "repo": "first-american-financial",
   "feeds": [
     {
-      "source": "https://www.firstam.com/news/",
-      "feed_url": "https://www.firstam.com/news/",
-      "title": "",
-      "saved": 0,
-      "method": "none",
-      "nature": "vendor-blog",
-      "nature_basis": "path_blog"
-    },
-    {
       "source": "https://developer.firstam.com/llms.txt",
       "feed_url": "https://developer.firstam.com/llms.txt",
       "title": "",
       "saved": 0,
       "method": "none"
+    },
+    {
+      "source": "https://www.firstam.com/news/",
+      "feed_url": "https://www.firstam.com/news/",
+      "title": "",
+      "saved": 0,
+      "method": "none"
     }
   ],
-  "fetched": "2026-08-30T22:33:40Z",
+  "fetched": "2026-09-06T19:17:18Z",
   "post_count": 5,
   "feed_nature": "vendor-blog",
   "feed_nature_basis": "path_blog",

@@ -1,0 +1,109 @@
+generated: '2026-09-09'
+method: derived
+source: >-
+  openapi/first-american-financial-title-settlement-openapi.yml (38 component schemas) plus the
+  definitions blocks of the fifteen Swagger 2.0 data-service specifications
+note: >-
+  Derived from $ref edges and id-reference fields in the harvested contracts. Two disjoint models
+  live on this surface and they do NOT share a key: the Title & Settlement order model, which is a
+  proper object graph, and the Digital Gateway data-service model, which is a flat
+  request/transaction/report triple repeated once per product with no cross-product identifier.
+models:
+  - name: title-settlement
+    spec: openapi/first-american-financial-title-settlement-openapi.yml
+    root: Order
+    identifiers:
+      - {field: externalTrackingId, owner: client, note: 'Client-supplied, must be unique per transaction. The correlation key across orders, documents, messages, cancel and every webhook event.'}
+      - {field: FileNumber, owner: First American, note: 'Returned on ServiceResponse; the First American escrow file number.'}
+      - {field: ID, owner: First American, note: 'Returned on ResourceResponse / ServiceResponse / OrderCancelResponse.'}
+      - {field: officeId, owner: First American, note: 'Office key; also the query key for escrow and title officer lookups.'}
+    entities:
+      - {name: OrderRequest, description: 'The order envelope - service, parties, property address, office, officers, transaction type, loan, documents and notes.'}
+      - {name: IndividualParty, description: 'A natural person on the transaction, with role, contact points and addresses.'}
+      - {name: LegalEntityParty, description: 'A company on the transaction, with contacts, role, HOI and HOA accounts.'}
+      - {name: PartyContact, description: 'A named contact within a LegalEntityParty.'}
+      - {name: PropertyAddress, description: 'The subject property - address, county FIPS, property type and APN.'}
+      - {name: Address, description: 'A typed postal address on a party.'}
+      - {name: ContactPoint, description: 'Email, phone or fax for a party or contact.'}
+      - {name: Loan, description: 'Loan number, amount and type.'}
+      - {name: TransactionDetails, description: 'Contract signed date, earnest money, inspection end, close of escrow, acquisition price and payoffs.'}
+      - {name: PayoffInformation, description: 'An existing lien to be paid off, with lien position and lender.'}
+      - {name: Document, description: 'A document attached to an order, with embedded Base64 content.'}
+      - {name: DocumentPayload, description: 'A document delivered by webhook, adding vesting information and legal description.'}
+      - {name: Service, description: 'A service on the order (escrow, title) with its assigned Officer and Assistant.'}
+      - {name: Contact, description: 'The name and phone of an assigned officer or assistant.'}
+      - {name: Office, description: 'A First American office - id, name, DBA, status, company and address.'}
+      - {name: Employee, description: 'An escrow or title officer at an office.'}
+      - {name: Webhook, description: 'An event subscription - URI, secret, filter, headers, retry ceiling and paused flag.'}
+      - {name: EventNotification, description: 'The webhook delivery envelope carrying one or more Events.'}
+      - {name: Event, description: 'A single event - action, externalTrackingId and a typed message payload.'}
+      - {name: OrderCancelRequest, description: 'A cancellation with a reason.'}
+    relationships:
+      - {from: OrderRequest, to: IndividualParty, type: has_many, via: parties}
+      - {from: OrderRequest, to: LegalEntityParty, type: has_many, via: parties}
+      - {from: OrderRequest, to: PropertyAddress, type: has_one, via: propertyAddress}
+      - {from: OrderRequest, to: Loan, type: has_one, via: loan}
+      - {from: OrderRequest, to: TransactionDetails, type: has_one, via: transactionDetails}
+      - {from: OrderRequest, to: Document, type: has_many, via: documents}
+      - {from: OrderRequest, to: Office, type: belongs_to, via: officeId}
+      - {from: OrderRequest, to: Employee, type: belongs_to, via: escrowOfficerCode}
+      - {from: OrderRequest, to: Employee, type: belongs_to, via: titleOfficerCode}
+      - {from: IndividualParty, to: Address, type: has_many, via: addresses}
+      - {from: IndividualParty, to: ContactPoint, type: has_many, via: contactPoints}
+      - {from: IndividualParty, to: IndividualPartyRole, type: has_one, via: role}
+      - {from: LegalEntityParty, to: PartyContact, type: has_many, via: contacts}
+      - {from: LegalEntityParty, to: Address, type: has_many, via: addresses}
+      - {from: LegalEntityParty, to: LegalEntityPartyRole, type: has_one, via: role}
+      - {from: PartyContact, to: ContactPoint, type: has_many, via: contactPoints}
+      - {from: TransactionDetails, to: PayoffInformation, type: has_many, via: payoffInformations}
+      - {from: ServiceResponse, to: Service, type: has_many, via: Services}
+      - {from: Service, to: Contact, type: has_one, via: Officer}
+      - {from: Service, to: Contact, type: has_one, via: Assistant}
+      - {from: Offices, to: Office, type: has_many, via: items}
+      - {from: Employee, to: Office, type: belongs_to, via: officeId query parameter}
+      - {from: Webhooks, to: Webhook, type: has_many, via: items}
+      - {from: Webhook, to: EventType, type: has_one, via: Filter}
+      - {from: EventNotification, to: Event, type: has_many, via: Notifications}
+      - {from: Event, to: EventType, type: has_one, via: Action}
+      - {from: Event, to: DocumentPayload, type: has_one, via: Message}
+      - {from: Event, to: MessagePayload, type: has_one, via: Message}
+      - {from: Event, to: FundsDisbursedMessagePayload, type: has_one, via: Message}
+      - {from: Event, to: CurativeClearedMessagePayload, type: has_one, via: Message}
+      - {from: Event, to: ServiceResponse, type: has_one, via: Message}
+      - {from: Event, to: OrderRequest, type: belongs_to, via: ExternalTrackingId}
+  - name: digital-gateway-data-services
+    specs:
+      - openapi/first-american-financial-property-openapi.yml
+      - openapi/first-american-financial-ownership-openapi.yml
+      - openapi/first-american-financial-identity-openapi.yml
+      - openapi/first-american-financial-bankruptcy-openapi.yml
+      - openapi/first-american-financial-watchlist-openapi.yml
+      - openapi/first-american-financial-nmls-openapi.yml
+      - openapi/first-american-financial-scra-openapi.yml
+      - openapi/first-american-financial-4506c-openapi.yml
+      - openapi/first-american-financial-liens-judgments-fcra-openapi.yml
+      - openapi/first-american-financial-liens-judgments-non-fcra-openapi.yml
+      - openapi/first-american-financial-occupancy-openapi.yml
+      - openapi/first-american-financial-reverse-phone-openapi.yml
+      - openapi/first-american-financial-reverse-address-openapi.yml
+      - openapi/first-american-financial-income-estimate-openapi.yml
+      - openapi/first-american-financial-clearsearch-openapi.yml
+    shape: request -> transaction -> report
+    entities:
+      - {name: OrderRequest, description: 'Product-specific search criteria - subject name, SSN, property address or identifier - posted to /<service>/order.'}
+      - {name: OrderResponse, description: 'Acknowledgement carrying the transaction identifier used to fetch the result.'}
+      - {name: Report, description: 'The product-specific result document retrieved from GET /<service>/report.'}
+    relationships:
+      - {from: OrderRequest, to: OrderResponse, type: has_one, via: 'POST /<service>/order'}
+      - {from: OrderResponse, to: Report, type: has_one, via: 'transaction id -> GET /<service>/report'}
+    note: >-
+      Each of the fifteen services defines its own request and report schemas (2 to 49 definitions
+      each) with NO shared base type and NO cross-service identifier. There is no customer, account
+      or subject entity spanning products - an agent that orders a Property report and an Identity
+      report on the same borrower cannot join the two through the API.
+cross_model:
+  shared_entities: []
+  note: >-
+    Title & Settlement and the Digital Gateway data services share no schema and no identifier, and
+    are not even served from the same host family (settlement.stageapi.firstam.com vs
+    api.firstam.io / api-w2.firstam.io / *.dgw.firstam.io). They are two products behind one portal.

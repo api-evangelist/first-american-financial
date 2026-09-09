@@ -1,0 +1,545 @@
+swagger: '2.0'
+info:
+  description: ''
+  version: v1
+  title: Liens & Judgments FCRA API
+host: api.firstam.io
+basePath: /v1
+tags:
+- name: developers
+  description: Operations available to regular developers
+schemes:
+- https
+paths:
+  /lnj-fcra/order:
+    post:
+      tags:
+      - Request
+      summary: Make a new Liens & Judgments FCRA service call
+      description: 'Required fields: First Name, Last Name, SSN'
+      operationId: post
+      consumes:
+      - application/json
+      - application/xml
+      produces:
+      - application/json
+      - application/xml
+      parameters:
+      - in: header
+        name: x-app-id
+        description: Application ID
+        required: true
+        type: string
+      - in: header
+        name: x-app-key
+        description: Application Key
+        required: true
+        type: string
+      - in: body
+        name: LiensJudgmentsFCRAServiceRequest
+        description: Request to the service
+        required: true
+        schema:
+          $ref: '#/definitions/LiensJudgmentsFCRAServiceRequest'
+      responses:
+        '200':
+          description: OK
+          schema:
+            $ref: '#/definitions/LiensJudgmentsFCRAServiceResponse'
+        '400':
+          description: Bad Request
+        '500':
+          description: Internal Server Error
+  /lnj-fcra/report:
+    get:
+      tags:
+      - Get Response
+      summary: Retrieve existing FCRA report by transactionID
+      description: Add a transactionID to the query string to retrieve an existing report
+      operationId: get
+      consumes:
+      - application/json
+      - application/xml
+      produces:
+      - application/json
+      - application/xml
+      parameters:
+      - in: header
+        name: x-app-id
+        description: Application ID
+        required: true
+        type: string
+      - in: header
+        name: x-app-key
+        description: Application Key
+        required: true
+        type: string
+      - name: transactionID
+        in: query
+        description: Unique identifier tied to a report
+        required: true
+        type: string
+      responses:
+        '200':
+          description: OK
+          schema:
+            $ref: '#/definitions/LiensJudgmentsFCRAServiceResponse'
+        '400':
+          description: Bad Request (missing/invalid transactionID)
+        '404':
+          description: Not Found (no response found by transactionID)
+        '500':
+          description: Internal Server Error
+definitions:
+  LiensJudgmentsFCRAServiceRequest:
+    type: object
+    required:
+    - IntendedPurpose
+    - Person
+    - RequestorID
+    properties:
+      RequestorID:
+        type: string
+        example: '123456'
+      IntendedPurpose:
+        type: string
+        example: Application
+      Person:
+        $ref: '#/definitions/Person'
+    example:
+      RequestorID: '12345'
+      IntendedPurpose: Application
+      Person:
+        Name:
+          First: Joe
+          Last: Liensjudgments
+        Address:
+          StreetAddress1: 123 MAIN AVENUE
+          City: LOS ANGELES
+          State: CA
+          Zip5: '90001'
+        SSN: '999111114'
+  LiensJudgmentsFCRAServiceResponse:
+    type: object
+    required:
+    - RequestorID
+    - TransactionID
+    - Result
+    properties:
+      TransactionID:
+        type: string
+        example: d49c3068-eaad-4f13-88f5-9cd94e65f516
+        description: Unique identifier for the transaction
+      RequestorID:
+        type: string
+        example: '1234567'
+      Result:
+        type: string
+        example: ResultsFound
+        enum:
+        - SubjectNotFound
+        - NoRecordsFound
+        - RecordsFound
+      Liens:
+        type: array
+        items:
+          $ref: '#/definitions/Lien'
+      Judgments:
+        type: array
+        items:
+          $ref: '#/definitions/Judgment'
+      LnJAttributes:
+        type: array
+        items:
+          $ref: '#/definitions/LnJAttribute'
+    example:
+      TransactionID: d49c3068-eaad-4f13-88f5-9cd94e65f516
+      RequestorID: '1234567'
+      Result: RecordsFound
+      Liens:
+      - FilingBook: '678'
+        FilingPage: '97989'
+        FilingNumber: 99DJ1687715
+        Amount: '5000'
+        Agency: CALIFORNIA SUPERIOR COURT
+        ReleaseDate:
+          month: 1
+          year: 2017
+          day: 1
+        LienType: State Tax Lien
+        AgencyCounty: VENTURA
+        AgencyState: CA
+        Seq: '1'
+        DateFiled:
+          Month: 1
+          Year: 2017
+          Day: 1
+        DateLastSeen:
+          Month: 1
+          Year: 2017
+          Day: 1
+      - FilingBook: '678'
+        FilingPage: '97989'
+        FilingNumber: 99DJ1687715
+        Amount: '5000'
+        Agency: CALIFORNIA SUPERIOR COURT
+        ReleaseDate:
+          Month: 1
+          Year: 2017
+          Day: 1
+        LienFilingType: State Tax Lien
+        AgencyCounty: VENTURA
+        AgencyState: CA
+        Seq: '1'
+        DateFiled:
+          Month: 1
+          Year: 2017
+          Day: 1
+        DateLastSeen:
+          Month: 1
+          Year: 2017
+          Day: 1
+      Judgments:
+      - FilingBook: '7688'
+        FilingPage: '9789'
+        FilingNumber: 99DJ1687715
+        Amount: '5000'
+        Plaintiff: ABC Corp
+        JudgmentType: Civil Judgment
+        Agency: CALIFORNIA SUPERIOR COURT
+        ReleaseDate:
+          Month: 1
+          Year: 2017
+          Day: 1
+        AgencyCounty: VENTURA
+        AgencyState: CA
+        DateLastSeen:
+          Month: 1
+          Year: 2017
+          Day: 1
+        FilingDescription: Released
+        Eviction: N
+        Defendant: John Doe
+        Seq: '1'
+        DateFiled:
+          Month: 1
+          Year: 2017
+          Day: 1
+      - FilingBook: '7688'
+        FilingPage: '9789'
+        FilingNumber: 99DJ1687715
+        Amount: '5000'
+        Plaintiff: ABC Corp
+        JudgmentType: Civil Judgment
+        Agency: CALIFORNIA SUPERIOR COURT
+        ReleaseDate:
+          Month: 1
+          Year: 2017
+          Day: 1
+        AgencyCounty: VENTURA
+        AgencyState: CA
+        DateLastSeen:
+          Month: 1
+          Year: 2017
+          Day: 1
+        FilingDescription: Released
+        Eviction: N
+        Defendant: John Doe
+        Seq: '1'
+        DateFiled:
+          Month: 1
+          Year: 2017
+          Day: 1
+      LnJAttributes:
+      - Name: LnJLienTaxCount
+        Value: '1'
+      - Name: LnJLienTaxCount
+        Value: '1'
+  Person:
+    type: object
+    properties:
+      Name:
+        $ref: '#/definitions/Name'
+      Address:
+        $ref: '#/definitions/Address'
+      DOB:
+        $ref: '#/definitions/ParsedDate'
+      SSN:
+        type: string
+        example: '999999990'
+      HomePhone:
+        type: string
+        example: '8058675309'
+    example:
+      Address:
+        StreetNumber: '123'
+        City: Agoura Hills
+        StreetPostDirection: E
+        StreetAddress1: 123 Main St
+        County: Los Angeles
+        UnitNumber: '110'
+        StreetAddress2: Apt 504
+        ZipFour: '1212'
+        ZipCode: '91301'
+        StreetPreDirection: S
+        StreetName: Main
+        UnitDesignation: APT
+        StreetSuffix: St
+        State: CA
+      DOB:
+        Month: 1
+        Year: 2017
+        Day: 1
+      HomePhone: '8058675309'
+      Name:
+        Middle: C
+        Last: Doe
+        Prefix: Mr.
+        Suffix: Sr.
+        First: John
+        Full: John C Doe.
+      SSN: '999999990'
+  Name:
+    type: object
+    properties:
+      Full:
+        type: string
+        example: John C Doe.
+      First:
+        type: string
+        example: John
+      Middle:
+        type: string
+        example: C
+      Last:
+        type: string
+        example: Doe
+      Suffix:
+        type: string
+        example: Sr.
+      Prefix:
+        type: string
+        example: Mr.
+    example:
+      Middle: C
+      Last: Doe
+      Prefix: Mr.
+      Suffix: Sr.
+      First: John
+      Full: John C Doe.
+  Address:
+    type: object
+    properties:
+      StreetNumber:
+        type: string
+        example: '123'
+      StreetPreDirection:
+        type: string
+        example: S
+      StreetName:
+        type: string
+        example: Main
+      StreetSuffix:
+        type: string
+        example: St
+      StreetPostDirection:
+        type: string
+        example: E
+      UnitDesignation:
+        type: string
+        example: APT
+      UnitNumber:
+        type: string
+        example: '110'
+      StreetAddress1:
+        type: string
+        example: 123 Main St
+      StreetAddress2:
+        type: string
+        example: Apt 504
+      City:
+        type: string
+        example: Agoura Hills
+      State:
+        type: string
+        example: CA
+      ZipCode:
+        type: string
+        example: '91301'
+      ZipFour:
+        type: string
+        example: '1212'
+      County:
+        type: string
+        example: Los Angeles
+    example:
+      StreetNumber: '123'
+      City: Agoura Hills
+      StreetPostDirection: E
+      StreetAddress1: 123 Main St
+      County: Los Angeles
+      UnitNumber: '110'
+      StreetAddress2: Apt 504
+      ZipFour: '1212'
+      ZipCode: '91301'
+      StreetPreDirection: S
+      StreetName: Main
+      UnitDesignation: APT
+      StreetSuffix: St
+      State: CA
+  Lien:
+    properties:
+      Seq:
+        type: string
+        example: '1'
+      DateFiled:
+        $ref: '#/definitions/ParsedDate'
+      LienFilingType:
+        type: string
+        example: State Tax Lien
+      Amount:
+        type: string
+        example: '5000'
+      ReleaseDate:
+        $ref: '#/definitions/ParsedDate'
+      DateLastSeen:
+        $ref: '#/definitions/ParsedDate'
+      FilingNumber:
+        type: string
+        example: 99DJ1687715
+      FilingBook:
+        type: string
+        example: '678'
+      FilingPage:
+        type: string
+        example: '97989'
+      Agency:
+        type: string
+        example: CALIFORNIA SUPERIOR COURT
+      AgencyCounty:
+        type: string
+        example: VENTURA
+      AgencyState:
+        type: string
+        example: CA
+    example:
+      FilingBook: '678'
+      FilingPage: '97989'
+      FilingNumber: 99DJ1687715
+      Amount: '5000'
+      Agency: CALIFORNIA SUPERIOR COURT
+      ReleaseDate:
+        Month: 1
+        Year: 2017
+        Day: 1
+      LienFilingType: State Tax Lien
+      AgencyCounty: VENTURA
+      AgencyState: CA
+      Seq: '1'
+      DateFiled:
+        Month: 1
+        Year: 2017
+        Day: 1
+      DateLastSeen:
+        Month: 1
+        Year: 2017
+        Day: 1
+  Judgment:
+    properties:
+      Seq:
+        type: string
+        example: '1'
+      DateFiled:
+        $ref: '#/definitions/ParsedDate'
+      JudgmentType:
+        type: string
+        example: Civil Judgment
+      Amount:
+        type: string
+        example: '5000'
+      ReleaseDate:
+        $ref: '#/definitions/ParsedDate'
+      FilingDescription:
+        type: string
+        example: Released
+      DateLastSeen:
+        $ref: '#/definitions/ParsedDate'
+      Defendant:
+        type: string
+        example: John Doe
+      Plaintiff:
+        type: string
+        example: ABC Corp
+      FilingNumber:
+        type: string
+        example: 99DJ1687715
+      FilingBook:
+        type: string
+        example: '7688'
+      FilingPage:
+        type: string
+        example: '9789'
+      Eviction:
+        type: string
+        example: N
+      Agency:
+        type: string
+        example: CALIFORNIA SUPERIOR COURT
+      AgencyCounty:
+        type: string
+        example: VENTURA
+      AgencyState:
+        type: string
+        example: CA
+    example:
+      FilingBook: '7688'
+      FilingPage: '9789'
+      FilingNumber: 99DJ1687715
+      Amount: '5000'
+      Plaintiff: ABC Corp
+      JudgmentType: Civil Judgment
+      Agency: CALIFORNIA SUPERIOR COURT
+      ReleaseDate:
+        Month: 1
+        Year: 2017
+        Day: 1
+      AgencyCounty: VENTURA
+      AgencyState: CA
+      DateLastSeen:
+        Month: 1
+        Year: 2017
+        Day: 1
+      FilingDescription: Released
+      Eviction: N
+      Defendant: John Doe
+      Seq: '1'
+      DateFiled:
+        Month: 1
+        Year: 2017
+        Day: 1
+  LnJAttribute:
+    properties:
+      Name:
+        type: string
+        example: LnJLienTaxCount
+      Value:
+        type: string
+        example: '1'
+    example:
+      Name: LnJLienTaxCount
+      Value: '1'
+  ParsedDate:
+    properties:
+      Year:
+        type: number
+        example: 2017
+      Month:
+        type: number
+        example: 1
+      Day:
+        type: number
+        example: 1
+    example:
+      Month: 1
+      Year: 2017
+      Day: 1

@@ -1,0 +1,41 @@
+generated: '2026-09-09'
+method: searched
+source: >-
+  npm registry search, PyPI, and the First American Digital Gateway developer portal
+  (https://developer.firstam.io/api/docs)
+package_count: 0
+note: >-
+  NO first-party client library found. The Digital Gateway documentation ships no SDK section
+  and no code libraries — its "Test your APP" guidance points developers at generic REST clients
+  (Postman, Fiddler) and then says that because the APIs require specific headers and tokens,
+  "this may make it difficult to use off the shelf clients, instead pointing more towards writing
+  your own App." There is no First American GitHub organisation: github.com/firstam is an
+  unrelated personal account (Oleksii M.), and github.com/first-american and
+  github.com/FirstAmericanFinancial both return 404. Nothing published in npm, PyPI, RubyGems or
+  the other registries is first-party.
+packages: []
+rejected:
+  - name: cra-template-fa-react
+    registry: npm
+    url: https://www.npmjs.com/package/cra-template-fa-react
+    version: 1.0.2
+    published: '2023-09-22'
+    official: false
+    reason: >-
+      Description says "Basic UI template for FirstAm applications" but the sole npm maintainer is
+      a personal gmail account (fa-ebui), there is no repository, homepage or organisation scope,
+      and it is a Create React App UI template — not a client for any Digital Gateway API. Not
+      recorded as a First American package.
+  - name: firstam-insert
+    registry: npm
+    url: https://www.npmjs.com/package/firstam-insert
+    version: 1.3.0
+    published: '2020-07-14'
+    official: false
+    reason: >-
+      Name-collision only. No description, no repository, maintained by an unrelated personal
+      account. Not a First American client library.
+registries_checked:
+  - {registry: npm, query: firstam, result: 2 name-collision packages, official: 0}
+  - {registry: pypi, query: 'firstam / first-american / firstamerican', result: 404 on all three}
+  - {registry: github, query: 'orgs firstam / first-american / FirstAmericanFinancial', result: no First American organisation}

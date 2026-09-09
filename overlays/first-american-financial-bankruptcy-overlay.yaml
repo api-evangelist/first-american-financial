@@ -1,0 +1,31 @@
+overlay: 1.0.0
+info:
+  title: API Evangelist enhancements for First American Financial — Bankruptcy API
+  version: 1.0.0
+extends: openapi/first-american-financial-bankruptcy-openapi.yml
+actions:
+- target: $.info
+  update:
+    x-apievangelist-provider: first-american-financial
+    x-apievangelist-product: bankruptcy
+    x-apievangelist-source: https://developer.firstam.io/api_docs/services/86415.json
+    x-apievangelist-source-catalog: https://developer.firstam.io/api_docs/services.json
+    x-apievangelist-harvested: '2026-09-09'
+    x-apievangelist-portal: https://developer.firstam.io/
+    x-apievangelist-access: approval-gated — App ID / App Key issued after an administrator review; production
+      requires the First American relationship team
+    x-apievangelist-artifacts:
+      authentication: authentication/first-american-financial-authentication.yml
+      conventions: conventions/first-american-financial-conventions.yml
+      errors: errors/first-american-financial-problem-types.yml
+      lifecycle: lifecycle/first-american-financial-lifecycle.yml
+      rate_limits: rate-limits/first-american-financial-rate-limits.yml
+      data_model: data-model/first-american-financial-data-model.yml
+- target: $.info
+  update:
+    x-apievangelist-auth-note: Credentials are declared as required x-app-id / x-app-key HEADER PARAMETERS
+      on each operation, not in a securityDefinitions block.
+    x-apievangelist-pattern: order-then-retrieve — POST /order returns a transaction id, GET /report fetches
+      the result
+    x-apievangelist-reversibility: none — no cancel, void or refund operation exists for a data-service
+      order

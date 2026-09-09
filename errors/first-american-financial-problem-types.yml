@@ -1,0 +1,66 @@
+generated: '2026-09-09'
+method: searched
+source: https://developer.firstam.io/api/docs
+also_derived_from: openapi/ — 93 operations across 16 harvested specifications
+format: http-status-codes
+note: >-
+  First American does NOT use RFC 9457 problem+json. The Digital Gateway documentation publishes a
+  five-row conventional HTTP status table ("We use conventional HTTP response codes to indicate the
+  success or failure of an API request") and each specification restates those codes per operation.
+  Error detail is returned in the service-specific response body, not in a standard envelope.
+envelope:
+  media_type: application/json
+  also: application/xml
+  shape: service-specific
+  note: >-
+    Each service defines its own response schema; the 400 body carries the reason as prose
+    (documented example: "Bad Request - SSN is a required field"). No shared error object,
+    no error code registry beyond the HTTP status.
+problems:
+  - status: 200
+    title: Success
+    detail: Successful request
+    source: https://developer.firstam.io/api/docs
+    occurrences: 93
+  - status: 400
+    title: Invalid Request
+    detail: >-
+      Output detail is provided in response as to why the request is invalid. Required field is
+      missing or the data is invalid. Documented example - "Bad Request - SSN is a required field"
+    remediation: Fix the named required or malformed field and resubmit; do not retry unchanged.
+    source: https://developer.firstam.io/api/docs
+    occurrences: 73
+  - status: 401
+    title: Invalid App ID or App Key
+    detail: Invalid app id or key.
+    remediation: >-
+      Check the x-app-id / x-app-key pair issued for your App in the Digital Gateway portal, or the
+      bearer JWT on Title & Settlement. A token from the wrong environment (sandbox vs production)
+      presents the same way.
+    source: https://developer.firstam.io/api/docs
+    occurrences: 34
+  - status: 404
+    title: Not Found
+    detail: >-
+      Declared per-operation in the harvested specifications; typically the requested transaction
+      or report identifier does not exist or has not completed.
+    source: openapi/ (36 operation-level declarations)
+    occurrences: 36
+  - status: 500
+    title: System Error
+    detail: >-
+      An unexpected error has occurred. Please try again. If the problem persists, please contact
+      Customer Service.
+    remediation: Retry with backoff; escalate to DigitalGateway@firstam.io if persistent.
+    source: https://developer.firstam.io/api/docs
+    occurrences: 38
+  - status: 503
+    title: Exceed usage limit
+    detail: Maximum amount of usage limit has been reached for API calls.
+    remediation: >-
+      This is the rate-limit / quota exhaustion signal on this platform - NOT 429. Quotas are set
+      by the QoS policy attached to your license term; contact your First American relationship
+      team to raise them.
+    source: https://developer.firstam.io/api/docs
+    occurrences: 34
+    see_also: rate-limits/first-american-financial-rate-limits.yml

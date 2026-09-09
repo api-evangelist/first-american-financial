@@ -1,0 +1,84 @@
+generated: '2026-09-09'
+method: derived
+status: candidate
+source: openapi/ — 16 Digital Gateway ActiveDocs specs harvested 2026-09-09
+note: >-
+  First American publishes NO MCP server. This is a DERIVED candidate tool list, computed from the
+  operations in the harvested Digital Gateway specifications so the agent-facing shape of the
+  surface is on record. No endpoint is asserted and none was guessed. Searched the provider docs,
+  the npm registry and the public MCP registries on 2026-09-09 — nothing.
+deployment:
+  mode: none
+  auth: unknown
+  verified: derived
+server:
+  name: first-american-digital-gateway
+  transport: null
+  url: null
+tools:
+  - name: find_office
+    description: Find a First American office by city, state or ZIP
+    source_operation: openapi/first-american-financial-title-settlement-openapi.yml#FAoffices
+  - name: open_order
+    description: Open a title and escrow order with First American
+    source_operation: openapi/first-american-financial-title-settlement-openapi.yml#OrdersPost
+  - name: cancel_order
+    description: Cancel a previously created order
+    source_operation: openapi/first-american-financial-title-settlement-openapi.yml#Orders_Cancel
+  - name: upload_order_document
+    description: Upload a document to an order
+    source_operation: openapi/first-american-financial-title-settlement-openapi.yml#Orders_UploadDocument
+  - name: post_order_message
+    description: Send a message to the escrow officer on an order
+    source_operation: openapi/first-american-financial-title-settlement-openapi.yml#Orders_PostMessage
+  - name: list_escrow_officers
+    description: List escrow officers for an office
+    source_operation: openapi/first-american-financial-title-settlement-openapi.yml#EscrowOfficers_Get
+  - name: list_title_officers
+    description: List title officers for an office
+    source_operation: openapi/first-american-financial-title-settlement-openapi.yml#TitleOfficers_Get
+  - name: register_webhook
+    description: Register a webhook subscription for order milestone events
+    source_operation: openapi/first-american-financial-title-settlement-openapi.yml#Webhooks_Post
+  - name: list_webhooks
+    description: List registered webhooks
+    source_operation: openapi/first-american-financial-title-settlement-openapi.yml#Webhooks_GetAll
+  - name: delete_webhook
+    description: Delete a webhook subscription
+    source_operation: openapi/first-american-financial-title-settlement-openapi.yml#Webhooks_Del
+  - name: order_property_report
+    description: Order a Property Basic / Extended / Overview data report
+    source_operation: openapi/first-american-financial-property-openapi.yml#reqPropertyBasic
+  - name: retrieve_property_report
+    description: Retrieve a previously ordered property report
+    source_operation: openapi/first-american-financial-property-openapi.yml#retrieveProperty
+  - name: order_ownership_report
+    description: Order an Ownership report
+    source_operation: openapi/first-american-financial-ownership-openapi.yml#reqOwnership
+  - name: order_identity_check
+    description: Order an SSN search, verification or identity report
+    source_operation: openapi/first-american-financial-identity-openapi.yml#reqssnsearch
+  - name: order_watchlist_screen
+    description: Screen an individual or company against OFAC and other watchlists
+    source_operation: openapi/first-american-financial-watchlist-openapi.yml#post
+  - name: lookup_nmls
+    description: Look up NMLS company or individual records
+    source_operation: openapi/first-american-financial-nmls-openapi.yml#get
+  - name: order_bankruptcy_search
+    description: Order a bankruptcy search
+    source_operation: openapi/first-american-financial-bankruptcy-openapi.yml#post
+  - name: order_scra_check
+    description: Order a Servicemembers Civil Relief Act check
+    source_operation: openapi/first-american-financial-scra-openapi.yml#post
+  - name: order_liens_and_judgments
+    description: Order a liens and judgments search (FCRA or non-FCRA)
+    source_operation: openapi/first-american-financial-liens-judgments-fcra-openapi.yml#post
+  - name: order_occupancy_report
+    description: Order an occupancy report
+    source_operation: openapi/first-american-financial-occupancy-openapi.yml#Order
+  - name: order_4506c_transcript
+    description: Request an IRS 4506-C tax transcript
+    source_operation: openapi/first-american-financial-4506c-openapi.yml#postOrder
+  - name: order_clearsearch
+    description: Submit a ClearSearch title search order
+    source_operation: openapi/first-american-financial-clearsearch-openapi.yml#addOrder

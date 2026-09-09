@@ -1,0 +1,1238 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "description": "Identity service for borrower(s) and/or participant information delivers data for the applicant’s Social Security Number (SSN) usage, validation of SSN, identity and identity theft detection. Other names, addresses, employment, and associated dates reported including number of verifying sources.",
+    "version": "1.0.0",
+    "title": "Identity Service"
+  },
+  "paths": {
+    "/identity/order/ssnsearch": {
+      "post": {
+        "tags": [
+          "RequestIdentity"
+        ],
+        "summary": "Place request for Identity Service",
+        "operationId": "reqssnsearch",
+        "description": "Required fields: First name, last name, and full SSN. Alerts and Analytics can be added by setting the \"IncludeAnalytics\" flag in the request body to true.",
+        "consumes": [
+          "application/json",
+          "application/xml"
+        ],
+        "produces": [
+          "application/json",
+          "application/xml"
+        ],
+        "parameters": [
+          {
+            "in": "header",
+            "name": "x-app-id",
+            "description": "Application ID",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "in": "header",
+            "name": "x-app-key",
+            "description": "Application Key",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "in": "body",
+            "name": "Request",
+            "description": "Request for Identity",
+            "schema": {
+              "$ref": "#/definitions/IdentityRequestSSNSearch"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/IdentityResponseExtra"
+            }
+          },
+          "400": {
+            "description": "invalid input, object invalid"
+          },
+          "404": {
+            "description": "No data found"
+          }
+        }
+      }
+    },
+    "/identity/order/ssnverification": {
+      "post": {
+        "tags": [
+          "RequestIdentity"
+        ],
+        "summary": "Place request for Identity Service",
+        "operationId": "reqSsnVerification",
+        "description": "Identity Verification: Compares consumer input data against multiple databases returning fraud messages, match results, file data, High-risk fraud alerts (HRFA) and fraud model score(s). Required fields: Last name and full SSN, or last 4 of SSN and address. Alerts and Analytics can be added by setting the \"IncludeAnalytics\" flag in the request body to true.",
+        "consumes": [
+          "application/json",
+          "application/xml"
+        ],
+        "produces": [
+          "application/json",
+          "application/xml"
+        ],
+        "parameters": [
+          {
+            "in": "header",
+            "name": "x-app-id",
+            "description": "Application ID",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "in": "header",
+            "name": "x-app-key",
+            "description": "Application Key",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "in": "body",
+            "name": "Request",
+            "description": "Request for Identity",
+            "schema": {
+              "$ref": "#/definitions/IdentityRequest"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/IdentityResponseBase"
+            }
+          },
+          "400": {
+            "description": "invalid input, object invalid"
+          },
+          "404": {
+            "description": "No data found"
+          }
+        }
+      }
+    },
+    "/identity/order/ssnreport": {
+      "post": {
+        "tags": [
+          "RequestIdentity"
+        ],
+        "summary": "Place request for Identity Service",
+        "operationId": "reqSsnReport",
+        "description": "Identity Report: Provides alias, employment, date of birth, infile- since-date, phone information, and consumer statements when available. FCRA product. There will be a soft credit inquiry posted in consumer file. Required fields: Last name and full SSN. Alerts and Analytics can be added by setting the \"IncludeAnalytics\" flag in the request body to true.",
+        "consumes": [
+          "application/json",
+          "application/xml"
+        ],
+        "produces": [
+          "application/json",
+          "application/xml"
+        ],
+        "parameters": [
+          {
+            "in": "header",
+            "name": "x-app-id",
+            "description": "Application ID",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "in": "header",
+            "name": "x-app-key",
+            "description": "Application Key",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "in": "body",
+            "name": "Request",
+            "description": "Request for Identity",
+            "schema": {
+              "$ref": "#/definitions/IdentityRequest"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/IdentityResponseBase"
+            }
+          },
+          "400": {
+            "description": "invalid input, object invalid"
+          },
+          "404": {
+            "description": "No data found"
+          }
+        }
+      }
+    },
+    "/identity/order/ssnreportplus": {
+      "post": {
+        "tags": [
+          "RequestIdentity"
+        ],
+        "summary": "Place request for Identity Service",
+        "operationId": "reqSsnPlus",
+        "description": "Identity Report Plus: An FCRA report designed for users who do not want the detail supplied by the Credit Report and are primarily interested in summary information that helps to automate decision-making process. Required fields: Last name and full SSN. Alerts and Analytics can be added by setting the \"IncludeAnalytics\" flag in the request body to true.",
+        "consumes": [
+          "application/json",
+          "application/xml"
+        ],
+        "produces": [
+          "application/json",
+          "application/xml"
+        ],
+        "parameters": [
+          {
+            "in": "header",
+            "name": "x-app-id",
+            "description": "Application ID",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "in": "header",
+            "name": "x-app-key",
+            "description": "Application Key",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "in": "body",
+            "name": "Request",
+            "description": "Request for Identity",
+            "schema": {
+              "$ref": "#/definitions/IdentityRequest"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/IdentityResponseBase"
+            }
+          },
+          "400": {
+            "description": "invalid input, object invalid"
+          },
+          "404": {
+            "description": "No data found"
+          }
+        }
+      }
+    },
+    "/identity/report": {
+      "get": {
+        "tags": [
+          "GetIdentityResponseBase"
+        ],
+        "summary": "Retrieve by Transaction ID",
+        "operationId": "retrieveIdentity",
+        "description": "Retrieve existing Identity Response by Transaction ID",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json",
+          "application/xml"
+        ],
+        "parameters": [
+          {
+            "in": "header",
+            "name": "x-app-id",
+            "description": "Application ID",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "in": "header",
+            "name": "x-app-key",
+            "description": "Application Key",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "in": "query",
+            "name": "TransactionID",
+            "description": "Transaction ID number provided",
+            "required": true,
+            "default": "82d9762b-70c3-4801-bd4b-8ffc8d358f77",
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/IdentityResponseBase"
+            }
+          },
+          "400": {
+            "description": "Invalid Request, object invalid."
+          },
+          "404": {
+            "description": "No data found."
+          }
+        }
+      }
+    }
+  },
+  "definitions": {
+    "IdentityRequest": {
+      "type": "object",
+      "required": [
+        "RequestorID",
+        "Person"
+      ],
+      "properties": {
+        "RequestorID": {
+          "example": "loannumber1234",
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 100,
+          "description": "LoanNumber or TransactionID"
+        },
+        "Person": {
+          "$ref": "#/definitions/Person"
+        },
+        "IncludeHighRiskAlerts": {
+          "type": "boolean",
+          "example": false
+        },
+        "IncludeAnalytics": {
+          "type": "boolean",
+          "example": false,
+          "description": "Option to run analytics on data set."
+        },
+        "AnalyticsInput": {
+          "description": "Optional dictionary for alert analytics (dependent on alert).",
+          "$ref": "#/definitions/AnalyticsInputType"
+        }
+      }
+    },
+    "IdentityRequestSSNSearch": {
+      "type": "object",
+      "required": [
+        "RequestorID",
+        "Person"
+      ],
+      "properties": {
+        "RequestorID": {
+          "example": "loannumber1234",
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 100,
+          "description": "LoanNumber or TransactionID"
+        },
+        "Person": {
+          "$ref": "#/definitions/PersonSSNSearch"
+        },
+        "IncludeHighRiskAlerts": {
+          "type": "boolean",
+          "example": false
+        },
+        "IncludeAnalytics": {
+          "type": "boolean",
+          "example": false,
+          "description": "Option to run analytics on data set."
+        },
+        "AnalyticsInput": {
+          "description": "Optional dictionary for alert analytics (dependent on alert).",
+          "$ref": "#/definitions/AnalyticsInputType"
+        }
+      }
+    },
+    "IdentityResponseBase": {
+      "type": "object",
+      "properties": {
+        "RequestorID": {
+          "example": "loannumber1234",
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 100,
+          "description": "LoanNumber or TransactionID"
+        },
+        "TransactionID": {
+          "example": "82d9762b-70c3-4801-bd4b-8ffc8d358f77",
+          "type": "string",
+          "description": "TransactionID can be used to fetch data at later stage"
+        },
+        "PrimaryIdentity": {
+          "$ref": "#/definitions/ConsumerIdentity"
+        },
+        "Alerts": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/AlertType"
+          }
+        }
+      }
+    },
+    "IdentityResponseExtra": {
+      "type": "object",
+      "properties": {
+        "RequestorID": {
+          "example": "loannumber1234",
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 100,
+          "description": "LoanNumber or TransactionID"
+        },
+        "TransactionID": {
+          "example": "82d9762b-70c3-4801-bd4b-8ffc8d358f77",
+          "type": "string",
+          "description": "TransactionID can be used to fetch data at later stage"
+        },
+        "PrimaryIdentity": {
+          "$ref": "#/definitions/ConsumerIdentity"
+        },
+        "AssociatedIdentities": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/AssociatedConsumerIdentity"
+          },
+          "xml": {
+            "wrapped": true
+          }
+        },
+        "AssociatedAddresses": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/AssociatedConsumerAddress"
+          },
+          "xml": {
+            "wrapped": true
+          }
+        },
+        "Alerts": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/AlertType"
+          }
+        }
+      }
+    },
+    "AssociatedConsumerAddress": {
+      "allOf": [
+        {
+          "$ref": "#/definitions/ConsumerAddress"
+        },
+        {
+          "properties": {
+            "Residents": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/AssociatedConsumerIdentity"
+              },
+              "xml": {
+                "wrapped": true
+              }
+            }
+          }
+        }
+      ],
+      "xml": {
+        "name": "AssociatedAddress"
+      }
+    },
+    "AssociatedConsumerIdentity": {
+      "allOf": [
+        {
+          "$ref": "#/definitions/ConsumerIdentity"
+        },
+        {
+          "properties": {
+            "SharedSSNs": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/SSNInfo"
+              },
+              "xml": {
+                "wrapped": true
+              }
+            },
+            "InferredAssociation": {
+              "type": "string",
+              "example": "Parent"
+            }
+          }
+        }
+      ],
+      "xml": {
+        "name": "AssociatedIdentity"
+      }
+    },
+    "Address": {
+      "type": "object",
+      "properties": {
+        "StreetNumber": {
+          "type": "string",
+          "example": "108"
+        },
+        "StreetPreDirection": {
+          "type": "string",
+          "example": "W"
+        },
+        "StreetName": {
+          "type": "string",
+          "example": "2nd St"
+        },
+        "StreetSuffix": {
+          "type": "string",
+          "example": "A"
+        },
+        "StreetPostDirection": {
+          "type": "string",
+          "example": "South"
+        },
+        "UnitDesignation": {
+          "type": "string",
+          "example": "Apt"
+        },
+        "UnitNumber": {
+          "type": "string",
+          "example": "801"
+        },
+        "StreetAddress1": {
+          "type": "string",
+          "example": ""
+        },
+        "StreetAddress2": {
+          "type": "string",
+          "example": ""
+        },
+        "City": {
+          "type": "string",
+          "example": "St. Louis"
+        },
+        "State": {
+          "type": "string",
+          "example": "MO"
+        },
+        "ZipCode": {
+          "type": "string",
+          "example": "63101"
+        },
+        "ZipFour": {
+          "type": "string",
+          "example": "1423"
+        },
+        "StateCityZip": {
+          "type": "string",
+          "example": ""
+        },
+        "FullAddress": {
+          "type": "string",
+          "example": ""
+        }
+      }
+    },
+    "ConsumerAddress": {
+      "allOf": [
+        {
+          "$ref": "#/definitions/Address"
+        },
+        {
+          "type": "object",
+          "properties": {
+            "County": {
+              "type": "string",
+              "example": "Ventura"
+            },
+            "StreetAddress1": {
+              "type": "string",
+              "example": "108 W 2nd St"
+            },
+            "StreetAddress2": {
+              "type": "string",
+              "example": "Apt. 801"
+            },
+            "FirstReportedDate": {
+              "$ref": "#/definitions/ParsedDate"
+            },
+            "LastReportedDate": {
+              "$ref": "#/definitions/ParsedDate"
+            },
+            "ResidenceDuration": {
+              "type": "integer",
+              "example": 1
+            },
+            "ResidenceStatus": {
+              "type": "string",
+              "example": "own"
+            },
+            "VerifyingSources": {
+              "type": "integer",
+              "example": 2,
+              "description": "Number of verifying sources"
+            },
+            "TypesOfSources": {
+              "type": "array",
+              "items": {
+                "type": "string",
+                "description": "Verifying sources",
+                "xml": {
+                  "name": "Source"
+                }
+              },
+              "xml": {
+                "wrapped": true
+              },
+              "example": [
+                "file",
+                "vendor"
+              ]
+            },
+            "HighRiskIndicators": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/RiskIndicator"
+              },
+              "xml": {
+                "wrapped": true
+              }
+            }
+          }
+        }
+      ],
+      "xml": {
+        "name": "Address"
+      }
+    },
+    "ConsumerIdentity": {
+      "type": "object",
+      "properties": {
+        "FileSummary": {
+          "$ref": "#/definitions/FileSummary"
+        },
+        "Name": {
+          "$ref": "#/definitions/ConsumerName"
+        },
+        "SSNInfo": {
+          "$ref": "#/definitions/SSNInfo"
+        },
+        "Age": {
+          "type": "integer",
+          "example": 34
+        },
+        "DateOfBirth": {
+          "$ref": "#/definitions/ParsedDate"
+        },
+        "DateOfDeath": {
+          "$ref": "#/definitions/ParsedDate"
+        },
+        "DeceasedInfo": {
+          "$ref": "#/definitions/DeceasedInfo"
+        },
+        "DriversLicense": {
+          "$ref": "#/definitions/License"
+        },
+        "Addresses": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/ConsumerAddress"
+          },
+          "xml": {
+            "wrapped": true
+          }
+        },
+        "Employers": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/Employer"
+          },
+          "xml": {
+            "wrapped": true
+          }
+        },
+        "OtherNames": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/ConsumerName"
+          },
+          "xml": {
+            "wrapped": true
+          }
+        },
+        "ConsumerStatements": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/ConsumerStatement"
+          },
+          "xml": {
+            "wrapped": true
+          }
+        },
+        "DateFirstReported": {
+          "$ref": "#/definitions/ParsedDate"
+        },
+        "DateLastReported": {
+          "$ref": "#/definitions/ParsedDate"
+        },
+        "TypesOfSources": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "description": "Verifying sources",
+            "xml": {
+              "name": "Source"
+            }
+          },
+          "xml": {
+            "wrapped": true
+          },
+          "example": [
+            "file",
+            "vendor"
+          ]
+        },
+        "VerifyingSources": {
+          "type": "integer",
+          "example": 2,
+          "description": "Number of verifying sources"
+        },
+        "HighRiskIndicators": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/RiskIndicator"
+          },
+          "xml": {
+            "wrapped": true
+          }
+        }
+      }
+    },
+    "ConsumerLicense": {
+      "allOf": [
+        {
+          "$ref": "#/definitions/License"
+        },
+        {
+          "type": "object",
+          "properties": {
+            "DateFirstReported": {
+              "$ref": "#/definitions/ParsedDate"
+            },
+            "DateLastReported": {
+              "$ref": "#/definitions/ParsedDate"
+            },
+            "IsGovernmentSource": {
+              "type": "boolean",
+              "example": true
+            }
+          }
+        }
+      ]
+    },
+    "ConsumerName": {
+      "allOf": [
+        {
+          "$ref": "#/definitions/Name"
+        },
+        {
+          "type": "object",
+          "properties": {
+            "Suffix": {
+              "type": "string",
+              "example": "Mr"
+            },
+            "Prefix": {
+              "type": "string",
+              "example": "Jr"
+            },
+            "FullName": {
+              "type": "string",
+              "example": "Mark Marsupial"
+            },
+            "Qualifier": {
+              "type": "string",
+              "example": "alsoKnownAs"
+            },
+            "DateFirstReported": {
+              "$ref": "#/definitions/ParsedDate"
+            },
+            "DateLastReported": {
+              "$ref": "#/definitions/ParsedDate"
+            }
+          }
+        }
+      ],
+      "xml": {
+        "name": "Name"
+      }
+    },
+    "ConsumerStatement": {
+      "type": "object",
+      "properties": {
+        "Type": {
+          "type": "string",
+          "example": "regular"
+        },
+        "Text": {
+          "type": "string"
+        }
+      },
+      "xml": {
+        "name": "ConsumerStatement"
+      }
+    },
+    "CreditDataStatus": {
+      "type": "object",
+      "properties": {
+        "CreditDataSuppressed": {
+          "type": "boolean",
+          "example": "true"
+        },
+        "Freeze": {
+          "$ref": "#/definitions/Freeze"
+        },
+        "DoNotPromote": {
+          "$ref": "#/definitions/DoNotPromote"
+        }
+      }
+    },
+    "DeceasedInfo": {
+      "type": "object",
+      "properties": {
+        "Name": {
+          "$ref": "#/definitions/ConsumerName"
+        },
+        "LastResidency": {
+          "$ref": "#/definitions/ConsumerAddress"
+        },
+        "DateOfBirth": {
+          "$ref": "#/definitions/ParsedDate"
+        },
+        "DateOfDeath": {
+          "$ref": "#/definitions/ParsedDate"
+        },
+        "AgeAtDeath": {
+          "type": "integer",
+          "example": 72
+        },
+        "DeathLocation": {
+          "$ref": "#/definitions/ConsumerAddress"
+        }
+      }
+    },
+    "DoNotPromote": {
+      "type": "object",
+      "properties": {
+        "PromotionIndicator": {
+          "type": "boolean",
+          "example": true
+        },
+        "PromotionDateOfExpiration": {
+          "$ref": "#/definitions/ParsedDate"
+        }
+      }
+    },
+    "Employer": {
+      "type": "object",
+      "properties": {
+        "Name": {
+          "$ref": "#/definitions/ConsumerName"
+        },
+        "DateFirstReported": {
+          "$ref": "#/definitions/ParsedDate"
+        },
+        "DateLastReported": {
+          "$ref": "#/definitions/ParsedDate"
+        },
+        "DateHired": {
+          "$ref": "#/definitions/ParsedDate"
+        },
+        "DateTerminated": {
+          "$ref": "#/definitions/ParsedDate"
+        },
+        "Address": {
+          "$ref": "#/definitions/ConsumerAddress"
+        },
+        "Addresses": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/ConsumerAddress"
+          },
+          "xml": {
+            "wrapped": true
+          }
+        },
+        "Positions": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/Position"
+          },
+          "xml": {
+            "wrapped": true
+          }
+        },
+        "CompanyNames": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "xml": {
+              "name": "CompanyName"
+            }
+          },
+          "xml": {
+            "wrapped": true
+          }
+        },
+        "FEINs": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "xml": {
+              "name": "FEIN"
+            }
+          },
+          "xml": {
+            "wrapped": true
+          }
+        }
+      },
+      "xml": {
+        "name": "Employer"
+      }
+    },
+    "FileSummary": {
+      "type": "object",
+      "properties": {
+        "FileHitIndicator": {
+          "type": "string"
+        },
+        "FileMatchIndicator": {
+          "type": "string"
+        },
+        "SSNMatchIndicator": {
+          "type": "string"
+        },
+        "InFileSinceDate": {
+          "$ref": "#/definitions/ParsedDate"
+        },
+        "CreditDataStatus": {
+          "$ref": "#/definitions/CreditDataStatus"
+        }
+      }
+    },
+    "Freeze": {
+      "type": "object",
+      "properties": {
+        "FreezeIndicator": {
+          "type": "boolean",
+          "example": true
+        },
+        "FreezeType": {
+          "type": "string",
+          "example": "exempt"
+        }
+      }
+    },
+    "RiskIndicator": {
+      "type": "object",
+      "properties": {
+        "RiskCode": {
+          "type": "string",
+          "example": 1111
+        },
+        "RiskMessage": {
+          "type": "string",
+          "example": "Risk found"
+        }
+      },
+      "xml": {
+        "name": "RiskIndicator"
+      }
+    },
+    "License": {
+      "type": "object",
+      "required": [
+        "State"
+      ],
+      "properties": {
+        "LicenseState": {
+          "example": "CA",
+          "type": "string",
+          "minLength": 0,
+          "maxLength": 2,
+          "pattern": "[A-Za-z]+"
+        },
+        "LicenseNumber": {
+          "example": "ABC1234",
+          "type": "string",
+          "minLength": 0,
+          "maxLength": 21,
+          "pattern": "[A-Za-z0-9@#\\*\\+\\s]+"
+        },
+        "ExpirationDate": {
+          "$ref": "#/definitions/ParsedDate"
+        },
+        "IssuedDate": {
+          "$ref": "#/definitions/ParsedDate"
+        }
+      }
+    },
+    "Name": {
+      "required": [
+        "Last"
+      ],
+      "properties": {
+        "First": {
+          "example": "Mark",
+          "type": "string",
+          "maxLength": 32
+        },
+        "Middle": {
+          "type": "string",
+          "example": "M",
+          "maxLength": 32
+        },
+        "Last": {
+          "type": "string",
+          "example": "Marsupial",
+          "maxLength": 65
+        }
+      }
+    },
+    "ParsedDate": {
+      "type": "object",
+      "properties": {
+        "Year": {
+          "type": "integer",
+          "example": 2017
+        },
+        "Month": {
+          "type": "integer",
+          "example": 12
+        },
+        "Day": {
+          "type": "integer",
+          "example": 21
+        }
+      }
+    },
+    "Person": {
+      "type": "object",
+      "required": [
+        "SSN"
+      ],
+      "properties": {
+        "Name": {
+          "$ref": "#/definitions/Name"
+        },
+        "Address": {
+          "$ref": "#/definitions/Address"
+        },
+        "Age": {
+          "type": "integer",
+          "example": 25
+        },
+        "SSN": {
+          "type": "string",
+          "example": "999991234",
+          "pattern": "([0-9]{9})?",
+          "description": "Individual SSN"
+        },
+        "DOB": {
+          "$ref": "#/definitions/ParsedDate"
+        }
+      }
+    },
+    "Position": {
+      "type": "object",
+      "properties": {
+        "Title": {
+          "type": "string",
+          "example": "Engineer"
+        },
+        "Department": {
+          "type": "string",
+          "example": "Tech"
+        },
+        "DateFirstReported": {
+          "$ref": "#/definitions/ParsedDate"
+        },
+        "DateLastReported": {
+          "$ref": "#/definitions/ParsedDate"
+        }
+      },
+      "xml": {
+        "name": "Position"
+      }
+    },
+    "SSNInfo": {
+      "type": "object",
+      "xml": {
+        "name": "SSNInfo"
+      },
+      "properties": {
+        "SSN": {
+          "type": "string",
+          "example": "999-99-9990",
+          "description": "Individual's SSN"
+        },
+        "IdentificationType": {
+          "type": "string",
+          "example": "ssn",
+          "description": "Identifies the type of identification returned."
+        },
+        "AgeObtainedRangeStart": {
+          "type": "integer",
+          "example": 1980,
+          "description": "Identifies the beginning year of the age range in which the SSN was issued"
+        },
+        "AgeObtainedRangeEnd": {
+          "type": "integer",
+          "example": 1990,
+          "description": "Identifies the endining year of the age range in which the SSN was issued"
+        },
+        "IssuanceAlertCode": {
+          "type": "string",
+          "example": "5503"
+        },
+        "FirstPossibleIssuanceYear": {
+          "type": "string",
+          "example": 1974,
+          "description": "Year of first issuance of SSN"
+        },
+        "LastPossibleIssuanceYear": {
+          "type": "string",
+          "example": 1980,
+          "description": "Year of the last issuance of SSN"
+        },
+        "IssuanceExpirationDate": {
+          "$ref": "#/definitions/ParsedDate"
+        },
+        "IssuanceStatus": {
+          "type": "string",
+          "example": "clear"
+        },
+        "IssuanceYearsCovered": {
+          "type": "integer",
+          "example": 2,
+          "description": "Specifies the number of years covered by this transaction"
+        },
+        "IssuedStartDate": {
+          "$ref": "#/definitions/ParsedDate"
+        },
+        "IssuedEndDate": {
+          "$ref": "#/definitions/ParsedDate"
+        },
+        "StateOfIssuance": {
+          "type": "string",
+          "example": "MO",
+          "description": "State of SSN issuance"
+        },
+        "DateFirstReported": {
+          "$ref": "#/definitions/ParsedDate"
+        },
+        "DateLastReported": {
+          "$ref": "#/definitions/ParsedDate"
+        },
+        "Valid": {
+          "type": "string"
+        }
+      }
+    },
+    "PersonSSNSearch": {
+      "type": "object",
+      "required": [
+        "SSN"
+      ],
+      "properties": {
+        "Name": {
+          "$ref": "#/definitions/NameSSNSearch"
+        },
+        "Address": {
+          "$ref": "#/definitions/Address"
+        },
+        "Age": {
+          "type": "integer",
+          "example": 25
+        },
+        "SSN": {
+          "type": "string",
+          "example": "999991234",
+          "pattern": "([0-9]{9})?",
+          "description": "Individual SSN"
+        },
+        "DOB": {
+          "$ref": "#/definitions/ParsedDate"
+        }
+      }
+    },
+    "NameSSNSearch": {
+      "required": [
+        "First",
+        "Last"
+      ],
+      "properties": {
+        "First": {
+          "example": "Mark",
+          "type": "string",
+          "maxLength": 32
+        },
+        "Middle": {
+          "type": "string",
+          "example": "M",
+          "maxLength": 32
+        },
+        "Last": {
+          "type": "string",
+          "example": "Marsupial",
+          "maxLength": 65
+        }
+      }
+    },
+    "AlertType": {
+      "type": "object",
+      "properties": {
+        "Code": {
+          "example": "AlertCode",
+          "type": "string"
+        },
+        "Description": {
+          "example": "ALERT - This is an alert description.",
+          "type": "string"
+        },
+        "Status": {
+          "example": "Fired",
+          "type": "string"
+        },
+        "Evidence": {
+          "description": "Collection of evidence fields that caused the alert to fire.",
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/EvidenceType"
+          }
+        }
+      }
+    },
+    "EvidenceType": {
+      "type": "object",
+      "example": {
+        "Key": "Value"
+      }
+    },
+    "AnalyticsInputType": {
+      "type": "object",
+      "example": {
+        "Key": "Value"
+      }
+    }
+  },
+  "schemes": [
+    "https"
+  ],
+  "host": "api.firstam.io",
+  "basePath": "/v1"
+}

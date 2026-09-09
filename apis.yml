@@ -1,93 +1,471 @@
 aid: first-american-financial
 name: First American Financial
-description: >-
-  First American Financial is a leading provider of title insurance, settlement
-  services, and risk solutions for real estate transactions, as well as related
-  products and services. First American operates a developer portal exposing
-  APIs for office lookup, order management, document exchange, messaging, and
-  webhook notifications.
+description: 'First American Financial Corporation (NYSE: FAF) is a leading provider of title insurance,
+  settlement services, property data and risk solutions for real estate and mortgage transactions, and
+  one of the largest title insurance underwriters in the United States. Its public API surface is the
+  Digital Gateway (developer.firstam.io), a 3scale-managed developer portal operated by First American
+  Mortgage Solutions and First American Data & Analytics, which publishes 16 machine-readable specifications
+  covering 93 operations: title and escrow order management with a 21-event webhook catalogue, nationwide
+  property and ownership data, occupancy, identity and SSN verification, bankruptcy, IRS 4506-C tax transcripts,
+  reverse phone and address search, SCRA military-service checks, liens and judgments in separate FCRA
+  and non-FCRA contracts, OFAC and agency watchlist screening, and NMLS license verification. A second,
+  separate request-access portal at developer.firstam.com fronts the same title and settlement integration.
+  Access to every API is approval-gated: an administrator reviews each account, credentials are issued
+  per App as an App ID and App Key pair, and production access additionally requires the First American
+  relationship team and may require a contract or SOW.'
 type: Index
 deliveryModel:
-  model: unknown
+  model: saas
   open_source: false
-  commercial: false
-  callable_host: false
-  label: Delivery model not determined — needs a product licence on record
-  confidence: low
+  commercial: true
+  callable_host: true
+  label: Commercial hosted API — 16 published contracts on api.firstam.io, api-w2.firstam.io, api.dgw.firstam.io,
+    solutions.dgw.firstam.io and settlement.stageapi.firstam.com
+  confidence: high
   source:
-  - none
-  generated: '2026-08-28'
-  method: derived
+  - openapi
+  - https://developer.firstam.io/api_docs/services.json
+  generated: '2026-09-09'
+  method: searched
 accessModel:
-  pricing: freemium
-  onboarding: unknown
+  pricing: negotiated
+  onboarding: approval-gated
   trial: false
   try_now: false
   public: false
-  label: Freemium
-  confidence: medium
+  label: Negotiated — administrator-approved App credentials; production requires a relationship-team
+    contract or SOW
+  confidence: high
   source:
+  - https://developer.firstam.io/api/docs
   - plans
-  generated: '2026-07-22'
-  method: derived
+  generated: '2026-09-09'
+  method: searched
 image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/icons/first-american-financial.png
 access: 3rd-Party
 created: '2025-03-01'
-modified: '2026-04-28'
-position: Consuming
+modified: '2026-09-09'
+position: Producing
 tags:
-  - Title Insurance
-  - Real-Estate
-  - Settlement Services
-  - Financial-Services
-  - Fortune 1000
+- Title Insurance
+- Real-Estate
+- Settlement Services
+- Financial-Services
+- Mortgage
+- Property Data
+- Identity Verification
+- Regulatory Compliance
+- Fortune 1000
 tags_raw:
-  - Title Insurance
-  - Real Estate
-  - Settlement Services
-  - Financial Services
-  - Fortune 1000
-url: >-
-  https://raw.githubusercontent.com/api-evangelist/first-american-financial/refs/heads/main/apis.yml
+- Title Insurance
+- Real Estate
+- Settlement Services
+- Financial Services
+- Mortgage
+- Property Data
+- Identity Verification
+- Regulatory Compliance
+- Fortune 1000
+url: https://raw.githubusercontent.com/api-evangelist/first-american-financial/refs/heads/main/apis.yml
 specificationVersion: '0.23'
 apis:
-  - aid: first-american-financial:first-american-financial
-    name: First American Financial
-    tags:
-      - Title Insurance
-      - Real-Estate
-      - Settlement Services
-    tags_raw:
-      - Title Insurance
-      - Real Estate
-      - Settlement Services
-    humanURL: https://developer.firstam.com
-    properties:
-      - url: https://www.firstam.com
-        type: Website
-      - url: https://developer.firstam.com
-        type: DeveloperPortal
-      - url: https://developer.firstam.com
-        type: Documentation
-    description: >-
-      First American developer APIs include Find an Office (locate offices by
-      city, state, or ZIP), Order Management (open new orders), Document
-      Exchange (send and receive order-related documents), Messaging
-      (communicate with the order team), and Webhooks (receive notifications
-      for order milestones).
+- aid: first-american-financial:first-american-financial-title-settlement
+  name: First American Title & Settlement (Mortgage Services) API
+  description: Open, track and cancel First American title and escrow orders, exchange documents and messages
+    with the escrow team, find offices and escrow/title officers, and register webhooks for 21 published
+    order-milestone events. OpenAPI 3.0.0, 17 operations, bearer JWT from an OAuth 2.0 client-credentials
+    token endpoint.
+  humanURL: https://developer.firstam.io/api/TitleSettlement
+  baseURL: https://settlement.stageapi.firstam.com
+  tags:
+  - Title Insurance
+  - Escrow
+  - Settlement Services
+  - Webhooks
+  - Real-Estate
+  properties:
+  - url: https://developer.firstam.io/api/TitleSettlement
+    type: Documentation
+  - url: openapi/first-american-financial-title-settlement-openapi.yml
+    type: OpenAPI
+  - url: https://developer.firstam.io/api_docs/services/182515.json
+    type: OpenAPI
+  - url: overlays/first-american-financial-title-settlement-overlay.yaml
+    type: Overlay
+  - url: asyncapi/first-american-financial-title-settlement-webhooks.yml
+    type: Webhooks
+  image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/icons/first-american-financial.png
+- aid: first-american-financial:first-american-financial-property
+  name: First American Property API
+  description: Nationwide property data — property basic and extended characteristics, assessor tax and
+    legal description, property overview, listing history, local market trends, nearby active listings,
+    HOA, and FEMA flood zone determination. Swagger 2.0, 10 operations, order-then-retrieve.
+  humanURL: https://developer.firstam.io/api/property
+  baseURL: https://api.firstam.io/v1
+  tags:
+  - Property Data
+  - Real-Estate
+  - Flood Zone
+  - Mortgage
+  properties:
+  - url: https://developer.firstam.io/api/property
+    type: Documentation
+  - url: openapi/first-american-financial-property-openapi.yml
+    type: OpenAPI
+  - url: https://developer.firstam.io/api_docs/services/84597.json
+    type: OpenAPI
+  - url: overlays/first-american-financial-property-overlay.yaml
+    type: Overlay
+  image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/icons/first-american-financial.png
+- aid: first-american-financial:first-american-financial-ownership
+  name: First American Ownership API
+  description: Ownership information used to assess properties owned by borrowers, occupancy issues and
+    foreclosure activity — full, prime, address, details, pre-foreclosure, foreclosure, previous foreclosure
+    and scheduled REO. Swagger 2.0, 16 operations.
+  humanURL: https://developer.firstam.io/api/property
+  baseURL: https://api-w2.firstam.io/v1
+  tags:
+  - Property Data
+  - Ownership
+  - Foreclosure
+  - Real-Estate
+  properties:
+  - url: https://developer.firstam.io/api/property
+    type: Documentation
+  - url: openapi/first-american-financial-ownership-openapi.yml
+    type: OpenAPI
+  - url: https://developer.firstam.io/api_docs/services/84598.json
+    type: OpenAPI
+  - url: overlays/first-american-financial-ownership-overlay.yaml
+    type: Overlay
+  image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/icons/first-american-financial.png
+- aid: first-american-financial:first-american-financial-occupancy
+  name: First American Occupancy API
+  description: Occupancy report ordering and retrieval, including a PDF rendering. Swagger 2.0, 3 operations.
+  humanURL: https://developer.firstam.io/api/property
+  baseURL: https://solutions.dgw.firstam.io/v1
+  tags:
+  - Property Data
+  - Occupancy
+  - Mortgage
+  properties:
+  - url: https://developer.firstam.io/api/property
+    type: Documentation
+  - url: openapi/first-american-financial-occupancy-openapi.yml
+    type: OpenAPI
+  - url: https://developer.firstam.io/api_docs/services/137827.json
+    type: OpenAPI
+  - url: overlays/first-american-financial-occupancy-overlay.yaml
+    type: Overlay
+  image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/icons/first-american-financial.png
+- aid: first-american-financial:first-american-financial-identity
+  name: First American Identity API
+  description: Comprehensive search of an applicant Social Security Number with identity and occupancy
+    validation — SSN search, SSN verification, SSN report and SSN report plus. Swagger 2.0, 5 operations.
+  humanURL: https://developer.firstam.io/api/verification
+  baseURL: https://api.firstam.io/v1
+  tags:
+  - Identity Verification
+  - Mortgage
+  - Risk
+  properties:
+  - url: https://developer.firstam.io/api/verification
+    type: Documentation
+  - url: openapi/first-american-financial-identity-openapi.yml
+    type: OpenAPI
+  - url: https://developer.firstam.io/api_docs/services/84596.json
+    type: OpenAPI
+  - url: overlays/first-american-financial-identity-overlay.yaml
+    type: Overlay
+  image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/icons/first-american-financial.png
+- aid: first-american-financial:first-american-financial-bankruptcy
+  name: First American Bankruptcy API
+  description: Nationwide bankruptcy data search to identify new filings and obtain the latest case information
+    — basic, extended and premium tiers, searchable by defendant name, case number, attorney or trustee.
+    Swagger 2.0, 4 operations.
+  humanURL: https://developer.firstam.io/api/verification
+  baseURL: https://api-w2.firstam.io/v1
+  tags:
+  - Public Records
+  - Bankruptcy
+  - Mortgage
+  - Risk
+  properties:
+  - url: https://developer.firstam.io/api/verification
+    type: Documentation
+  - url: openapi/first-american-financial-bankruptcy-openapi.yml
+    type: OpenAPI
+  - url: https://developer.firstam.io/api_docs/services/86415.json
+    type: OpenAPI
+  - url: overlays/first-american-financial-bankruptcy-overlay.yaml
+    type: Overlay
+  image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/icons/first-american-financial.png
+- aid: first-american-financial:first-american-financial-4506c
+  name: First American 4506-C Tax Transcript API
+  description: Direct access to the IRS to verify consistency of borrower income, identity and employment
+    via IRS Form 4506-C — order, consent form, status, and transcript retrieval as JSON or PDF. Swagger
+    2.0, 5 operations.
+  humanURL: https://developer.firstam.io/api/verification
+  baseURL: https://api.firstam.io/v1
+  tags:
+  - Income Verification
+  - IRS
+  - Mortgage
+  properties:
+  - url: https://developer.firstam.io/api/verification
+    type: Documentation
+  - url: openapi/first-american-financial-4506c-openapi.yml
+    type: OpenAPI
+  - url: https://developer.firstam.io/api_docs/services/90387.json
+    type: OpenAPI
+  - url: overlays/first-american-financial-4506c-overlay.yaml
+    type: Overlay
+  image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/icons/first-american-financial.png
+- aid: first-american-financial:first-american-financial-reverse-phone
+  name: First American Reverse Phone Search API
+  description: Reverse phone number search returning the owner current name, address or business associated
+    with a phone number. Swagger 2.0, 2 operations.
+  humanURL: https://developer.firstam.io/api/verification
+  baseURL: https://api.firstam.io/v1
+  tags:
+  - Identity Verification
+  - Data Enrichment
+  properties:
+  - url: https://developer.firstam.io/api/verification
+    type: Documentation
+  - url: openapi/first-american-financial-reverse-phone-openapi.yml
+    type: OpenAPI
+  - url: https://developer.firstam.io/api_docs/services/91046.json
+    type: OpenAPI
+  - url: overlays/first-american-financial-reverse-phone-overlay.yaml
+    type: Overlay
+  image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/icons/first-american-financial.png
+- aid: first-american-financial:first-american-financial-reverse-address
+  name: First American Reverse Address Search API
+  description: Reverse address search returning the owner current name, address or business associated
+    with an address — basic and detailed. Swagger 2.0, 3 operations.
+  humanURL: https://developer.firstam.io/api/verification
+  baseURL: https://api-w2.firstam.io/v1
+  tags:
+  - Identity Verification
+  - Data Enrichment
+  - Property Data
+  properties:
+  - url: https://developer.firstam.io/api/verification
+    type: Documentation
+  - url: openapi/first-american-financial-reverse-address-openapi.yml
+    type: OpenAPI
+  - url: https://developer.firstam.io/api_docs/services/139645.json
+    type: OpenAPI
+  - url: overlays/first-american-financial-reverse-address-overlay.yaml
+    type: Overlay
+  image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/icons/first-american-financial.png
+- aid: first-american-financial:first-american-financial-scra
+  name: First American Active Duty SCRA Search API
+  description: Servicemembers Civil Relief Act search to determine current or past military service of
+    an applicant. Swagger 2.0, 2 operations.
+  humanURL: https://developer.firstam.io/api/verification
+  baseURL: https://api.firstam.io/v1
+  tags:
+  - Regulatory Compliance
+  - SCRA
+  - Mortgage
+  properties:
+  - url: https://developer.firstam.io/api/verification
+    type: Documentation
+  - url: openapi/first-american-financial-scra-openapi.yml
+    type: OpenAPI
+  - url: https://developer.firstam.io/api_docs/services/137921.json
+    type: OpenAPI
+  - url: overlays/first-american-financial-scra-overlay.yaml
+    type: Overlay
+  image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/icons/first-american-financial.png
+- aid: first-american-financial:first-american-financial-income-estimate
+  name: First American Income Estimate API
+  description: Income estimate (SalaryComp) service returning a salary comparison for a named employer.
+    Swagger 2.0, 2 operations.
+  humanURL: https://developer.firstam.io/api/docs
+  baseURL: https://api.firstam.io/v1
+  tags:
+  - Income Verification
+  - Data Enrichment
+  properties:
+  - url: https://developer.firstam.io/api/docs
+    type: Documentation
+  - url: openapi/first-american-financial-income-estimate-openapi.yml
+    type: OpenAPI
+  - url: https://developer.firstam.io/api_docs/services/90386.json
+    type: OpenAPI
+  - url: overlays/first-american-financial-income-estimate-overlay.yaml
+    type: Overlay
+  image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/icons/first-american-financial.png
+- aid: first-american-financial:first-american-financial-liens-judgments-fcra
+  name: First American Liens & Judgments (FCRA) API
+  description: Liens and judgments search under Fair Credit Reporting Act permissible purpose. Swagger
+    2.0, 2 operations. First American publishes this as a SEPARATE contract from the non-FCRA variant,
+    on a separate host — choosing between them is a permissible-purpose decision.
+  humanURL: https://developer.firstam.io/api/docs
+  baseURL: https://api.firstam.io/v1
+  tags:
+  - Public Records
+  - Liens
+  - FCRA
+  - Risk
+  properties:
+  - url: https://developer.firstam.io/api/docs
+    type: Documentation
+  - url: openapi/first-american-financial-liens-judgments-fcra-openapi.yml
+    type: OpenAPI
+  - url: https://developer.firstam.io/api_docs/services/84595.json
+    type: OpenAPI
+  - url: overlays/first-american-financial-liens-judgments-fcra-overlay.yaml
+    type: Overlay
+  image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/icons/first-american-financial.png
+- aid: first-american-financial:first-american-financial-liens-judgments-non-fcra
+  name: First American Liens & Judgments (Non-FCRA) API
+  description: Liens and judgments search for non-FCRA use. Swagger 2.0, 2 operations, on api.dgw.firstam.io/v2.
+    The FCRA variant is a separate contract on a separate host.
+  humanURL: https://developer.firstam.io/api/docs
+  baseURL: https://api.dgw.firstam.io/v2
+  tags:
+  - Public Records
+  - Liens
+  - Risk
+  properties:
+  - url: https://developer.firstam.io/api/docs
+    type: Documentation
+  - url: openapi/first-american-financial-liens-judgments-non-fcra-openapi.yml
+    type: OpenAPI
+  - url: https://developer.firstam.io/api_docs/services/84331.json
+    type: OpenAPI
+  - url: overlays/first-american-financial-liens-judgments-non-fcra-overlay.yaml
+    type: Overlay
+  image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/icons/first-american-financial.png
+- aid: first-american-financial:first-american-financial-watchlist
+  name: First American Watchlist API
+  description: Screen individuals and companies against OFAC SDN, Freddie Mac, FHFA SCP, HUD EPLS, HUD
+    LDP, NFPD and proprietary ineligible lists, with optional alerts and analytics. Swagger 2.0, 8 operations.
+  humanURL: https://developer.firstam.io/api/regulatorycompliance
+  baseURL: https://api-w2.firstam.io/v1
+  tags:
+  - Regulatory Compliance
+  - Watchlist Screening
+  - OFAC
+  - Risk
+  properties:
+  - url: https://developer.firstam.io/api/regulatorycompliance
+    type: Documentation
+  - url: openapi/first-american-financial-watchlist-openapi.yml
+    type: OpenAPI
+  - url: https://developer.firstam.io/api_docs/services/88461.json
+    type: OpenAPI
+  - url: overlays/first-american-financial-watchlist-overlay.yaml
+    type: Overlay
+  image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/icons/first-american-financial.png
+- aid: first-american-financial:first-american-financial-nmls
+  name: First American NMLS License Verification API
+  description: NMLS license verification for third-party originators — company and individual lookup by
+    NMLS ID and search, with optional alert analytics. Swagger 2.0, 9 operations. The only synchronous
+    data service on the gateway.
+  humanURL: https://developer.firstam.io/api/regulatorycompliance
+  baseURL: https://api-w2.firstam.io/v1
+  tags:
+  - Regulatory Compliance
+  - NMLS
+  - Licensing
+  - Mortgage
+  properties:
+  - url: https://developer.firstam.io/api/regulatorycompliance
+    type: Documentation
+  - url: openapi/first-american-financial-nmls-openapi.yml
+    type: OpenAPI
+  - url: https://developer.firstam.io/api_docs/services/90129.json
+    type: OpenAPI
+  - url: overlays/first-american-financial-nmls-overlay.yaml
+    type: Overlay
+  image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/icons/first-american-financial.png
+- aid: first-american-financial:first-american-financial-clearsearch
+  name: First American ClearSearch API
+  description: Submit a ClearSearch title search order and retrieve its status and report. Swagger 2.0,
+    3 operations.
+  humanURL: https://developer.firstam.io/api/TitleSettlement
+  baseURL: https://api.firstam.io/v1/clearsearch
+  tags:
+  - Title Insurance
+  - Title Search
+  - Real-Estate
+  properties:
+  - url: https://developer.firstam.io/api/TitleSettlement
+    type: Documentation
+  - url: openapi/first-american-financial-clearsearch-openapi.yml
+    type: OpenAPI
+  - url: https://developer.firstam.io/api_docs/services/127283.json
+    type: OpenAPI
+  - url: overlays/first-american-financial-clearsearch-overlay.yaml
+    type: Overlay
+  image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/icons/first-american-financial.png
 common:
-  - type: DomainSecurity
-    url: security/first-american-financial-domain-security.yml
-  - type: LinkedIn
-    url: https://www.linkedin.com/company/first-american
-  - type: Website
-    url: https://www.firstam.com
-  - type: DeveloperPortal
-    url: https://developer.firstam.com
-  - type: LlmsText
-    url: https://developer.firstam.com/llms.txt
-  - type: Blog
-    url: https://www.firstam.com/news/
+- type: Website
+  url: https://www.firstam.com
+- type: DeveloperPortal
+  url: https://developer.firstam.io/
+- type: Documentation
+  url: https://developer.firstam.io/api/docs
+- type: APIReference
+  url: https://developer.firstam.io/api/TitleSettlement
+- type: GettingStarted
+  url: https://developer.firstam.io/api/getstarted
+- type: SignUp
+  url: https://developer.firstam.io/signup
+- type: Login
+  url: https://developer.firstam.io/login
+- type: Support
+  url: https://www.firstam.com/mortgagesolutions/support.html
+- type: TermsOfService
+  url: https://www.firstam.com/terms-of-use/
+- type: PrivacyPolicy
+  url: https://www.firstam.com/privacy-policy/
+- type: Blog
+  url: https://www.firstam.com/news/
+- type: LinkedIn
+  url: https://www.linkedin.com/company/first-american
+- type: Authentication
+  url: authentication/first-american-financial-authentication.yml
+- type: Conventions
+  url: conventions/first-american-financial-conventions.yml
+- type: ErrorCatalog
+  url: errors/first-american-financial-problem-types.yml
+- type: Lifecycle
+  url: lifecycle/first-american-financial-lifecycle.yml
+- type: Conformance
+  url: conformance/first-american-financial-conformance.yml
+- type: DataModel
+  url: data-model/first-american-financial-data-model.yml
+- type: Sandbox
+  url: sandbox/first-american-financial-sandbox.yml
+- type: Packages
+  url: packages/first-american-financial-packages.yml
+- type: Webhooks
+  url: asyncapi/first-american-financial-title-settlement-webhooks.yml
+- type: AgentSkill
+  url: skills/_index.yml
+- type: LLMsTxt
+  url: llms/first-american-financial-llms.txt
+- type: DomainSecurity
+  url: security/first-american-financial-domain-security.yml
+- type: Plans
+  url: plans/first-american-financial-plans-pricing.yml
+- type: RateLimits
+  url: rate-limits/first-american-financial-rate-limits.yml
+- type: FinOps
+  url: finops/first-american-financial-finops.yml
+- type: X-MCPServerCandidate
+  url: mcp/first-american-financial-mcp.yml
 maintainers:
-  - FN: Kin Lane
-    email: kin@apievangelist.com
+- FN: Kin Lane
+  email: kin@apievangelist.com
+x-enrichment:
+  date: '2026-09-09'
+  status: enriched
+  artifacts_added: 65
+  pass: local-v3

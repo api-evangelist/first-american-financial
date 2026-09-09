@@ -1,0 +1,3200 @@
+swagger: '2.0'
+info:
+  description: ''
+  version: 1.0.0
+  title: Ownership Service
+host: api-w2.firstam.io
+basePath: /v1
+schemes:
+- https
+paths:
+  /ownership/order/full:
+    post:
+      tags:
+      - RequestOwnership
+      summary: Make a new Ownership service call
+      description: 'Required fields: First Name, Last Name, SSN. Alerts and Analytics can be added by
+        setting the "IncludeAnalytics" flag in the request body to true.'
+      operationId: reqOwnership
+      consumes:
+      - application/json
+      - application/xml
+      produces:
+      - application/json
+      - application/xml
+      parameters:
+      - in: header
+        name: x-app-id
+        description: Application ID
+        required: true
+        type: string
+      - in: header
+        name: x-app-key
+        description: Application Key
+        required: true
+        type: string
+      - in: body
+        name: Request
+        description: Request for Ownership
+        schema:
+          $ref: '#/definitions/OwnershipRequest'
+      responses:
+        '200':
+          description: OK
+          schema:
+            $ref: '#/definitions/OwnershipResponse'
+        '400':
+          description: Invalid Input, Object Invalid
+  /ownership/order/prime:
+    post:
+      tags:
+      - RequestOwnership
+      summary: Make a new Ownership service call
+      description: 'Required fields: First Name, Last Name, SSN. Alerts and Analytics can be added by
+        setting the "IncludeAnalytics" flag in the request body to true.'
+      operationId: reqOwnership
+      consumes:
+      - application/json
+      - application/xml
+      produces:
+      - application/json
+      - application/xml
+      parameters:
+      - in: header
+        name: x-app-id
+        description: Application ID
+        required: true
+        type: string
+      - in: header
+        name: x-app-key
+        description: Application Key
+        required: true
+        type: string
+      - in: body
+        name: Request
+        description: Request for Ownership
+        schema:
+          $ref: '#/definitions/OwnershipRequest'
+      responses:
+        '200':
+          description: OK
+          schema:
+            $ref: '#/definitions/OwnershipResponse'
+        '400':
+          description: Invalid Input, Object Invalid
+  /ownership/order/address:
+    post:
+      tags:
+      - RequestOwnership
+      summary: Make a new Ownership service call to get a quick summary of addresses owned.
+      description: 'Required fields: First Name, Last Name, SSN. Alerts and Analytics can be added by
+        setting the "IncludeAnalytics" flag in the request body to true.'
+      operationId: reqAddress
+      consumes:
+      - application/json
+      - application/xml
+      produces:
+      - application/json
+      - application/xml
+      parameters:
+      - in: header
+        name: x-app-id
+        description: Application ID
+        required: true
+        type: string
+      - in: header
+        name: x-app-key
+        description: Application Key
+        required: true
+        type: string
+      - in: body
+        name: Request
+        description: Request for Ownership
+        schema:
+          $ref: '#/definitions/OwnershipRequest'
+      responses:
+        '200':
+          description: OK
+          schema:
+            $ref: '#/definitions/OwnershipAddressResponse'
+        '400':
+          description: Invalid Input, Object Invalid
+  /ownership/order/details:
+    post:
+      tags:
+      - RequestOwnership
+      summary: Make a new Ownership service call to get all property transaction details.
+      description: 'Required fields: First Name, Last Name, SSN. Alerts and Analytics can be added by
+        setting the "IncludeAnalytics" flag in the request body to true.'
+      operationId: reqDetails
+      consumes:
+      - application/json
+      - application/xml
+      produces:
+      - application/json
+      - application/xml
+      parameters:
+      - in: header
+        name: x-app-id
+        description: Application ID
+        required: true
+        type: string
+      - in: header
+        name: x-app-key
+        description: Application Key
+        required: true
+        type: string
+      - in: body
+        name: Request
+        description: Request for Ownership
+        schema:
+          $ref: '#/definitions/OwnershipRequest'
+      responses:
+        '200':
+          description: OK
+          schema:
+            $ref: '#/definitions/OwnershipDetailResponse'
+        '400':
+          description: Invalid Input, Object Invalid
+  /ownership/order/preforeclosure:
+    post:
+      tags:
+      - RequestOwnership
+      summary: Make a new Ownership service call that provides back Properties Owned in Pre-Foreclosure.
+      description: 'Required fields: First Name, Last Name, SSN. Alerts and Analytics can be added by
+        setting the "IncludeAnalytics" flag in the request body to true.'
+      operationId: reqPreforeclosure
+      consumes:
+      - application/json
+      - application/xml
+      produces:
+      - application/json
+      - application/xml
+      parameters:
+      - in: header
+        name: x-app-id
+        description: Application ID
+        required: true
+        type: string
+      - in: header
+        name: x-app-key
+        description: Application Key
+        required: true
+        type: string
+      - in: body
+        name: Request
+        description: Request for Ownership
+        schema:
+          $ref: '#/definitions/OwnershipRequest'
+      responses:
+        '200':
+          description: OK
+          schema:
+            $ref: '#/definitions/OwnershipPreforeclosureResponse'
+        '400':
+          description: Invalid Input, Object Invalid
+  /ownership/order/schedulereo:
+    post:
+      tags:
+      - RequestOwnership
+      summary: Make a new Ownership service call that provides back Properties Owned for Schedule of Real
+        Estate Owned to Pre-Populate URLA 1003 Section 3 Rev. 8/2016.
+      description: 'Required fields: First Name, Last Name, SSN. Alerts and Analytics can be added by
+        setting the "IncludeAnalytics" flag in the request body to true.'
+      operationId: reqScheduleREO
+      consumes:
+      - application/json
+      - application/xml
+      produces:
+      - application/json
+      - application/xml
+      parameters:
+      - in: header
+        name: x-app-id
+        description: Application ID
+        required: true
+        type: string
+      - in: header
+        name: x-app-key
+        description: Application Key
+        required: true
+        type: string
+      - in: body
+        name: Request
+        description: Request for Ownership
+        schema:
+          $ref: '#/definitions/OwnershipRequest'
+      responses:
+        '200':
+          description: OK
+          schema:
+            $ref: '#/definitions/OwnershipScheduleREOResponse'
+        '400':
+          description: Invalid Input, Object Invalid
+  /ownership/order/foreclosure:
+    post:
+      tags:
+      - RequestOwnership
+      summary: Make a new Ownership service call that provides back data to Pre-Populate Foreclosure data
+        for URLA 1003 Section 3 Rev. 8/2016.
+      description: 'Required fields: First Name, Last Name, SSN. Alerts and Analytics can be added by
+        setting the "IncludeAnalytics" flag in the request body to true.'
+      operationId: reqForeclosure
+      consumes:
+      - application/json
+      - application/xml
+      produces:
+      - application/json
+      - application/xml
+      parameters:
+      - in: header
+        name: x-app-id
+        description: Application ID
+        required: true
+        type: string
+      - in: header
+        name: x-app-key
+        description: Application Key
+        required: true
+        type: string
+      - in: body
+        name: Request
+        description: Request for Ownership
+        schema:
+          $ref: '#/definitions/OwnershipRequest'
+      responses:
+        '200':
+          description: OK
+          schema:
+            $ref: '#/definitions/OwnershipForeclosureResponse'
+        '400':
+          description: Invalid Input, Object Invalid
+  /ownership/order/previousforeclosure:
+    post:
+      tags:
+      - RequestOwnership
+      summary: Make a new Ownership service call that returns Borrower Previously Owned Foreclosure liabilities
+        related to properties owned.
+      description: 'Required fields: First Name, Last Name, SSN. Alerts and Analytics can be added by
+        setting the "IncludeAnalytics" flag in the request body to true.'
+      operationId: reqPrevForeclsoure
+      consumes:
+      - application/json
+      - application/xml
+      produces:
+      - application/json
+      - application/xml
+      parameters:
+      - in: header
+        name: x-app-id
+        description: Application ID
+        required: true
+        type: string
+      - in: header
+        name: x-app-key
+        description: Application Key
+        required: true
+        type: string
+      - in: body
+        name: Request
+        description: Request for Ownership
+        schema:
+          $ref: '#/definitions/OwnershipRequest'
+      responses:
+        '200':
+          description: OK
+          schema:
+            $ref: '#/definitions/OwnershipDetailResponse'
+        '400':
+          description: Invalid Input, Object Invalid
+  /ownership/report/full:
+    get:
+      tags:
+      - GetOwnershipResponse
+      summary: Retrieve existing report by transactionID
+      description: Add a transactionID to the query string to retrieve an existing report
+      operationId: retreiveOwnership
+      produces:
+      - application/json
+      - application/xml
+      parameters:
+      - in: header
+        name: x-app-id
+        description: Application ID
+        required: true
+        type: string
+      - in: header
+        name: x-app-key
+        description: Application Key
+        required: true
+        type: string
+      - in: query
+        name: TransactionID
+        description: Transaction ID number provided
+        required: true
+        default: 82d9762b-70c3-4801-bd4b-8ffc8d358f77
+        type: string
+      responses:
+        '200':
+          description: OK
+          schema:
+            $ref: '#/definitions/OwnershipResponse'
+        '400':
+          description: Invalid Request, object invalid.
+        '404':
+          description: No data found.
+  /ownership/report/prime:
+    get:
+      tags:
+      - GetOwnershipResponse
+      summary: Retrieve existing report by transactionID
+      description: Add a transactionID to the query string to retrieve an existing report
+      operationId: retreiveOwnership
+      produces:
+      - application/json
+      - application/xml
+      parameters:
+      - in: header
+        name: x-app-id
+        description: Application ID
+        required: true
+        type: string
+      - in: header
+        name: x-app-key
+        description: Application Key
+        required: true
+        type: string
+      - in: query
+        name: TransactionID
+        description: Transaction ID number provided
+        required: true
+        default: 82d9762b-70c3-4801-bd4b-8ffc8d358f77
+        type: string
+      responses:
+        '200':
+          description: OK
+          schema:
+            $ref: '#/definitions/OwnershipResponse'
+        '400':
+          description: Invalid Request, object invalid.
+        '404':
+          description: No data found.
+  /ownership/report/address:
+    get:
+      tags:
+      - GetOwnershipResponse
+      summary: Retrieve existing report by transactionID
+      description: Add a transactionID to the query string to retrieve an existing report
+      operationId: retreiveOwnership
+      produces:
+      - application/json
+      - application/xml
+      parameters:
+      - in: header
+        name: x-app-id
+        description: Application ID
+        required: true
+        type: string
+      - in: header
+        name: x-app-key
+        description: Application Key
+        required: true
+        type: string
+      - in: query
+        name: TransactionID
+        description: Transaction ID number provided
+        required: true
+        default: 82d9762b-70c3-4801-bd4b-8ffc8d358f77
+        type: string
+      responses:
+        '200':
+          description: OK
+          schema:
+            $ref: '#/definitions/OwnershipAddressResponse'
+        '400':
+          description: Invalid Request, object invalid.
+        '404':
+          description: No data found.
+  /ownership/report/details:
+    get:
+      tags:
+      - GetOwnershipResponse
+      summary: Retrieve existing report by transactionID
+      description: Add a transactionID to the query string to retrieve an existing report
+      operationId: retreiveOwnership
+      produces:
+      - application/json
+      - application/xml
+      parameters:
+      - in: header
+        name: x-app-id
+        description: Application ID
+        required: true
+        type: string
+      - in: header
+        name: x-app-key
+        description: Application Key
+        required: true
+        type: string
+      - in: query
+        name: TransactionID
+        description: Transaction ID number provided
+        required: true
+        default: 82d9762b-70c3-4801-bd4b-8ffc8d358f77
+        type: string
+      responses:
+        '200':
+          description: OK
+          schema:
+            $ref: '#/definitions/OwnershipDetailResponse'
+        '400':
+          description: Invalid Request, object invalid.
+        '404':
+          description: No data found.
+  /ownership/report/preforeclosure:
+    get:
+      tags:
+      - GetOwnershipResponse
+      summary: Retrieve existing report by transactionID
+      description: Add a transactionID to the query string to retrieve an existing report
+      operationId: retreiveOwnership
+      produces:
+      - application/json
+      - application/xml
+      parameters:
+      - in: header
+        name: x-app-id
+        description: Application ID
+        required: true
+        type: string
+      - in: header
+        name: x-app-key
+        description: Application Key
+        required: true
+        type: string
+      - in: query
+        name: TransactionID
+        description: Transaction ID number provided
+        required: true
+        default: 82d9762b-70c3-4801-bd4b-8ffc8d358f77
+        type: string
+      responses:
+        '200':
+          description: OK
+          schema:
+            $ref: '#/definitions/OwnershipPreforeclosureResponse'
+        '400':
+          description: Invalid Request, object invalid.
+        '404':
+          description: No data found.
+  /ownership/report/schedulereo:
+    get:
+      tags:
+      - GetOwnershipResponse
+      summary: Retrieve existing report by transactionID
+      description: Add a transactionID to the query string to retrieve an existing report
+      operationId: retreiveOwnership
+      produces:
+      - application/json
+      - application/xml
+      parameters:
+      - in: header
+        name: x-app-id
+        description: Application ID
+        required: true
+        type: string
+      - in: header
+        name: x-app-key
+        description: Application Key
+        required: true
+        type: string
+      - in: query
+        name: TransactionID
+        description: Transaction ID number provided
+        required: true
+        default: 82d9762b-70c3-4801-bd4b-8ffc8d358f77
+        type: string
+      responses:
+        '200':
+          description: OK
+          schema:
+            $ref: '#/definitions/OwnershipScheduleREOResponse'
+        '400':
+          description: Invalid Request, object invalid.
+        '404':
+          description: No data found.
+  /ownership/report/foreclosure:
+    get:
+      tags:
+      - GetOwnershipResponse
+      summary: Retrieve existing report by transactionID
+      description: Add a transactionID to the query string to retrieve an existing report
+      operationId: retreiveOwnership
+      produces:
+      - application/json
+      - application/xml
+      parameters:
+      - in: header
+        name: x-app-id
+        description: Application ID
+        required: true
+        type: string
+      - in: header
+        name: x-app-key
+        description: Application Key
+        required: true
+        type: string
+      - in: query
+        name: TransactionID
+        description: Transaction ID number provided
+        required: true
+        default: 82d9762b-70c3-4801-bd4b-8ffc8d358f77
+        type: string
+      responses:
+        '200':
+          description: OK
+          schema:
+            $ref: '#/definitions/OwnershipForeclosureResponse'
+        '400':
+          description: Invalid Request, object invalid.
+        '404':
+          description: No data found.
+  /ownership/report/previousforeclosure:
+    get:
+      tags:
+      - GetOwnershipResponse
+      summary: Retrieve existing report by transactionID
+      description: Add a transactionID to the query string to retrieve an existing report
+      operationId: retreiveOwnership
+      produces:
+      - application/json
+      - application/xml
+      parameters:
+      - in: header
+        name: x-app-id
+        description: Application ID
+        required: true
+        type: string
+      - in: header
+        name: x-app-key
+        description: Application Key
+        required: true
+        type: string
+      - in: query
+        name: TransactionID
+        description: Transaction ID number provided
+        required: true
+        default: 82d9762b-70c3-4801-bd4b-8ffc8d358f77
+        type: string
+      responses:
+        '200':
+          description: OK
+          schema:
+            $ref: '#/definitions/OwnershipDetailResponse'
+        '400':
+          description: Invalid Request, object invalid.
+        '404':
+          description: No data found.
+definitions:
+  OwnershipRequest:
+    type: object
+    required:
+    - Header
+    - Request
+    properties:
+      Header:
+        $ref: '#/definitions/HeaderType'
+      Request:
+        $ref: '#/definitions/RequestType'
+    example:
+      RequestorID: Test123
+      Person:
+        SSN: '999999914'
+        Name:
+          Last: Doe
+          First: John
+      IncludeAnalytics: false
+  HeaderType:
+    type: object
+    required:
+    - x-app-id
+    - x-app-key
+    properties:
+      x-app-id:
+        type: string
+        example: '3423423423423'
+      x-app-key:
+        type: string
+        example: '3242342342342'
+  RequestType:
+    required:
+    - Person
+    - RequestorID
+    properties:
+      RequestorID:
+        type: string
+        example: '1234'
+        description: Client's EntityID or ReferenceID
+      Person:
+        $ref: '#/definitions/PersonType'
+      CurrentAddress:
+        $ref: '#/definitions/Address'
+      RealEstateOwned:
+        $ref: '#/definitions/RealEstateOwnedType'
+      IncludeAnalytics:
+        type: boolean
+        example: false
+        description: Option to run analytics on data set.
+  PersonType:
+    type: object
+    required:
+    - SSN
+    properties:
+      Name:
+        $ref: '#/definitions/PersonnameType'
+      Address:
+        $ref: '#/definitions/Address'
+      SSN:
+        type: string
+        example: 111-11-1234
+        description: Individal SSN
+        pattern: ([0-9]{3}((-[0-9]{2}-[0-9]{4})|([0-9]{6})))?
+      AKAs:
+        type: array
+        items:
+          $ref: '#/definitions/PersonnameType'
+  PersonnameType:
+    properties:
+      FirstName:
+        type: string
+        example: Mark
+        maxLength: 32
+      MiddleName:
+        type: string
+        example: M
+        maxLength: 32
+      LastName:
+        type: string
+        example: Marsupial
+        maxLength: 65
+      Suffix:
+        type: string
+        example: Mr
+      Prefix:
+        type: string
+        example: Jr
+      FullName:
+        type: string
+        example: Mark Marsupial
+    example:
+      Suffix: Mr
+      FirstName: Mark
+      FullName: Mark Marsupial
+      LastName: Marsupial
+      Prefix: Jr
+      MiddleName: M
+  RealEstateOwnedType:
+    type: object
+    properties:
+      Addresses:
+        type: array
+        items:
+          $ref: '#/definitions/Address'
+    example:
+      Addresses:
+      - StreetNumber: '5824'
+        StreetName: Alder
+        StreetSuffix: Ave
+        City: Littleton
+        State: CO
+        Zip5: '80128'
+        StateCityZip: CO, Littleton, 80128
+      - StreetNumber: '8938'
+        StreetName: Brandt
+        StreetSuffix: Dr
+        City: Littleton
+        State: CO
+        Zip5: '80123'
+        StateCityZip: CO, Littleton, 80123
+      - StreetNumber: '2432'
+        StreetName: 38th
+        StreetSuffix: Ave
+        City: Denver
+        State: CO
+        Zip5: '80211'
+        StateCityZip: CO, Denver, 80211
+      - StreetNumber: '12674'
+        StreetName: Grand
+        StreetSuffix: Dr
+        City: Morrison
+        State: CO
+        zip5: '80465'
+        StateCityZip: CO, Morrison, 80465
+      - StreetNumber: '8025'
+        StreetName: Wagon Wheel
+        StreetSuffix: Rd
+        City: Morrison
+        State: CO
+        Zip5: '80465'
+        StateCityZip: CO, Morrison, 80465
+  OwnershipResponse:
+    type: object
+    properties:
+      RequestorID:
+        type: string
+        example: loannumber1234
+        description: LoanNumber or TransactionID
+        minLength: 1
+        maxLength: 100
+      TransactionID:
+        type: string
+        example: 82d9762b-70c3-4801-bd4b-8ffc8d358f77
+        description: TransactionID can be used to fetach data at later stage
+      Properties:
+        type: array
+        items:
+          $ref: '#/definitions/PropertyType'
+      Status:
+        type: string
+        example: Hit
+        description: Search Status
+      Message:
+        type: string
+        example: Results are Incomplete.
+        description: Order Status
+      Alerts:
+        type: array
+        items:
+          $ref: '#/definitions/AlertType'
+  OwnershipAddressResponse:
+    type: object
+    properties:
+      RequestorID:
+        type: string
+        example: loannumber1234
+        description: LoanNumber or TransactionID
+        minLength: 1
+        maxLength: 100
+      TransactionID:
+        type: string
+        example: 82d9762b-70c3-4801-bd4b-8ffc8d358f77
+        description: TransactionID can be used to fetach data at later stage
+      Properties:
+        type: array
+        items:
+          $ref: '#/definitions/PropertyAddressType'
+      Status:
+        type: string
+        example: Hit
+        description: Search Status
+      Message:
+        type: string
+        example: Results are Incomplete.
+        description: Order Status
+      Alerts:
+        type: array
+        items:
+          $ref: '#/definitions/AlertType'
+  OwnershipPreforeclosureResponse:
+    type: object
+    properties:
+      RequestorID:
+        type: string
+        example: loannumber1234
+        description: LoanNumber or TransactionID
+        minLength: 1
+        maxLength: 100
+      TransactionID:
+        type: string
+        example: 82d9762b-70c3-4801-bd4b-8ffc8d358f77
+        description: TransactionID can be used to fetach data at later stage
+      Properties:
+        type: array
+        items:
+          $ref: '#/definitions/PropertyPreforeclosureType'
+      Status:
+        type: string
+        example: Hit
+        description: Search Status
+      Message:
+        type: string
+        example: Results are Incomplete.
+        description: Order Status
+      Alerts:
+        type: array
+        items:
+          $ref: '#/definitions/AlertType'
+  OwnershipScheduleREOResponse:
+    type: object
+    properties:
+      RequestorID:
+        type: string
+        example: loannumber1234
+        description: LoanNumber or TransactionID
+        minLength: 1
+        maxLength: 100
+      TransactionID:
+        type: string
+        example: 82d9762b-70c3-4801-bd4b-8ffc8d358f77
+        description: TransactionID can be used to fetach data at later stage
+      Properties:
+        type: array
+        items:
+          $ref: '#/definitions/PropertyScheduleREOType'
+      Status:
+        type: string
+        example: Hit
+        description: Search Status
+      Message:
+        type: string
+        example: Results are Incomplete.
+        description: Order Status
+      Alerts:
+        type: array
+        items:
+          $ref: '#/definitions/AlertType'
+  OwnershipForeclosureResponse:
+    type: object
+    properties:
+      RequestorID:
+        type: string
+        example: loannumber1234
+        description: LoanNumber or TransactionID
+        minLength: 1
+        maxLength: 100
+      TransactionID:
+        type: string
+        example: 82d9762b-70c3-4801-bd4b-8ffc8d358f77
+        description: TransactionID can be used to fetach data at later stage
+      Properties:
+        type: array
+        items:
+          $ref: '#/definitions/PropertyForeclosureType'
+      Status:
+        type: string
+        example: Hit
+        description: Search Status
+      Message:
+        type: string
+        example: Results are Incomplete.
+        description: Order Status
+      Alerts:
+        type: array
+        items:
+          $ref: '#/definitions/AlertType'
+  OwnershipDetailResponse:
+    type: object
+    properties:
+      RequestorID:
+        type: string
+        example: loannumber1234
+        description: LoanNumber or TransactionID
+        minLength: 1
+        maxLength: 100
+      TransactionID:
+        type: string
+        example: 82d9762b-70c3-4801-bd4b-8ffc8d358f77
+        description: TransactionID can be used to fetach data at later stage
+      Properties:
+        type: array
+        items:
+          $ref: '#/definitions/PropertyDetailType'
+      Status:
+        type: string
+        example: Hit
+        description: Search Status
+      Message:
+        type: string
+        example: Results are Incomplete.
+        description: Order Status
+      Alerts:
+        type: array
+        items:
+          $ref: '#/definitions/AlertType'
+  PropertyType:
+    type: object
+    properties:
+      StatusCode:
+        example: Success
+        type: string
+      ProductMessage:
+        $ref: '#/definitions/ProductMessage'
+      PropertyLocationData:
+        $ref: '#/definitions/PropertyLocationData'
+      Locations:
+        type: array
+        items:
+          $ref: '#/definitions/PropertyLocationData'
+      PropertyTaxInformation:
+        $ref: '#/definitions/PropertyTaxInformation'
+      PropertyOwnerInformation:
+        $ref: '#/definitions/PropertyOwnerInformation'
+      AssesseeContactInformation:
+        $ref: '#/definitions/AssesseeContactInformation'
+      PropertyCharacteristics:
+        $ref: '#/definitions/PropertyCharacteristics'
+      AssessorLegal:
+        $ref: '#/definitions/AssessorLegal'
+      PropertyTransactionHistory:
+        $ref: '#/definitions/PropertyTransactionHistory'
+      LoanTransactionHistory:
+        $ref: '#/definitions/LoanTransactionHistory'
+      NearbyComparableSales:
+        type: array
+        items:
+          $ref: '#/definitions/ComparableSale'
+      AVMInformation:
+        $ref: '#/definitions/AVMInformation'
+      PropertyValueRange:
+        $ref: '#/definitions/PropertyValueRange'
+      ActiveDefault:
+        $ref: '#/definitions/ActiveDefault'
+      ActiveForeclosuresByZip:
+        type: array
+        items:
+          $ref: '#/definitions/ActiveForeclosureByZip'
+      NormalizedAddress:
+        $ref: '#/definitions/Address'
+      AssessorTaxInfo:
+        $ref: '#/definitions/AssessorTaxInfo'
+  PropertyDetailType:
+    type: object
+    properties:
+      StatusCode:
+        example: Success
+        type: string
+      PropertyLocationData:
+        $ref: '#/definitions/PropertyLocationDetailData'
+      OwnerInformation:
+        $ref: '#/definitions/PropertyOwnerDetailInformation'
+      LastMarketSale:
+        $ref: '#/definitions/TransactionDetail'
+      PropertyDetails:
+        $ref: '#/definitions/PropertyDetails'
+      LoanDetails:
+        $ref: '#/definitions/LoanDetails'
+      AssessorTaxInfo:
+        $ref: '#/definitions/AssessorTaxInfo'
+      PropertyTransactionHistory:
+        type: array
+        items:
+          $ref: '#/definitions/TransactionDetail'
+  PropertyAddressType:
+    type: object
+    properties:
+      StatusCode:
+        example: Success
+        type: string
+      PropertyAddress:
+        $ref: '#/definitions/Address'
+      Buyers:
+        type: array
+        items:
+          $ref: '#/definitions/EntityInfo'
+      Sellers:
+        type: array
+        items:
+          $ref: '#/definitions/EntityInfo'
+      RecordingDate:
+        example: '20171231'
+        type: string
+      SalesPrice:
+        example: '123412.01'
+        type: string
+      OwnerName1:
+        example: OwnerName1
+        type: string
+      OwnerName2:
+        example: OwnerName2
+        type: string
+      OwnerName3:
+        example: OwnerName3
+        type: string
+      OwnerName4:
+        example: OwnerName4
+        type: string
+      CurrentOwnerAsOf:
+        example: '20171231'
+        type: string
+      TransactionHistory:
+        type: array
+        items:
+          $ref: '#/definitions/Transaction'
+  PropertyPreforeclosureType:
+    type: object
+    properties:
+      StatusCode:
+        example: Success
+        type: string
+      PropertyAddress:
+        $ref: '#/definitions/Address'
+      Buyers:
+        type: array
+        items:
+          $ref: '#/definitions/EntityInfo'
+      Sellers:
+        type: array
+        items:
+          $ref: '#/definitions/EntityInfo'
+      RecordingDate:
+        example: '20171231'
+        type: string
+      ForeclosureStatus:
+        example: Preforeclosure
+        type: string
+      TypeofSale:
+        example: Refi
+        type: string
+      OwnerName1:
+        example: OwnerName1
+        type: string
+      OwnerName2:
+        example: OwnerName2
+        type: string
+      OwnerName3:
+        example: OwnerName3
+        type: string
+      OwnerName4:
+        example: OwnerName4
+        type: string
+      CurrentOwnerAsOf:
+        example: CurrentOwnerAsOf
+        type: string
+      TransactionHistory:
+        type: array
+        items:
+          $ref: '#/definitions/Transaction'
+  PropertyScheduleREOType:
+    type: object
+    properties:
+      StatusCode:
+        example: Success
+        type: string
+      PropertyAddress:
+        $ref: '#/definitions/Address'
+      Buyers:
+        type: array
+        items:
+          $ref: '#/definitions/EntityInfo'
+      Sellers:
+        type: array
+        items:
+          $ref: '#/definitions/EntityInfo'
+      RecordingDate:
+        example: '20171231'
+        type: string
+      ForeclosureStatus:
+        example: Preforeclosure
+        type: string
+      TypeofSale:
+        example: Refi
+        type: string
+      SaleDate:
+        example: '20161031'
+        type: string
+      SalesPrice:
+        example: '215292'
+        type: string
+      LenderName:
+        example: Don Draper
+        type: string
+      LoanAmount:
+        example: '215292'
+        type: string
+      LoanTerms:
+        example: 20 Years
+        type: string
+      LoanType:
+        example: Refi
+        type: string
+      MaturityDate:
+        example: '20161031'
+        type: string
+      LandUse:
+        example: Land Use Description
+        type: string
+      PropertyTaxYear:
+        example: '2016'
+        type: string
+      PropertyTaxAmount:
+        example: '3500'
+        type: string
+      OwnershipStatus:
+        example: Previously Foreclosed
+        type: string
+      OwnerName1:
+        example: OwnerName1
+        type: string
+      OwnerName2:
+        example: OwnerName2
+        type: string
+      OwnerName3:
+        example: OwnerName3
+        type: string
+      OwnerName4:
+        example: OwnerName4
+        type: string
+      FinancingTypeCode:
+        example: code
+        type: string
+      FinancingTypeDesc:
+        example: financing desc
+        type: string
+      OwnerOccupied:
+        example: 'True'
+        type: string
+      Valuations:
+        $ref: '#/definitions/AVMInformation'
+      MailingAddress:
+        $ref: '#/definitions/Address'
+      CurrentOwnerAsOf:
+        example: '20171231'
+        type: string
+      TransactionHistory:
+        type: array
+        items:
+          $ref: '#/definitions/Transaction'
+  PropertyForeclosureType:
+    type: object
+    properties:
+      StatusCode:
+        example: Success
+        type: string
+      PropertyAddress:
+        $ref: '#/definitions/Address'
+      Buyers:
+        type: array
+        items:
+          $ref: '#/definitions/EntityInfo'
+      Sellers:
+        type: array
+        items:
+          $ref: '#/definitions/EntityInfo'
+      RecordingDate:
+        example: '20171231'
+        type: string
+      ForeclosureStatus:
+        example: Preforeclosure
+        type: string
+      TypeofSale:
+        example: Refi
+        type: string
+      SaleDate:
+        example: '20161031'
+        type: string
+      SalesPrice:
+        example: '215292'
+        type: string
+      OwnershipStatus:
+        example: Previously Foreclosed
+        type: string
+      CurrentOwnerAsOf:
+        example: '20171231'
+        type: string
+      TransactionHistory:
+        type: array
+        items:
+          $ref: '#/definitions/Transaction'
+  ProductMessage:
+    properties:
+      MessageCode:
+        example: S
+        type: string
+      MessageDescription:
+        example: Complete
+        type: string
+      Reason:
+        example: Reason
+        type: string
+      MatchCode:
+        example: OK
+        type: string
+  Address:
+    type: object
+    required:
+    - StreetAddress1
+    - City
+    - State
+    - Zip5
+    properties:
+      StreetNumber:
+        example: StreetNumber
+        type: string
+      StreetPreDirection:
+        example: StreetPreDirection
+        type: string
+      StreetName:
+        example: StreetName
+        type: string
+      StreetSuffix:
+        example: StreetSuffix
+        type: string
+      StreetPostDirection:
+        example: StreetPostDirection
+        type: string
+      UnitDesignation:
+        example: UnitDesignation
+        type: string
+      UnitNumber:
+        example: UnitNumber
+        type: string
+      StreetAddress1:
+        example: StreetAddress1
+        type: string
+      StreetAddress2:
+        example: StreetAddress2
+        type: string
+      City:
+        example: City
+        type: string
+      State:
+        example: State
+        type: string
+      ZipCode:
+        example: ZipCode
+        type: string
+      ZipFour:
+        example: ZipFour
+        type: string
+      County:
+        example: County
+        type: string
+      PostalCode:
+        example: PostalCode
+        type: string
+      StateCityZip:
+        example: StateCityZip
+        type: string
+      Latitude:
+        example: Latitude
+        type: string
+      Longitude:
+        example: Longitude
+        type: string
+      APN:
+        example: APN
+        type: string
+  PropertyLocationData:
+    type: object
+    properties:
+      FIPSStateCountyCode:
+        example: FIPSStateCountyCode
+        type: string
+      RefId:
+        example: RefId
+        type: string
+      County:
+        example: County
+        type: string
+      APN:
+        example: APN
+        type: string
+      OldorAlternateAPN:
+        example: OldorAlternateAPN
+        type: string
+      Address:
+        $ref: '#/definitions/Address'
+      AddressStandardized:
+        example: AddressStandardized
+        type: string
+      AddressGeoMatchCode:
+        example: AddressGeoMatchCode
+        type: string
+      AddressGeoMatchCodeDesc:
+        example: AddressGeoMatchCodeDesc
+        type: string
+      CarrierRoute:
+        example: CarrierRoute
+        type: string
+      Latitude:
+        example: Latitude
+        type: string
+      Longitude:
+        example: Longitude
+        type: string
+      CensusTract:
+        example: CensusTract
+        type: string
+      Zoning:
+        example: Zoning
+        type: string
+      LandUse:
+        example: LandUse
+        type: string
+      LandUseDesc:
+        example: LandUseDesc
+        type: string
+      LegalDescription:
+        example: LegalDescription
+        type: string
+      ThomasBrosPage:
+        example: ThomasBrosPage
+        type: string
+      ThomasBrosGrid:
+        example: ThomasBrosGrid
+        type: string
+      TimeShare:
+        example: TimeShare
+        type: string
+  PropertyDetails:
+    type: object
+    properties:
+      CountyData:
+        example: County
+        type: string
+      APN:
+        example: APN
+        type: string
+      Zoning:
+        example: Zoning
+        type: string
+      LandUse:
+        example: LandUse
+        type: string
+      LegalDescription:
+        example: LegalDescription
+        type: string
+      TimeShare:
+        example: TimeShare
+        type: string
+      YearBuilt:
+        example: '1977'
+        type: string
+      Bedrooms:
+        example: '1'
+        type: string
+      Baths:
+        example: '3'
+        type: string
+      TotalRooms:
+        example: '5'
+        type: string
+      LivingArea:
+        example: 2322sqft
+        type: string
+  PropertyLocationDetailData:
+    type: object
+    properties:
+      Address:
+        $ref: '#/definitions/Address'
+  PropertyTaxInformation:
+    type: object
+    properties:
+      TaxAccountNumber:
+        example: TaxAccountNumber
+        type: string
+      CurrentYearTaxSourceCodeDesc:
+        example: CurrentYearTaxSourceCodeDesc
+        type: string
+      PropertyTaxYear:
+        example: PropertyTaxYear
+        type: string
+      PropertyTaxDelinquentYearPrior:
+        example: PropertyTaxDelinquentYearPrior
+        type: string
+      CurrentYearTaxSourceCode:
+        example: CurrentYearTaxSourceCode
+        type: string
+      PriorYearTaxSourceCode:
+        example: PriorYearTaxSourceCode
+        type: string
+      PriorYearTaxSourceCodeDesc:
+        example: PriorYearTaxSourceCodeDesc
+        type: string
+      PriorYearDelinquentStatusCode:
+        example: PriorYearDelinquentStatusCode
+        type: string
+      PropertyTaxDelinquentYearCurrent:
+        example: PropertyTaxDelinquentYearCurrent
+        type: string
+      PriorYearDelinquentStatusCodeDesc:
+        example: PriorYearDelinquentStatusCodeDesc
+        type: string
+      CurrentYearDelinquentStatus:
+        example: CurrentYearDelinquentStatus
+        type: string
+      CurrentYearDelinquentStatusCodeDesc:
+        example: CurrentYearDelinquentStatusCodeDesc
+        type: string
+      PropertyTaxAmount:
+        example: PropertyTaxAmount
+        type: string
+      StatusCurrentTaxAmountCode:
+        example: StatusCurrentTaxAmountCode
+        type: string
+      StatusCurrentTaxAmountCodeDesc:
+        example: StatusCurrentTaxAmountCodeDesc
+        type: string
+      TaxExemptionCodes:
+        type: array
+        items:
+          $ref: '#/definitions/TaxExemptionCode'
+      CAHomeownerExemption:
+        example: CAHomeownerExemption
+        type: string
+      TaxRateCodeArea:
+        example: TaxRateCodeArea
+        type: string
+      SchoolTaxDistricts:
+        type: array
+        items:
+          $ref: '#/definitions/SchoolTaxDistrict'
+      AssessmentYear:
+        example: AssessmentYear
+        type: string
+      AssessedLandValue:
+        example: AssessedLandValue
+        type: string
+      AssessedImprovedValue:
+        example: AssessedImprovedValue
+        type: string
+      AssessedTotalValue:
+        example: AssessedTotalValue
+        type: string
+      AssessedImprovedPercentage:
+        example: AssessedImprovedPercentage
+        type: string
+      AssessorMarketYear:
+        example: AssessorMarketYear
+        type: string
+      AssessorMarketValueLand:
+        example: AssessorMarketValueLand
+        type: string
+      AssessorMarketValueImprovements:
+        example: AssessorMarketValueImprovements
+        type: string
+      AssessorMarketValueTotal:
+        example: AssessorMarketValueTotal
+        type: string
+      MarketImprovedPercentage:
+        example: MarketImprovedPercentage
+        type: string
+  AssessorTaxInfo:
+    type: object
+    properties:
+      PropertyTaxYear:
+        example: PropertyTaxYear
+        type: string
+      PropertyTaxDelinquentYearPrior:
+        example: PropertyTaxDelinquentYearPrior
+        type: string
+      CurrentYearDelinquentStatusCodeDesc:
+        example: CurrentYearDelinquentStatusCodeDesc
+        type: string
+      PropertyTaxAmount:
+        example: PropertyTaxAmount
+        type: string
+      AssessmentYear:
+        example: AssessmentYear
+        type: string
+      AssessedLandValue:
+        example: AssessedLandValue
+        type: string
+      AssessedImprovedValue:
+        example: AssessedImprovedValue
+        type: string
+      AssessedTotalValue:
+        example: AssessedTotalValue
+        type: string
+      AssessedImprovedPercentage:
+        example: AssessedImprovedPercentage
+        type: string
+  PropertyOwnerDetailInformation:
+    type: object
+    properties:
+      OwnerName1:
+        example: OwnerName1
+        type: string
+      OwnerName2:
+        example: OwnerName2
+        type: string
+      OwnerName3:
+        example: OwnerName3
+        type: string
+      OwnerName4:
+        example: OwnerName4
+        type: string
+      Vesting:
+        example: Vesting
+        type: string
+      OwnerOccupiedFlag:
+        example: 'Yes'
+        type: string
+      MailingAddress:
+        $ref: '#/definitions/Address'
+  PropertyOwnerInformation:
+    type: object
+    properties:
+      OwnerNames:
+        example: OwnerNames
+        type: string
+      OwnerName1:
+        example: OwnerName1
+        type: string
+      OwnerName2:
+        example: OwnerName2
+        type: string
+      OwnerName3:
+        example: OwnerName3
+        type: string
+      OwnerName4:
+        example: OwnerName4
+        type: string
+      AdditionalBuyerNameCount:
+        example: AdditionalBuyerNameCount
+        type: string
+      Buyer1IDCode:
+        example: Buyer1IDCode
+        type: string
+      Buyer1IDCodeDesc:
+        example: Buyer1IDCodeDesc
+        type: string
+      Buyer2IDCode:
+        example: Buyer2IDCode
+        type: string
+      Buyer2IDCodeDesc:
+        example: Buyer2IDCodeDesc
+        type: string
+      Vesting:
+        example: Vesting
+        type: string
+      VestingCodeDesc:
+        example: VestingCodeDesc
+        type: string
+      CurrentOwnerAsOf:
+        example: CurrentOwnerAsOf
+        type: string
+      OwnerOccupiedFlag:
+        example: OwnerOccupiedFlag
+        type: string
+      MailingCareOfName:
+        example: MailingCareOfName
+        type: string
+      MailingAddress:
+        $ref: '#/definitions/Address'
+      MailingCarrierRoute:
+        example: MailingCarrierRoute
+        type: string
+      MailingAddressStandardized:
+        example: MailingAddressStandardized
+        type: string
+      PhoneNumber:
+        example: PhoneNumber
+        type: string
+      YearsOwned:
+        example: YearsOwned
+        type: string
+      AssessorThroughDate:
+        example: AssessorThroughDate
+        type: string
+  AssesseeContactInformation:
+    type: object
+    properties:
+      AssesseeNames:
+        type: array
+        items:
+          $ref: '#/definitions/EntityInfo'
+      VestingIDCode:
+        example: VestingIDCode
+        type: string
+      VestingIDCodeDesc:
+        example: VestingIDCodeDesc
+        type: string
+      MailCareOfName:
+        example: MailCareOfName
+        type: string
+      MailCareOfEntityTypeCode:
+        example: MailCareOfEntityTypeCode
+        type: string
+      MailCareOfEntityTypeCodeDesc:
+        example: MailCareOfEntityTypeCodeDesc
+        type: string
+      AssesseeMailingAddress:
+        $ref: '#/definitions/Address'
+      OwnershipCurrencyDate:
+        example: OwnershipCurrencyDate
+        type: string
+      AssessorTapeCutDate:
+        example: AssessorTapeCutDate
+        type: string
+  PropertyCharacteristics:
+    type: object
+    properties:
+      LandUseAssessorCode:
+        example: LandUseAssessorCode
+        type: string
+      LandUseAssessorDesc:
+        example: LandUseAssessorDesc
+        type: string
+      LandUseStandardizedCode:
+        example: LandUseStandardizedCode
+        type: string
+      LandUseStandardizedDesc:
+        example: LandUseStandardizedDesc
+        type: string
+      LandUseStateCode:
+        example: LandUseStateCode
+        type: string
+      ZoningAssessorDescription:
+        example: ZoningAssessorDescription
+        type: string
+      TotalRooms:
+        example: TotalRooms
+        type: string
+      Bedrooms:
+        example: Bedrooms
+        type: string
+      BathsHalf:
+        example: BathsHalf
+        type: string
+      BathsPlumbingFixturesCount:
+        example: BathsPlumbingFixturesCount
+        type: string
+      BathsTotalCount:
+        example: BathsTotalCount
+        type: string
+      OtherRooms1Code:
+        example: OtherRooms1Code
+        type: string
+      OtherRooms1Desc:
+        example: OtherRooms1Desc
+        type: string
+      BuildingCount:
+        example: BuildingCount
+        type: string
+      UnitCount:
+        example: UnitCount
+        type: string
+      BuildingArchitecturalStyleCode:
+        example: BuildingArchitecturalStyleCode
+        type: string
+      BuildingArchitecturalStyleDesc:
+        example: BuildingArchitecturalStyleDesc
+        type: string
+      Buildings:
+        type: array
+        items:
+          $ref: '#/definitions/Building'
+      BuildingAreaTotal:
+        example: BuildingAreaTotal
+        type: string
+      BuildingAreaTotalCode:
+        example: BuildingAreaTotalCode
+        type: string
+      BuildingAreaTotalDesc:
+        example: BuildingAreaTotalDesc
+        type: string
+      BuildingClassCode:
+        example: BuildingClassCode
+        type: string
+      BuildingClassDesc:
+        example: BuildingClassDesc
+        type: string
+      BuildingConditionCode:
+        example: BuildingConditionCode
+        type: string
+      BuildingConditionDesc:
+        example: BuildingConditionDesc
+        type: string
+      BuildingQualityCode:
+        example: BuildingQualityCode
+        type: string
+      OtherImprBuildings:
+        type: array
+        items:
+          $ref: '#/definitions/Building'
+      LotSizeAcres:
+        example: LotSizeAcres
+        type: string
+      LotSizeFrontageFeet:
+        example: LotSizeFrontageFeet
+        type: string
+      LotSizeDepthFeet:
+        example: LotSizeDepthFeet
+        type: string
+      LotSizeOrArea:
+        example: LotSizeOrArea
+        type: string
+      LotSizeValue:
+        example: LotSizeValue
+        type: string
+      LotSizeUnit:
+        example: LotSizeUnit
+        type: string
+      LotSizeSquareFeet:
+        example: LotSizeSquareFeet
+        type: string
+      ConstructionTypeCode:
+        example: ConstructionTypeCode
+        type: string
+      ConstructionTypeDesc:
+        example: ConstructionTypeDesc
+        type: string
+      FoundationTypeCode:
+        example: FoundationTypeCode
+        type: string
+      FoundationTypeDesc:
+        example: FoundationTypeDesc
+        type: string
+      ExteriorWallTypeCode:
+        example: ExteriorWallTypeCode
+        type: string
+      ExteriorWallTypeDesc:
+        example: ExteriorWallTypeDesc
+        type: string
+      InteriorWallTypeCode:
+        example: InteriorWallTypeCode
+        type: string
+      InteriorWallTypeDesc:
+        example: InteriorWallTypeDesc
+        type: string
+      FloorCoverType1Code:
+        example: FloorCoverType1Code
+        type: string
+      FloorCoverType1Desc:
+        example: FloorCoverType1Desc
+        type: string
+      StoryCountCode:
+        example: StoryCountCode
+        type: string
+      StoryCountDesc:
+        example: StoryCountDesc
+        type: string
+      YearBuilt:
+        example: YearBuilt
+        type: string
+      YearBuiltEffective:
+        example: YearBuiltEffective
+        type: string
+      AirConditioningMethodCode:
+        example: AirConditioningMethodCode
+        type: string
+      AirConditioningMethodDesc:
+        example: AirConditioningMethodDesc
+        type: string
+      AirConditioningTypeCode:
+        example: AirConditioningTypeCode
+        type: string
+      AirConditioningTypeDesc:
+        example: AirConditioningTypeDesc
+        type: string
+      HeatingTypeCode:
+        example: HeatingTypeCode
+        type: string
+      HeatingTypeDesc:
+        example: HeatingTypeDesc
+        type: string
+      HeatingFuelTypeCode:
+        example: HeatingFuelTypeCode
+        type: string
+      HeatingFuelTypeDesc:
+        example: HeatingFuelTypeDesc
+        type: string
+      BasementCode:
+        example: BasementCode
+        type: string
+      BasementDesc:
+        example: BasementDesc
+        type: string
+      Elevator:
+        example: Elevator
+        type: string
+      Fireplace:
+        example: Fireplace
+        type: string
+      PoolTypeCode:
+        example: PoolTypeCode
+        type: string
+      PoolTypeDesc:
+        example: PoolTypeDesc
+        type: string
+      RoofMaterialCode:
+        example: RoofMaterialCode
+        type: string
+      RoofMaterialDesc:
+        example: RoofMaterialDesc
+        type: string
+      RoofStructureTypeCode:
+        example: RoofStructureTypeCode
+        type: string
+      RoofStructureTypeDesc:
+        example: RoofStructureTypeDesc
+        type: string
+      Amenities:
+        type: array
+        items:
+          $ref: '#/definitions/Building'
+      GarageParkingNumberofCars:
+        example: GarageParkingNumberofCars
+        type: string
+      GarageTypeCode:
+        example: GarageTypeCode
+        type: string
+      GarageTypeDesc:
+        example: GarageTypeDesc
+        type: string
+      RBDI:
+        example: RBDI
+        type: string
+      AssessedTotalValue:
+        example: AssessedTotalValue
+        type: string
+      SewerTypeCode:
+        example: SewerTypeCode
+        type: string
+      SewerTypeDesc:
+        example: SewerTypeDesc
+        type: string
+      TopographyTypeCode:
+        example: TopographyTypeCode
+        type: string
+      TopographyTypeDesc:
+        example: TopographyTypeDesc
+        type: string
+      WaterSourceCode:
+        example: WaterSourceCode
+        type: string
+      WaterSourceDesc:
+        example: WaterSourceDesc
+        type: string
+      SiteInfluence1Code:
+        example: SiteInfluence1Code
+        type: string
+      SiteInfluence1Desc:
+        example: SiteInfluence1Desc
+        type: string
+      ExtraFeatures:
+        type: array
+        items:
+          $ref: '#/definitions/Building'
+      CondoProjectOrBuildingName:
+        example: CondoProjectOrBuildingName
+        type: string
+      AssessorParcelComments:
+        example: AssessorParcelComments
+        type: string
+  AssessorLegal:
+    properties:
+      BriefDescription:
+        example: BriefDescription
+        type: string
+      FullDescription:
+        example: FullDescription
+        type: string
+      CityMuniTownship:
+        example: CityMuniTownship
+        type: string
+      District:
+        example: District
+        type: string
+      Section:
+        example: Section
+        type: string
+      SecTwnRngMer:
+        example: SecTwnRngMer
+        type: string
+      BlockNumber:
+        example: BlockNumber
+        type: string
+      LotNumber:
+        example: LotNumber
+        type: string
+      LandLot:
+        example: LandLot
+        type: string
+      LotCodeDesc:
+        example: LotCodeDesc
+        type: string
+      SubdivisionCode:
+        example: SubdivisionCode
+        type: string
+      SubdivisonName:
+        example: SubdivisonName
+        type: string
+      TractNumber:
+        example: TractNumber
+        type: string
+      PhaseNumber:
+        example: PhaseNumber
+        type: string
+      Unit:
+        example: Unit
+        type: string
+      RecordersMapRef:
+        example: RecordersMapRef
+        type: string
+  PropertyTransactionHistory:
+    type: array
+    items:
+      $ref: '#/definitions/Transaction'
+  LoanTransactionHistory:
+    type: array
+    items:
+      $ref: '#/definitions/LoanTransaction'
+  TaxExemptionCode:
+    type: object
+    properties:
+      Description:
+        example: TaxDesc1
+        type: string
+      Code:
+        example: TaxCode1
+        type: string
+  SchoolTaxDistrict:
+    type: object
+    properties:
+      Description:
+        example: Description
+        type: string
+      Code:
+        example: Code
+        type: string
+      Value:
+        example: Value
+        type: string
+  EntityInfo:
+    type: object
+    properties:
+      EntityCodeDesc:
+        example: EntityCodeDesc
+        type: string
+      EntityCode:
+        example: EntityCode
+        type: string
+      Name:
+        $ref: '#/definitions/NameDefinition'
+  NameDefinition:
+    type: object
+    properties:
+      Full:
+        example: Full
+        type: string
+      First:
+        example: First
+        type: string
+      FirstAndMiddleName:
+        example: FirstAndMiddleName
+        type: string
+      LastOrCompanyName:
+        example: LastOrCompanyName
+        type: string
+  Building:
+    type: object
+    properties:
+      Description:
+        example: Description
+        type: string
+      Code:
+        example: Code
+        type: string
+      Value:
+        example: Value
+        type: string
+  TransactionDetail:
+    type: object
+    properties:
+      ContractDate:
+        example: ContractDate
+        type: string
+      RecordingDate:
+        example: RecordingDate
+        type: string
+      SalesPrice:
+        example: SalesPrice
+        type: string
+      Sellers:
+        type: array
+        items:
+          $ref: '#/definitions/EntityInfo'
+      SellerAddress:
+        $ref: '#/definitions/Address'
+      Buyers:
+        type: array
+        items:
+          $ref: '#/definitions/EntityInfo'
+      TypeofSale:
+        example: TypeofSale
+        type: string
+      ForeclosureStatus:
+        example: Foreclosure
+        type: string
+      TransactionID:
+        example: '123'
+        type: string
+      TransactionType:
+        example: Foreclosure
+        type: string
+      DocumentTypeCodeDesc:
+        example: Foreclosure
+        type: string
+  LoanDetails:
+    type: object
+    properties:
+      LenderAddress:
+        $ref: '#/definitions/Address'
+      LenderName:
+        example: Bob Smith
+        type: string
+      LoanAmount:
+        example: '3423.12'
+        type: string
+      LoanTerms:
+        example: '3'
+        type: string
+      LoanType:
+        example: LoanType
+        type: string
+      MaturityDate:
+        example: MaturityDate
+        type: string
+  Transaction:
+    type: object
+    properties:
+      TransactionType:
+        example: TransactionType
+        type: string
+      TransactionID:
+        example: TransactionID
+        type: string
+      MainOrAddendumRecord:
+        example: MainOrAddendumRecord
+        type: string
+      PropertyUseCode:
+        example: PropertyUseCode
+        type: string
+      PropertyUseCodeDesc:
+        example: PropertyUseCodeDesc
+        type: string
+      DocumentType:
+        example: DocumentType
+        type: string
+      DocumentTypeCodeDesc:
+        example: DocumentTypeCodeDesc
+        type: string
+      RecorderDocumentNumber:
+        example: RecorderDocumentNumber
+        type: string
+      RecorderBookNumber:
+        example: RecorderBookNumber
+        type: string
+      RecorderPageNumber:
+        example: RecorderPageNumber
+        type: string
+      ContractDate:
+        example: ContractDate
+        type: string
+      RecordingDate:
+        example: RecordingDate
+        type: string
+      CondominiumRider:
+        example: CondominiumRider
+        type: string
+      PlannedUnitDevelopmentRider:
+        example: PlannedUnitDevelopmentRider
+        type: string
+      FamilyRider1to4:
+        example: FamilyRider1to4
+        type: string
+      SecondHomeRider:
+        example: SecondHomeRider
+        type: string
+      LegalBriefDescription:
+        example: LegalBriefDescription
+        type: string
+      LegalLotCode:
+        example: LegalLotCode
+        type: string
+      LegalLotCodeDesc:
+        example: LegalLotCodeDesc
+        type: string
+      LegalLotNumber:
+        example: LegalLotNumber
+        type: string
+      LegalBlockNumber:
+        example: LegalBlockNumber
+        type: string
+      LegalSection:
+        example: LegalSection
+        type: string
+      LegalDistrict:
+        example: LegalDistrict
+        type: string
+      LegalLandLot:
+        example: LegalLandLot
+        type: string
+      LegalUnit:
+        example: LegalUnit
+        type: string
+      LegalCityMuniTownship:
+        example: LegalCityMuniTownship
+        type: string
+      LegalSubdivisonName:
+        example: LegalSubdivisonName
+        type: string
+      LegalPhaseNumber:
+        example: LegalPhaseNumber
+        type: string
+      LegalTractNumber:
+        example: LegalTractNumber
+        type: string
+      LegalSecTwnRngMer:
+        example: LegalSecTwnRngMer
+        type: string
+      LegalRecordersMapRef:
+        example: LegalRecordersMapRef
+        type: string
+      TitleCompanyName:
+        example: TitleCompanyName
+        type: string
+      RecorderPropertyAddress:
+        $ref: '#/definitions/Address'
+      RecorderPropertyAddressSourceCode:
+        example: RecorderPropertyAddressSourceCode
+        type: string
+      RecorderPropertyAddressSourceCodeDesc:
+        example: RecorderPropertyAddressSourceCodeDesc
+        type: string
+      OriginalLoanPID:
+        example: OriginalLoanPID
+        type: string
+      OriginalLoanRecordingDate:
+        example: OriginalLoanRecordingDate
+        type: string
+      OriginalLoanContractDate:
+        example: OriginalLoanContractDate
+        type: string
+      OriginalLoanDocumentNumber:
+        example: OriginalLoanDocumentNumber
+        type: string
+      OriginalLoanBook:
+        example: OriginalLoanBook
+        type: string
+      OriginalLoanPage:
+        example: OriginalLoanPage
+        type: string
+      OriginalLoanAmount:
+        example: OriginalLoanAmount
+        type: string
+      OriginalLender:
+        example: OriginalLender
+        type: string
+      LoanNumber:
+        example: LoanNumber
+        type: string
+      BorrowerName:
+        example: BorrowerName
+        type: string
+      MERSNumber:
+        example: MERSNumber
+        type: string
+      MERSNumberValidation:
+        example: MERSNumberValidation
+        type: string
+      MAINAddendum:
+        example: MAINAddendum
+        type: string
+      MSPSvcrLoanNumber:
+        example: MSPSvcrLoanNumber
+        type: string
+      MultipleAPNFlag:
+        example: MultipleAPNFlag
+        type: string
+      MultipleAPNFlagDesc:
+        example: MultipleAPNFlagDesc
+        type: string
+      SalesPrice:
+        example: SalesPrice
+        type: string
+      SalesPriceCode:
+        example: SalesPriceCode
+        type: string
+      SalesPriceCodeDesc:
+        example: SalesPriceCodeDesc
+        type: string
+      CityTransferTax:
+        example: CityTransferTax
+        type: string
+      CountyTransferTax:
+        example: CountyTransferTax
+        type: string
+      TotalTransferTaxRecorder:
+        example: TotalTransferTaxRecorder
+        type: string
+      PartialOwnershipInterestTransfer:
+        example: PartialOwnershipInterestTransfer
+        type: string
+      Sellers:
+        type: array
+        items:
+          $ref: '#/definitions/EntityInfo'
+      SellerNameAddendumFlagRowCount:
+        example: SellerNameAddendumFlagRowCount
+        type: string
+      SellerAddress:
+        $ref: '#/definitions/Address'
+      Buyers:
+        type: array
+        items:
+          $ref: '#/definitions/EntityInfo'
+      BuyerVestingCode:
+        example: BuyerVestingCode
+        type: string
+      BuyerVestingCodeDesc:
+        example: BuyerVestingCodeDesc
+        type: string
+      BuyerNameAddendumFlagRowCount:
+        example: BuyerNameAddendumFlagRowCount
+        type: string
+      RecorderBuyerMailCareOfName:
+        example: RecorderBuyerMailCareOfName
+        type: string
+      RecorderBuyerAddress:
+        $ref: '#/definitions/Address'
+      ConcurrentMortgagePurchaseORRefiFlag:
+        example: ConcurrentMortgagePurchaseORRefiFlag
+        type: string
+      ConcurrentMortgageDocumentNumber:
+        example: ConcurrentMortgageDocumentNumber
+        type: string
+      ConcurrentMortgageLenderName:
+        example: ConcurrentMortgageLenderName
+        type: string
+      ConcurrentMortgageLenderTypeCode:
+        example: ConcurrentMortgageLenderTypeCode
+        type: string
+      ConcurrentMortgageLenderTypeCodeDesc:
+        example: ConcurrentMortgageLenderTypeCodeDesc
+        type: string
+      ConcurrentMortgageLoanAmount:
+        example: ConcurrentMortgageLoanAmount
+        type: string
+      ConcurrentMortgageLoanTypeCode:
+        example: ConcurrentMortgageLoanTypeCode
+        type: string
+      ConcurrentMortgageLoanTypeCodeDesc:
+        example: ConcurrentMortgageLoanTypeCodeDesc
+        type: string
+      ConcurrentMortgageFinancingTypeCode:
+        example: ConcurrentMortgageFinancingTypeCode
+        type: string
+      ConcurrentMortgageFinancingTypeCodeDesc:
+        example: ConcurrentMortgageFinancingTypeCodeDesc
+        type: string
+      ConcurrentMortgageInterestRate:
+        example: ConcurrentMortgageInterestRate
+        type: string
+      ConcurrentMortgageMaturityDate:
+        example: ConcurrentMortgageMaturityDate
+        type: string
+      ConcurrentMortgageImpliedInterestRate:
+        example: ConcurrentMortgageImpliedInterestRate
+        type: string
+      ConcurrentMortgageMortgageTerm:
+        example: ConcurrentMortgageMortgageTerm
+        type: string
+      ConcurrentMortgageRateChangeFrequencyCode:
+        example: ConcurrentMortgageRateChangeFrequencyCode
+        type: string
+      ConcurrentMortgageRateChangeFrequencyCodeDesc:
+        example: ConcurrentMortgageRateChangeFrequencyCodeDesc
+        type: string
+      ConcurrentMortgageChangeIndexLendersMargin:
+        example: ConcurrentMortgageChangeIndexLendersMargin
+        type: string
+      ConcurrentMortgageAdjustableRateIndexCode:
+        example: ConcurrentMortgageAdjustableRateIndexCode
+        type: string
+      ConcurrentMortgageAdjustableRateIndexCodeDesc:
+        example: ConcurrentMortgageAdjustableRateIndexCodeDesc
+        type: string
+      ConcurrentMortgageFirstChangeDateInterestRateNotGreaterThan:
+        example: ConcurrentMortgageFirstChangeDateInterestRateNotGreaterThan
+        type: string
+      ConcurrentMortgageFirstChangeDateInterestNotLessThan:
+        example: ConcurrentMortgageFirstChangeDateInterestNotLessThan
+        type: string
+      ConcurrentMortgageMaximumInterestRate:
+        example: ConcurrentMortgageMaximumInterestRate
+        type: string
+      ConcurrentMortgageFirstChangeDateMMDD:
+        example: ConcurrentMortgageFirstChangeDateMMDD
+        type: string
+      ConcurrentMortgageFirstChangeDateYEAR:
+        example: ConcurrentMortgageFirstChangeDateYEAR
+        type: string
+      ConcurrentMortgageInterestOnlyFlag:
+        example: ConcurrentMortgageInterestOnlyFlag
+        type: string
+      ConcurrentMortgageAdjustableRateRider:
+        example: ConcurrentMortgageAdjustableRateRider
+        type: string
+      ConcurrentMortgagePrepaymentRiderCode:
+        example: ConcurrentMortgagePrepaymentRiderCode
+        type: string
+      ConcurrentMortgagePrepaymentTerm:
+        example: ConcurrentMortgagePrepaymentTerm
+        type: string
+      ConcurrentMortgageFixedStepRateRiderCode:
+        example: ConcurrentMortgageFixedStepRateRiderCode
+        type: string
+      ConcurrentMortgageFixedStepRateRiderCodeDesc:
+        example: ConcurrentMortgageFixedStepRateRiderCodeDesc
+        type: string
+      ConcurrentMortgageBiweeklyPaymentRider:
+        example: ConcurrentMortgageBiweeklyPaymentRider
+        type: string
+      ConcurrentMortgageBalloonRider:
+        example: ConcurrentMortgageBalloonRider
+        type: string
+      ConcurrentMortgageRateImprovementRider:
+        example: ConcurrentMortgageRateImprovementRider
+        type: string
+      ConcurrentMortgageAssumabilityRider:
+        example: ConcurrentMortgageAssumabilityRider
+        type: string
+      SecondLoanAmount:
+        example: SecondLoanAmount
+        type: string
+      CompleteLegalDescriptionCode:
+        example: CompleteLegalDescriptionCode
+        type: string
+      CompleteLegalDescriptionCodeDesc:
+        example: CompleteLegalDescriptionCodeDesc
+        type: string
+      LandOrLotSizeOrAcreageRecorderData:
+        example: LandOrLotSizeOrAcreageRecorderData
+        type: string
+      TimeShareFlag:
+        example: TimeShareFlag
+        type: string
+      TypeofSale:
+        example: TypeofSale
+        type: string
+      AssessmentSalesPrice:
+        example: AssessmentSalesPrice
+        type: string
+      AssessmentSalesPriceCode:
+        example: AssessmentSalesPriceCode
+        type: string
+      AssessmentSalesPriceCodeDesc:
+        example: AssessmentSalesPriceCodeDesc
+        type: string
+      AssessmentSalePriorRecordingDate:
+        example: AssessmentSalePriorRecordingDate
+        type: string
+      AssessmentSalePriorSalesPrice:
+        example: AssessmentSalePriorSalesPrice
+        type: string
+      AssessmentSalePriorSalesPriceCode:
+        example: AssessmentSalePriorSalesPriceCode
+        type: string
+      AssessmentSalePriorSalesPriceCodeDesc:
+        example: AssessmentSalePriorSalesPriceCodeDesc
+        type: string
+      Borrowers:
+        type: array
+        items:
+          $ref: '#/definitions/EntityInfo'
+      BorrowerVestingCode:
+        example: BorrowerVestingCode
+        type: string
+      BorrowerVestingCodeDesc:
+        example: BorrowerVestingCodeDesc
+        type: string
+      RecorderBorrowerMailingAddress:
+        $ref: '#/definitions/Address'
+      BorrowerAddressSourceCode:
+        example: BorrowerAddressSourceCode
+        type: string
+      PurchaseORRefiFlag:
+        example: PurchaseORRefiFlag
+        type: string
+      LenderName:
+        example: LenderName
+        type: string
+      LenderNameID:
+        example: LenderNameID
+        type: string
+      LenderTypeCode:
+        example: LenderTypeCode
+        type: string
+      LenderTypeCodeDesc:
+        example: LenderTypeCodeDesc
+        type: string
+      LenderMailingAddress:
+        $ref: '#/definitions/Address'
+      LoanAmount:
+        example: LoanAmount
+        type: string
+      LoanType:
+        example: LoanType
+        type: string
+      LoanTypeCodeDesc:
+        example: LoanTypeCodeDesc
+        type: string
+      FinancingTypeCode:
+        example: FinancingTypeCode
+        type: string
+      FinancingTypeCodeDesc:
+        example: FinancingTypeCodeDesc
+        type: string
+      InterestRate:
+        example: InterestRate
+        type: string
+      MaturityDate:
+        example: MaturityDate
+        type: string
+      ImpliedInterestRate:
+        example: ImpliedInterestRate
+        type: string
+      MortgageTerm:
+        example: MortgageTerm
+        type: string
+      LoanTermMonths:
+        example: LoanTermMonths
+        type: string
+      LoanTermYears:
+        example: LoanTermYears
+        type: string
+      RateChangeFrequencyCode:
+        example: RateChangeFrequencyCode
+        type: string
+      RateChangeFrequencyCodeDesc:
+        example: RateChangeFrequencyCodeDesc
+        type: string
+      ChangeIndexLendersMargin:
+        example: ChangeIndexLendersMargin
+        type: string
+      AdjustableRateIndexCode:
+        example: AdjustableRateIndexCode
+        type: string
+      AdjustableRateIndexCodeDesc:
+        example: AdjustableRateIndexCodeDesc
+        type: string
+      FirstChangeDateInterestRateNotGreaterThan:
+        example: FirstChangeDateInterestRateNotGreaterThan
+        type: string
+      FirstChangeDateInterestNotLessThan:
+        example: FirstChangeDateInterestNotLessThan
+        type: string
+      MaximumInterestRate:
+        example: MaximumInterestRate
+        type: string
+      FirstChangeDate:
+        example: FirstChangeDate
+        type: string
+      InterestOnlyPeriod:
+        example: InterestOnlyPeriod
+        type: string
+      AdjustableRateRider:
+        example: AdjustableRateRider
+        type: string
+      PrepaymentRiderCode:
+        example: PrepaymentRiderCode
+        type: string
+      PrepaymentTerm:
+        example: PrepaymentTerm
+        type: string
+      FixedStepRateRiderCode:
+        example: FixedStepRateRiderCode
+        type: string
+      BiweeklyPaymentRider:
+        example: BiweeklyPaymentRider
+        type: string
+      BalloonRider:
+        example: BalloonRider
+        type: string
+      RateImprovementRider:
+        example: RateImprovementRider
+        type: string
+      AssumabilityRider:
+        example: AssumabilityRider
+        type: string
+      PreForeclosurePublishedDate:
+        example: PreForeclosurePublishedDate
+        type: string
+      MultipleLoansInDefaultFlag:
+        example: MultipleLoansInDefaultFlag
+        type: string
+      CaseNumber:
+        example: CaseNumber
+        type: string
+      UnpaidBalance:
+        example: UnpaidBalance
+        type: string
+      TotalDelinquentAmount:
+        example: TotalDelinquentAmount
+        type: string
+      TotalDelinquentDate:
+        example: TotalDelinquentDate
+        type: string
+      InstallmentDueDate:
+        example: InstallmentDueDate
+        type: string
+      Trustors:
+        type: array
+        items:
+          $ref: '#/definitions/EntityInfo'
+      TrusteeSaleNumber:
+        example: TrusteeSaleNumber
+        type: string
+      TrusteeAttyName:
+        $ref: '#/definitions/NameDefinition'
+      TrusteeAttyMailCareOfName:
+        example: TrusteeAttyMailCareOfName
+        type: string
+      TrusteeAttyAddress:
+        $ref: '#/definitions/Address'
+      TrusteeAttyTelephoneNumber:
+        example: TrusteeAttyTelephoneNumber
+        type: string
+      TrusteeAttyTelephoneExtOrAltNumber:
+        example: TrusteeAttyTelephoneExtOrAltNumber
+        type: string
+      ContactName:
+        $ref: '#/definitions/NameDefinition'
+      ContactMailCareOfName:
+        example: ContactMailCareOfName
+        type: string
+      ContactAddress:
+        $ref: '#/definitions/Address'
+      ContactTelephoneNumber:
+        example: ContactTelephoneNumber
+        type: string
+      ContactTelephoneExtOrAltNumber:
+        example: ContactTelephoneExtOrAltNumber
+        type: string
+      OriginalBeneficiaryLender:
+        example: OriginalBeneficiaryLender
+        type: string
+      OriginalBeneficiaryLenderTypeCode:
+        example: OriginalBeneficiaryLenderTypeCode
+        type: string
+      OriginalBeneficiaryLenderTypeCodeDesc:
+        example: OriginalBeneficiaryLenderTypeCodeDesc
+        type: string
+      CurrentBeneficiaryLender:
+        example: CurrentBeneficiaryLender
+        type: string
+      CurrentBeneficiaryLenderNameID:
+        example: CurrentBeneficiaryLenderNameID
+        type: string
+      CurrentBeneficiaryLenderTypeCode:
+        example: CurrentBeneficiaryLenderTypeCode
+        type: string
+      CurrentBeneficiaryLenderTypeCodeDesc:
+        example: CurrentBeneficiaryLenderTypeCodeDesc
+        type: string
+      OriginalLoanMINNumber:
+        example: OriginalLoanMINNumber
+        type: string
+      OriginalLoanMINValidation:
+        example: OriginalLoanMINValidation
+        type: string
+      OriginalLoanMERSDocumentCode:
+        example: OriginalLoanMERSDocumentCode
+        type: string
+      OriginalLoanLoanNumber:
+        example: OriginalLoanLoanNumber
+        type: string
+      OriginalLoanRecorderDocumentNumber:
+        example: OriginalLoanRecorderDocumentNumber
+        type: string
+      OriginalLoanRecorderBookNumber:
+        example: OriginalLoanRecorderBookNumber
+        type: string
+      OriginalLoanRecorderPageNumber:
+        example: OriginalLoanRecorderPageNumber
+        type: string
+      OriginalLoanLoanAmount:
+        example: OriginalLoanLoanAmount
+        type: string
+      AuctionDate:
+        example: AuctionDate
+        type: string
+      AuctionTime:
+        example: AuctionTime
+        type: string
+      AuctionDateTime:
+        example: AuctionDateTime
+        type: string
+      AuctionPostponedFromDate:
+        example: AuctionPostponedFromDate
+        type: string
+      AuctionPostponedToDate:
+        example: AuctionPostponedToDate
+        type: string
+      AuctionPostponedReasonCode:
+        example: AuctionPostponedReasonCode
+        type: string
+      AuctionPostponedReasonCodeDesc:
+        example: AuctionPostponedReasonCodeDesc
+        type: string
+      AuctionLocation:
+        example: AuctionLocation
+        type: string
+      AuctionCityName:
+        example: AuctionCityName
+        type: string
+      AuctionMinimumBidAmount:
+        example: AuctionMinimumBidAmount
+        type: string
+      AuctionOpenLowBidAmount:
+        example: AuctionOpenLowBidAmount
+        type: string
+      AuctionOpenMidBidAmount:
+        example: AuctionOpenMidBidAmount
+        type: string
+      AuctionOpenHighBidAmount:
+        example: AuctionOpenHighBidAmount
+        type: string
+      AuctionIncrement:
+        example: AuctionIncrement
+        type: string
+      CertOfPurchaseWinningBidAmount:
+        example: CertOfPurchaseWinningBidAmount
+        type: string
+      CertOfPurchasePurchaserLastNameOrCorp:
+        example: CertOfPurchasePurchaserLastNameOrCorp
+        type: string
+      REOIndicator:
+        example: REOIndicator
+        type: string
+      AssignorName:
+        example: AssignorName
+        type: string
+      Assignee:
+        example: Assignee
+        type: string
+      AssigneePool:
+        example: AssigneePool
+        type: string
+      AssignmentEffectiveDate:
+        example: AssignmentEffectiveDate
+        type: string
+      MERSIndicator:
+        example: MERSIndicator
+        type: string
+      ReleaseEffectiveDate:
+        example: ReleaseEffectiveDate
+        type: string
+      MortgagePayOffDate:
+        example: MortgagePayOffDate
+        type: string
+      MultiplePageImage:
+        example: MultiplePageImage
+        type: string
+      CurrentLender:
+        example: CurrentLender
+        type: string
+      CurrentLenderPoolNumber:
+        example: CurrentLenderPoolNumber
+        type: string
+      BorrowerMailingAddress:
+        $ref: '#/definitions/Address'
+  LoanTransaction:
+    type: object
+    properties:
+      Description:
+        example: Description
+        type: string
+      Code:
+        example: Code
+        type: string
+      Value:
+        example: Value
+        type: string
+  ComparableSale:
+    type: object
+    properties:
+      Distance:
+        example: Distance
+        type: string
+      Latitude:
+        example: Latitude
+        type: string
+      Longitude:
+        example: Longitude
+        type: string
+      APN:
+        example: APN
+        type: string
+      Address:
+        $ref: '#/definitions/Address'
+      DocumentNumber:
+        example: DocumentNumber
+        type: string
+      Book:
+        example: Book
+        type: string
+      Page:
+        example: Page
+        type: string
+      DocumentType:
+        example: DocumentType
+        type: string
+      DocumentTypeDesc:
+        example: DocumentTypeDesc
+        type: string
+      ContractDate:
+        example: ContractDate
+        type: string
+      RecordingDate:
+        example: RecordingDate
+        type: string
+      SalesPrice:
+        example: SalesPrice
+        type: string
+      SalesPriceCode:
+        example: SalesPriceCode
+        type: string
+      SalesPriceCodeDesc:
+        example: SalesPriceCodeDesc
+        type: string
+      SalesPriceTypeDesc:
+        example: SalesPriceTypeDesc
+        type: string
+      PricePerSQFT:
+        example: PricePerSQFT
+        type: string
+      LotNumber:
+        example: LotNumber
+        type: string
+      LegalBriefDescription:
+        example: LegalBriefDescription
+        type: string
+      LotCodeDesc:
+        example: LotCodeDesc
+        type: string
+      LegalDistrict:
+        example: LegalDistrict
+        type: string
+      LegalLandLot:
+        example: LegalLandLot
+        type: string
+      Unit:
+        example: Unit
+        type: string
+      LegalCityMuniTownship:
+        example: LegalCityMuniTownship
+        type: string
+      Subdivision:
+        example: Subdivision
+        type: string
+      PhaseNumber:
+        example: PhaseNumber
+        type: string
+      TractNumber:
+        example: TractNumber
+        type: string
+      LegalBlockNumber:
+        example: LegalBlockNumber
+        type: string
+      Section:
+        example: Section
+        type: string
+      MapRef:
+        example: MapRef
+        type: string
+      Buyers:
+        type: array
+        items:
+          $ref: '#/definitions/EntityInfo'
+      Sellers:
+        type: array
+        items:
+          $ref: '#/definitions/EntityInfo'
+      LandUseAssessorCode:
+        example: LandUseAssessorCode
+        type: string
+      LandUseAssessorDesc:
+        example: LandUseAssessorDesc
+        type: string
+      LandUseStandardizedCode:
+        example: LandUseStandardizedCode
+        type: string
+      LandUseStandardizedDesc:
+        example: LandUseStandardizedDesc
+        type: string
+      LandUseStateDesc:
+        example: LandUseStateDesc
+        type: string
+      ZoningAssessorDescription:
+        example: ZoningAssessorDescription
+        type: string
+      RoomsTotalCount:
+        example: RoomsTotalCount
+        type: string
+      BedroomCount:
+        example: BedroomCount
+        type: string
+      BathsPartialCount:
+        example: BathsPartialCount
+        type: string
+      BathsPlumbingFixturesCount:
+        example: BathsPlumbingFixturesCount
+        type: string
+      BathsTotalCount:
+        example: BathsTotalCount
+        type: string
+      BuildingAreaTotal:
+        example: BuildingAreaTotal
+        type: string
+      LotSizeAcres:
+        example: LotSizeAcres
+        type: string
+      LotSizeOrArea:
+        example: LotSizeOrArea
+        type: string
+      LotSize:
+        example: LotSize
+        type: string
+      LotSizeUnits:
+        example: LotSizeUnits
+        type: string
+      ConstructionTypeCode:
+        example: ConstructionTypeCode
+        type: string
+      ConstructionTypeDesc:
+        example: ConstructionTypeDesc
+        type: string
+      FoundationTypeCode:
+        example: FoundationTypeCode
+        type: string
+      FoundationTypeDesc:
+        example: FoundationTypeDesc
+        type: string
+      ExteriorWallTypeCode:
+        example: ExteriorWallTypeCode
+        type: string
+      ExteriorWallTypeDesc:
+        example: ExteriorWallTypeDesc
+        type: string
+      InteriorWallTypeCode:
+        example: InteriorWallTypeCode
+        type: string
+      InteriorWallTypeDesc:
+        example: InteriorWallTypeDesc
+        type: string
+      FloorCoverTypeCode:
+        example: FloorCoverTypeCode
+        type: string
+      FloorCoverTypeDesc:
+        example: FloorCoverTypeDesc
+        type: string
+      StoryCountCode:
+        example: StoryCountCode
+        type: string
+      StoryCountDesc:
+        example: StoryCountDesc
+        type: string
+      YearBuiltActual:
+        example: YearBuiltActual
+        type: string
+      YearBuiltEffective:
+        example: YearBuiltEffective
+        type: string
+      AirConditioningMethodCode:
+        example: AirConditioningMethodCode
+        type: string
+      AirConditioningMethodDesc:
+        example: AirConditioningMethodDesc
+        type: string
+      AirConditioningTypeCode:
+        example: AirConditioningTypeCode
+        type: string
+      AirConditioningTypeDesc:
+        example: AirConditioningTypeDesc
+        type: string
+      HeatingTypeCode:
+        example: HeatingTypeCode
+        type: string
+      HeatingTypeDesc:
+        example: HeatingTypeDesc
+        type: string
+      HeatingFuelTypeCode:
+        example: HeatingFuelTypeCode
+        type: string
+      HeatingFuelTypeDesc:
+        example: HeatingFuelTypeDesc
+        type: string
+      BasementCode:
+        example: BasementCode
+        type: string
+      BasementDesc:
+        example: BasementDesc
+        type: string
+      Elevator:
+        example: Elevator
+        type: string
+      Fireplace:
+        example: Fireplace
+        type: string
+      PoolTypeCode:
+        example: PoolTypeCode
+        type: string
+      PoolTypeDesc:
+        example: PoolTypeDesc
+        type: string
+      RoofMaterialCode:
+        example: RoofMaterialCode
+        type: string
+      RoofMaterialDesc:
+        example: RoofMaterialDesc
+        type: string
+      RoofStructureTypeCode:
+        example: RoofStructureTypeCode
+        type: string
+      RoofStructureTypeDesc:
+        example: RoofStructureTypeDesc
+        type: string
+      GarageParkingNumberofCars:
+        example: GarageParkingNumberofCars
+        type: string
+      GarageTypeCode:
+        example: GarageTypeCode
+        type: string
+      GarageTypeDesc:
+        example: GarageTypeDesc
+        type: string
+      REOFlag:
+        example: REOFlag
+        type: string
+      TargetDate:
+        example: TargetDate
+        type: string
+      LenderName:
+        example: LenderName
+        type: string
+      Loan2Amount:
+        example: Loan2Amount
+        type: string
+      DeedTransactionType:
+        example: DeedTransactionType
+        type: string
+      DeedTransactionTypeDesc:
+        example: DeedTransactionTypeDesc
+        type: string
+      NonArmsLengthTransCount:
+        example: NonArmsLengthTransCount
+        type: string
+      NumberOfTimesSold:
+        example: NumberOfTimesSold
+        type: string
+      REOMultiFlag:
+        example: REOMultiFlag
+        type: string
+      AssessedLandValue:
+        example: AssessedLandValue
+        type: string
+      AssessedImprovedValue:
+        example: AssessedImprovedValue
+        type: string
+      AssessedTotalValue:
+        example: AssessedTotalValue
+        type: string
+      AssessmentYear:
+        example: AssessmentYear
+        type: string
+      MarketLandValue:
+        example: MarketLandValue
+        type: string
+      MarketImprovedValue:
+        example: MarketImprovedValue
+        type: string
+      MarketTotalValue:
+        example: MarketTotalValue
+        type: string
+      AssessorMarketYear:
+        example: AssessorMarketYear
+        type: string
+      Loan1Amount:
+        example: Loan1Amount
+        type: string
+      SecTwpRngMer:
+        example: SecTwpRngMer
+        type: string
+      PriorSale1Buyers:
+        type: array
+        items:
+          $ref: '#/definitions/EntityInfo'
+      PriorSale1Sellers:
+        type: array
+        items:
+          $ref: '#/definitions/EntityInfo'
+      PriorSale1TypeOfSale:
+        example: PriorSale1TypeOfSale
+        type: string
+      PriorSale1TypeOfSaleDesc:
+        example: PriorSale1TypeOfSaleDesc
+        type: string
+      PriorSale1DocumentType:
+        example: PriorSale1DocumentType
+        type: string
+      PriorSale1DocumentNumber:
+        example: PriorSale1DocumentNumber
+        type: string
+      PriorSale1Book:
+        example: PriorSale1Book
+        type: string
+      PriorSale1Page:
+        example: PriorSale1Page
+        type: string
+      PriorSale1ContractDate:
+        example: PriorSale1ContractDate
+        type: string
+      PriorSale1RecordingDate:
+        example: PriorSale1RecordingDate
+        type: string
+      PriorSale1Price:
+        example: PriorSale1Price
+        type: string
+      PriorSale1PriceCode:
+        example: PriorSale1PriceCode
+        type: string
+      PriorSale1PriceCodeDesc:
+        example: PriorSale1PriceCodeDesc
+        type: string
+      PriorSale2Buyers:
+        type: array
+        items:
+          $ref: '#/definitions/EntityInfo'
+      PriorSale2Sellers:
+        type: array
+        items:
+          $ref: '#/definitions/EntityInfo'
+      PriorSale2TypeOfSale:
+        example: PriorSale2TypeOfSale
+        type: string
+      PriorSale2TypeOfSaleDesc:
+        example: PriorSale2TypeOfSaleDesc
+        type: string
+      PriorSale2DocumentType:
+        example: PriorSale2DocumentType
+        type: string
+      PriorSale2DocumentNumber:
+        example: PriorSale2DocumentNumber
+        type: string
+      PriorSale2Book:
+        example: PriorSale2Book
+        type: string
+      PriorSale2Page:
+        example: PriorSale2Page
+        type: string
+      PriorSale2ContractDate:
+        example: PriorSale2ContractDate
+        type: string
+      PriorSale2RecordingDate:
+        example: PriorSale2RecordingDate
+        type: string
+      PriorSale2Price:
+        example: PriorSale2Price
+        type: string
+      PriorSale2PriceCode:
+        example: PriorSale2PriceCode
+        type: string
+      PriorSale2PriceCodeDesc:
+        example: PriorSale2PriceCodeDesc
+        type: string
+      ActiveDefault:
+        $ref: '#/definitions/ActiveDefault'
+  AVMInformation:
+    type: object
+    properties:
+      AVMType:
+        example: AVMType
+        type: string
+      AVMLow:
+        example: AVMLow
+        type: string
+      ConfiAVMHigh:
+        example: ConfiAVMHigh
+        type: string
+      AVMValue:
+        example: AVMValue
+        type: string
+      AVMConfidenceDescr:
+        example: AVMConfidenceDescr
+        type: string
+      AVMConfScore:
+        example: AVMConfScore
+        type: string
+      AVMFSD:
+        example: AVMFSD
+        type: string
+  PropertyValueRange:
+    type: object
+    properties:
+      EstimatedRangeMin:
+        example: EstimatedRangeMin
+        type: string
+      EstimatedRangeMax:
+        example: EstimatedRangeMax
+        type: string
+      ConfidenceScore:
+        example: ConfidenceScore
+        type: string
+      ConfidenceLevel:
+        example: ConfidenceLevel
+        type: string
+      NeighborhoodAverage:
+        example: NeighborhoodAverage
+        type: string
+      NeighborhoodMin:
+        example: NeighborhoodMin
+        type: string
+      NeighborhoodMax:
+        example: NeighborhoodMax
+        type: string
+  ActiveDefault:
+    type: object
+    properties:
+      IsActiveDefault:
+        example: IsActiveDefault
+        type: string
+      LatestStatus:
+        example: LatestStatus
+        type: string
+      RecordingDate:
+        example: RecordingDate
+        type: string
+  ActiveForeclosureByZip:
+    type: object
+    properties:
+      MonthYear:
+        example: MonthYear
+        type: string
+      ActiveForeclosures:
+        type: array
+        items:
+          $ref: '#/definitions/ActiveForeclosure'
+  ActiveForeclosure:
+    type: object
+    properties:
+      ForeclosureType:
+        example: ForeclosureType
+        type: string
+      Count:
+        example: Count
+        type: string
+  AlertType:
+    type: object
+    properties:
+      Code:
+        example: AlertCode
+        type: string
+      Description:
+        example: ALERT - This is an alert description.
+        type: string
+      Status:
+        example: Fired
+        type: string
+      Evidence:
+        type: array
+        items:
+          $ref: '#/definitions/EvidenceType'
+  EvidenceType:
+    description: Dictionary of evidence fields that caused the alert to fire.
+    type: object
+    example:
+      Key: Value

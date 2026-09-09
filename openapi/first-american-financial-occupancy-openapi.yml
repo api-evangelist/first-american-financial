@@ -1,0 +1,1807 @@
+swagger: '2.0'
+info:
+  version: v1
+  title: Occupancy Service
+host: solutions.dgw.firstam.io
+basePath: /v1
+schemes:
+- https
+paths:
+  /occupancy/report:
+    get:
+      tags:
+      - Request Occupancy
+      operationId: Report
+      consumes:
+      - application/json
+      - application/xml
+      produces:
+      - application/json
+      - application/xml
+      parameters:
+      - in: header
+        name: X-App-Id
+        description: Application ID
+        required: true
+        type: string
+      - in: header
+        name: X-App-Key
+        description: Application Key
+        required: true
+        type: string
+      - name: transactionID
+        in: query
+        required: false
+        default: 4514c308-468f-438a-bd8f-253c6c3cbd65
+        type: string
+      responses:
+        '200':
+          description: Success
+          schema:
+            $ref: '#/definitions/OccupancyServiceResponse'
+  /occupancy/report/pdf:
+    get:
+      tags:
+      - Request Occupancy
+      summary: Get PDF report
+      operationId: ReportPDF
+      consumes:
+      - application/json
+      - application/xml
+      produces:
+      - application/json
+      - application/xml
+      parameters:
+      - in: header
+        name: X-App-Id
+        description: Application ID
+        required: true
+        type: string
+      - in: header
+        name: X-App-Key
+        description: Application Key
+        required: true
+        type: string
+      - name: transactionID
+        in: query
+        required: false
+        default: 4514c308-468f-438a-bd8f-253c6c3cbd65
+        type: string
+      responses:
+        '200':
+          description: Success
+  /occupancy/order:
+    post:
+      tags:
+      - Request Occupancy
+      summary: Make a new Occupancy service call to get a Occupancy check on the property.
+      description: 'Required fields: First Name, Last Name, SSN, Subject Address, Loan Purpose, Occupancy'
+      operationId: Order
+      consumes:
+      - application/json
+      - application/xml
+      produces:
+      - application/json
+      - application/xml
+      parameters:
+      - in: header
+        name: X-App-Id
+        description: Application ID
+        required: true
+        type: string
+      - in: header
+        name: X-App-Key
+        description: Application Key
+        required: true
+        type: string
+      - name: request
+        in: body
+        required: false
+        schema:
+          $ref: '#/definitions/OccupancyServiceRequest'
+      responses:
+        '200':
+          description: Success
+          schema:
+            $ref: '#/definitions/OccupancyServiceResponse'
+        '400':
+          description: Invalid Input, Object Invalid
+definitions:
+  OccupancyServiceResponse:
+    type: object
+    properties:
+      RequestorID:
+        type:
+        - string
+        - 'null'
+      TransactionID:
+        type:
+        - string
+        - 'null'
+      Status:
+        type:
+        - string
+        - 'null'
+      Message:
+        type:
+        - string
+        - 'null'
+      IdentityDetails:
+        type:
+        - array
+        - 'null'
+        items:
+          $ref: '#/definitions/IdentityDetails'
+      PropertyOwnerInformation:
+        $ref: '#/definitions/OwnerInformation'
+      PropertyCharacteristics:
+        $ref: '#/definitions/RealtyCharacteristics'
+      PropertyTransaction:
+        $ref: '#/definitions/PropertyTransaction'
+      PropertyAssessorTaxInfo:
+        $ref: '#/definitions/PropertyAssessorTaxInfo'
+      MERSLoans:
+        type:
+        - array
+        - 'null'
+        items:
+          $ref: '#/definitions/InquiryData'
+      FlexLoans:
+        type:
+        - array
+        - 'null'
+        items:
+          $ref: '#/definitions/FLEXData'
+      RentalData:
+        $ref: '#/definitions/RentalData'
+      Alerts:
+        type:
+        - array
+        - 'null'
+        items:
+          $ref: '#/definitions/Alert'
+      Errors:
+        type:
+        - array
+        - 'null'
+        items:
+          $ref: '#/definitions/Error'
+      PDFS3SignedURL:
+        type:
+        - string
+        - 'null'
+  Alert:
+    type:
+    - object
+    - 'null'
+    properties:
+      Code:
+        type:
+        - string
+        - 'null'
+      Description:
+        type:
+        - string
+        - 'null'
+      Status:
+        type: string
+        enum:
+        - NotEvaluated
+        - Fired
+        - NotFired
+      Evidence:
+        type:
+        - array
+        - 'null'
+        items:
+          type:
+          - object
+          - 'null'
+          additionalProperties: {}
+    required:
+    - Code
+    - Description
+    - Status
+    - Evidence
+  Borrower:
+    type:
+    - object
+    - 'null'
+    properties:
+      BorrowerID:
+        type: integer
+      Name:
+        $ref: '#/definitions/Name'
+      Addresses:
+        type:
+        - array
+        - 'null'
+        items:
+          $ref: '#/definitions/ContactAddress'
+      DOB:
+        $ref: '#/definitions/ParsedDate'
+      SSN:
+        type:
+        - string
+        - 'null'
+      RentorOwn:
+        type:
+        - string
+        - 'null'
+      RentOrOwnNbrOfYrs:
+        type: integer
+      HomePhone:
+        type:
+        - string
+        - 'null'
+      Citizenship:
+        type:
+        - string
+        - 'null'
+      PermanentResidentAlien:
+        type:
+        - string
+        - 'null'
+      NonPermanentResident:
+        type:
+        - string
+        - 'null'
+      FICOScore:
+        type: integer
+      MonthlyBaseIncome:
+        type:
+        - number
+        - 'null'
+      MonthlyTotalIncome:
+        type:
+        - number
+        - 'null'
+    required:
+    - BorrowerID
+    - Name
+    - Addresses
+    - DOB
+    - SSN
+    - RentorOwn
+    - RentOrOwnNbrOfYrs
+    - HomePhone
+    - Citizenship
+    - PermanentResidentAlien
+    - NonPermanentResident
+    - FICOScore
+    - MonthlyBaseIncome
+    - MonthlyTotalIncome
+  ConsumerAddress:
+    type:
+    - object
+    - 'null'
+    properties:
+      FirstReportedDate:
+        $ref: '#/definitions/ParsedDate'
+      LastReportedDate:
+        $ref: '#/definitions/ParsedDate'
+      ResidenceStatus:
+        type:
+        - string
+        - 'null'
+      ResidenceDuration:
+        type:
+        - integer
+        - 'null'
+      Status:
+        type:
+        - string
+        - 'null'
+      Qualifier:
+        type:
+        - string
+        - 'null'
+      TypesOfSources:
+        type:
+        - array
+        - 'null'
+        items:
+          type:
+          - string
+          - 'null'
+      HighRiskIndicators:
+        type:
+        - array
+        - 'null'
+        items:
+          $ref: '#/definitions/RiskIndicator'
+      GeoDistance:
+        type: number
+      StreetNumber:
+        type:
+        - string
+        - 'null'
+        minLength: 0
+        maxLength: 20
+      StreetPreDirection:
+        type:
+        - string
+        - 'null'
+        minLength: 0
+        maxLength: 20
+      StreetName:
+        type:
+        - string
+        - 'null'
+        minLength: 0
+        maxLength: 200
+      StreetSuffix:
+        type:
+        - string
+        - 'null'
+        minLength: 0
+        maxLength: 30
+      StreetPostDirection:
+        type:
+        - string
+        - 'null'
+        minLength: 0
+        maxLength: 20
+      UnitDesignation:
+        type:
+        - string
+        - 'null'
+        minLength: 0
+        maxLength: 20
+      UnitNumber:
+        type:
+        - string
+        - 'null'
+        minLength: 0
+        maxLength: 15
+      StreetAddress1:
+        type:
+        - string
+        - 'null'
+        minLength: 0
+        maxLength: 350
+      StreetAddress2:
+        type:
+        - string
+        - 'null'
+        minLength: 0
+        maxLength: 300
+      City:
+        type:
+        - string
+        - 'null'
+        minLength: 0
+        maxLength: 100
+      State:
+        type:
+        - string
+        - 'null'
+        minLength: 0
+        maxLength: 2
+      ZipCode:
+        type:
+        - string
+        - 'null'
+        minLength: 0
+        maxLength: 10
+      ZipFour:
+        type:
+        - string
+        - 'null'
+        minLength: 0
+        maxLength: 4
+      County:
+        type:
+        - string
+        - 'null'
+        minLength: 0
+        maxLength: 100
+      Country:
+        type:
+        - string
+        - 'null'
+        minLength: 0
+        maxLength: 100
+      PostalCode:
+        type:
+        - string
+        - 'null'
+        minLength: 0
+        maxLength: 20
+      StateCityZip:
+        type:
+        - string
+        - 'null'
+        minLength: 0
+        maxLength: 150
+      Latitude:
+        type:
+        - number
+        - 'null'
+      Longitude:
+        type:
+        - number
+        - 'null'
+      APN:
+        type:
+        - string
+        - 'null'
+        minLength: 0
+        maxLength: 100
+      Hash:
+        type:
+        - string
+        - 'null'
+        minLength: 0
+        maxLength: 50
+      FullAddress:
+        type:
+        - string
+        - 'null'
+        minLength: 0
+        maxLength: 700
+      CountyFIPSCode:
+        type:
+        - string
+        - 'null'
+        minLength: 0
+        maxLength: 20
+      StateFIPSCode:
+        type:
+        - string
+        - 'null'
+        minLength: 0
+        maxLength: 20
+      AddressStandardized:
+        type:
+        - boolean
+        - 'null'
+      RefID:
+        type:
+        - string
+        - 'null'
+        minLength: 0
+        maxLength: 20
+    required:
+    - FirstReportedDate
+    - LastReportedDate
+    - ResidenceStatus
+    - ResidenceDuration
+    - Status
+    - Qualifier
+    - TypesOfSources
+    - HighRiskIndicators
+    - GeoDistance
+    - StreetNumber
+    - StreetPreDirection
+    - StreetName
+    - StreetSuffix
+    - StreetPostDirection
+    - UnitDesignation
+    - UnitNumber
+    - StreetAddress1
+    - StreetAddress2
+    - City
+    - State
+    - ZipCode
+    - ZipFour
+    - County
+    - Country
+    - PostalCode
+    - StateCityZip
+    - Latitude
+    - Longitude
+    - APN
+    - Hash
+    - FullAddress
+    - CountyFIPSCode
+    - StateFIPSCode
+    - AddressStandardized
+    - RefID
+  ConsumerNameInfo:
+    type:
+    - object
+    - 'null'
+    properties:
+      Qualifier:
+        type:
+        - string
+        - 'null'
+      DateFirstReported:
+        $ref: '#/definitions/ParsedDate'
+      DateLastReported:
+        $ref: '#/definitions/ParsedDate'
+      TypesOfSources:
+        type:
+        - array
+        - 'null'
+        items:
+          type:
+          - string
+          - 'null'
+      Full:
+        type:
+        - string
+        - 'null'
+        minLength: 0
+        maxLength: 1000
+      First:
+        type:
+        - string
+        - 'null'
+        minLength: 0
+        maxLength: 150
+      Middle:
+        type:
+        - string
+        - 'null'
+        minLength: 0
+        maxLength: 100
+      Last:
+        type:
+        - string
+        - 'null'
+        minLength: 0
+        maxLength: 300
+      Suffix:
+        type:
+        - string
+        - 'null'
+        minLength: 0
+        maxLength: 20
+      Prefix:
+        type:
+        - string
+        - 'null'
+        minLength: 0
+        maxLength: 20
+      LastOrCompanyName:
+        type:
+        - string
+        - 'null'
+        minLength: 0
+        maxLength: 500
+      FirstAndMiddleName:
+        type:
+        - string
+        - 'null'
+        minLength: 0
+        maxLength: 250
+    required:
+    - Qualifier
+    - DateFirstReported
+    - DateLastReported
+    - TypesOfSources
+    - Full
+    - First
+    - Middle
+    - Last
+    - Suffix
+    - Prefix
+    - LastOrCompanyName
+    - FirstAndMiddleName
+  ConsumerSSNInfo:
+    type:
+    - object
+    - 'null'
+    properties:
+      SSN:
+        type:
+        - string
+        - 'null'
+      IdentificationType:
+        type:
+        - string
+        - 'null'
+      AgeObtainedRangeStart:
+        type:
+        - string
+        - 'null'
+      AgeObtainedRangeEnd:
+        type:
+        - string
+        - 'null'
+      IssuanceAlertCode:
+        type:
+        - string
+        - 'null'
+      FirstPossibleIssuanceYear:
+        type:
+        - integer
+        - 'null'
+      LastPossibleIssuanceYear:
+        type:
+        - integer
+        - 'null'
+      IssuedStartDate:
+        $ref: '#/definitions/ParsedDate'
+      IssuedEndDate:
+        $ref: '#/definitions/ParsedDate'
+      DateFirstReported:
+        $ref: '#/definitions/ParsedDate'
+      DateLastReported:
+        $ref: '#/definitions/ParsedDate'
+      IssuanceExpirationDate:
+        $ref: '#/definitions/ParsedDate'
+      IssuanceStatus:
+        type:
+        - string
+        - 'null'
+      IssuanceYearsCovered:
+        type:
+        - integer
+        - 'null'
+      StateOfIssuance:
+        type:
+        - string
+        - 'null'
+      Valid:
+        type:
+        - boolean
+        - 'null'
+      TypesOfSources:
+        type:
+        - array
+        - 'null'
+        items:
+          type:
+          - string
+          - 'null'
+    required:
+    - SSN
+    - IdentificationType
+    - AgeObtainedRangeStart
+    - AgeObtainedRangeEnd
+    - IssuanceAlertCode
+    - FirstPossibleIssuanceYear
+    - LastPossibleIssuanceYear
+    - IssuedStartDate
+    - IssuedEndDate
+    - DateFirstReported
+    - DateLastReported
+    - IssuanceExpirationDate
+    - IssuanceStatus
+    - IssuanceYearsCovered
+    - StateOfIssuance
+    - Valid
+    - TypesOfSources
+  ContactAddress:
+    type:
+    - object
+    - 'null'
+    properties:
+      AddressType:
+        type:
+        - string
+        - 'null'
+      StreetNumber:
+        type:
+        - string
+        - 'null'
+        minLength: 0
+        maxLength: 20
+      StreetPreDirection:
+        type:
+        - string
+        - 'null'
+        minLength: 0
+        maxLength: 20
+      StreetName:
+        type:
+        - string
+        - 'null'
+        minLength: 0
+        maxLength: 200
+      StreetSuffix:
+        type:
+        - string
+        - 'null'
+        minLength: 0
+        maxLength: 30
+      StreetPostDirection:
+        type:
+        - string
+        - 'null'
+        minLength: 0
+        maxLength: 20
+      UnitDesignation:
+        type:
+        - string
+        - 'null'
+        minLength: 0
+        maxLength: 20
+      UnitNumber:
+        type:
+        - string
+        - 'null'
+        minLength: 0
+        maxLength: 15
+      StreetAddress1:
+        type:
+        - string
+        - 'null'
+        minLength: 0
+        maxLength: 350
+      StreetAddress2:
+        type:
+        - string
+        - 'null'
+        minLength: 0
+        maxLength: 300
+      City:
+        type:
+        - string
+        - 'null'
+        minLength: 0
+        maxLength: 100
+      State:
+        type:
+        - string
+        - 'null'
+        minLength: 0
+        maxLength: 2
+      ZipCode:
+        type:
+        - string
+        - 'null'
+        minLength: 0
+        maxLength: 10
+      ZipFour:
+        type:
+        - string
+        - 'null'
+        minLength: 0
+        maxLength: 4
+      County:
+        type:
+        - string
+        - 'null'
+        minLength: 0
+        maxLength: 100
+      Country:
+        type:
+        - string
+        - 'null'
+        minLength: 0
+        maxLength: 100
+      PostalCode:
+        type:
+        - string
+        - 'null'
+        minLength: 0
+        maxLength: 20
+      StateCityZip:
+        type:
+        - string
+        - 'null'
+        minLength: 0
+        maxLength: 150
+      Latitude:
+        type:
+        - number
+        - 'null'
+      Longitude:
+        type:
+        - number
+        - 'null'
+      APN:
+        type:
+        - string
+        - 'null'
+        minLength: 0
+        maxLength: 100
+      Hash:
+        type:
+        - string
+        - 'null'
+        minLength: 0
+        maxLength: 50
+      FullAddress:
+        type:
+        - string
+        - 'null'
+        minLength: 0
+        maxLength: 700
+      CountyFIPSCode:
+        type:
+        - string
+        - 'null'
+        minLength: 0
+        maxLength: 20
+      StateFIPSCode:
+        type:
+        - string
+        - 'null'
+        minLength: 0
+        maxLength: 20
+      AddressStandardized:
+        type:
+        - boolean
+        - 'null'
+      RefID:
+        type:
+        - string
+        - 'null'
+        minLength: 0
+        maxLength: 20
+    required:
+    - AddressType
+    - StreetNumber
+    - StreetPreDirection
+    - StreetName
+    - StreetSuffix
+    - StreetPostDirection
+    - UnitDesignation
+    - UnitNumber
+    - StreetAddress1
+    - StreetAddress2
+    - City
+    - State
+    - ZipCode
+    - ZipFour
+    - County
+    - Country
+    - PostalCode
+    - StateCityZip
+    - Latitude
+    - Longitude
+    - APN
+    - Hash
+    - FullAddress
+    - CountyFIPSCode
+    - StateFIPSCode
+    - AddressStandardized
+    - RefID
+  EntityInfo:
+    type:
+    - object
+    - 'null'
+    properties:
+      EntityCode:
+        type:
+        - string
+        - 'null'
+      EntityCodeDesc:
+        type:
+        - string
+        - 'null'
+      Name:
+        $ref: '#/definitions/Name'
+    required:
+    - EntityCode
+    - EntityCodeDesc
+    - Name
+  Error:
+    type:
+    - object
+    - 'null'
+    properties:
+      Code:
+        type:
+        - string
+        - 'null'
+        minLength: 0
+        maxLength: 10
+      Description:
+        type:
+        - string
+        - 'null'
+        minLength: 0
+        maxLength: 500
+    required:
+    - Code
+    - Description
+  FLEXData:
+    type:
+    - object
+    - 'null'
+    properties:
+      CompanyInventory:
+        type: boolean
+      LoanNumber:
+        type:
+        - string
+        - 'null'
+      MatchedSSN:
+        type:
+        - string
+        - 'null'
+      SubjectProperty:
+        $ref: '#/definitions/Location'
+      ScheduleofRealEstateOwned:
+        type:
+        - array
+        - 'null'
+        items:
+          $ref: '#/definitions/Location'
+      Borrowers:
+        type:
+        - array
+        - 'null'
+        items:
+          $ref: '#/definitions/Borrower'
+      LoanData:
+        $ref: '#/definitions/LoanData'
+    required:
+    - CompanyInventory
+    - LoanNumber
+    - MatchedSSN
+    - SubjectProperty
+    - ScheduleofRealEstateOwned
+    - Borrowers
+    - LoanData
+  IdentityDetails:
+    type:
+    - object
+    - 'null'
+    properties:
+      ID:
+        type: integer
+      Name:
+        $ref: '#/definitions/ConsumerNameInfo'
+      SSNInfo:
+        $ref: '#/definitions/ConsumerSSNInfo'
+      Address:
+        $ref: '#/definitions/ConsumerAddress'
+    required:
+    - ID
+    - Name
+    - SSNInfo
+    - Address
+  InquiryData:
+    type:
+    - object
+    - 'null'
+    properties:
+      Mers:
+        $ref: '#/definitions/Mers'
+      Borrower:
+        $ref: '#/definitions/MersBorrower'
+      Property:
+        $ref: '#/definitions/Location'
+      Status:
+        $ref: '#/definitions/Status'
+      Key:
+        $ref: '#/definitions/Key'
+      InvestorOrganizationIdentifier:
+        type:
+        - string
+        - 'null'
+      InvestorOrganizationName:
+        type:
+        - string
+        - 'null'
+      LienPriority:
+        type: string
+        enum:
+        - FirstLien
+        - SecondLien
+        - Other
+        - NoLienPriorityFromMERS
+      MERSiRegistrationIndicator:
+        type:
+        - string
+        - 'null'
+      MINAffiliationIndicator:
+        type:
+        - string
+        - 'null'
+      MINArchivedIndicator:
+        type:
+        - string
+        - 'null'
+      MINStatus:
+        type: string
+        enum:
+        - Active
+        - ForeclosureComplete
+        - PaidInFull
+        - DefaultBySubservicer
+        - TransferToNonMERSStatus
+        - RenewalAndExtension
+        - ReinstatedOrModified
+        - ResignationFromMERS
+        - RegistrationReversal
+        - MERS123Reserved
+        - MERS123PreliminaryRegistration
+        - MERS123CancelledPreliminaryRegistration
+        - Reserved
+        - Inactive
+        - DefaultByServicer
+        - PreClosing
+        - DeactivationAssignedFromMERSForDefaultOrBankruptcy
+        - NoMINStatusFromMERS
+      NoteDate:
+        $ref: '#/definitions/ParsedDate'
+      OriginalLoanAmount:
+        type:
+        - string
+        - 'null'
+      OriginatingOrganizationIdentifier:
+        type:
+        - string
+        - 'null'
+      OwnerOccupiedIndicator:
+        type:
+        - string
+        - 'null'
+      ServicerOrganizationIdentifier:
+        type:
+        - string
+        - 'null'
+      ServicerOrganizationName:
+        type:
+        - string
+        - 'null'
+      SubservicerOrganizationIdentifier:
+        type:
+        - string
+        - 'null'
+      SubservicerOrganizationName:
+        type:
+        - string
+        - 'null'
+      ForeclosureStatus:
+        type: string
+        enum:
+        - None
+        - PendingOption1
+        - PendingOption2
+        - ReinstatedOrModifiedOption1
+        - ReinstatedOrModifiedOption2
+        - Other
+        - ReinstatedOrModifiedOption3
+        - ReinstatedOrModifiedOption1iReg
+        - PendingOption3
+        - NoForeclosureStatusFromMERS
+      PoolIdentifier:
+        type:
+        - string
+        - 'null'
+      DeactivationDate:
+        type:
+        - string
+        - 'null'
+      SecuritizationIdentifier:
+        type:
+        - string
+        - 'null'
+      OriginalNoteHolder:
+        type:
+        - string
+        - 'null'
+      InvestorLoanIdentifier:
+        type:
+        - string
+        - 'null'
+      CustodianOrganizationIdentifier:
+        type:
+        - string
+        - 'null'
+      CustodianOrganizationName:
+        type:
+        - string
+        - 'null'
+      InterimFunderOrganizationIdentifier:
+        type:
+        - string
+        - 'null'
+      InterimFunderOrganizationName:
+        type:
+        - string
+        - 'null'
+    required:
+    - Mers
+    - Borrower
+    - Property
+    - Status
+    - Key
+    - InvestorOrganizationIdentifier
+    - InvestorOrganizationName
+    - LienPriority
+    - MERSiRegistrationIndicator
+    - MINAffiliationIndicator
+    - MINArchivedIndicator
+    - MINStatus
+    - NoteDate
+    - OriginalLoanAmount
+    - OriginatingOrganizationIdentifier
+    - OwnerOccupiedIndicator
+    - ServicerOrganizationIdentifier
+    - ServicerOrganizationName
+    - SubservicerOrganizationIdentifier
+    - SubservicerOrganizationName
+    - ForeclosureStatus
+    - PoolIdentifier
+    - DeactivationDate
+    - SecuritizationIdentifier
+    - OriginalNoteHolder
+    - InvestorLoanIdentifier
+    - CustodianOrganizationIdentifier
+    - CustodianOrganizationName
+    - InterimFunderOrganizationIdentifier
+    - InterimFunderOrganizationName
+  Key:
+    type:
+    - object
+    - 'null'
+    properties:
+      Name:
+        type:
+        - string
+        - 'null'
+      Value:
+        type:
+        - string
+        - 'null'
+    required:
+    - Name
+    - Value
+  LoanData:
+    type: object
+    properties:
+      loanDate:
+        $ref: '#/definitions/ParsedDate'
+      loanPurpose:
+        format: int32
+        enum:
+        - CashOutRefi
+        - Purchase
+        - NoCashOutRefi
+        - ConstructionPerm
+        - RefiLandContract
+        - LandContract
+        - RateTermRefinance
+        - HomeImprovement
+        - ReverseMortgage
+        - HomeEquity
+        - Other
+        type: integer
+      occupancy:
+        format: int32
+        enum:
+        - OwnerOccupied
+        - Investor
+        - SecondHome
+        - Other
+        type: integer
+  Location:
+    type:
+    - object
+    - 'null'
+    properties:
+      GeoDistance:
+        type: number
+      StreetNumber:
+        type:
+        - string
+        - 'null'
+        minLength: 0
+        maxLength: 20
+      StreetPreDirection:
+        type:
+        - string
+        - 'null'
+        minLength: 0
+        maxLength: 20
+      StreetName:
+        type:
+        - string
+        - 'null'
+        minLength: 0
+        maxLength: 200
+      StreetSuffix:
+        type:
+        - string
+        - 'null'
+        minLength: 0
+        maxLength: 30
+      StreetPostDirection:
+        type:
+        - string
+        - 'null'
+        minLength: 0
+        maxLength: 20
+      UnitDesignation:
+        type:
+        - string
+        - 'null'
+        minLength: 0
+        maxLength: 20
+      UnitNumber:
+        type:
+        - string
+        - 'null'
+        minLength: 0
+        maxLength: 15
+      StreetAddress1:
+        type:
+        - string
+        - 'null'
+        minLength: 0
+        maxLength: 350
+      StreetAddress2:
+        type:
+        - string
+        - 'null'
+        minLength: 0
+        maxLength: 300
+      City:
+        type:
+        - string
+        - 'null'
+        minLength: 0
+        maxLength: 100
+      State:
+        type:
+        - string
+        - 'null'
+        minLength: 0
+        maxLength: 2
+      ZipCode:
+        type:
+        - string
+        - 'null'
+        minLength: 0
+        maxLength: 10
+      ZipFour:
+        type:
+        - string
+        - 'null'
+        minLength: 0
+        maxLength: 4
+      County:
+        type:
+        - string
+        - 'null'
+        minLength: 0
+        maxLength: 100
+      Country:
+        type:
+        - string
+        - 'null'
+        minLength: 0
+        maxLength: 100
+      PostalCode:
+        type:
+        - string
+        - 'null'
+        minLength: 0
+        maxLength: 20
+      StateCityZip:
+        type:
+        - string
+        - 'null'
+        minLength: 0
+        maxLength: 150
+      Latitude:
+        type:
+        - number
+        - 'null'
+      Longitude:
+        type:
+        - number
+        - 'null'
+      APN:
+        type:
+        - string
+        - 'null'
+        minLength: 0
+        maxLength: 100
+      Hash:
+        type:
+        - string
+        - 'null'
+        minLength: 0
+        maxLength: 50
+      FullAddress:
+        type:
+        - string
+        - 'null'
+        minLength: 0
+        maxLength: 700
+      CountyFIPSCode:
+        type:
+        - string
+        - 'null'
+        minLength: 0
+        maxLength: 20
+      StateFIPSCode:
+        type:
+        - string
+        - 'null'
+        minLength: 0
+        maxLength: 20
+      AddressStandardized:
+        type:
+        - boolean
+        - 'null'
+      RefID:
+        type:
+        - string
+        - 'null'
+        minLength: 0
+        maxLength: 20
+    required:
+    - GeoDistance
+    - StreetNumber
+    - StreetPreDirection
+    - StreetName
+    - StreetSuffix
+    - StreetPostDirection
+    - UnitDesignation
+    - UnitNumber
+    - StreetAddress1
+    - StreetAddress2
+    - City
+    - State
+    - ZipCode
+    - ZipFour
+    - County
+    - Country
+    - PostalCode
+    - StateCityZip
+    - Latitude
+    - Longitude
+    - APN
+    - Hash
+    - FullAddress
+    - CountyFIPSCode
+    - StateFIPSCode
+    - AddressStandardized
+    - RefID
+  Mers:
+    type:
+    - object
+    - 'null'
+    properties:
+      MERS_MINNumber:
+        type:
+        - string
+        - 'null'
+      MERSOriginalMortgageeOfRecordIndicator:
+        type:
+        - string
+        - 'null'
+      MERSRegistrationDate:
+        type:
+        - string
+        - 'null'
+    required:
+    - MERS_MINNumber
+    - MERSOriginalMortgageeOfRecordIndicator
+    - MERSRegistrationDate
+  MersBorrower:
+    type:
+    - object
+    - 'null'
+    properties:
+      FirstName:
+        type:
+        - string
+        - 'null'
+      LastName:
+        type:
+        - string
+        - 'null'
+      UnParsedName:
+        type:
+        - string
+        - 'null'
+      SSN:
+        type:
+        - string
+        - 'null'
+      NonPersonEntityIndicator:
+        type:
+        - string
+        - 'null'
+    required:
+    - FirstName
+    - LastName
+    - UnParsedName
+    - SSN
+    - NonPersonEntityIndicator
+  Name:
+    type:
+    - object
+    - 'null'
+    properties:
+      Full:
+        type:
+        - string
+        - 'null'
+        minLength: 0
+        maxLength: 1000
+      First:
+        type:
+        - string
+        - 'null'
+        minLength: 0
+        maxLength: 150
+      Middle:
+        type:
+        - string
+        - 'null'
+        minLength: 0
+        maxLength: 100
+      Last:
+        type:
+        - string
+        - 'null'
+        minLength: 0
+        maxLength: 300
+      Suffix:
+        type:
+        - string
+        - 'null'
+        minLength: 0
+        maxLength: 20
+      Prefix:
+        type:
+        - string
+        - 'null'
+        minLength: 0
+        maxLength: 20
+      LastOrCompanyName:
+        type:
+        - string
+        - 'null'
+        minLength: 0
+        maxLength: 500
+      FirstAndMiddleName:
+        type:
+        - string
+        - 'null'
+        minLength: 0
+        maxLength: 250
+    required:
+    - Full
+    - First
+    - Middle
+    - Last
+    - Suffix
+    - Prefix
+    - LastOrCompanyName
+    - FirstAndMiddleName
+  OwnerInformation:
+    type:
+    - object
+    - 'null'
+    properties:
+      OwnerNames:
+        type:
+        - string
+        - 'null'
+      OwnerName1:
+        type:
+        - string
+        - 'null'
+      OwnerName2:
+        type:
+        - string
+        - 'null'
+      OwnerName3:
+        type:
+        - string
+        - 'null'
+      OwnerName4:
+        type:
+        - string
+        - 'null'
+      Buyer1IDCodeDesc:
+        type:
+        - string
+        - 'null'
+      Buyer2IDCodeDesc:
+        type:
+        - string
+        - 'null'
+      Vesting:
+        type:
+        - string
+        - 'null'
+      VestingCodeDesc:
+        type:
+        - string
+        - 'null'
+      CurrentOwnerAsOf:
+        type:
+        - string
+        - 'null'
+      OwnerOccupiedFlag:
+        type:
+        - string
+        - 'null'
+      MailingCareOfName:
+        type:
+        - string
+        - 'null'
+      MailingAddress:
+        $ref: '#/definitions/Location'
+    required:
+    - OwnerNames
+    - OwnerName1
+    - OwnerName2
+    - OwnerName3
+    - OwnerName4
+    - Buyer1IDCodeDesc
+    - Buyer2IDCodeDesc
+    - Vesting
+    - VestingCodeDesc
+    - CurrentOwnerAsOf
+    - OwnerOccupiedFlag
+    - MailingCareOfName
+    - MailingAddress
+  ParsedDate:
+    type:
+    - object
+    - 'null'
+    properties:
+      Year:
+        type:
+        - integer
+        - 'null'
+      Month:
+        type:
+        - integer
+        - 'null'
+      Day:
+        type:
+        - integer
+        - 'null'
+    required:
+    - Year
+    - Month
+    - Day
+  PropertyAssessorTaxInfo:
+    type:
+    - object
+    - 'null'
+    properties:
+      TaxExemptions:
+        type:
+        - array
+        - 'null'
+        items:
+          type:
+          - string
+          - 'null'
+    required:
+    - TaxExemptions
+  PropertyTransaction:
+    type:
+    - object
+    - 'null'
+    properties:
+      TypeofSale:
+        type:
+        - string
+        - 'null'
+      SalesPrice:
+        type: number
+      PurchaseDate:
+        $ref: '#/definitions/ParsedDate'
+      Buyers:
+        type:
+        - array
+        - 'null'
+        items:
+          $ref: '#/definitions/EntityInfo'
+    required:
+    - TypeofSale
+    - SalesPrice
+    - PurchaseDate
+    - Buyers
+  RealtyCharacteristics:
+    type:
+    - object
+    - 'null'
+    properties:
+      LandUseStandardizedDesc:
+        type:
+        - string
+        - 'null'
+      BuildingCount:
+        type:
+        - string
+        - 'null'
+      UnitCount:
+        type:
+        - string
+        - 'null'
+      BuildingAreaTotal:
+        type:
+        - string
+        - 'null'
+    required:
+    - LandUseStandardizedDesc
+    - BuildingCount
+    - UnitCount
+    - BuildingAreaTotal
+  RentalData:
+    type:
+    - object
+    - 'null'
+    properties:
+      Accommodation:
+        type:
+        - string
+        - 'null'
+      Type:
+        type:
+        - string
+        - 'null'
+      OccupancyRate:
+        type:
+        - string
+        - 'null'
+      Price:
+        type:
+        - string
+        - 'null'
+    required:
+    - Accommodation
+    - Type
+    - OccupancyRate
+    - Price
+  RiskIndicator:
+    type:
+    - object
+    - 'null'
+    properties:
+      RiskCode:
+        type:
+        - string
+        - 'null'
+      RiskMessage:
+        type:
+        - string
+        - 'null'
+    required:
+    - RiskCode
+    - RiskMessage
+  Status:
+    type:
+    - object
+    - 'null'
+    properties:
+      Code:
+        type:
+        - string
+        - 'null'
+      Condition:
+        type:
+        - string
+        - 'null'
+      Description:
+        type:
+        - string
+        - 'null'
+      Name:
+        type:
+        - string
+        - 'null'
+    required:
+    - Code
+    - Condition
+    - Description
+    - Name
+  OccupancyServiceRequest:
+    required:
+    - Persons
+    - LoanData
+    - SubjectAddress
+    type: object
+    properties:
+      RequestorID:
+        type:
+        - string
+        - 'null'
+      Persons:
+        type:
+        - array
+        - 'null'
+        items:
+          $ref: '#/definitions/Person'
+      LoanData:
+        $ref: '#/definitions/LoanData'
+      SubjectAddress:
+        $ref: '#/definitions/Address'
+      MERSInfo:
+        $ref: '#/definitions/MERSInfo'
+      IncludeAnalytics:
+        type: boolean
+  Person:
+    type: object
+    properties:
+      name:
+        $ref: '#/definitions/Name'
+      address:
+        $ref: '#/definitions/Address'
+      dob:
+        $ref: '#/definitions/ParsedDate'
+      ssn:
+        type: string
+      phoneNumbers:
+        uniqueItems: false
+        type: array
+        items:
+          $ref: '#/definitions/Phone'
+      driversLicense:
+        $ref: '#/definitions/License'
+      akAs:
+        uniqueItems: false
+        type: array
+        items:
+          $ref: '#/definitions/Name'
+      id:
+        format: int32
+        type: integer
+  Address:
+    type: object
+    properties:
+      streetNumber:
+        type: string
+      streetPreDirection:
+        type: string
+      streetName:
+        type: string
+      streetSuffix:
+        type: string
+      streetPostDirection:
+        type: string
+      unitDesignation:
+        type: string
+      unitNumber:
+        type: string
+      streetAddress1:
+        type: string
+      streetAddress2:
+        type: string
+      city:
+        type: string
+      state:
+        type: string
+      zipCode:
+        type: string
+      zipFour:
+        type: string
+      county:
+        type: string
+      country:
+        type: string
+      postalCode:
+        type: string
+      stateCityZip:
+        type: string
+      latitude:
+        type: string
+      longitude:
+        type: string
+      apn:
+        type: string
+      hash:
+        type: string
+      fullAddress:
+        type: string
+      countyFIPSCode:
+        type: string
+      stateFIPSCode:
+        type: string
+  MERSInfo:
+    type: object
+    properties:
+      organizationIdentifier:
+        type: string
+      organizationPassword:
+        type: string
+      requestingParty:
+        $ref: '#/definitions/Party'
+  Party:
+    type: object
+    properties:
+      identifier:
+        type: string
+      name:
+        type: string

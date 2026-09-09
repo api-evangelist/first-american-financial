@@ -1,0 +1,82 @@
+generated: '2026-09-09'
+method: searched
+source: >-
+  https://developer.firstam.io/api_docs/services/182515.json — the event catalogue is published
+  verbatim in the description of the webhook registration operation
+spec_type: Webhooks
+asyncapi_published: false
+asyncapi_note: >-
+  First American publishes NO AsyncAPI document. Searched developer.firstam.io, the ActiveDocs
+  catalogue and the 16 harvested specifications - none. The event surface below is a real, published
+  webhook catalogue captured from the contract, not a generated one.
+api: Title & Settlement (Mortgage Services)
+transport: https-webhook
+delivery:
+  direction: provider-to-subscriber
+  format: JSON
+  envelope: EventNotification
+  ack: >-
+    "Once the integration partner system responds with a HTTP 200 status code, the EventNotification
+    will be considered to have been successfully published."
+  retry: >-
+    The envelope carries a retryCount field and the Webhook subscription schema exposes a
+    Properties.retryCount with an enum of 1-5, so a subscriber chooses the redelivery ceiling.
+    No retry schedule or backoff interval is documented.
+  security: >-
+    Domain whitelisting is required before events will be delivered - contact
+    LVIS.support@firstam.com. The Webhook subscription itself carries a `Secret` field described as
+    "secret to be used when generating a message hash", so message hashing is supported, but the
+    hash algorithm and the header the hash arrives in are NOT documented in the contract. The
+    subscription also accepts arbitrary Headers (an x-api-key pair is the documented example) that
+    First American will send back to the subscriber endpoint.
+  pause: The subscription carries IsPaused, so delivery can be suspended without deleting it.
+  filter: The subscription carries a Filter of type EventType, so a subscriber can scope which events it receives.
+  correlation: externalTrackingId — the client-supplied id from the originating order
+envelope_schema:
+  name: EventNotification
+  source: openapi/first-american-financial-title-settlement-openapi.yml#/components/schemas
+  fields:
+    - {name: id, note: notification id}
+    - {name: retryCount, note: delivery attempt counter}
+    - {name: notifications, note: array of at least one Event}
+    - {name: 'notifications[].action', note: 'the event type, one of the values below'}
+    - {name: 'notifications[].externalTrackingId', note: 'client-provided transaction id from the order'}
+    - {name: 'notifications[].message', note: 'a Message instance relevant to the event'}
+management:
+  register: openapi/first-american-financial-title-settlement-openapi.yml#Webhooks_Post
+  register_many: openapi/first-american-financial-title-settlement-openapi.yml#Webhooks_Post_Multiple
+  update: openapi/first-american-financial-title-settlement-openapi.yml#Webhooks_Put
+  update_many: openapi/first-american-financial-title-settlement-openapi.yml#Webhooks_MultipulePUT
+  list: openapi/first-american-financial-title-settlement-openapi.yml#Webhooks_GetAll
+  get: openapi/first-american-financial-title-settlement-openapi.yml#Webhooks_Get
+  delete: openapi/first-american-financial-title-settlement-openapi.yml#Webhooks_Del
+  delete_many: openapi/first-american-financial-title-settlement-openapi.yml#Webhooks_Delete_Multiple
+  delete_all: openapi/first-american-financial-title-settlement-openapi.yml#Webhooks_DelAll
+event_count: 21
+events:
+  - {action: OrderCreated, category: order, description: 'Status event indicating that the order has been created. Event will contain message detail such as file number and contacts.'}
+  - {action: OrderRejected, category: order, description: 'Status event indicating that an order has been rejected for failing to meet business rules.'}
+  - {action: OrderCancelled, category: order, description: 'Status event indicating that an order has been cancelled.'}
+  - {action: OrderClosed, category: order, description: 'Status event indicating that an order has been closed.'}
+  - {action: CurativeCleared, category: title, description: 'Status event indicating title clearance, will include message detail.'}
+  - {action: 'Curative Pending', category: title, description: 'Status event indicating that there are outstanding items to be cleared on Title. The status can come before or after Title is cleared.'}
+  - {action: TitleProductDelivered, category: document, description: 'Delivery of a requested title product, such as Title Commitment or Preliminary Report as a Base64-encoded pdf.'}
+  - {action: FinalPolicyDelivered, category: document, description: "Delivery of a final title product, such as Owner's Policy or Lender's Policy as a Base64-encoded pdf."}
+  - {action: DocumentDelivery, category: document, description: 'Delivery of a document as Base64-encoded pdf.'}
+  - {action: CDDraft, category: document, description: 'Delivery of a draft Closing Disclosure as a Base64-encoded pdf.'}
+  - {action: CDBalanced, category: document, description: 'Status event indicating that this is the final Closing Disclosure from First American.'}
+  - {action: MessageAdded, category: messaging, description: 'Status event indicating that a message has been sent. Message container holds up to 1048576 characters.'}
+  - {action: FundingApproved, category: funds, description: 'Status event indicating that approval has been given to fund the loan, will include message detail.'}
+  - {action: FundsDisbursed, category: funds, description: 'Status event indicating that proceeds have been distributed to all parties, will include message detail.'}
+  - {action: DisburseHold, category: funds, description: 'Status event indicating that disbursement of funds has been delayed, will include message detail.'}
+  - {action: AppointmentScheduled, category: signing, description: 'Status event indicating that a signing has been scheduled.'}
+  - {action: SigningOrdered, category: signing, description: 'Status event indicating that the signing request has been received by First American.'}
+  - {action: SigningBorrowerNotified, category: signing, description: 'Status event indicating that a notary or signing agent has confirmed the signing appointment with the borrower.'}
+  - {action: SigningCompleted, category: signing, description: 'Status event indicating that the borrower has completed the signing appointment with the notary or signing agent.'}
+  - {action: SigningFailed, category: signing, description: 'Status event indicating the notary or signing agent was not able to complete the signing with the borrower on the scheduled date/ time due to an unforeseen event.'}
+  - {action: RecordingCompleted, category: recording, description: 'Status event indicating that a document (example: Mortgage Deed of Trust) has been recorded.'}
+data_services_events:
+  supported: false
+  note: >-
+    The fifteen Digital Gateway data services have NO event surface. They are order-then-poll:
+    POST /<service>/order then GET /<service>/report. Only Title & Settlement publishes webhooks.

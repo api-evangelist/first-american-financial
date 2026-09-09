@@ -1,0 +1,865 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "description": "",
+    "version": "v1",
+    "title": "Bankruptcy API"
+  },
+  "host": "api-w2.firstam.io",
+  "basePath": "/v1",
+  "tags": [
+    {
+      "name": "developers",
+      "description": "Operations available to regular developers"
+    }
+  ],
+  "schemes": [
+    "https"
+  ],
+  "paths": {
+    "/bankruptcy/order/extended": {
+      "post": {
+        "tags": [
+          "Request"
+        ],
+        "summary": "Make a new Bankruptcy service call",
+        "description": "DefendantName searches require a Defendant and a CourtID or CourtState. CaseNumber searches require a CaseNumber and a CourtState. AttorneySearch searches required an Attorney name and a CourtState. TrusteeSearch searches require a Trustee name and a CourtState. Alerts and Analytics can be added by setting the \"IncludeAnalytics\" flag in the request body to true.",
+        "operationId": "post",
+        "consumes": [
+          "application/json",
+          "application/xml"
+        ],
+        "produces": [
+          "application/json",
+          "application/xml"
+        ],
+        "parameters": [
+          {
+            "in": "header",
+            "name": "x-app-id",
+            "description": "Application ID",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "in": "header",
+            "name": "x-app-key",
+            "description": "Application Key",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "in": "body",
+            "name": "BankruptcyServiceRequest",
+            "description": "Request to the service",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/BankruptcyServiceRequestExtended"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "schema": {
+              "$ref": "#/definitions/BankruptcyServiceResponse"
+            }
+          },
+          "400": {
+            "description": "Bad Request"
+          },
+          "401": {
+            "description": "Invalid App ID or Key"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          },
+          "503": {
+            "description": "Usage Limit Exceeded"
+          }
+        }
+      }
+    },
+    "/bankruptcy/order/premium": {
+      "post": {
+        "tags": [
+          "Request"
+        ],
+        "summary": "Make a new Bankruptcy service call",
+        "description": "Required Field: LastOrCompanyName. Alerts and Analytics can be added by setting the \"IncludeAnalytics\" flag in the request body to true.",
+        "operationId": "post",
+        "consumes": [
+          "application/json",
+          "application/xml"
+        ],
+        "produces": [
+          "application/json",
+          "application/xml"
+        ],
+        "parameters": [
+          {
+            "in": "header",
+            "name": "x-app-id",
+            "description": "Application ID",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "in": "header",
+            "name": "x-app-key",
+            "description": "Application Key",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "in": "body",
+            "name": "BankruptcyServiceRequest",
+            "description": "Request to the service",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/BankruptcyServiceRequestPremium"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "schema": {
+              "$ref": "#/definitions/BankruptcyServiceResponse"
+            }
+          },
+          "400": {
+            "description": "Bad Request"
+          },
+          "401": {
+            "description": "Invalid App ID or Key"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          },
+          "503": {
+            "description": "Usage Limit Exceeded"
+          }
+        }
+      }
+    },
+    "/bankruptcy/order/basic": {
+      "post": {
+        "tags": [
+          "Request"
+        ],
+        "summary": "Make a new Bankruptcy service call",
+        "description": "Required Field: LastOrCompanyName. Alerts and Analytics can be added by setting the \"IncludeAnalytics\" flag in the request body to true.",
+        "operationId": "post",
+        "consumes": [
+          "application/json",
+          "application/xml"
+        ],
+        "produces": [
+          "application/json",
+          "application/xml"
+        ],
+        "parameters": [
+          {
+            "in": "header",
+            "name": "x-app-id",
+            "description": "Application ID",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "in": "header",
+            "name": "x-app-key",
+            "description": "Application Key",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "in": "body",
+            "name": "BankruptcyServiceRequest",
+            "description": "Request to the service",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/BankruptcyServiceRequestBasic"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "schema": {
+              "$ref": "#/definitions/BankruptcyServiceResponse"
+            }
+          },
+          "400": {
+            "description": "Bad Request"
+          },
+          "401": {
+            "description": "Invalid App ID or Key"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          },
+          "503": {
+            "description": "Usage Limit Exceeded"
+          }
+        }
+      }
+    },
+    "/bankruptcy/report": {
+      "get": {
+        "tags": [
+          "Get Response"
+        ],
+        "summary": "Retrieve existing bankruptcy report by transactionID",
+        "description": "Add a transactionID to the query string to retrieve an existing report",
+        "operationId": "get",
+        "consumes": [
+          "application/json",
+          "application/xml"
+        ],
+        "produces": [
+          "application/json",
+          "application/xml"
+        ],
+        "parameters": [
+          {
+            "in": "header",
+            "name": "x-app-id",
+            "description": "Application ID",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "in": "header",
+            "name": "x-app-key",
+            "description": "Application Key",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "transactionID",
+            "in": "query",
+            "description": "Unique identifier tied to a report",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "schema": {
+              "$ref": "#/definitions/BankruptcyServiceResponse"
+            }
+          },
+          "400": {
+            "description": "Bad Request (missing/invalid transactionID)"
+          },
+          "401": {
+            "description": "Invalid App ID or Key"
+          },
+          "404": {
+            "description": "Not Found (no report found by transactionID)"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          },
+          "503": {
+            "description": "Usage Limit Exceeded"
+          }
+        }
+      }
+    }
+  },
+  "definitions": {
+    "BankruptcyServiceRequestExtended": {
+      "type": "object",
+      "properties": {
+        "RequestorID": {
+          "type": "string"
+        },
+        "SearchType": {
+          "type": "string",
+          "enum": [
+            "DefendantName",
+            "CaseNumber",
+            "AttorneySearch",
+            "TrusteeSearch"
+          ]
+        },
+        "CourtID": {
+          "type": "string"
+        },
+        "CourtState": {
+          "type": "string"
+        },
+        "CountyName": {
+          "type": "string"
+        },
+        "CaseNumber": {
+          "type": "string"
+        },
+        "FilingStartDate": {
+          "$ref": "#/definitions/ParsedDate"
+        },
+        "FilingEndDate": {
+          "$ref": "#/definitions/ParsedDate"
+        },
+        "Defendant": {
+          "$ref": "#/definitions/Person"
+        },
+        "Attorney": {
+          "$ref": "#/definitions/Person"
+        },
+        "Trustee": {
+          "$ref": "#/definitions/Person"
+        },
+        "IncludeAnalytics": {
+          "type": "boolean",
+          "example": false,
+          "description": "Option to run analytics on data set."
+        },
+        "AnalyticsInput": {
+          "description": "Optional dictionary for alert analytics (dependent on alert).",
+          "$ref": "#/definitions/AnalyticsInputType"
+        }
+      },
+      "example": {
+        "RequestorID": "ID123",
+        "SearchType": "DefendantName",
+        "Defendant": {
+          "Name": {
+            "First": "John",
+            "LastOrCompanyName": "Defendant"
+          }
+        },
+        "CourtState": "ZZ",
+        "CountyName": "",
+        "FilingStartDate": {
+          "Day": 10,
+          "Month": 10,
+          "Year": 2000
+        },
+        "FilingEndDate": {
+          "Day": 10,
+          "Month": 10,
+          "Year": 2018
+        },
+        "IncludeAnalytics": false
+      }
+    },
+    "BankruptcyServiceRequestBasic": {
+      "type": "object",
+      "properties": {
+        "RequestorID": {
+          "type": "string"
+        },
+        "Search": {
+          "$ref": "#/definitions/Search"
+        },
+        "IncludeAnalytics": {
+          "type": "boolean",
+          "example": false,
+          "description": "Option to run analytics on data set."
+        },
+        "AnalyticsInput": {
+          "description": "Optional dictionary for alert analytics (dependent on alert).",
+          "$ref": "#/definitions/AnalyticsInputType"
+        }
+      },
+      "example": {
+        "RequestorID": "ID123",
+        "Search": {
+          "Name": {
+            "First": "John",
+            "LastOrCompanyName": "Doe"
+          },
+          "Address": {
+            "StreetNumber": "456",
+            "StreetPreDirection": "",
+            "StreetName": "Main",
+            "StreetSuffix": "St",
+            "UnitDesignation": "",
+            "UnitNumber": "",
+            "City": "Los Angeles",
+            "State": "CA"
+          }
+        },
+        "CaseNumber": "",
+        "FilingJurisdiction": "",
+        "PartyType": "",
+        "IncludeAnalytics": false
+      }
+    },
+    "BankruptcyServiceRequestPremium": {
+      "type": "object",
+      "properties": {
+        "RequestorID": {
+          "type": "string"
+        },
+        "Search": {
+          "$ref": "#/definitions/Search"
+        },
+        "IncludeAnalytics": {
+          "type": "boolean",
+          "example": false,
+          "description": "Option to run analytics on data set."
+        },
+        "AnalyticsInput": {
+          "description": "Optional dictionary for alert analytics (dependent on alert).",
+          "$ref": "#/definitions/AnalyticsInputType"
+        }
+      },
+      "example": {
+        "RequestorID": "ID123",
+        "Search": {
+          "Name": {
+            "First": "John",
+            "LastOrCompanyName": "Doe"
+          },
+          "Address": {
+            "StreetNumber": "123",
+            "StreetPreDirection": "",
+            "StreetName": "Main",
+            "StreetSuffix": "St",
+            "UnitDesignation": "",
+            "UnitNumber": "",
+            "City": "Los Angeles",
+            "State": "CA"
+          }
+        },
+        "CaseNumber": "",
+        "FilingJurisdiction": "",
+        "PartyType": "",
+        "IncludeAnalytics": false
+      }
+    },
+    "BankruptcyServiceResponse": {
+      "type": "object",
+      "properties": {
+        "TransactionID": {
+          "type": "string",
+          "description": "Unique identifier for the transaction"
+        },
+        "RequestorID": {
+          "type": "string"
+        },
+        "Result": {
+          "type": "string",
+          "enum": [
+            "NoRecordsFound",
+            "RecordsFound"
+          ]
+        },
+        "Records": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/BankruptcyRecord"
+          }
+        },
+        "Alerts": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/AlertType"
+          }
+        }
+      },
+      "example": {
+        "TransactionID": "a85226ad-4c3b-4e1f-9423-0d55a283fb33",
+        "RequestorID": "Mock001",
+        "Result": "RecordsFound",
+        "Records": [
+          {
+            "ActionType": "23",
+            "AliasType": "I",
+            "AssociationCode": "2",
+            "AssetsIndicator": "N",
+            "Attorney": {
+              "Name": {
+                "Full": "JOHN C ATTORNEY"
+              },
+              "Address": {
+                "StreetAddress1": "PO BOX 7007",
+                "City": "LOS ANGELES",
+                "State": "CA",
+                "ZipCode": "90001",
+                "FullAddress": "PO BOX 7007 LOS ANGELES, CA 90001"
+              },
+              "PhoneNumbers": [
+                {
+                  "PhoneType": "Work",
+                  "PhoneNumber": "2099569698"
+                }
+              ]
+            },
+            "CaseNumber": "1230328",
+            "CaseNumberOther": "12030328",
+            "CaseNumberUnique": "BB05678686786",
+            "CaseType": "V",
+            "ClosedDate": {
+              "Year": 2012,
+              "Month": 10,
+              "Day": 5
+            },
+            "CourtId": "CAEASF3",
+            "CurrentChapter": "7",
+            "Defendant": {
+              "Name": {
+                "Full": "JOHN,DEFENDANT W",
+                "Suffix": "Jr"
+              },
+              "Address": {
+                "StreetAddress1": "123 MAIN ST",
+                "City": "LOS ANGELES",
+                "State": "CA",
+                "ZipCode": "91301",
+                "FullAddress": "123 MAIN ST LOS ANGELES, CA 91301"
+              },
+              "SSN": "000000493"
+            },
+            "DefinitionType": "I",
+            "DischargeDate": {
+              "Year": 2015,
+              "Month": 5,
+              "Day": 30
+            },
+            "FilingDate": {
+              "Year": 2012,
+              "Month": 5,
+              "Day": 30
+            },
+            "FilingType": "7",
+            "IsBankruptcyValid": true,
+            "JudgeInitials": "RSB",
+            "MeetingDate": {
+              "Year": 2012,
+              "Month": 12,
+              "Day": 31
+            },
+            "MeetingTime": "unknown",
+            "OriginalChapter": "7",
+            "POCDate": {
+              "Year": 2012,
+              "Month": 12,
+              "Day": 31
+            },
+            "PreviousChapter": "n/a",
+            "RecordDate": {
+              "Year": 2012,
+              "Month": 5,
+              "Day": 30
+            },
+            "RMSId": "AA68945252",
+            "Trustee": {
+              "Name": {
+                "Full": "JOHN C ATTORNEY ATT AT LAW"
+              }
+            },
+            "UpdatedDate": {
+              "Year": 2014,
+              "Month": 10,
+              "Day": 9
+            }
+          }
+        ],
+        "Alerts": [
+          {
+            "Code": "Alert1",
+            "Description": "ALERT - This is an alert description.",
+            "Status": "Fired",
+            "Evidence": [
+              {
+                "Key": "Value"
+              }
+            ]
+          }
+        ]
+      }
+    },
+    "Person": {
+      "type": "object",
+      "properties": {
+        "Name": {
+          "$ref": "#/definitions/Name"
+        },
+        "Address": {
+          "$ref": "#/definitions/Address"
+        },
+        "SSN": {
+          "type": "string"
+        },
+        "PhoneNumbers": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/PhoneNumber"
+          }
+        }
+      }
+    },
+    "Search": {
+      "type": "object",
+      "properties": {
+        "Name": {
+          "$ref": "#/definitions/Name"
+        },
+        "Address": {
+          "$ref": "#/definitions/Address_Premium"
+        },
+        "CaseNumber": {
+          "type": "string"
+        },
+        "FilingJurisdiction": {
+          "type": "string"
+        },
+        "PartyType": {
+          "type": "string"
+        }
+      }
+    },
+    "Name": {
+      "type": "object",
+      "properties": {
+        "Full": {
+          "type": "string"
+        },
+        "First": {
+          "type": "string"
+        },
+        "Middle": {
+          "type": "string"
+        },
+        "LastOrCompanyName": {
+          "type": "string"
+        },
+        "Suffix": {
+          "type": "string"
+        }
+      }
+    },
+    "PhoneNumber": {
+      "type": "object",
+      "properties": {
+        "PhoneType": {
+          "type": "string"
+        },
+        "PhoneNumber": {
+          "type": "string"
+        }
+      }
+    },
+    "Address_Premium": {
+      "type": "object",
+      "properties": {
+        "StreetNumber": {
+          "type": "string"
+        },
+        "StreetPreDirection": {
+          "type": "string"
+        },
+        "StreetName": {
+          "type": "string"
+        },
+        "StreetSuffix": {
+          "type": "string"
+        },
+        "UnitDesignation": {
+          "type": "string"
+        },
+        "UnitNumber": {
+          "type": "string"
+        },
+        "City": {
+          "type": "string"
+        },
+        "State": {
+          "type": "string"
+        }
+      }
+    },
+    "Address": {
+      "type": "object",
+      "properties": {
+        "StreetAddress1": {
+          "type": "string",
+          "example": "123 Main St"
+        },
+        "City": {
+          "type": "string",
+          "example": "Agoura Hills"
+        },
+        "State": {
+          "type": "string",
+          "example": "CA"
+        },
+        "ZipCode": {
+          "type": "string",
+          "example": "91301"
+        }
+      }
+    },
+    "BankruptcyRecord": {
+      "properties": {
+        "ActionType": {
+          "type": "string"
+        },
+        "AliasType": {
+          "type": "string"
+        },
+        "AssociationCode": {
+          "type": "string"
+        },
+        "AssetsIndicator": {
+          "type": "string"
+        },
+        "Attorney": {
+          "$ref": "#/definitions/Person"
+        },
+        "CaseNumber": {
+          "type": "string"
+        },
+        "CaseNumberOther": {
+          "type": "string"
+        },
+        "CaseNumberUnique": {
+          "type": "string"
+        },
+        "CaseType": {
+          "type": "string"
+        },
+        "ClosedDate": {
+          "$ref": "#/definitions/ParsedDate"
+        },
+        "CourtId": {
+          "type": "string"
+        },
+        "CourtName": {
+          "type": "string"
+        },
+        "CourtLocation": {
+          "type": "string"
+        },
+        "CurrentChapter": {
+          "type": "string"
+        },
+        "Defendant": {
+          "$ref": "#/definitions/Person"
+        },
+        "DefinitionType": {
+          "type": "string"
+        },
+        "DischargeDate": {
+          "$ref": "#/definitions/ParsedDate"
+        },
+        "FilingDate": {
+          "$ref": "#/definitions/ParsedDate"
+        },
+        "OriginalFilingDate": {
+          "$ref": "#/definitions/ParsedDate"
+        },
+        "FilingType": {
+          "type": "string"
+        },
+        "FilerType": {
+          "type": "string"
+        },
+        "IsBankruptcyValid": {
+          "type": "string"
+        },
+        "JudgeInitials": {
+          "type": "string"
+        },
+        "MeetingDate": {
+          "$ref": "#/definitions/ParsedDate"
+        },
+        "MeetingTime": {
+          "type": "string"
+        },
+        "OriginalChapter": {
+          "type": "string"
+        },
+        "POCDate": {
+          "$ref": "#/definitions/ParsedDate"
+        },
+        "PreviousChapter": {
+          "type": "string"
+        },
+        "RecordDate": {
+          "$ref": "#/definitions/ParsedDate"
+        },
+        "RMSId": {
+          "type": "string"
+        },
+        "Trustee": {
+          "$ref": "#/definitions/Person"
+        },
+        "UpdatedDate": {
+          "$ref": "#/definitions/ParsedDate"
+        },
+        "AssetsForUnsecured": {
+          "type": "string"
+        },
+        "Assets": {
+          "type": "string"
+        },
+        "JudgeName": {
+          "type": "string"
+        },
+        "Liabilities": {
+          "type": "string"
+        },
+        "ReOpenDate": {
+          "$ref": "#/definitions/ParsedDate"
+        }
+      }
+    },
+    "ParsedDate": {
+      "properties": {
+        "Year": {
+          "type": "number"
+        },
+        "Month": {
+          "type": "number"
+        },
+        "Day": {
+          "type": "number"
+        }
+      }
+    },
+    "AlertType": {
+      "type": "object",
+      "properties": {
+        "Code": {
+          "example": "AlertCode",
+          "type": "string"
+        },
+        "Description": {
+          "example": "ALERT - This is an alert description.",
+          "type": "string"
+        },
+        "Status": {
+          "example": "Fired",
+          "type": "string"
+        },
+        "Evidence": {
+          "description": "Collection of evidence fields that caused the alert to fire.",
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/EvidenceType"
+          }
+        }
+      }
+    },
+    "EvidenceType": {
+      "type": "object",
+      "example": {
+        "Key": "Value"
+      }
+    },
+    "AnalyticsInputType": {
+      "type": "object",
+      "example": {
+        "Key": "Value"
+      }
+    }
+  }
+}

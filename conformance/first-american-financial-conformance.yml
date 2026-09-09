@@ -1,0 +1,104 @@
+generated: '2026-09-09'
+method: derived
+source: >-
+  openapi/ (16 harvested Digital Gateway specifications) plus the Digital Gateway documentation
+  overview at https://developer.firstam.io/api/docs
+note: >-
+  Derived from the contracts and the published documentation. First American publishes no
+  compliance-certification page, no trust centre and no SOC 2 / ISO 27001 / PCI attestation that a
+  public probe could reach, so NO `Compliance` pointer is emitted. The regulatory-regime entries
+  below are recorded because the CONTRACTS themselves name the regime they serve, not because a
+  marketing page claims it.
+standards:
+  - id: openapi-3
+    conforms: true
+    evidence: openapi/first-american-financial-title-settlement-openapi.yml declares openapi 3.0.0
+  - id: swagger-2
+    conforms: true
+    evidence: 15 of the 16 harvested specifications declare swagger 2.0
+  - id: oauth2
+    conforms: true
+    evidence: >-
+      Title & Settlement documents an OAuth 2.0 client-credentials token endpoint
+      (POST /api/token, required form fields client_id, client_secret, scope, grant_type) and
+      applies a bearer JWT security scheme to every other operation
+  - id: jwt-bearer
+    conforms: true
+    evidence: components.securitySchemes.bearerAuth type http, scheme bearer, bearerFormat JWT
+  - id: oidc
+    conforms: false
+    evidence: no /.well-known/openid-configuration served on any of the ten hosts probed 2026-09-09
+  - id: rfc9457-problem-details
+    conforms: false
+    evidence: >-
+      no application/problem+json media type in any harvested spec; errors are plain HTTP status
+      codes with a service-specific JSON body
+  - id: rfc9116-security-txt
+    conforms: false
+    evidence: /.well-known/security.txt 404 or catch-all on every host probed 2026-09-09
+  - id: webhooks
+    conforms: true
+    evidence: >-
+      Title & Settlement publishes a 21-event webhook catalogue and full webhook subscription CRUD
+      (openapi/first-american-financial-title-settlement-openapi.yml#Webhooks_Post)
+  - id: idempotency
+    conforms: false
+    evidence: no idempotency key header or parameter in any harvested spec or in the documentation
+  - id: pagination
+    conforms: false
+    evidence: >-
+      no pagination parameters in any harvested spec; the data services are order/retrieve, not
+      collection listing
+  - id: json-api
+    conforms: false
+  - id: fhir-r4
+    conforms: false
+  - id: scim2
+    conforms: false
+  - id: odata
+    conforms: false
+  - id: fapi
+    conforms: false
+  - id: psd2
+    conforms: false
+domain_standards:
+  - id: mismo
+    conforms: false
+    evidence: >-
+      MISMO is the mortgage industry's data standard and is the one this market would expect. No
+      MISMO namespace, schema reference or message type appears anywhere in the 16 harvested
+      contracts. Recorded as an honest absence, not a penalty.
+  - id: fcra
+    conforms: true
+    evidence: >-
+      The contract set is split by regime: openapi/first-american-financial-liens-judgments-fcra-openapi.yml
+      (path /lnj-fcra/order) is the Fair Credit Reporting Act permissible-purpose variant and
+      openapi/first-american-financial-liens-judgments-non-fcra-openapi.yml (path /lnj/order) is
+      the non-FCRA variant. Splitting the surface by permissible purpose in the contract itself is
+      the FCRA-conformant shape.
+  - id: ofac-sdn
+    conforms: true
+    evidence: >-
+      openapi/first-american-financial-watchlist-openapi.yml#/paths/~1watchlist~1order~1ofac
+      screens against the OFAC Specially Designated Nationals list, alongside FHFA SCP, HUD EPLS,
+      HUD LDP, NFPD and Freddie Mac exclusionary lists
+  - id: scra
+    conforms: true
+    evidence: >-
+      openapi/first-american-financial-scra-openapi.yml exposes /scra/order and /scra/report for
+      Servicemembers Civil Relief Act status verification
+  - id: nmls
+    conforms: true
+    evidence: >-
+      openapi/first-american-financial-nmls-openapi.yml exposes /nmls/lookup, /nmls/lookup/company,
+      /nmls/lookup/individual and the matching /nmls/search operations against NMLS identifiers
+  - id: irs-4506c
+    conforms: true
+    evidence: >-
+      openapi/first-american-financial-4506c-openapi.yml implements the IRS Form 4506-C tax
+      transcript request flow including the consent form operation (postConsentForm)
+  - id: fema-flood
+    conforms: true
+    evidence: >-
+      openapi/first-american-financial-property-openapi.yml exposes /fema/order and /fema/report
+      for FEMA flood zone determination

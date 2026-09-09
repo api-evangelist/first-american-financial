@@ -1,0 +1,203 @@
+swagger: '2.0'
+info:
+  description: ''
+  version: v1
+  title: Income Estimate API
+host: api.firstam.io
+basePath: /v1
+tags:
+- name: developers
+  description: Operations available to regular developers
+schemes:
+- https
+paths:
+  /salarycomp/order:
+    post:
+      tags:
+      - Request
+      summary: Make a new Income Estimate service call
+      description: 'Required fields: RequestorID, Employer.'
+      operationId: post
+      consumes:
+      - application/json
+      - application/xml
+      produces:
+      - application/json
+      - application/xml
+      parameters:
+      - in: header
+        name: x-app-id
+        description: Application ID
+        required: true
+        type: string
+      - in: header
+        name: x-app-key
+        description: Application Key
+        required: true
+        type: string
+      - in: body
+        name: ServiceRequest
+        description: Request to the Service
+        required: true
+        schema:
+          $ref: '#/definitions/ServiceRequest'
+      responses:
+        '200':
+          description: Success
+          schema:
+            $ref: '#/definitions/ServiceResponse'
+        '400':
+          description: Bad Request
+        '401':
+          description: Invalid App ID or Key
+        '500':
+          description: Internal Server Error
+        '503':
+          description: Usage Limit Exceeded
+  /salarycomp/report:
+    get:
+      tags:
+      - Get Response
+      summary: Retrieve existing Income Estimate report by transactionID
+      description: Add a transactionID to the query string to retrieve an existing report.
+      operationId: get
+      consumes:
+      - application/json
+      - application/xml
+      produces:
+      - application/json
+      - application/xml
+      parameters:
+      - in: header
+        name: x-app-id
+        description: Application ID
+        required: true
+        type: string
+      - in: header
+        name: x-app-key
+        description: Application Key
+        required: true
+        type: string
+      - name: transactionID
+        in: query
+        description: Unique Identifier Tied To a Report
+        required: true
+        type: string
+      responses:
+        '200':
+          description: Success
+          schema:
+            $ref: '#/definitions/ServiceResponse'
+        '400':
+          description: Bad Request (Missing/Invalid TransactionID)
+        '401':
+          description: Invalid App ID or Key
+        '404':
+          description: Not Found (No Report Found by TransactionID)
+        '500':
+          description: Internal Server Error
+        '503':
+          description: Usage Limit Exceeded
+definitions:
+  ServiceRequest:
+    type: object
+    required:
+    - RequestorID
+    - Employer
+    properties:
+      RequestorID:
+        type: string
+      Individual:
+        $ref: '#/definitions/IndividualRequest'
+      Employer:
+        $ref: '#/definitions/EmployerRequest'
+      Location:
+        $ref: '#/definitions/LocationRequest'
+      Income:
+        $ref: '#/definitions/IncomeRequest'
+    example:
+      RequestorID: ID123
+      Employer:
+        Title: engineer
+        YearsOnJob: 10
+        YearsWithEmployer: 0
+        YearsExperience: 0
+      Income:
+        BaseAnnualIncome: 144000
+        Overtime: 0
+        Bonus: 0
+        Commissions: 0
+  ServiceResponse:
+    type: object
+    properties:
+      TransactionID:
+        type: string
+      RequestorID:
+        type: string
+      Error:
+        type: string
+      Result:
+        $ref: '#/definitions/Result'
+  IndividualRequest:
+    type: object
+    properties:
+      DateOfBirth:
+        type: string
+  EmployerRequest:
+    type: object
+    properties:
+      Name:
+        type: string
+      Title:
+        type: string
+      YearsOnJob:
+        type: integer
+      YearsWithEmployer:
+        type: integer
+      YearsExperience:
+        type: integer
+      EmployerType:
+        type: string
+  LocationRequest:
+    type: object
+    properties:
+      Country:
+        type: string
+      State:
+        type: string
+      City:
+        type: integer
+  IncomeRequest:
+    type: object
+    properties:
+      BaseAnnualIncome:
+        type: integer
+      Overtime:
+        type: integer
+      Bonus:
+        type: integer
+      Commissions:
+        type: integer
+  Result:
+    type: object
+    properties:
+      MatchingJobs:
+        description: 'Jobs Matching  '
+        type: array
+        items:
+          type: string
+      OverstatedCompScore:
+        type: integer
+        description: 'OverstatedCompScore '
+      TargetCompensation:
+        type: integer
+        description: 'TargetCompensation  '
+      Percentile25:
+        type: integer
+        description: 'Percentile25 '
+      Median:
+        type: integer
+        description: 'Median '
+      Percentile75:
+        type: integer
+        description: 'Percentile75  '
