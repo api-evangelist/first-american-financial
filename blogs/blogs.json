@@ -2,8 +2,8 @@
   "repo": "first-american-financial",
   "feeds": [
     {
-      "source": "https://developer.firstam.com/llms.txt",
-      "feed_url": "https://developer.firstam.com/llms.txt",
+      "source": "https://www.firstam.com/privacy-policy/",
+      "feed_url": "https://www.firstam.com/privacy-policy/",
       "title": "",
       "saved": 0,
       "method": "none"
@@ -14,9 +14,16 @@
       "title": "",
       "saved": 0,
       "method": "none"
+    },
+    {
+      "source": "https://developer.firstam.com/llms.txt",
+      "feed_url": "https://developer.firstam.com/llms.txt",
+      "title": "",
+      "saved": 0,
+      "method": "none"
     }
   ],
-  "fetched": "2026-09-06T19:17:18Z",
+  "fetched": "2026-09-13T13:00:00Z",
   "post_count": 5,
   "feed_nature": "vendor-blog",
   "feed_nature_basis": "path_blog",
