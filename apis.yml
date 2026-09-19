@@ -256,6 +256,8 @@ apis:
   humanURL: https://developer.firstam.io/api/TitleSettlement
   baseURL: https://settlement.stageapi.firstam.com
   tags:
+  - Order
+  tags_raw:
   - order
   properties:
   - type: OpenAPI
@@ -278,6 +280,8 @@ apis:
   humanURL: https://developer.firstam.io/api/TitleSettlement
   baseURL: https://settlement.stageapi.firstam.com
   tags:
+  - Order
+  tags_raw:
   - Orders
   properties:
   - type: OpenAPI
@@ -300,6 +304,8 @@ apis:
   humanURL: https://developer.firstam.io/api/TitleSettlement
   baseURL: https://settlement.stageapi.firstam.com
   tags:
+  - Report
+  tags_raw:
   - report
   properties:
   - type: OpenAPI
@@ -550,6 +556,8 @@ apis:
   humanURL: https://developer.firstam.io/api/TitleSettlement
   baseURL: https://settlement.stageapi.firstam.com
   tags:
+  - Status
+  tags_raw:
   - status
   properties:
   - type: OpenAPI
@@ -572,6 +580,8 @@ apis:
   humanURL: https://developer.firstam.io/api/TitleSettlement
   baseURL: https://settlement.stageapi.firstam.com
   tags:
+  - Webhook
+  tags_raw:
   - Webhooks
   properties:
   - type: OpenAPI
