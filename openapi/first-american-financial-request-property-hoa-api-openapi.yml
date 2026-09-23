@@ -1,0 +1,229 @@
+openapi: 3.2.0
+info:
+  description: ''
+  version: 1.0.0
+  title: Property Service Request Property HOA API
+servers:
+- url: https://api.firstam.io/v1
+tags:
+- name: Request Property HOA
+paths:
+  /property/order/hoa:
+    post:
+      tags:
+      - Request Property HOA
+      summary: Request for Property HOA Service
+      description: 'Property HOA: Current HOA information of the property. Required fields: StreetAddress1, City, State, ZipCode or APN'
+      operationId: reqPropertyHOA
+      parameters:
+      - in: header
+        name: x-app-id
+        description: Application ID
+        required: true
+        schema:
+          type: string
+      - in: header
+        name: x-app-key
+        description: Application Key
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HOAServiceResponseDefinition'
+            application/xml:
+              schema:
+                $ref: '#/components/schemas/HOAServiceResponseDefinition'
+        '400':
+          description: Invalid Input, Object Invalid
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PropertyServiceRequest'
+          application/xml:
+            schema:
+              $ref: '#/components/schemas/PropertyServiceRequest'
+        description: Request for HOA
+        required: true
+components:
+  schemas:
+    Address:
+      type: object
+      required:
+      - StreetAddress1
+      - City
+      - State
+      - Zip5
+      properties:
+        StreetNumber:
+          example: StreetNumber
+          type: string
+        StreetPreDirection:
+          example: StreetPreDirection
+          type: string
+        StreetName:
+          example: StreetName
+          type: string
+        StreetSuffix:
+          example: StreetSuffix
+          type: string
+        StreetPostDirection:
+          example: StreetPostDirection
+          type: string
+        UnitDesignation:
+          example: UnitDesignation
+          type: string
+        UnitNumber:
+          example: UnitNumber
+          type: string
+        StreetAddress1:
+          example: StreetAddress1
+          type: string
+        StreetAddress2:
+          example: StreetAddress2
+          type: string
+        City:
+          example: City
+          type: string
+        State:
+          example: State
+          type: string
+        ZipCode:
+          example: ZipCode
+          type: string
+        ZipFour:
+          example: ZipFour
+          type: string
+        County:
+          example: County
+          type: string
+        PostalCode:
+          example: PostalCode
+          type: string
+        StateCityZip:
+          example: StateCityZip
+          type: string
+        Latitude:
+          example: Latitude
+          type: string
+        Longitude:
+          example: Longitude
+          type: string
+        APN:
+          example: APN
+          type: string
+    Phone:
+      properties:
+        PhoneType:
+          example: PhoneType
+          type: string
+        PhoneNumber:
+          example: PhoneNumber
+          type: string
+    HoaInfoDefinition:
+      properties:
+        Name:
+          example: Name
+          type: string
+        HoaType:
+          example: Hoatype
+          type: string
+        City:
+          example: City
+          type: string
+        Amount:
+          example: Amount
+          type: string
+        MinAmount:
+          example: MinAmount
+          type: string
+        MaxAmount:
+          example: MaxAmount
+          type: string
+        FeeFrequency:
+          example: FeeFrequency
+          type: string
+        FeeType:
+          example: FeeType
+          type: string
+        Contacts:
+          $ref: '#/components/schemas/Contact'
+    HOAServiceResponseDefinition:
+      properties:
+        TransactionID:
+          example: 82d9762b-70c3-4801-bd4b-8ffc8d358f77
+          type: string
+          description: TransactionID can be used to fetch data at later stage.
+        RequestorID:
+          example: RequestorID
+          type: string
+          minLength: 1
+          maxLength: 100
+          description: LoanNumber or TransactionID
+        HoaInfo:
+          $ref: '#/components/schemas/HoaInfoDefinition'
+    PropertyServiceRequest:
+      type: object
+      required:
+      - RequestorID
+      - Address
+      properties:
+        RequestorID:
+          example: ID123
+          type: string
+          minLength: 1
+          maxLength: 100
+          description: LoanNumber or TransactionID
+        Address:
+          type: object
+          required:
+          - StreetAddress1
+          - City
+          - State
+          - ZipCode
+          properties:
+            StreetAddress1:
+              example: 123 Main St
+              type: string
+            StreetAddress2:
+              example: ''
+              type: string
+            City:
+              example: Mountainsee
+              type: string
+            State:
+              example: ZZ
+              type: string
+            ZipCode:
+              example: '90000'
+              type: string
+            ZipFour:
+              example: ''
+              type: string
+            County:
+              example: ''
+              type: string
+            APN:
+              example: ''
+              type: string
+        IncludeAnalytics:
+          type: boolean
+          example: false
+          description: Option to run analytics on data set.
+    Contact:
+      properties:
+        ContactType:
+          example: ContactType
+          type: string
+        ContactName:
+          example: ContactName
+          type: string
+        Address:
+          $ref: '#/components/schemas/Address'
+        Phone:
+          $ref: '#/components/schemas/Phone'

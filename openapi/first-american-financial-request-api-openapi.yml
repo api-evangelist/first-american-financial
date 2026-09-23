@@ -1,0 +1,5029 @@
+openapi: 3.2.0
+info:
+  title: First American Financial Request API
+  version: v1
+  description: 'Operations tagged Request across 8 of this provider''s published API definitions: first-american-financial-4506c-openapi.json, first-american-financial-bankruptcy-openapi.json, first-american-financial-income-estimate-openapi.json, first-american-financial-liens-judgments-fcra-openapi.json, first-american-financial-liens-judgments-non-fcra-openapi.json, first-american-financial-reverse-address-openapi.json, first-american-financial-scra-openapi.json…'
+servers:
+- url: https://api.firstam.io/v1
+- url: https://api-w2.firstam.io/v1
+- url: https://api.dgw.firstam.io/v2
+tags:
+- name: Request
+paths:
+  /4506t/order:
+    post:
+      tags:
+      - Request
+      summary: Request tax transcript
+      description: 'Required fields: Name, TaxID, TaxYears, FormType, TaxReturnType, RequestorID'
+      operationId: postOrder
+      parameters:
+      - in: header
+        name: x-app-id
+        description: Application ID
+        required: true
+        schema:
+          type: string
+      - in: header
+        name: x-app-key
+        description: Application Key
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/confirmation'
+        '400':
+          description: Bad Request
+        '401':
+          description: Invalid App ID or Key
+        '500':
+          description: Internal Server Error
+        '503':
+          description: Usage Limit Exceeded
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/order'
+        description: Request to the Service
+        required: true
+    servers:
+    - url: https://api.firstam.io/v1
+  /4506t/consentForm:
+    post:
+      tags:
+      - Request
+      summary: Upload consent form for previously submitted tax transcript request
+      description: 'Required fields: TransactionID, IsEsigned, File, FileType.'
+      operationId: postConsentForm
+      parameters:
+      - in: header
+        name: x-app-id
+        description: Application ID
+        required: true
+        schema:
+          type: string
+      - in: header
+        name: x-app-key
+        description: Application Key
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/confirmation'
+        '400':
+          description: Bad Request
+        '401':
+          description: Invalid App ID or Key
+        '500':
+          description: Internal Server Error
+        '503':
+          description: Usage Limit Exceeded
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/consentform'
+        description: Upload consent form
+        required: true
+    servers:
+    - url: https://api.firstam.io/v1
+  /4506t/transcript:
+    get:
+      tags:
+      - Request
+      summary: Retrieve transcript
+      description: Retrieve transcript.
+      operationId: getTranscript
+      parameters:
+      - in: header
+        name: x-app-id
+        description: Application ID
+        required: true
+        schema:
+          type: string
+      - in: header
+        name: x-app-key
+        description: Application Key
+        required: true
+        schema:
+          type: string
+      - name: transactionID
+        in: query
+        description: Unique Identifier Tied to Order
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/transcript'
+        '400':
+          description: Bad Request (Missing/Invalid TransactionID)
+        '401':
+          description: Invalid App ID or Key
+        '404':
+          description: Not Found (No Report Found by TransactionID)
+        '500':
+          description: Internal Server Error
+        '503':
+          description: Usage Limit Exceeded
+    servers:
+    - url: https://api.firstam.io/v1
+  /4506t/transcriptpdf:
+    get:
+      tags:
+      - Request
+      summary: Retrieve transcript pdf
+      operationId: getTranscriptPDF
+      parameters:
+      - in: header
+        name: x-app-id
+        description: Application ID
+        required: true
+        schema:
+          type: string
+      - in: header
+        name: x-app-key
+        description: Application Key
+        required: true
+        schema:
+          type: string
+      - name: transactionID
+        in: query
+        description: Unique Identifier Tied to Order
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  TransactionID:
+                    type: string
+                  RequestorID:
+                    type: string
+                  OrderStatus:
+                    $ref: '#/components/schemas/orderstatus'
+                  TranscriptPDF:
+                    type: string
+                    description: Base64 encoded PDF file
+        '400':
+          description: Bad Request (Missing TransactionID)
+        '401':
+          description: Invalid App ID or Key
+        '404':
+          description: Not Found (No Report Found by TransactionID)
+        '500':
+          description: Internal Server Error
+        '503':
+          description: Usage Limit Exceeded
+    servers:
+    - url: https://api.firstam.io/v1
+  /4506t/status:
+    get:
+      tags:
+      - Request
+      summary: Retrieve status of order
+      description: Retrieve status of order.
+      operationId: getStatus
+      parameters:
+      - in: header
+        name: x-app-id
+        description: Application ID
+        required: true
+        schema:
+          type: string
+      - in: header
+        name: x-app-key
+        description: Application Key
+        required: true
+        schema:
+          type: string
+      - name: transactionID
+        in: query
+        description: Unique Identifier Tied to Order
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/confirmation'
+        '400':
+          description: Bad Request (Missing/Invalid TransactionID)
+        '401':
+          description: Invalid App ID or Key
+        '404':
+          description: Not Found (No Report Found by TransactionID)
+        '500':
+          description: Internal Server Error
+        '503':
+          description: Usage Limit Exceeded
+    servers:
+    - url: https://api.firstam.io/v1
+  /bankruptcy/order/extended:
+    post:
+      tags:
+      - Request
+      summary: Make a new Bankruptcy service call
+      description: DefendantName searches require a Defendant and a CourtID or CourtState. CaseNumber searches require a CaseNumber and a CourtState. AttorneySearch searches required an Attorney name and a CourtState. TrusteeSearch searches require a Trustee name and a CourtState. Alerts and Analytics can be added by setting the "IncludeAnalytics" flag in the request body to true.
+      operationId: post
+      parameters:
+      - in: header
+        name: x-app-id
+        description: Application ID
+        required: true
+        schema:
+          type: string
+      - in: header
+        name: x-app-key
+        description: Application Key
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BankruptcyServiceResponse'
+            application/xml:
+              schema:
+                $ref: '#/components/schemas/BankruptcyServiceResponse'
+        '400':
+          description: Bad Request
+        '401':
+          description: Invalid App ID or Key
+        '500':
+          description: Internal Server Error
+        '503':
+          description: Usage Limit Exceeded
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/BankruptcyServiceRequestExtended'
+          application/xml:
+            schema:
+              $ref: '#/components/schemas/BankruptcyServiceRequestExtended'
+        description: Request to the service
+        required: true
+    servers:
+    - url: https://api-w2.firstam.io/v1
+  /bankruptcy/order/premium:
+    post:
+      tags:
+      - Request
+      summary: Make a new Bankruptcy service call
+      description: 'Required Field: LastOrCompanyName. Alerts and Analytics can be added by setting the "IncludeAnalytics" flag in the request body to true.'
+      operationId: post
+      parameters:
+      - in: header
+        name: x-app-id
+        description: Application ID
+        required: true
+        schema:
+          type: string
+      - in: header
+        name: x-app-key
+        description: Application Key
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BankruptcyServiceResponse'
+            application/xml:
+              schema:
+                $ref: '#/components/schemas/BankruptcyServiceResponse'
+        '400':
+          description: Bad Request
+        '401':
+          description: Invalid App ID or Key
+        '500':
+          description: Internal Server Error
+        '503':
+          description: Usage Limit Exceeded
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/BankruptcyServiceRequestPremium'
+          application/xml:
+            schema:
+              $ref: '#/components/schemas/BankruptcyServiceRequestPremium'
+        description: Request to the service
+        required: true
+    servers:
+    - url: https://api-w2.firstam.io/v1
+  /bankruptcy/order/basic:
+    post:
+      tags:
+      - Request
+      summary: Make a new Bankruptcy service call
+      description: 'Required Field: LastOrCompanyName. Alerts and Analytics can be added by setting the "IncludeAnalytics" flag in the request body to true.'
+      operationId: post
+      parameters:
+      - in: header
+        name: x-app-id
+        description: Application ID
+        required: true
+        schema:
+          type: string
+      - in: header
+        name: x-app-key
+        description: Application Key
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BankruptcyServiceResponse'
+            application/xml:
+              schema:
+                $ref: '#/components/schemas/BankruptcyServiceResponse'
+        '400':
+          description: Bad Request
+        '401':
+          description: Invalid App ID or Key
+        '500':
+          description: Internal Server Error
+        '503':
+          description: Usage Limit Exceeded
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/BankruptcyServiceRequestBasic'
+          application/xml:
+            schema:
+              $ref: '#/components/schemas/BankruptcyServiceRequestBasic'
+        description: Request to the service
+        required: true
+    servers:
+    - url: https://api-w2.firstam.io/v1
+  /salarycomp/order:
+    post:
+      tags:
+      - Request
+      summary: Make a new Income Estimate service call
+      description: 'Required fields: RequestorID, Employer.'
+      operationId: post
+      parameters:
+      - in: header
+        name: x-app-id
+        description: Application ID
+        required: true
+        schema:
+          type: string
+      - in: header
+        name: x-app-key
+        description: Application Key
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ServiceResponse'
+            application/xml:
+              schema:
+                $ref: '#/components/schemas/ServiceResponse'
+        '400':
+          description: Bad Request
+        '401':
+          description: Invalid App ID or Key
+        '500':
+          description: Internal Server Error
+        '503':
+          description: Usage Limit Exceeded
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ServiceRequest'
+          application/xml:
+            schema:
+              $ref: '#/components/schemas/ServiceRequest'
+        description: Request to the Service
+        required: true
+    servers:
+    - url: https://api.firstam.io/v1
+  /lnj-fcra/order:
+    post:
+      tags:
+      - Request
+      summary: Make a new Liens & Judgments FCRA service call
+      description: 'Required fields: First Name, Last Name, SSN'
+      operationId: post
+      parameters:
+      - in: header
+        name: x-app-id
+        description: Application ID
+        required: true
+        schema:
+          type: string
+      - in: header
+        name: x-app-key
+        description: Application Key
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/LiensJudgmentsFCRAServiceResponse'
+            application/xml:
+              schema:
+                $ref: '#/components/schemas/LiensJudgmentsFCRAServiceResponse'
+        '400':
+          description: Bad Request
+        '500':
+          description: Internal Server Error
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/LiensJudgmentsFCRAServiceRequest'
+          application/xml:
+            schema:
+              $ref: '#/components/schemas/LiensJudgmentsFCRAServiceRequest'
+        description: Request to the service
+        required: true
+    servers:
+    - url: https://api.firstam.io/v1
+  /lnj/order:
+    post:
+      tags:
+      - Request
+      summary: Make a new Liens & Judgments Non-FCRA service call
+      description: 'Required fields: First Name, Last Name, SSN'
+      operationId: post
+      parameters:
+      - in: header
+        name: x-app-id
+        description: Application ID
+        required: true
+        schema:
+          type: string
+      - in: header
+        name: x-app-key
+        description: Application Key
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/LiensJudgmentsServiceResponse'
+            application/xml:
+              schema:
+                $ref: '#/components/schemas/LiensJudgmentsServiceResponse'
+        '400':
+          description: Bad Request
+        '500':
+          description: Internal Server Error
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/LiensJudgmentsServiceRequest'
+          application/xml:
+            schema:
+              $ref: '#/components/schemas/LiensJudgmentsServiceRequest'
+        description: Request to the service
+    servers:
+    - url: https://api.dgw.firstam.io/v2
+  /revaddress/orderbasic:
+    post:
+      tags:
+      - Request
+      summary: Make a new Reverse Address service call
+      description: 'Required fields: RequestorID, Employer.'
+      operationId: post
+      parameters:
+      - in: header
+        name: x-app-id
+        description: Application ID
+        required: true
+        schema:
+          type: string
+      - in: header
+        name: x-app-key
+        description: Application Key
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ServiceResponse_2'
+            application/xml:
+              schema:
+                $ref: '#/components/schemas/ServiceResponse_2'
+        '400':
+          description: Bad Request
+        '401':
+          description: Invalid App ID or Key
+        '500':
+          description: Internal Server Error
+        '503':
+          description: Usage Limit Exceeded
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ServiceRequest_2'
+          application/xml:
+            schema:
+              $ref: '#/components/schemas/ServiceRequest_2'
+        description: Request to the Service
+        required: true
+    servers:
+    - url: https://api-w2.firstam.io/v1
+  /revaddress/orderdetailed:
+    post:
+      tags:
+      - Request
+      summary: Make a new Reverse Address service call
+      description: 'Required fields: RequestorID, Employer.'
+      operationId: post
+      parameters:
+      - in: header
+        name: x-app-id
+        description: Application ID
+        required: true
+        schema:
+          type: string
+      - in: header
+        name: x-app-key
+        description: Application Key
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ServiceResponse_2'
+            application/xml:
+              schema:
+                $ref: '#/components/schemas/ServiceResponse_2'
+        '400':
+          description: Bad Request
+        '401':
+          description: Invalid App ID or Key
+        '500':
+          description: Internal Server Error
+        '503':
+          description: Usage Limit Exceeded
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ServiceRequest_2'
+          application/xml:
+            schema:
+              $ref: '#/components/schemas/ServiceRequest_2'
+        description: Request to the Service
+        required: true
+    servers:
+    - url: https://api-w2.firstam.io/v1
+  /scra/order:
+    post:
+      tags:
+      - Request
+      summary: Make a new SCRA service call
+      description: 'Required fields: RequestorID, FirstName, LastName, SSN, DOB'
+      operationId: post
+      parameters:
+      - in: header
+        name: x-app-id
+        description: Application ID
+        required: true
+        schema:
+          type: string
+      - in: header
+        name: x-app-key
+        description: Application Key
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ServiceResponse_3'
+            application/xml:
+              schema:
+                $ref: '#/components/schemas/ServiceResponse_3'
+        '400':
+          description: Bad Request
+        '401':
+          description: Invalid App ID or Key
+        '500':
+          description: Internal Server Error
+        '503':
+          description: Usage Limit Exceeded
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ServiceRequest_3'
+          application/xml:
+            schema:
+              $ref: '#/components/schemas/ServiceRequest_3'
+        description: Request to the Service
+        required: true
+    servers:
+    - url: https://api.firstam.io/v1
+  /watchlist/order/ofac:
+    post:
+      tags:
+      - Request
+      summary: Make a new Watchlist service call
+      description: 'Required fields: EntityType (Company or Individual) and Name. If searching for company, submit EntityType as ''Company'' and input company name under ''LastOrCompanyName''. Alerts and Analytics can be added by setting the "IncludeAnalytics" flag in the request body to true.'
+      operationId: post
+      parameters:
+      - in: header
+        name: x-app-id
+        description: Application ID
+        required: true
+        schema:
+          type: string
+      - in: header
+        name: x-app-key
+        description: Application Key
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ServiceResponseOFAC'
+            application/xml:
+              schema:
+                $ref: '#/components/schemas/ServiceResponseOFAC'
+        '400':
+          description: Bad Request
+        '401':
+          description: Invalid App ID or Key
+        '500':
+          description: Internal Server Error
+        '503':
+          description: Usage Limit Exceeded
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ServiceRequestOfac'
+          application/xml:
+            schema:
+              $ref: '#/components/schemas/ServiceRequestOfac'
+        description: Request to the Service
+        required: true
+    servers:
+    - url: https://api-w2.firstam.io/v1
+  /watchlist/order/freddiemac:
+    post:
+      tags:
+      - Request
+      summary: Make a new Watchlist service call
+      description: 'Required fields: EntityType (Company or Individual) and Name. If searching for company, submit EntityType as ''Company'' and input company name under ''LastOrCompanyName''. Alerts and Analytics can be added by setting the "IncludeAnalytics" flag in the request body to true.'
+      operationId: post
+      parameters:
+      - in: header
+        name: x-app-id
+        description: Application ID
+        required: true
+        schema:
+          type: string
+      - in: header
+        name: x-app-key
+        description: Application Key
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ServiceResponseFreddieMac'
+            application/xml:
+              schema:
+                $ref: '#/components/schemas/ServiceResponseFreddieMac'
+        '400':
+          description: Bad Request
+        '401':
+          description: Invalid App ID or Key
+        '500':
+          description: Internal Server Error
+        '503':
+          description: Usage Limit Exceeded
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ServiceRequestFreddieMac'
+          application/xml:
+            schema:
+              $ref: '#/components/schemas/ServiceRequestFreddieMac'
+        description: Request to the Service
+        required: true
+    servers:
+    - url: https://api-w2.firstam.io/v1
+  /watchlist/order/fhfascp:
+    post:
+      tags:
+      - Request
+      summary: Make a new Watchlist service call
+      description: 'Required fields: EntityType (Company or Individual) and Name. If searching for company, submit EntityType as ''Company'' and input company name under ''LastOrCompanyName''. Alerts and Analytics can be added by setting the "IncludeAnalytics" flag in the request body to true.'
+      operationId: post
+      parameters:
+      - in: header
+        name: x-app-id
+        description: Application ID
+        required: true
+        schema:
+          type: string
+      - in: header
+        name: x-app-key
+        description: Application Key
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ServiceResponseFHFASCP'
+            application/xml:
+              schema:
+                $ref: '#/components/schemas/ServiceResponseFHFASCP'
+        '400':
+          description: Bad Request
+        '401':
+          description: Invalid App ID or Key
+        '500':
+          description: Internal Server Error
+        '503':
+          description: Usage Limit Exceeded
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ServiceRequestFHFASCP'
+          application/xml:
+            schema:
+              $ref: '#/components/schemas/ServiceRequestFHFASCP'
+        description: Request to the Service
+        required: true
+    servers:
+    - url: https://api-w2.firstam.io/v1
+  /watchlist/order/hudepls:
+    post:
+      tags:
+      - Request
+      summary: Make a new Watchlist service call
+      description: 'Required fields: EntityType (Company or Individual) and Name. If searching for company, submit EntityType as ''Company'' and input company name under ''LastOrCompanyName''. Alerts and Analytics can be added by setting the "IncludeAnalytics" flag in the request body to true.'
+      operationId: post
+      parameters:
+      - in: header
+        name: x-app-id
+        description: Application ID
+        required: true
+        schema:
+          type: string
+      - in: header
+        name: x-app-key
+        description: Application Key
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ServiceResponseHUDEPLS'
+            application/xml:
+              schema:
+                $ref: '#/components/schemas/ServiceResponseHUDEPLS'
+        '400':
+          description: Bad Request
+        '401':
+          description: Invalid App ID or Key
+        '500':
+          description: Internal Server Error
+        '503':
+          description: Usage Limit Exceeded
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ServiceRequestHUDEPLS'
+          application/xml:
+            schema:
+              $ref: '#/components/schemas/ServiceRequestHUDEPLS'
+        description: Request to the Service
+        required: true
+    servers:
+    - url: https://api-w2.firstam.io/v1
+  /watchlist/order/hudldp:
+    post:
+      tags:
+      - Request
+      summary: Make a new Watchlist service call
+      description: 'Required fields: EntityType (Company or Individual) and Name. If searching for company, submit EntityType as ''Company'' and input company name under ''LastOrCompanyName''. Alerts and Analytics can be added by setting the "IncludeAnalytics" flag in the request body to true.'
+      operationId: post
+      parameters:
+      - in: header
+        name: x-app-id
+        description: Application ID
+        required: true
+        schema:
+          type: string
+      - in: header
+        name: x-app-key
+        description: Application Key
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ServiceResponseHUDLDP'
+            application/xml:
+              schema:
+                $ref: '#/components/schemas/ServiceResponseHUDLDP'
+        '400':
+          description: Bad Request
+        '401':
+          description: Invalid App ID or Key
+        '500':
+          description: Internal Server Error
+        '503':
+          description: Usage Limit Exceeded
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ServiceRequestHUDLDP'
+          application/xml:
+            schema:
+              $ref: '#/components/schemas/ServiceRequestHUDLDP'
+        description: Request to the Service
+        required: true
+    servers:
+    - url: https://api-w2.firstam.io/v1
+  /watchlist/order/nfpd:
+    post:
+      tags:
+      - Request
+      summary: Make a new Watchlist service call
+      description: 'Required fields: EntityType (Company or Individual) and Name. If searching for company, submit EntityType as ''Company'' and input company name under ''LastOrCompanyName''. Alerts and Analytics can be added by setting the "IncludeAnalytics" flag in the request body to true.'
+      operationId: post
+      parameters:
+      - in: header
+        name: x-app-id
+        description: Application ID
+        required: true
+        schema:
+          type: string
+      - in: header
+        name: x-app-key
+        description: Application Key
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ServiceResponseNFPD'
+            application/xml:
+              schema:
+                $ref: '#/components/schemas/ServiceResponseNFPD'
+        '400':
+          description: Bad Request
+        '401':
+          description: Invalid App ID or Key
+        '500':
+          description: Internal Server Error
+        '503':
+          description: Usage Limit Exceeded
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ServiceRequestNFPD'
+          application/xml:
+            schema:
+              $ref: '#/components/schemas/ServiceRequestNFPD'
+        description: Request to the Service
+        required: true
+    servers:
+    - url: https://api-w2.firstam.io/v1
+  /watchlist/order/ineligiblelist:
+    post:
+      tags:
+      - Request
+      summary: Make a new Watchlist service call
+      description: 'Required fields: EntityType (Company or Individual) and Name. If searching for company, submit EntityType as ''Company'' and input company name under ''LastOrCompanyName''. Alerts and Analytics can be added by setting the "IncludeAnalytics" flag in the request body to true.'
+      operationId: post
+      parameters:
+      - in: header
+        name: x-app-id
+        description: Application ID
+        required: true
+        schema:
+          type: string
+      - in: header
+        name: x-app-key
+        description: Application Key
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ServiceResponseIneligible'
+            application/xml:
+              schema:
+                $ref: '#/components/schemas/ServiceResponseIneligible'
+        '400':
+          description: Bad Request
+        '401':
+          description: Invalid App ID or Key
+        '500':
+          description: Internal Server Error
+        '503':
+          description: Usage Limit Exceeded
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ServiceRequestIneligible'
+          application/xml:
+            schema:
+              $ref: '#/components/schemas/ServiceRequestIneligible'
+        description: Request to the Service
+        required: true
+    servers:
+    - url: https://api-w2.firstam.io/v1
+components:
+  schemas:
+    consentform:
+      title: ConsentForm
+      description: Upload Consent form
+      type: object
+      properties:
+        TransactionID:
+          type: string
+          minLength: 1
+        File:
+          type: string
+          minLength: 1
+          description: Base64 encoded file
+          format: byte
+        FileType:
+          type: string
+          enum:
+          - PDF
+          - TIFF
+        IsEsigned:
+          type: boolean
+      required:
+      - TransactionID
+      - IsEsigned
+      - File
+      - FileType
+    transcript:
+      type: object
+      title: Transcript
+      description: Tax Transcript
+      properties:
+        TransactionID:
+          type: string
+          description: A GUID
+          minLength: 1
+          example: 2885a98e-79e7-4c6b-b431-f3849fd58e93
+        RequestorID:
+          type: string
+          minLength: 1
+        OrderStatus:
+          $ref: '#/components/schemas/orderstatus'
+        RequestedForm:
+          $ref: '#/components/schemas/formtype'
+        RequestedTranscript:
+          type: string
+        Transcripts:
+          type: array
+          items:
+            type: object
+            properties:
+              TranscriptType:
+                type: string
+              TaxYear:
+                type: integer
+              Rows:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    Description:
+                      type: string
+                    Value:
+                      type: string
+                    FormSection:
+                      type: string
+                    LineNumber:
+                      type: string
+    order:
+      title: Order
+      description: New order request
+      type: object
+      properties:
+        TaxReturnType:
+          type: string
+          enum:
+          - Personal
+          - Corporate
+        TaxYears:
+          type: array
+          items:
+            type: integer
+        Name:
+          type: object
+          properties:
+            First:
+              type: string
+              example: John
+            Middle:
+              type: string
+            Last:
+              type: string
+              example: Doe
+            Company:
+              type: string
+        RequestorID:
+          type: string
+          minLength: 1
+        TaxID:
+          type: string
+          pattern: '[0-9]{9}'
+        ConsentForm:
+          type: object
+          properties:
+            File:
+              type: string
+            FileType:
+              type: string
+              enum:
+              - PDF
+              - TIFF
+            IsEsigned:
+              type: boolean
+          required:
+          - IsEsigned
+          - File
+          - FileType
+        FormType:
+          $ref: '#/components/schemas/formtype'
+        TranscriptsToInclude:
+          type: object
+          properties:
+            Return:
+              type: boolean
+            Account:
+              type: boolean
+            RecordOfAccount:
+              type: boolean
+      required:
+      - Name
+      - TaxYears
+      - FormType
+      - TaxReturnType
+      - TaxID
+      - RequestorID
+    formtype:
+      title: FormType
+      type: string
+      enum:
+      - W2
+      - '1040'
+      - '1099'
+      - '1065'
+      - '1120'
+      - 1120S
+    confirmation:
+      type: object
+      title: Confirmation
+      description: Order confirmation response
+      properties:
+        TransactionID:
+          type: string
+          description: A GUID
+          minLength: 1
+          example: 2885a98e-79e7-4c6b-b431-f3849fd58e93
+        OrderStatus:
+          $ref: '#/components/schemas/orderstatus'
+      required:
+      - TransactionID
+      - OrderStatus
+    orderstatus:
+      title: OrderStatus
+      type: string
+      enum:
+      - Received
+      - Falied
+      - Rejected
+      - Completed
+      - Cancelled
+      - PendingSignature
+      - InProgress
+      - WaitingForConsentForm
+    Address:
+      type: object
+      properties:
+        StreetAddress1:
+          type: string
+          example: 123 Main St
+        City:
+          type: string
+          example: Agoura Hills
+        State:
+          type: string
+          example: CA
+        ZipCode:
+          type: string
+          example: '91301'
+    Search:
+      type: object
+      properties:
+        Name:
+          $ref: '#/components/schemas/Name'
+        Address:
+          $ref: '#/components/schemas/Address_Premium'
+        CaseNumber:
+          type: string
+        FilingJurisdiction:
+          type: string
+        PartyType:
+          type: string
+    BankruptcyServiceRequestExtended:
+      type: object
+      properties:
+        RequestorID:
+          type: string
+        SearchType:
+          type: string
+          enum:
+          - DefendantName
+          - CaseNumber
+          - AttorneySearch
+          - TrusteeSearch
+        CourtID:
+          type: string
+        CourtState:
+          type: string
+        CountyName:
+          type: string
+        CaseNumber:
+          type: string
+        FilingStartDate:
+          $ref: '#/components/schemas/ParsedDate'
+        FilingEndDate:
+          $ref: '#/components/schemas/ParsedDate'
+        Defendant:
+          $ref: '#/components/schemas/Person'
+        Attorney:
+          $ref: '#/components/schemas/Person'
+        Trustee:
+          $ref: '#/components/schemas/Person'
+        IncludeAnalytics:
+          type: boolean
+          example: false
+          description: Option to run analytics on data set.
+        AnalyticsInput:
+          description: Optional dictionary for alert analytics (dependent on alert).
+          $ref: '#/components/schemas/AnalyticsInputType'
+      example:
+        RequestorID: ID123
+        SearchType: DefendantName
+        Defendant:
+          Name:
+            First: John
+            LastOrCompanyName: Defendant
+        CourtState: ZZ
+        CountyName: ''
+        FilingStartDate:
+          Day: 10
+          Month: 10
+          Year: 2000
+        FilingEndDate:
+          Day: 10
+          Month: 10
+          Year: 2018
+        IncludeAnalytics: false
+    AnalyticsInputType:
+      type: object
+      example:
+        Key: Value
+    Address_Premium:
+      type: object
+      properties:
+        StreetNumber:
+          type: string
+        StreetPreDirection:
+          type: string
+        StreetName:
+          type: string
+        StreetSuffix:
+          type: string
+        UnitDesignation:
+          type: string
+        UnitNumber:
+          type: string
+        City:
+          type: string
+        State:
+          type: string
+    BankruptcyRecord:
+      properties:
+        ActionType:
+          type: string
+        AliasType:
+          type: string
+        AssociationCode:
+          type: string
+        AssetsIndicator:
+          type: string
+        Attorney:
+          $ref: '#/components/schemas/Person'
+        CaseNumber:
+          type: string
+        CaseNumberOther:
+          type: string
+        CaseNumberUnique:
+          type: string
+        CaseType:
+          type: string
+        ClosedDate:
+          $ref: '#/components/schemas/ParsedDate'
+        CourtId:
+          type: string
+        CourtName:
+          type: string
+        CourtLocation:
+          type: string
+        CurrentChapter:
+          type: string
+        Defendant:
+          $ref: '#/components/schemas/Person'
+        DefinitionType:
+          type: string
+        DischargeDate:
+          $ref: '#/components/schemas/ParsedDate'
+        FilingDate:
+          $ref: '#/components/schemas/ParsedDate'
+        OriginalFilingDate:
+          $ref: '#/components/schemas/ParsedDate'
+        FilingType:
+          type: string
+        FilerType:
+          type: string
+        IsBankruptcyValid:
+          type: string
+        JudgeInitials:
+          type: string
+        MeetingDate:
+          $ref: '#/components/schemas/ParsedDate'
+        MeetingTime:
+          type: string
+        OriginalChapter:
+          type: string
+        POCDate:
+          $ref: '#/components/schemas/ParsedDate'
+        PreviousChapter:
+          type: string
+        RecordDate:
+          $ref: '#/components/schemas/ParsedDate'
+        RMSId:
+          type: string
+        Trustee:
+          $ref: '#/components/schemas/Person'
+        UpdatedDate:
+          $ref: '#/components/schemas/ParsedDate'
+        AssetsForUnsecured:
+          type: string
+        Assets:
+          type: string
+        JudgeName:
+          type: string
+        Liabilities:
+          type: string
+        ReOpenDate:
+          $ref: '#/components/schemas/ParsedDate'
+    Person:
+      type: object
+      properties:
+        Name:
+          $ref: '#/components/schemas/Name'
+        Address:
+          $ref: '#/components/schemas/Address'
+        SSN:
+          type: string
+        PhoneNumbers:
+          type: array
+          items:
+            $ref: '#/components/schemas/PhoneNumber'
+    BankruptcyServiceResponse:
+      type: object
+      properties:
+        TransactionID:
+          type: string
+          description: Unique identifier for the transaction
+        RequestorID:
+          type: string
+        Result:
+          type: string
+          enum:
+          - NoRecordsFound
+          - RecordsFound
+        Records:
+          type: array
+          items:
+            $ref: '#/components/schemas/BankruptcyRecord'
+        Alerts:
+          type: array
+          items:
+            $ref: '#/components/schemas/AlertType'
+      example:
+        TransactionID: a85226ad-4c3b-4e1f-9423-0d55a283fb33
+        RequestorID: Mock001
+        Result: RecordsFound
+        Records:
+        - ActionType: '23'
+          AliasType: I
+          AssociationCode: '2'
+          AssetsIndicator: N
+          Attorney:
+            Name:
+              Full: JOHN C ATTORNEY
+            Address:
+              StreetAddress1: PO BOX 7007
+              City: LOS ANGELES
+              State: CA
+              ZipCode: '90001'
+              FullAddress: PO BOX 7007 LOS ANGELES, CA 90001
+            PhoneNumbers:
+            - PhoneType: Work
+              PhoneNumber: '2099569698'
+          CaseNumber: '1230328'
+          CaseNumberOther: '12030328'
+          CaseNumberUnique: BB05678686786
+          CaseType: V
+          ClosedDate:
+            Year: 2012
+            Month: 10
+            Day: 5
+          CourtId: CAEASF3
+          CurrentChapter: '7'
+          Defendant:
+            Name:
+              Full: JOHN,DEFENDANT W
+              Suffix: Jr
+            Address:
+              StreetAddress1: 123 MAIN ST
+              City: LOS ANGELES
+              State: CA
+              ZipCode: '91301'
+              FullAddress: 123 MAIN ST LOS ANGELES, CA 91301
+            SSN: 000000493
+          DefinitionType: I
+          DischargeDate:
+            Year: 2015
+            Month: 5
+            Day: 30
+          FilingDate:
+            Year: 2012
+            Month: 5
+            Day: 30
+          FilingType: '7'
+          IsBankruptcyValid: true
+          JudgeInitials: RSB
+          MeetingDate:
+            Year: 2012
+            Month: 12
+            Day: 31
+          MeetingTime: unknown
+          OriginalChapter: '7'
+          POCDate:
+            Year: 2012
+            Month: 12
+            Day: 31
+          PreviousChapter: n/a
+          RecordDate:
+            Year: 2012
+            Month: 5
+            Day: 30
+          RMSId: AA68945252
+          Trustee:
+            Name:
+              Full: JOHN C ATTORNEY ATT AT LAW
+          UpdatedDate:
+            Year: 2014
+            Month: 10
+            Day: 9
+        Alerts:
+        - Code: Alert1
+          Description: ALERT - This is an alert description.
+          Status: Fired
+          Evidence:
+          - Key: Value
+    AlertType:
+      type: object
+      properties:
+        Code:
+          example: AlertCode
+          type: string
+        Description:
+          example: ALERT - This is an alert description.
+          type: string
+        Status:
+          example: Fired
+          type: string
+        Evidence:
+          description: Collection of evidence fields that caused the alert to fire.
+          type: array
+          items:
+            $ref: '#/components/schemas/EvidenceType'
+    BankruptcyServiceRequestPremium:
+      type: object
+      properties:
+        RequestorID:
+          type: string
+        Search:
+          $ref: '#/components/schemas/Search'
+        IncludeAnalytics:
+          type: boolean
+          example: false
+          description: Option to run analytics on data set.
+        AnalyticsInput:
+          description: Optional dictionary for alert analytics (dependent on alert).
+          $ref: '#/components/schemas/AnalyticsInputType'
+      example:
+        RequestorID: ID123
+        Search:
+          Name:
+            First: John
+            LastOrCompanyName: Doe
+          Address:
+            StreetNumber: '123'
+            StreetPreDirection: ''
+            StreetName: Main
+            StreetSuffix: St
+            UnitDesignation: ''
+            UnitNumber: ''
+            City: Los Angeles
+            State: CA
+        CaseNumber: ''
+        FilingJurisdiction: ''
+        PartyType: ''
+        IncludeAnalytics: false
+    EvidenceType:
+      type: object
+      example:
+        Key: Value
+    Name:
+      type: object
+      properties:
+        Full:
+          type: string
+        First:
+          type: string
+        Middle:
+          type: string
+        LastOrCompanyName:
+          type: string
+        Suffix:
+          type: string
+    PhoneNumber:
+      type: object
+      properties:
+        PhoneType:
+          type: string
+        PhoneNumber:
+          type: string
+    ParsedDate:
+      properties:
+        Year:
+          type: number
+        Month:
+          type: number
+        Day:
+          type: number
+    BankruptcyServiceRequestBasic:
+      type: object
+      properties:
+        RequestorID:
+          type: string
+        Search:
+          $ref: '#/components/schemas/Search'
+        IncludeAnalytics:
+          type: boolean
+          example: false
+          description: Option to run analytics on data set.
+        AnalyticsInput:
+          description: Optional dictionary for alert analytics (dependent on alert).
+          $ref: '#/components/schemas/AnalyticsInputType'
+      example:
+        RequestorID: ID123
+        Search:
+          Name:
+            First: John
+            LastOrCompanyName: Doe
+          Address:
+            StreetNumber: '456'
+            StreetPreDirection: ''
+            StreetName: Main
+            StreetSuffix: St
+            UnitDesignation: ''
+            UnitNumber: ''
+            City: Los Angeles
+            State: CA
+        CaseNumber: ''
+        FilingJurisdiction: ''
+        PartyType: ''
+        IncludeAnalytics: false
+    IndividualRequest:
+      type: object
+      properties:
+        DateOfBirth:
+          type: string
+    EmployerRequest:
+      type: object
+      properties:
+        Name:
+          type: string
+        Title:
+          type: string
+        YearsOnJob:
+          type: integer
+        YearsWithEmployer:
+          type: integer
+        YearsExperience:
+          type: integer
+        EmployerType:
+          type: string
+    ServiceResponse:
+      type: object
+      properties:
+        TransactionID:
+          type: string
+        RequestorID:
+          type: string
+        Error:
+          type: string
+        Result:
+          $ref: '#/components/schemas/Result'
+    IncomeRequest:
+      type: object
+      properties:
+        BaseAnnualIncome:
+          type: integer
+        Overtime:
+          type: integer
+        Bonus:
+          type: integer
+        Commissions:
+          type: integer
+    Result:
+      type: object
+      properties:
+        MatchingJobs:
+          description: 'Jobs Matching  '
+          type: array
+          items:
+            type: string
+        OverstatedCompScore:
+          type: integer
+          description: 'OverstatedCompScore '
+        TargetCompensation:
+          type: integer
+          description: 'TargetCompensation  '
+        Percentile25:
+          type: integer
+          description: 'Percentile25 '
+        Median:
+          type: integer
+          description: 'Median '
+        Percentile75:
+          type: integer
+          description: 'Percentile75  '
+    ServiceRequest:
+      type: object
+      required:
+      - RequestorID
+      - Employer
+      properties:
+        RequestorID:
+          type: string
+        Individual:
+          $ref: '#/components/schemas/IndividualRequest'
+        Employer:
+          $ref: '#/components/schemas/EmployerRequest'
+        Location:
+          $ref: '#/components/schemas/LocationRequest'
+        Income:
+          $ref: '#/components/schemas/IncomeRequest'
+      example:
+        RequestorID: ID123
+        Employer:
+          Title: engineer
+          YearsOnJob: 10
+          YearsWithEmployer: 0
+          YearsExperience: 0
+        Income:
+          BaseAnnualIncome: 144000
+          Overtime: 0
+          Bonus: 0
+          Commissions: 0
+    LocationRequest:
+      type: object
+      properties:
+        Country:
+          type: string
+        State:
+          type: string
+        City:
+          type: integer
+    Address_2:
+      type: object
+      properties:
+        StreetNumber:
+          type: string
+          example: '123'
+        StreetPreDirection:
+          type: string
+          example: S
+        StreetName:
+          type: string
+          example: Main
+        StreetSuffix:
+          type: string
+          example: St
+        StreetPostDirection:
+          type: string
+          example: E
+        UnitDesignation:
+          type: string
+          example: APT
+        UnitNumber:
+          type: string
+          example: '110'
+        StreetAddress1:
+          type: string
+          example: 123 Main St
+        StreetAddress2:
+          type: string
+          example: Apt 504
+        City:
+          type: string
+          example: Agoura Hills
+        State:
+          type: string
+          example: CA
+        ZipCode:
+          type: string
+          example: '91301'
+        ZipFour:
+          type: string
+          example: '1212'
+        County:
+          type: string
+          example: Los Angeles
+      example:
+        StreetNumber: '123'
+        City: Agoura Hills
+        StreetPostDirection: E
+        StreetAddress1: 123 Main St
+        County: Los Angeles
+        UnitNumber: '110'
+        StreetAddress2: Apt 504
+        ZipFour: '1212'
+        ZipCode: '91301'
+        StreetPreDirection: S
+        StreetName: Main
+        UnitDesignation: APT
+        StreetSuffix: St
+        State: CA
+    Judgment:
+      properties:
+        Seq:
+          type: string
+          example: '1'
+        DateFiled:
+          $ref: '#/components/schemas/ParsedDate_2'
+        JudgmentType:
+          type: string
+          example: Civil Judgment
+        Amount:
+          type: string
+          example: '5000'
+        ReleaseDate:
+          $ref: '#/components/schemas/ParsedDate_2'
+        FilingDescription:
+          type: string
+          example: Released
+        DateLastSeen:
+          $ref: '#/components/schemas/ParsedDate_2'
+        Defendant:
+          type: string
+          example: John Doe
+        Plaintiff:
+          type: string
+          example: ABC Corp
+        FilingNumber:
+          type: string
+          example: 99DJ1687715
+        FilingBook:
+          type: string
+          example: '7688'
+        FilingPage:
+          type: string
+          example: '9789'
+        Eviction:
+          type: string
+          example: N
+        Agency:
+          type: string
+          example: CALIFORNIA SUPERIOR COURT
+        AgencyCounty:
+          type: string
+          example: VENTURA
+        AgencyState:
+          type: string
+          example: CA
+      example:
+        FilingBook: '7688'
+        FilingPage: '9789'
+        FilingNumber: 99DJ1687715
+        Amount: '5000'
+        Plaintiff: ABC Corp
+        JudgmentType: Civil Judgment
+        Agency: CALIFORNIA SUPERIOR COURT
+        ReleaseDate:
+          Month: 1
+          Year: 2017
+          Day: 1
+        AgencyCounty: VENTURA
+        AgencyState: CA
+        DateLastSeen:
+          Month: 1
+          Year: 2017
+          Day: 1
+        FilingDescription: Released
+        Eviction: N
+        Defendant: John Doe
+        Seq: '1'
+        DateFiled:
+          Month: 1
+          Year: 2017
+          Day: 1
+    Person_2:
+      type: object
+      properties:
+        Name:
+          $ref: '#/components/schemas/Name_2'
+        Address:
+          $ref: '#/components/schemas/Address_2'
+        DOB:
+          $ref: '#/components/schemas/ParsedDate_2'
+        SSN:
+          type: string
+          example: '999999990'
+        HomePhone:
+          type: string
+          example: '8058675309'
+      example:
+        Address:
+          StreetNumber: '123'
+          City: Agoura Hills
+          StreetPostDirection: E
+          StreetAddress1: 123 Main St
+          County: Los Angeles
+          UnitNumber: '110'
+          StreetAddress2: Apt 504
+          ZipFour: '1212'
+          ZipCode: '91301'
+          StreetPreDirection: S
+          StreetName: Main
+          UnitDesignation: APT
+          StreetSuffix: St
+          State: CA
+        DOB:
+          Month: 1
+          Year: 2017
+          Day: 1
+        HomePhone: '8058675309'
+        Name:
+          Middle: C
+          Last: Doe
+          Prefix: Mr.
+          Suffix: Sr.
+          First: John
+          Full: John C Doe.
+        SSN: '999999990'
+    LiensJudgmentsFCRAServiceRequest:
+      type: object
+      required:
+      - IntendedPurpose
+      - Person
+      - RequestorID
+      properties:
+        RequestorID:
+          type: string
+          example: '123456'
+        IntendedPurpose:
+          type: string
+          example: Application
+        Person:
+          $ref: '#/components/schemas/Person_2'
+      example:
+        RequestorID: '12345'
+        IntendedPurpose: Application
+        Person:
+          Name:
+            First: Joe
+            Last: Liensjudgments
+          Address:
+            StreetAddress1: 123 MAIN AVENUE
+            City: LOS ANGELES
+            State: CA
+            Zip5: '90001'
+          SSN: '999111114'
+    Name_2:
+      type: object
+      properties:
+        Full:
+          type: string
+          example: John C Doe.
+        First:
+          type: string
+          example: John
+        Middle:
+          type: string
+          example: C
+        Last:
+          type: string
+          example: Doe
+        Suffix:
+          type: string
+          example: Sr.
+        Prefix:
+          type: string
+          example: Mr.
+      example:
+        Middle: C
+        Last: Doe
+        Prefix: Mr.
+        Suffix: Sr.
+        First: John
+        Full: John C Doe.
+    LiensJudgmentsFCRAServiceResponse:
+      type: object
+      required:
+      - RequestorID
+      - TransactionID
+      - Result
+      properties:
+        TransactionID:
+          type: string
+          example: d49c3068-eaad-4f13-88f5-9cd94e65f516
+          description: Unique identifier for the transaction
+        RequestorID:
+          type: string
+          example: '1234567'
+        Result:
+          type: string
+          example: ResultsFound
+          enum:
+          - SubjectNotFound
+          - NoRecordsFound
+          - RecordsFound
+        Liens:
+          type: array
+          items:
+            $ref: '#/components/schemas/Lien'
+        Judgments:
+          type: array
+          items:
+            $ref: '#/components/schemas/Judgment'
+        LnJAttributes:
+          type: array
+          items:
+            $ref: '#/components/schemas/LnJAttribute'
+      example:
+        TransactionID: d49c3068-eaad-4f13-88f5-9cd94e65f516
+        RequestorID: '1234567'
+        Result: RecordsFound
+        Liens:
+        - FilingBook: '678'
+          FilingPage: '97989'
+          FilingNumber: 99DJ1687715
+          Amount: '5000'
+          Agency: CALIFORNIA SUPERIOR COURT
+          ReleaseDate:
+            month: 1
+            year: 2017
+            day: 1
+          LienType: State Tax Lien
+          AgencyCounty: VENTURA
+          AgencyState: CA
+          Seq: '1'
+          DateFiled:
+            Month: 1
+            Year: 2017
+            Day: 1
+          DateLastSeen:
+            Month: 1
+            Year: 2017
+            Day: 1
+        - FilingBook: '678'
+          FilingPage: '97989'
+          FilingNumber: 99DJ1687715
+          Amount: '5000'
+          Agency: CALIFORNIA SUPERIOR COURT
+          ReleaseDate:
+            Month: 1
+            Year: 2017
+            Day: 1
+          LienFilingType: State Tax Lien
+          AgencyCounty: VENTURA
+          AgencyState: CA
+          Seq: '1'
+          DateFiled:
+            Month: 1
+            Year: 2017
+            Day: 1
+          DateLastSeen:
+            Month: 1
+            Year: 2017
+            Day: 1
+        Judgments:
+        - FilingBook: '7688'
+          FilingPage: '9789'
+          FilingNumber: 99DJ1687715
+          Amount: '5000'
+          Plaintiff: ABC Corp
+          JudgmentType: Civil Judgment
+          Agency: CALIFORNIA SUPERIOR COURT
+          ReleaseDate:
+            Month: 1
+            Year: 2017
+            Day: 1
+          AgencyCounty: VENTURA
+          AgencyState: CA
+          DateLastSeen:
+            Month: 1
+            Year: 2017
+            Day: 1
+          FilingDescription: Released
+          Eviction: N
+          Defendant: John Doe
+          Seq: '1'
+          DateFiled:
+            Month: 1
+            Year: 2017
+            Day: 1
+        - FilingBook: '7688'
+          FilingPage: '9789'
+          FilingNumber: 99DJ1687715
+          Amount: '5000'
+          Plaintiff: ABC Corp
+          JudgmentType: Civil Judgment
+          Agency: CALIFORNIA SUPERIOR COURT
+          ReleaseDate:
+            Month: 1
+            Year: 2017
+            Day: 1
+          AgencyCounty: VENTURA
+          AgencyState: CA
+          DateLastSeen:
+            Month: 1
+            Year: 2017
+            Day: 1
+          FilingDescription: Released
+          Eviction: N
+          Defendant: John Doe
+          Seq: '1'
+          DateFiled:
+            Month: 1
+            Year: 2017
+            Day: 1
+        LnJAttributes:
+        - Name: LnJLienTaxCount
+          Value: '1'
+        - Name: LnJLienTaxCount
+          Value: '1'
+    LnJAttribute:
+      properties:
+        Name:
+          type: string
+          example: LnJLienTaxCount
+        Value:
+          type: string
+          example: '1'
+      example:
+        Name: LnJLienTaxCount
+        Value: '1'
+    ParsedDate_2:
+      properties:
+        Year:
+          type: number
+          example: 2017
+        Month:
+          type: number
+          example: 1
+        Day:
+          type: number
+          example: 1
+      example:
+        Month: 1
+        Year: 2017
+        Day: 1
+    Lien:
+      properties:
+        Seq:
+          type: string
+          example: '1'
+        DateFiled:
+          $ref: '#/components/schemas/ParsedDate_2'
+        LienFilingType:
+          type: string
+          example: State Tax Lien
+        Amount:
+          type: string
+          example: '5000'
+        ReleaseDate:
+          $ref: '#/components/schemas/ParsedDate_2'
+        DateLastSeen:
+          $ref: '#/components/schemas/ParsedDate_2'
+        FilingNumber:
+          type: string
+          example: 99DJ1687715
+        FilingBook:
+          type: string
+          example: '678'
+        FilingPage:
+          type: string
+          example: '97989'
+        Agency:
+          type: string
+          example: CALIFORNIA SUPERIOR COURT
+        AgencyCounty:
+          type: string
+          example: VENTURA
+        AgencyState:
+          type: string
+          example: CA
+      example:
+        FilingBook: '678'
+        FilingPage: '97989'
+        FilingNumber: 99DJ1687715
+        Amount: '5000'
+        Agency: CALIFORNIA SUPERIOR COURT
+        ReleaseDate:
+          Month: 1
+          Year: 2017
+          Day: 1
+        LienFilingType: State Tax Lien
+        AgencyCounty: VENTURA
+        AgencyState: CA
+        Seq: '1'
+        DateFiled:
+          Month: 1
+          Year: 2017
+          Day: 1
+        DateLastSeen:
+          Month: 1
+          Year: 2017
+          Day: 1
+    Address_3:
+      type: object
+      properties:
+        StreetNumber:
+          type: string
+          example: '123'
+        StreetPreDirection:
+          type: string
+          example: S
+        StreetName:
+          type: string
+          example: Main
+        StreetSuffix:
+          type: string
+          example: St
+        StreetPostDirection:
+          type: string
+          example: E
+        UnitDesignation:
+          type: string
+          example: APT
+        UnitNumber:
+          type: string
+          example: '110'
+        StreetAddress1:
+          type: string
+          example: 123 Main St
+        StreetAddress2:
+          type: string
+          example: Apt 504
+        City:
+          type: string
+          example: Agoura Hills
+        State:
+          type: string
+          example: CA
+        ZipCode:
+          type: string
+          example: '91301'
+        ZipFour:
+          type: string
+          example: '1212'
+        County:
+          type: string
+          example: Los Angeles
+      example:
+        StreetNumber: '123'
+        City: Agoura Hills
+        StreetPostDirection: E
+        StreetAddress1: 123 Main St
+        County: Los Angeles
+        UnitNumber: '110'
+        StreetAddress2: Apt 504
+        ZipFour: '1212'
+        ZipCode: '91301'
+        StreetPreDirection: S
+        StreetName: Main
+        UnitDesignation: APT
+        StreetSuffix: St
+        State: CA
+    LiensJudgmentsServiceResponse:
+      type: object
+      required:
+      - RequestorID
+      - TransactionID
+      - Result
+      properties:
+        TransactionID:
+          type: string
+          example: d49c3068-eaad-4f13-88f5-9cd94e65f516
+          description: Unique identifier for the transaction
+        RequestorID:
+          type: string
+          example: '1234567'
+        Result:
+          type: string
+          example: ResultsFound
+          enum:
+          - NoRecordsFound
+          - RecordsFound
+        Records:
+          type: array
+          items:
+            $ref: '#/components/schemas/Record'
+      example:
+        RequestorID: '1234567'
+        TransactionID: d49c3068-eaad-4f13-88f5-9cd94e65f516
+        Result: RecordsFound
+        Records:
+        - Amount: 0.0
+          FilingJurisdictionName: CALIFORNIA
+          MultipleDefendant: false
+          Debtors:
+          - Name:
+              Full: JOE K TEST
+              First: JOE
+              Middle: K
+              Last: TEST
+              Prefix: MR
+            SSN: 99911xxxx
+            Addresses:
+            - StreetNumber: '123'
+              StreetName: MAIN
+              StreetSuffix: AVE
+              StreetAddress1: 123 MAIN AVE
+              City: LOS ANGELES
+              State: CA
+              ZipCode: '90001'
+              ZipFour: '1234'
+              County: OAKLAND
+              FullAddress: 123 MAIN AVE LOS ANGELES, CA 90001-1234
+          Filings:
+          - Number: BK40499PG874
+            Type: STATE TAX LIEN
+            OriginalFilingDate:
+              Year: 2008
+              Month: 12
+              Day: 9
+            Book: '40499'
+            Page: '874'
+            Agency: OAKLAND COUNTY REGISTER OF DEEDS
+            AgencyState: CA
+            AgencyCounty: OAKLAND
+        - Amount: 2039.0
+          FilingJurisdictionName: CALIFORNIA
+          MultipleDefendant: false
+          Debtors:
+          - Name:
+              Full: JOE ABC
+              First: JOE
+              Last: ABC
+              Prefix: MR
+            SSN: 99911xxxx
+            Addresses:
+            - StreetNumber: '2598'
+              StreetName: BJHJHKL
+              StreetSuffix: DR
+              StreetAddress1: 2598 BJHJHKL DR
+              City: BKHJHKJ
+              State: CA
+              ZipCode: '38071'
+              ZipFour: '2671'
+              County: OAKLAND
+              FullAddress: 2598 BJHJHKL DR BKHJHKJ, CA 38071-2671
+          Filings:
+          - Number: BK40554PG505
+            Type: FEDERAL TAX LIEN
+            OriginalFilingDate:
+              Year: 2008
+              Month: 5
+              Day: 26
+            Book: '40554'
+            Page: '505'
+            Agency: OAKLAND COUNTY REGISTER OF DEEDS
+            AgencyState: CA
+            AgencyCounty: OAKLAND
+        - Amount: 2039.0
+          FilingJurisdictionName: CALIFORNIA
+          MultipleDefendant: false
+          Debtors:
+          - Name:
+              Full: JOE D ABC
+              First: JOE
+              Middle: D
+              Last: ABC
+              Prefix: MR
+            SSN: 99911xxxx
+            Addresses:
+            - StreetNumber: '2598'
+              StreetName: GJVBJHGJH
+              StreetSuffix: DR
+              StreetAddress1: 2598 GJVBJHGJH DR
+              City: BJKGFFFGH
+              State: CA
+              ZipCode: '38071'
+              ZipFour: '2671'
+              County: OAKLAND
+              FullAddress: 2598 GJVBJHGJH DR BJKGFFFGH, CA 38071-2671
+          Filings:
+          - Number: BK40554PG506
+            Type: FEDERAL TAX LIEN
+            OriginalFilingDate:
+              Year: 2008
+              Month: 5
+              Day: 26
+            Book: '40554'
+            Page: '506'
+            Agency: OAKLAND COUNTY REGISTER OF DEEDS
+            AgencyState: CA
+            AgencyCounty: OAKLAND
+        - Amount: 19249.0
+          FilingJurisdictionName: CALIFORNIA
+          MultipleDefendant: false
+          Debtors:
+          - Name:
+              Full: JOE K TEST
+              First: JOE
+              Middle: K
+              Last: TEST
+              Prefix: MR
+            SSN: 99911xxxx
+            Addresses:
+            - StreetNumber: '123'
+              StreetName: MAIN
+              StreetSuffix: AVE
+              StreetAddress1: 123 MAIN AVE
+              City: LOS ANGELES
+              State: CA
+              ZipCode: '90001'
+              ZipFour: '1234'
+              County: OAKLAND
+              FullAddress: 123 MAIN AVE LOS ANGELES, CA 90001-1234
+          Filings:
+          - Type: FEDERAL TAX LIEN
+            OriginalFilingDate:
+              Year: 2008
+              Month: 2
+              Day: 12
+            Book: '40335'
+            Page: '494'
+            Agency: OAKLAND COUNTY REGISTER OF DEEDS
+            AgencyState: CA
+            AgencyCounty: OAKLAND
+        - Amount: 6190.0
+          FilingJurisdictionName: CALIFORNIA
+          CertificateNumber: '298070606'
+          MultipleDefendant: false
+          ReleaseDate:
+            Year: 2008
+            Month: 8
+            Day: 7
+          Debtors:
+          - Name:
+              Full: JOE K TEST
+              First: JOE
+              Middle: K
+              Last: TEST
+              Prefix: MR
+            SSN: 99911xxxx
+            Addresses:
+            - StreetNumber: '123'
+              StreetName: MAIN
+              StreetSuffix: AVE
+              StreetAddress1: 123 MAIN AVE
+              City: LOS ANGELES
+              State: CA
+              ZipCode: '90001'
+              ZipFour: '1234'
+              County: OAKLAND
+              FullAddress: 123 MAIN AVE LOS ANGELES, CA 90001-1234
+          Filings:
+          - Number: BK40695PG534
+            Type: FEDERAL TAX LIEN RELEASE
+            OriginalFilingDate:
+              Year: 2006
+              Month: 7
+              Day: 5
+            Book: '40695'
+            Page: '534'
+            AgencyState: CA
+        - Amount: 6190.0
+          FilingJurisdictionName: CALIFORNIA
+          MultipleDefendant: false
+          Debtors:
+          - Name:
+              Full: JOE K TEST
+              First: JOE
+              Middle: K
+              Last: TEST
+              Prefix: MR
+            SSN: 99911xxxx
+            Addresses:
+            - StreetNumber: '123'
+              StreetName: MAIN
+              StreetSuffix: AVE
+              StreetAddress1: 123 MAIN AVE
+              City: LOS ANGELES
+              State: CA
+              ZipCode: '90001'
+              ZipFour: '1234'
+              County: OAKLAND
+              FullAddress: 123 MAIN AVE LOS ANGELES, CA 90001-1234
+          Filings:
+          - Type: FEDERAL TAX LIEN
+            OriginalFilingDate:
+              Year: 2006
+              Month: 7
+              Day: 5
+            Book: '37773'
+            Page: '453'
+            Agency: OAKLAND COUNTY REGISTER OF DEEDS
+            AgencyState: CA
+            AgencyCounty: OAKLAND
+        - Amount: 21544.0
+          FilingJurisdictionName: CALIFORNIA
+          MultipleDefendant: false
+          Debtors:
+          - Name:
+              Full: JOE ABC
+              First: JOE
+              Last: ABC
+              Prefix: MR
+            SSN: 99911xxxx
+            Addresses:
+            - StreetNumber: '809'
+              StreetName: PAULA
+              StreetSuffix: ST
+              StreetAddress1: 809 PAULA ST
+              City: GAGLEPARK
+              State: CA
+              ZipCode: '96939'
+              ZipFour: '4114'
+              County: OAKLAND
+              FullAddress: 809 PAULA ST GAGLEPARK, CA 96939-4114
+          Filings:
+          - Number: '343833'
+            Type: STATE TAX LIEN RELEASE
+            OriginalFilingDate:
+              Year: 1999
+              Month: 11
+              Day: 22
+            Book: '43855'
+            Page: '764'
+            Agency: OAKLAND COUNTY REGISTER OF DEEDS
+            AgencyState: CA
+            AgencyCounty: OAKLAND
+    LiensJudgmentsServiceRequest:
+      type: object
+      required:
+      - Person
+      - RequestorID
+      properties:
+        RequestorID:
+          type: string
+          example: '123456'
+        Person:
+          $ref: '#/components/schemas/Person_3'
+      example:
+        RequestorID: '123456'
+        Person:
+          Name:
+            First: JOE
+            Last: TEST
+          SSN: '999111111'
+    Company:
+      type: object
+      properties:
+        Name:
+          type: string
+          example: ABC Company
+        Address:
+          $ref: '#/components/schemas/Address_3'
+        FEIN:
+          type: string
+          example: '999999990'
+      example:
+        Address:
+          StreetNumber: '123'
+          City: Agoura Hills
+          StreetPostDirection: E
+          StreetAddress1: 123 Main St
+          County: Los Angeles
+          UnitNumber: '110'
+          StreetAddress2: Apt 504
+          ZipFour: '1212'
+          ZipCode: '91301'
+          StreetPreDirection: S
+          StreetName: Main
+          UnitDesignation: APT
+          StreetSuffix: St
+          State: CA
+        Name: ABC Company
+        FEIN: '999999990'
+    Filing:
+      properties:
+        Number:
+          type: string
+          example: BK131312
+        Type:
+          type: string
+          example: FEDERAL TAX LIEN
+        Date:
+          $ref: '#/components/schemas/ParsedDate_3'
+        OriginalFilingDate:
+          $ref: '#/components/schemas/ParsedDate_3'
+        Book:
+          type: string
+          example: '567657'
+        Page:
+          type: string
+          example: '43545'
+        Agency:
+          type: string
+          example: REGISTER OF DEEDS
+        AgencyCity:
+          type: string
+          example: LOS ANGELES
+        AgencyState:
+          type: string
+          example: CA
+        AgencyCounty:
+          type: string
+          example: LOS ANGELES
+        Status:
+          type: string
+          example: In Progress
+        Description:
+          type: string
+          example: This is a description.
+        Time:
+          type: string
+          example: 01082008
+      example:
+        Date:
+          Month: 1
+          Year: 2017
+          Day: 1
+        Agency: REGISTER OF DEEDS
+        Book: '567657'
+        AgencyCity: LOS ANGELES
+        type: FEDERAL TAX LIEN
+        AgencyState: CA
+        AgencyCounty: LOS ANGELES
+        FilingTime: 01082008
+        Number: BK131312
+        Status: In Progress
+        Description: This is a description.
+        OriginalFilingDate:
+          Month: 1
+          Year: 2017
+          Day: 1
+        Page: '43545'
+    Person_3:
+      type: object
+      properties:
+        Name:
+          $ref: '#/components/schemas/Name_3'
+        Address:
+          $ref: '#/components/schemas/Address_3'
+        DOB:
+          $ref: '#/components/schemas/ParsedDate_3'
+        SSN:
+          type: string
+          example: '999999990'
+        HomePhone:
+          type: string
+          example: '8058675309'
+      example:
+        Address:
+          StreetNumber: '123'
+          City: Agoura Hills
+          StreetPostDirection: E
+          StreetAddress1: 123 Main St
+          County: Los Angeles
+          UnitNumber: '110'
+          StreetAddress2: Apt 504
+          ZipFour: '1212'
+          ZipCode: '91301'
+          StreetPreDirection: S
+          StreetName: Main
+          UnitDesignation: APT
+          StreetSuffix: St
+          State: CA
+        DOB:
+          Month: 1
+          Year: 2017
+          Day: 1
+        HomePhone: '8058675309'
+        Name:
+          Middle: C
+          Last: Doe
+          Prefix: Mr.
+          Suffix: Sr.
+          First: John
+          Full: John C Doe.
+        SSN: '999999990'
+    Record:
+      properties:
+        Amount:
+          type: number
+          example: 0.0
+        FilingJurisdictionName:
+          type: string
+          example: Name
+        FilingStatus:
+          type: string
+          example: Filed
+        CertificateNumber:
+          type: string
+          example: ABC123
+        MultipleDefendant:
+          type: boolean
+        JudgeSatisfiedDate:
+          $ref: '#/components/schemas/ParsedDate_3'
+        JudgeVacatedDate:
+          $ref: '#/components/schemas/ParsedDate_3'
+        ReleaseDate:
+          $ref: '#/components/schemas/ParsedDate_3'
+        Debtors:
+          type: array
+          items:
+            $ref: '#/components/schemas/Party'
+        Creditors:
+          type: array
+          items:
+            $ref: '#/components/schemas/Party'
+        Filings:
+          type: array
+          items:
+            $ref: '#/components/schemas/Filing'
+      example:
+        Amount: 0.0
+        FilingJurisdictionName: CALIFORNIA
+        MultipleDefendant: false
+        Debtors:
+        - Name:
+            Full: JOE K TEST
+            First: JOE
+            Middle: K
+            Last: TEST
+            Prefix: MR
+          SSN: 99911xxxx
+          Addresses:
+          - StreetNumber: '123'
+            StreetName: MAIN
+            StreetSuffix: AVE
+            StreetAddress1: 123 MAIN AVE
+            City: LOS ANGELES
+            State: CA
+            ZipCode: '90001'
+            ZipFour: '1234'
+            County: OAKLAND
+            FullAddress: 123 MAIN AVE LOS ANGELES, CA 90001-1234
+        Filings:
+        - Number: BK40499PG874
+          Type: STATE TAX LIEN
+          OriginalFilingDate:
+            Year: 2008
+            Month: 12
+            Day: 9
+          Book: '40499'
+          Page: '874'
+          Agency: OAKLAND COUNTY REGISTER OF DEEDS
+          AgencyState: CA
+          AgencyCounty: OAKLAND
+    PhoneTimeZone:
+      properties:
+        Phone10:
+          type: string
+          example: '8058675309'
+        Fax:
+          type: string
+          example: '8055672341'
+        TimeZone:
+          type: string
+          example: PST
+      example:
+        TimeZone: PST
+        Phone10: '8058675309'
+        Fax: '8055672341'
+    Name_3:
+      type: object
+      properties:
+        Full:
+          type: string
+          example: John C Doe.
+        First:
+          type: string
+          example: John
+        Middle:
+          type: string
+          example: C
+        Last:
+          type: string
+          example: Doe
+        Suffix:
+          type: string
+          example: Sr.
+        Prefix:
+          type: string
+          example: Mr.
+      example:
+        Middle: C
+        Last: Doe
+        Prefix: Mr.
+        Suffix: Sr.
+        First: John
+        Full: John C Doe.
+    Party:
+      properties:
+        Name:
+          $ref: '#/components/schemas/Name_3'
+        SSN:
+          type: string
+          example: '999999990'
+        Company:
+          $ref: '#/components/schemas/Company'
+        Addresses:
+          type: array
+          items:
+            $ref: '#/components/schemas/Address_3'
+        Phones:
+          type: array
+          items:
+            $ref: '#/components/schemas/PhoneTimeZone'
+      example:
+        Addresses:
+        - StreetNumber: '123'
+          City: Agoura Hills
+          StreetPostDirection: E
+          StreetAddress1: 123 Main St
+          County: Los Angeles
+          UnitNumber: '110'
+          StreetAddress2: Apt 504
+          ZipFour: '1212'
+          ZipCode: '91301'
+          StreetPreDirection: S
+          StreetName: Main
+          UnitDesignation: APT
+          StreetSuffix: St
+          State: CA
+        Phones:
+        - TimeZone: PST
+          Phone10: '8058675309'
+          Fax: '8055672341'
+        Name:
+          Full: JOE K TEST
+          First: JOE
+          Middle: K
+          Last: TEST
+          Prefix: MR
+    ParsedDate_3:
+      properties:
+        Year:
+          type: number
+          example: 2017
+        Month:
+          type: number
+          example: 1
+        Day:
+          type: number
+          example: 1
+      example:
+        Month: 1
+        Year: 2017
+        Day: 1
+    ServiceRequest_2:
+      type: object
+      required:
+      - RequestorID
+      - Employer
+      properties:
+        RequestorID:
+          $id: '#/properties/RequestorID'
+          type: string
+          title: The Requestorid Schema
+          default: ''
+          examples:
+          - fasfafssssafsa
+          pattern: ^(.*)$
+        CompanyName:
+          $id: '#/properties/CompanyName'
+          type: string
+          title: The Companyname Schema
+          default: ''
+          examples:
+          - McDonald's
+          pattern: ^(.*)$
+        PhoneNumber:
+          $id: '#/properties/PhoneNumber'
+          type: string
+          title: The Phonenumber Schema
+          default: ''
+          examples:
+          - ''
+          pattern: ^(.*)$
+        Address:
+          $id: '#/properties/Address'
+          type: object
+          title: The Address Schema
+          required:
+          - FullAddress
+          - Hash
+          - APN
+          - Longitude
+          - Latitude
+          - StateCityZip
+          - PostalCode
+          - Country
+          - County
+          - ZipFour
+          - CountyFIPSCode
+          - ZipCode
+          - City
+          - StreetAddress2
+          - StreetAddress1
+          - UnitNumber
+          - UnitDesignation
+          - StreetPostDirection
+          - StreetSuffix
+          - StreetName
+          - StreetPreDirection
+          - StreetNumber
+          - State
+          - StateFIPSCode
+          properties:
+            FullAddress:
+              $id: '#/properties/Address/properties/FullAddress'
+              type: string
+              title: The Fulladdress Schema
+              default: ''
+              examples:
+              - ''
+              pattern: ^(.*)$
+            Hash:
+              $id: '#/properties/Address/properties/Hash'
+              type: string
+              title: The Hash Schema
+              default: ''
+              examples:
+              - ''
+              pattern: ^(.*)$
+            APN:
+              $id: '#/properties/Address/properties/APN'
+              type: string
+              title: The Apn Schema
+              default: ''
+              examples:
+              - ''
+              pattern: ^(.*)$
+            Longitude:
+              $id: '#/properties/Address/properties/Longitude'
+              type: string
+              title: The Longitude Schema
+              default: ''
+              examples:
+              - ''
+              pattern: ^(.*)$
+            Latitude:
+              $id: '#/properties/Address/properties/Latitude'
+              type: string
+              title: The Latitude Schema
+              default: ''
+              examples:
+              - ''
+              pattern: ^(.*)$
+            StateCityZip:
+              $id: '#/properties/Address/properties/StateCityZip'
+              type: string
+              title: The Statecityzip Schema
+              default: ''
+              examples:
+              - ''
+              pattern: ^(.*)$
+            PostalCode:
+              $id: '#/properties/Address/properties/PostalCode'
+              type: string
+              title: The Postalcode Schema
+              default: ''
+              examples:
+              - ''
+              pattern: ^(.*)$
+            Country:
+              $id: '#/properties/Address/properties/Country'
+              type: string
+              title: The Country Schema
+              default: ''
+              examples:
+              - USA
+              pattern: ^(.*)$
+            County:
+              $id: '#/properties/Address/properties/County'
+              type: string
+              title: The County Schema
+              default: ''
+              examples:
+              - ''
+              pattern: ^(.*)$
+            ZipFour:
+              $id: '#/properties/Address/properties/ZipFour'
+              type: string
+              title: The Zipfour Schema
+              default: ''
+              examples:
+              - ''
+              pattern: ^(.*)$
+            CountyFIPSCode:
+              $id: '#/properties/Address/properties/CountyFIPSCode'
+              type: string
+              title: The Countyfipscode Schema
+              default: ''
+              examples:
+              - ''
+              pattern: ^(.*)$
+            ZipCode:
+              $id: '#/properties/Address/properties/ZipCode'
+              type: string
+              title: The Zipcode Schema
+              default: ''
+              examples:
+              - '30342'
+              pattern: ^(.*)$
+            City:
+              $id: '#/properties/Address/properties/City'
+              type: string
+              title: The City Schema
+              default: ''
+              examples:
+              - Atlanta
+              pattern: ^(.*)$
+            StreetAddress2:
+              $id: '#/properties/Address/properties/StreetAddress2'
+              type: string
+              title: The Streetaddress2 Schema
+              default: ''
+              examples:
+              - ''
+              pattern: ^(.*)$
+            StreetAddress1:
+              $id: '#/properties/Address/properties/StreetAddress1'
+              type: string
+              title: The Streetaddress1 Schema
+              default: ''
+              examples:
+              - 4362 Roswell Rd NE
+              pattern: ^(.*)$
+            UnitNumber:
+              $id: '#/properties/Address/properties/UnitNumber'
+              type: string
+              title: The Unitnumber Schema
+              default: ''
+              examples:
+              - ''
+              pattern: ^(.*)$
+            UnitDesignation:
+              $id: '#/properties/Address/properties/UnitDesignation'
+              type: string
+              title: The Unitdesignation Schema
+              default: ''
+              examples:
+              - ''
+              pattern: ^(.*)$
+            StreetPostDirection:
+              $id: '#/properties/Address/properties/StreetPostDirection'
+              type: string
+              title: The Streetpostdirection Schema
+              default: ''
+              examples:
+              - ''
+              pattern: ^(.*)$
+            StreetSuffix:
+              $id: '#/properties/Address/properties/StreetSuffix'
+              type: string
+              title: The Streetsuffix Schema
+              default: ''
+              examples:
+              - ''
+              pattern: ^(.*)$
+            StreetName:
+              $id: '#/properties/Address/properties/StreetName'
+              type: string
+              title: The Streetname Schema
+              default: ''
+              examples:
+              - ''
+              pattern: ^(.*)$
+            StreetPreDirection:
+              $id: '#/properties/Address/properties/StreetPreDirection'
+              type: string
+              title: The Streetpredirection Schema
+              default: ''
+              examples:
+              - ''
+              pattern: ^(.*)$
+            StreetNumber:
+              $id: '#/properties/Address/properties/StreetNumber'
+              type: string
+              title: The Streetnumber Schema
+              default: ''
+              examples:
+              - ''
+              pattern: ^(.*)$
+            State:
+              $id: '#/properties/Address/properties/State'
+              type: string
+              title: The State Schema
+              default: ''
+              examples:
+              - GAL
+              pattern: ^(.*)$
+            StateFIPSCode:
+              $id: '#/properties/Address/properties/StateFIPSCode'
+              type: string
+              title: The Statefipscode Schema
+              default: ''
+              examples:
+              - ''
+              pattern: ^(.*)$
+        ConfidenceScore:
+          $id: '#/properties/ConfidenceScore'
+          type: string
+          title: The Confidencescore Schema
+          default: ''
+          examples:
+          - '90'
+          pattern: ^(.*)$
+      example:
+        RequestorID: test1
+        CompanyName: McDonald's
+        PhoneNumber: ''
+        Address:
+          FullAddress: ''
+          Hash: ''
+          APN: ''
+          Longitude: ''
+          Latitude: ''
+          StateCityZip: ''
+          PostalCode: ''
+          Country: USA
+          County: ''
+          ZipFour: ''
+          CountyFIPSCode: ''
+          ZipCode: '30342'
+          City: Atlanta
+          StreetAddress2: ''
+          StreetAddress1: 4362 Roswell Rd NE
+          UnitNumber: ''
+          UnitDesignation: ''
+          StreetPostDirection: ''
+          StreetSuffix: ''
+          StreetName: ''
+          StreetPreDirection: ''
+          StreetNumber: ''
+          State: GAL
+          StateFIPSCode: ''
+        ConfidenceScore: '90'
+    ServiceResponse_2:
+      type: object
+      properties:
+        TransactionID:
+          $id: '#/properties/TransactionID'
+          type: string
+          title: The Transactionid Schema
+          default: ''
+          examples:
+          - 18a6dfe5-c465-43b5-9426-34cad478ee3c
+          pattern: ^(.*)$
+        RequestorID:
+          $id: '#/properties/RequestorID'
+          type: string
+          title: The Requestorid Schema
+          default: ''
+          examples:
+          - fasfafssssafsa
+          pattern: ^(.*)$
+        Status:
+          $id: '#/properties/Status'
+          type: object
+          title: The Status Schema
+          required:
+          - StatusCode
+          properties:
+            StatusCode:
+              $id: '#/properties/Status/properties/StatusCode'
+              type: string
+              title: The Statuscode Schema
+              default: ''
+              examples:
+              - Success
+              pattern: ^(.*)$
+        RecordsReturned:
+          $id: '#/properties/RecordsReturned'
+          type: integer
+          title: The Recordsreturned Schema
+          default: 0
+          examples:
+          - 1
+        RecordsFound:
+          $id: '#/properties/RecordsFound'
+          type: integer
+          title: The Recordsfound Schema
+          default: 0
+          examples:
+          - 1
+        Matchcode:
+          $id: '#/properties/Matchcode'
+          type: string
+          title: The Matchcode Schema
+          default: ''
+          examples:
+          - '2'
+          pattern: ^(.*)$
+        Companies:
+          $id: '#/properties/Companies'
+          type: array
+          title: The Companies Schema
+          items:
+            $id: '#/properties/Companies/items'
+            type: object
+            title: The Items Schema
+            required:
+            - Name
+            - Address
+            - Phones
+            - Demographics
+            - ParentCompany
+            - SICCodes
+            - Executives
+            - PublicFilingInformation
+            - AreaCompanies
+            - ListMatchConfidenceScore
+            - YearEstablished
+            properties:
+              Name:
+                $id: '#/properties/Companies/items/properties/Name'
+                type: string
+                title: The Name Schema
+                default: ''
+                examples:
+                - MC DONALD'S
+                pattern: ^(.*)$
+              Address:
+                $id: '#/properties/Companies/items/properties/Address'
+                type: object
+                title: The Address Schema
+                required:
+                - StreetAddress1
+                - City
+                - State
+                - ZipCode
+                - ZipFour
+                - County
+                - Country
+                - Latitude
+                - Longitude
+                - FullAddress
+                properties:
+                  StreetAddress1:
+                    $id: '#/properties/Companies/items/properties/Address/properties/StreetAddress1'
+                    type: string
+                    title: The Streetaddress1 Schema
+                    default: ''
+                    examples:
+                    - 4362 ROSWELL RD NE
+                    pattern: ^(.*)$
+                  City:
+                    $id: '#/properties/Companies/items/properties/Address/properties/City'
+                    type: string
+                    title: The City Schema
+                    default: ''
+                    examples:
+                    - ATLANTA
+                    pattern: ^(.*)$
+                  State:
+                    $id: '#/properties/Companies/items/properties/Address/properties/State'
+                    type: string
+                    title: The State Schema
+                    default: ''
+                    examples:
+                    - GA
+                    pattern: ^(.*)$
+                  ZipCode:
+                    $id: '#/properties/Companies/items/properties/Address/properties/ZipCode'
+                    type: string
+                    title: The Zipcode Schema
+                    default: ''
+                    examples:
+                    - '30342'
+                    pattern: ^(.*)$
+                  ZipFour:
+                    $id: '#/properties/Companies/items/properties/Address/properties/ZipFour'
+                    type: string
+                    title: The Zipfour Schema
+                    default: ''
+                    examples:
+                    - '3317'
+                    pattern: ^(.*)$
+                  County:
+                    $id: '#/properties/Companies/items/properties/Address/properties/County'
+                    type: string
+                    title: The County Schema
+                    default: ''
+                    examples:
+                    - FULTON
+                    pattern: ^(.*)$
+                  Country:
+                    $id: '#/properties/Companies/items/properties/Address/properties/Country'
+                    type: string
+                    title: The Country Schema
+                    default: ''
+                    examples:
+                    - ''
+                    pattern: ^(.*)$
+                  Latitude:
+                    $id: '#/properties/Companies/items/properties/Address/properties/Latitude'
+                    type: string
+                    title: The Latitude Schema
+                    default: ''
+                    examples:
+                    - 033873958
+                    pattern: ^(.*)$
+                  Longitude:
+                    $id: '#/properties/Companies/items/properties/Address/properties/Longitude'
+                    type: string
+                    title: The Longitude Schema
+                    default: ''
+                    examples:
+                    - 084381464
+                    pattern: ^(.*)$
+                  FullAddress:
+                    $id: '#/properties/Companies/items/properties/Address/properties/FullAddress'
+                    type: string
+                    title: The Fulladdress Schema
+                    default: ''
+                    examples:
+                    - 4362 ROSWELL RD NE ATLANTA, GA 30342-3317
+                    pattern: ^(.*)$
+              Phones:
+                $id: '#/properties/Companies/items/properties/Phones'
+                type: array
+                title: The Phones Schema
+                items:
+                  $id: '#/properties/Companies/items/properties/Phones/items'
+                  type: object
+                  title: The Items Schema
+                  required:
+                  - PhoneType
+                  - PhoneNumber
+                  properties:
+                    PhoneType:
+                      $id: '#/properties/Companies/items/properties/Phones/items/properties/PhoneType'
+                      type: string
+                      title: The Phonetype Schema
+                      default: ''
+                      examples:
+                      - Work
+                      pattern: ^(.*)$
+                    PhoneNumber:
+                      $id: '#/properties/Companies/items/properties/Phones/items/properties/PhoneNumber'
+                      type: string
+                      title: The Phonenumber Schema
+                      default: ''
+                      examples:
+                      - (404) 257-9440
+                      pattern: ^(.*)$
+              Demographics:
+                $id: '#/properties/Companies/items/properties/Demographics'
+                type: object
+                title: The Demographics Schema
+                required:
+                - ABINumber
+                - EmployeeSize
+                - SalesVolume
+                - BusinessStatusCode
+                - ProfessionalCode
+                - CreditRatingCode
+                - CreditAlphaScore
+                - CreditNumericScore
+                - CreditLimit
+                - CompanyHoldingStatus
+                - StockExchangeName
+                - StockTickerSymbol
+                - BankAssetFlag
+                - PrimarySICDesignator
+                - WebAddress
+                - Latitude
+                - Longitude
+                - MatchLevel
+                properties:
+                  ABINumber:
+                    $id: '#/properties/Companies/items/properties/Demographics/properties/ABINumber'
+                    type: string
+                    title: The Abinumber Schema
+                    default: ''
+                    examples:
+                    - 69-877-9717
+                    pattern: ^(.*)$
+                  EmployeeSize:
+                    $id: '#/properties/Companies/items/properties/Demographics/properties/EmployeeSize'
+                    type: string
+                    title: The Employeesize Schema
+                    default: ''
+                    examples:
+                    - 20 to 49
+                    pattern: ^(.*)$
+                  SalesVolume:
+                    $id: '#/properties/Companies/items/properties/Demographics/properties/SalesVolume'
+                    type: string
+                    title: The Salesvolume Schema
+                    default: ''
+                    examples:
+                    - $2.5 - 5 MILLION
+                    pattern: ^(.*)$
+                  BusinessStatusCode:
+                    $id: '#/properties/Companies/items/properties/Demographics/properties/BusinessStatusCode'
+                    type: string
+                    title: The Businessstatuscode Schema
+                    default: ''
+                    examples:
+                    - BRANCH
+                    pattern: ^(.*)$
+                  ProfessionalCode:
+                    $id: '#/properties/Companies/items/properties/Demographics/properties/ProfessionalCode'
+                    type: string
+                    title: The Professionalcode Schema
+                    default: ''
+                    examples:
+                    - BUSINESS FIRM
+                    pattern: ^(.*)$
+                  CreditRatingCode:
+                    $id: '#/properties/Companies/items/properties/Demographics/properties/CreditRatingCode'
+                    type: string
+                    title: The Creditratingcode Schema
+                    default: ''
+                    examples:
+                    - EXCELLENT
+                    pattern: ^(.*)$
+                  CreditAlphaScore:
+                    $id: '#/properties/Companies/items/properties/Demographics/properties/CreditAlphaScore'
+                    type: string
+                    title: The Creditalphascore Schema
+                    default: ''
+                    examples:
+                    - A+
+                    pattern: ^(.*)$
+                  CreditNumericScore:
+                    $id: '#/properties/Companies/items/properties/Demographics/properties/CreditNumericScore'
+                    type: string
+                    title: The Creditnumericscore Schema
+                    default: ''
+                    examples:
+                    - '100'
+                    pattern: ^(.*)$
+                  CreditLimit:
+                    $id: '#/properties/Companies/items/properties/Demographics/properties/CreditLimit'
+                    type: string
+                    title: The Creditlimit Schema
+                    default: ''
+                    examples:
+                    - '010000'
+                    pattern: ^(.*)$
+                  CompanyHoldingStatus:
+                    $id: '#/properties/Companies/items/properties/Demographics/properties/CompanyHoldingStatus'
+                    type: string
+                    title: The Companyholdingstatus Schema
+                    default: ''
+                    examples:
+                    - BRN
+                    pattern: ^(.*)$
+                  StockExchangeName:
+                    $id: '#/properties/Companies/items/properties/Demographics/properties/StockExchangeName'
+                    type: string
+                    title: The Stockexchangename Schema
+                    default: ''
+                    examples:
+                    - ''
+                    pattern: ^(.*)$
+                  StockTickerSymbol:
+                    $id: '#/properties/Companies/items/properties/Demographics/properties/StockTickerSymbol'
+                    type: string
+                    title: The Stocktickersymbol Schema
+                    default: ''
+                    examples:
+                    - ''
+                    pattern: ^(.*)$
+                  BankAssetFlag:
+                    $id: '#/properties/Companies/items/properties/Demographics/properties/BankAssetFlag'
+                    type: string
+                    title: The Bankassetflag Schema
+                    default: ''
+                    examples:
+                    - ''
+                    pattern: ^(.*)$
+                  PrimarySICDesignator:
+                    $id: '#/properties/Companies/items/properties/Demographics/properties/PrimarySICDesignator'
+                    type: string
+                    title: The Primarysicdesignator Schema
+                    default: ''
+                    examples:
+                    - L
+                    pattern: ^(.*)$
+                  WebAddress:
+                    $id: '#/properties/Companies/items/properties/Demographics/properties/WebAddress'
+                    type: string
+                    title: The Webaddress Schema
+                    default: ''
+                    examples:
+                    - MCDONALDS.COM
+                    pattern: ^(.*)$
+                  Latitude:
+                    $id: '#/properties/Companies/items/properties/Demographics/properties/Latitude'
+                    type: integer
+                    title: The Latitude Schema
+                    default: 0
+                    examples:
+                    - 33873958
+                  Longitude:
+                    $id: '#/properties/Companies/items/properties/Demographics/properties/Longitude'
+                    type: integer
+                    title: The Longitude Schema
+                    default: 0
+                    examples:
+                    - 84381464
+                  MatchLevel:
+                    $id: '#/properties/Companies/items/properties/Demographics/properties/MatchLevel'
+                    type: string
+                    title: The Matchlevel Schema
+                    default: ''
+                    examples:
+                    - P
+                    pattern: ^(.*)$
+              ParentCompany:
+                $id: '#/properties/Companies/items/properties/ParentCompany'
+                type: object
+                title: The Parentcompany Schema
+                required:
+                - ABINumber
+                - CompanyName
+                - Address
+                - City
+                - State
+                - ZIPCode
+                - ZIP4
+                - PublicFilingCount
+                properties:
+                  ABINumber:
+                    $id: '#/properties/Companies/items/properties/ParentCompany/properties/ABINumber'
+                    type: string
+                    title: The Abinumber Schema
+                    default: ''
+                    examples:
+                    - 00-168-2400
+                    pattern: ^(.*)$
+                  CompanyName:
+                    $id: '#/properties/Companies/items/properties/ParentCompany/properties/CompanyName'
+                    type: string
+                    title: The Companyname Schema
+                    default: ''
+                    examples:
+                    - MC DONALD'S
+                    pattern: ^(.*)$
+                  Address:
+                    $id: '#/properties/Companies/items/properties/ParentCompany/properties/Address'
+                    type: string
+                    title: The Address Schema
+                    default: ''
+                    examples:
+                    - 110 N CARPENTER ST
+                    pattern: ^(.*)$
+                  City:
+                    $id: '#/properties/Companies/items/properties/ParentCompany/properties/City'
+                    type: string
+                    title: The City Schema
+                    default: ''
+                    examples:
+                    - CHICAGO
+                    pattern: ^(.*)$
+                  State:
+                    $id: '#/properties/Companies/items/properties/ParentCompany/properties/State'
+                    type: string
+                    title: The State Schema
+                    default: ''
+                    examples:
+                    - IL
+                    pattern: ^(.*)$
+                  ZIPCode:
+                    $id: '#/properties/Companies/items/properties/ParentCompany/properties/ZIPCode'
+                    type: string
+                    title: The Zipcode Schema
+                    default: ''
+                    examples:
+                    - '60607'
+                    pattern: ^(.*)$
+                  ZIP4:
+                    $id: '#/properties/Companies/items/properties/ParentCompany/properties/ZIP4'
+                    type: string
+                    title: The Zip4 Schema
+                    default: ''
+                    examples:
+                    - '4106'
+                    pattern: ^(.*)$
+                  PublicFilingCount:
+                    $id: '#/properties/Companies/items/properties/ParentCompany/properties/PublicFilingCount'
+                    type: string
+                    title: The Publicfilingcount Schema
+                    default: ''
+                    examples:
+                    - '00000'
+                    pattern: ^(.*)$
+              SICCodes:
+                $id: '#/properties/Companies/items/properties/SICCodes'
+                type: array
+                title: The Siccodes Schema
+                items:
+                  $id: '#/properties/Companies/items/properties/SICCodes/items'
+                  type: object
+                  title: The Items Schema
+                  required:
+                  - Code
+                  - Description
+                  - Franchise
+                  - IndustrySpecificCode
+                  - IndustrySpecificDescription
+                  - AdSizeCode
+                  - YearFirstAppeared
+                  properties:
+                    Code:
+                      $id: '#/properties/Companies/items/properties/SICCodes/items/properties/Code'
+                      type: string
+                      title: The Code Schema
+                      default: ''
+                      examples:
+                      - 5812-08
+                      pattern: ^(.*)$
+                    Description:
+                      $id: '#/properties/Companies/items/properties/SICCodes/items/properties/Description'
+                      type: string
+                      title: The Description Schema
+                      default: ''
+                      examples:
+                      - RESTAURANTS
+                      pattern: ^(.*)$
+                    Franchise:
+                      $id: '#/properties/Companies/items/properties/SICCodes/items/properties/Franchise'
+                      type: object
+                      title: The Franchise Schema
+                      required:
+                      - Code
+                      - Description
+                      properties:
+                        Code:
+                          $id: '#/properties/Companies/items/properties/SICCodes/items/properties/Franchise/properties/Code'
+                          type: string
+                          title: The Code Schema
+                          default: ''
+                          examples:
+                          - K
+                          pattern: ^(.*)$
+                        Description:
+                          $id: '#/properties/Companies/items/properties/SICCodes/items/properties/Franchise/properties/Description'
+                          type: array
+                          title: The Description Schema
+                          items:
+                            $id: '#/properties/Companies/items/properties/SICCodes/items/properties/Franchise/properties/Description/items'
+                            type: string
+                            title: The Items Schema
+                            default: ''
+                            examples:
+                            - MC DONALD'S
+                            - MC DONALD'S
+                            - ''
+                            pattern: ^(.*)$
+                    IndustrySpecificCode:
+                      $id: '#/properties/Companies/items/properties/SICCodes/items/properties/IndustrySpecificCode'
+                      type: string
+                      title: The Industryspecificcode Schema
+                      default: ''
+                      examples:
+                      - e
+                      pattern: ^(.*)$
+                    IndustrySpecificDescription:
+                      $id: '#/properties/Companies/items/properties/SICCodes/items/properties/IndustrySpecificDescription'
+                      type: string
+                      title: The Industryspecificdescription Schema
+                      default: ''
+                      examples:
+                      - BURGERS
+                      pattern: ^(.*)$
+                    AdSizeCode:
+                      $id: '#/properties/Companies/items/properties/SICCodes/items/properties/AdSizeCode'
+                      type: string
+                      title: The Adsizecode Schema
+                      default: ''
+                      examples:
+                      - REGULAR
+                      pattern: ^(.*)$
+                    YearFirstAppeared:
+                      $id: '#/properties/Companies/items/properties/SICCodes/items/properties/YearFirstAppeared'
+                      type: string
+                      title: The Yearfirstappeared Schema
+                      default: ''
+                      examples:
+                      - 15+
+                      pattern: ^(.*)$
+              Executives:
+                $id: '#/properties/Companies/items/properties/Executives'
+                type: array
+                title: The Executives Schema
+                items:
+                  $id: '#/properties/Companies/items/properties/Executives/items'
+                  type: object
+                  title: The Items Schema
+                  required:
+                  - LastName
+                  - FirstName
+                  - ProfessionalTitle
+                  - Title
+                  - Gender
+                  properties:
+                    LastName:
+                      $id: '#/properties/Companies/items/properties/Executives/items/properties/LastName'
+                      type: string
+                      title: The Lastname Schema
+                      default: ''
+                      examples:
+                      - FARIAS
+                      pattern: ^(.*)$
+                    FirstName:
+                      $id: '#/properties/Companies/items/properties/Executives/items/properties/FirstName'
+                      type: string
+                      title: The Firstname Schema
+                      default: ''
+                      examples:
+                      - JIM
+                      pattern: ^(.*)$
+                    ProfessionalTitle:
+                      $id: '#/properties/Companies/items/properties/Executives/items/properties/ProfessionalTitle'
+                      type: string
+                      title: The Professionaltitle Schema
+                      default: ''
+                      examples:
+                      - ''
+                      pattern: ^(.*)$
+                    Title:
+                      $id: '#/properties/Companies/items/properties/Executives/items/properties/Title'
+                      type: string
+                      title: The Title Schema
+                      default: ''
+                      examples:
+                      - General Mgr
+                      pattern: ^(.*)$
+                    Gender:
+                      $id: '#/properties/Companies/items/properties/Executives/items/properties/Gender'
+                      type: string
+                      title: The Gender Schema
+                      default: ''
+                      examples:
+                      - MALE
+                      pattern: ^(.*)$
+              PublicFilingInformation:
+                $id: '#/properties/Companies/items/properties/PublicFilingInformation'
+                type: array
+                title: The Publicfilinginformation Schema
+                items:
+                  $id: '#/properties/Companies/items/properties/PublicFilingInformation/items'
+                  type: object
+                  title: The Items Schema
+                  required:
+                  - AddDeleteFlag
+                  - EntityIdentifier
+                  - AssociationCode
+                  - HISCourtID
+                  - StateOfFiling
+                  - CountyOfFiling
+                  - CourtType
+                  - FilingType
+                  - CaseNumber
+                  - Book
+                  - Page
+                  - FilingDate
+                  - ReleaseDate
+                  - AmountOrLiability
+                  - Assets
+                  - PlaintiffOrLawFirm
+                  - Attorney
+                  - AttorneyPhone
+                  - Schedule341Date
+                  - JudgesInitials
+                  - OtherCaseNumber
+                  - SSNOrTaxIDNumber
+                  - DefendantName
+                  - GenerationCode
+                  - DateOfUpload
+                  - UnlawfulDetainerFlag
+                  - OriginalCase
+                  - OriginalBook
+                  - OriginalPage
+                  - AttorneyAddress
+                  - AttorneyCity
+                  - AttorneyState
+                  - AttorneyZIPCode
+                  - AssetsAvailableForDistribution
+                  - ActionType
+                  - Schedule341Time
+                  - CountyOfResidency
+                  - OriginatingDepartment
+                  - BankruptcyDismissalFlag
+                  - RMSID
+                  properties:
+                    AddDeleteFlag:
+                      $id: '#/properties/Companies/items/properties/PublicFilingInformation/items/properties/AddDeleteFlag'
+                      type: string
+                      title: The Adddeleteflag Schema
+                      default: ''
+                      examples:
+                      - ''
+                      pattern: ^(.*)$
+                    EntityIdentifier:
+                      $id: '#/properties/Companies/items/properties/PublicFilingInformation/items/properties/EntityIdentifier'
+                      type: string
+                      title: The Entityidentifier Schema
+                      default: ''
+                      examples:
+                      - ''
+                      pattern: ^(.*)$
+                    AssociationCode:
+                      $id: '#/properties/Companies/items/properties/PublicFilingInformation/items/properties/AssociationCode'
+                      type: string
+                      title: The Associationcode Schema
+                      default: ''
+                      examples:
+                      - ''
+                      pattern: ^(.*)$
+                    HISCourtID:
+                      $id: '#/properties/Companies/items/properties/PublicFilingInformation/items/properties/HISCourtID'
+                      type: string
+                      title: The Hiscourtid Schema
+                      default: ''
+                      examples:
+                      - ''
+                      pattern: ^(.*)$
+                    StateOfFiling:
+                      $id: '#/properties/Companies/items/properties/PublicFilingInformation/items/properties/StateOfFiling'
+                      type: string
+                      title: The Stateoffiling Schema
+                      default: ''
+                      examples:
+                      - ''
+                      pattern: ^(.*)$
+                    CountyOfFiling:
+                      $id: '#/properties/Companies/items/properties/PublicFilingInformation/items/properties/CountyOfFiling'
+                      type: string
+                      title: The Countyoffiling Schema
+                      default: ''
+                      examples:
+                      - ''
+                      pattern: ^(.*)$
+                    CourtType:
+                      $id: '#/properties/Companies/items/properties/PublicFilingInformation/items/properties/CourtType'
+                      type: string
+                      title: The Courttype Schema
+                      default: ''
+                      examples:
+                      - ''
+                      pattern: ^(.*)$
+                    FilingType:
+                      $id: '#/properties/Companies/items/properties/PublicFilingInformation/items/properties/FilingType'
+                      type: string
+                      title: The Filingtype Schema
+                      default: ''
+                      examples:
+                      - ''
+                      pattern: ^(.*)$
+                    CaseNumber:
+                      $id: '#/properties/Companies/items/properties/PublicFilingInformation/items/properties/CaseNumber'
+                      type: string
+                      title: The Casenumber Schema
+                      default: ''
+                      examples:
+                      - ''
+                      pattern: ^(.*)$
+                    Book:
+                      $id: '#/properties/Companies/items/properties/PublicFilingInformation/items/properties/Book'
+                      type: string
+                      title: The Book Schema
+                      default: ''
+                      examples:
+                      - ''
+                      pattern: ^(.*)$
+                    Page:
+                      $id: '#/properties/Companies/items/properties/PublicFilingInformation/items/properties/Page'
+                      type: string
+                      title: The Page Schema
+                      default: ''
+                      examples:
+                      - ''
+                      pattern: ^(.*)$
+                    FilingDate:
+                      $id: '#/properties/Companies/items/properties/PublicFilingInformation/items/properties/FilingDate'
+                      type: string
+                      title: The Filingdate Schema
+                      default: ''
+                      examples:
+                      - ''
+                      pattern: ^(.*)$
+                    ReleaseDate:
+                      $id: '#/properties/Companies/items/properties/PublicFilingInformation/items/properties/ReleaseDate'
+                      type: string
+                      title: The Releasedate Schema
+                      default: ''
+                      examples:
+                      - ''
+                      pattern: ^(.*)$
+                    AmountOrLiability:
+                      $id: '#/properties/Companies/items/properties/PublicFilingInformation/items/properties/AmountOrLiability'
+                      type: string
+                      title: The Amountorliability Schema
+                      default: ''
+                      examples:
+                      - ''
+                      pattern: ^(.*)$
+                    Assets:
+                      $id: '#/properties/Companies/items/properties/PublicFilingInformation/items/properties/Assets'
+                      type: string
+                      title: The Assets Schema
+                      default: ''
+                      examples:
+                      - ''
+                      pattern: ^(.*)$
+                    PlaintiffOrLawFirm:
+                      $id: '#/properties/Companies/items/properties/PublicFilingInformation/items/properties/PlaintiffOrLawFirm'
+                      type: string
+                      title: The Plaintifforlawfirm Schema
+                      default: ''
+                      examples:
+                      - ''
+                      pattern: ^(.*)$
+                    Attorney:
+                      $id: '#/properties/Companies/items/properties/PublicFilingInformation/items/properties/Attorney'
+                      type: string
+                      title: The Attorney Schema
+                      default: ''
+                      examples:
+                      - ''
+                      pattern: ^(.*)$
+                    AttorneyPhone:
+                      $id: '#/properties/Companies/items/properties/PublicFilingInformation/items/properties/AttorneyPhone'
+                      type: string
+                      title: The Attorneyphone Schema
+                      default: ''
+                      examples:
+                      - ''
+                      pattern: ^(.*)$
+                    Schedule341Date:
+                      $id: '#/properties/Companies/items/properties/PublicFilingInformation/items/properties/Schedule341Date'
+                      type: string
+                      title: The Schedule341date Schema
+                      default: ''
+                      examples:
+                      - ''
+                      pattern: ^(.*)$
+                    JudgesInitials:
+                      $id: '#/properties/Companies/items/properties/PublicFilingInformation/items/properties/JudgesInitials'
+                      type: string
+                      title: The Judgesinitials Schema
+                      default: ''
+                      examples:
+                      - ''
+                      pattern: ^(.*)$
+                    OtherCaseNumber:
+                      $id: '#/properties/Companies/items/properties/PublicFilingInformation/items/properties/OtherCaseNumber'
+                      type: string
+                      title: The Othercasenumber Schema
+                      default: ''
+                      examples:
+                      - ''
+                      pattern: ^(.*)$
+                    SSNOrTaxIDNumber:
+                      $id: '#/properties/Companies/items/properties/PublicFilingInformation/items/properties/SSNOrTaxIDNumber'
+                      type: string
+                      title: The Ssnortaxidnumber Schema
+                      default: ''
+                      examples:
+                      - ''
+                      pattern: ^(.*)$
+                    DefendantName:
+                      $id: '#/properties/Companies/items/properties/PublicFilingInformation/items/properties/DefendantName'
+                      type: string
+                      title: The Defendantname Schema
+                      default: ''
+                      examples:
+                      - ''
+                      pattern: ^(.*)$
+                    GenerationCode:
+                      $id: '#/properties/Companies/items/properties/PublicFilingInformation/items/properties/GenerationCode'
+                      type: string
+                      title: The Generationcode Schema
+                      default: ''
+                      examples:
+                      - ''
+                      pattern: ^(.*)$
+                    DateOfUpload:
+                      $id: '#/properties/Companies/items/properties/PublicFilingInformation/items/properties/DateOfUpload'
+                      type: string
+                      title: The Dateofupload Schema
+                      default: ''
+                      examples:
+                      - ''
+                      pattern: ^(.*)$
+                    UnlawfulDetainerFlag:
+                      $id: '#/properties/Companies/items/properties/PublicFilingInformation/items/properties/UnlawfulDetainerFlag'
+                      type: string
+                      title: The Unlawfuldetainerflag Schema
+                      default: ''
+                      examples:
+                      - ''
+                      pattern: ^(.*)$
+                    OriginalCase:
+                      $id: '#/properties/Companies/items/properties/PublicFilingInformation/items/properties/OriginalCase'
+                      type: string
+                      title: The Originalcase Schema
+                      default: ''
+                      examples:
+                      - ''
+                      pattern: ^(.*)$
+                    OriginalBook:
+                      $id: '#/properties/Companies/items/properties/PublicFilingInformation/items/properties/OriginalBook'
+                      type: string
+                      title: The Originalbook Schema
+                      default: ''
+                      examples:
+                      - ''
+                      pattern: ^(.*)$
+                    OriginalPage:
+                      $id: '#/properties/Companies/items/properties/PublicFilingInformation/items/properties/OriginalPage'
+                      type: string
+                      title: The Originalpage Schema
+                      default: ''
+                      examples:
+                      - ''
+                      pattern: ^(.*)$
+                    AttorneyAddress:
+                      $id: '#/properties/Companies/items/properties/PublicFilingInformation/items/properties/AttorneyAddress'
+                      type: string
+                      title: The Attorneyaddress Schema
+                      default: ''
+                      examples:
+                      - ''
+                      pattern: ^(.*)$
+                    AttorneyCity:
+                      $id: '#/properties/Companies/items/properties/PublicFilingInformation/items/properties/AttorneyCity'
+                      type: string
+                      title: The Attorneycity Schema
+                      default: ''
+                      examples:
+                      - ''
+                      pattern: ^(.*)$
+                    AttorneyState:
+                      $id: '#/properties/Companies/items/properties/PublicFilingInformation/items/properties/AttorneyState'
+                      type: string
+                      title: The Attorneystate Schema
+                      default: ''
+                      examples:
+                      - ''
+                      pattern: ^(.*)$
+                    AttorneyZIPCode:
+                      $id: '#/properties/Companies/items/properties/PublicFilingInformation/items/properties/AttorneyZIPCode'
+                      type: string
+                      title: The Attorneyzipcode Schema
+                      default: ''
+                      examples:
+                      - ''
+                      pattern: ^(.*)$
+                    AssetsAvailableForDistribution:
+                      $id: '#/properties/Companies/items/properties/PublicFilingInformation/items/properties/AssetsAvailableForDistribution'
+                      type: string
+                      title: The Assetsavailablefordistribution Schema
+                      default: ''
+                      examples:
+                      - ''
+                      pattern: ^(.*)$
+                    ActionType:
+                      $id: '#/properties/Companies/items/properties/PublicFilingInformation/items/properties/ActionType'
+                      type: string
+                      title: The Actiontype Schema
+                      default: ''
+                      examples:
+                      - ''
+                      pattern: ^(.*)$
+                    Schedule341Time:
+                      $id: '#/properties/Companies/items/properties/PublicFilingInformation/items/properties/Schedule341Time'
+                      type: string
+                      title: The Schedule341time Schema
+                      default: ''
+                      examples:
+                      - ''
+                      pattern: ^(.*)$
+                    CountyOfResidency:
+                      $id: '#/properties/Companies/items/properties/PublicFilingInformation/items/properties/CountyOfResidency'
+                      type: string
+                      title: The Countyofresidency Schema
+                      default: ''
+                      examples:
+                      - ''
+                      pattern: ^(.*)$
+                    OriginatingDepartment:
+                      $id: '#/properties/Companies/items/properties/PublicFilingInformation/items/properties/OriginatingDepartment'
+                      type: string
+                      title: The Originatingdepartment Schema
+                      default: ''
+                      examples:
+                      - ''
+                      pattern: ^(.*)$
+                    BankruptcyDismissalFlag:
+                      $id: '#/properties/Companies/items/properties/PublicFilingInformation/items/properties/BankruptcyDismissalFlag'
+                      type: string
+                      title: The Bankruptcydismissalflag Schema
+                      default: ''
+                      examples:
+                      - ''
+                      pattern: ^(.*)$
+                    RMSID:
+                      $id: '#/properties/Companies/items/properties/PublicFilingInformation/items/properties/RMSID'
+                      type: string
+                      title: The Rmsid Schema
+                      default: ''
+                      examples:
+                      - ''
+                      pattern: ^(.*)$
+              AreaCompanies:
+                $id: '#/properties/Companies/items/properties/AreaCompanies'
+                type: array
+                title: The Areacompanies Schema
+                items:
+                  $id: '#/properties/Companies/items/properties/AreaCompanies/items'
+                  type: object
+                  title: The Items Schema
+                  required:
+                  - Name
+                  - Address
+                  - PhoneNumber
+                  - ABINumber
+                  - FortuneRanking
+                  - TeleresearchDate
+                  - ContactInformation
+                  properties:
+                    Name:
+                      $id: '#/properties/Companies/items/properties/AreaCompanies/items/properties/Name'
+                      type: string
+                      title: The Name Schema
+                      default: ''
+                      examples:
+                      - ARBY'S
+                      pattern: ^(.*)$
+                    Address:
+                      $id: '#/properties/Companies/items/properties/AreaCompanies/items/properties/Address'
+                      type: object
+                      title: The Address Schema
+                      required:
+                      - StreetAddress1
+                      - City
+                      - State
+                      - ZipCode
+                      - ZipFour
+                      - FullAddress
+                      properties:
+                        StreetAddress1:
+                          $id: '#/properties/Companies/items/properties/AreaCompanies/items/properties/Address/properties/StreetAddress1'
+                          type: string
+                          title: The Streetaddress1 Schema
+                          default: ''
+                          examples:
+                          - 4415 ROSWELL RD NE
+                          pattern: ^(.*)$
+                        City:
+                          $id: '#/properties/Companies/items/properties/AreaCompanies/items/properties/Address/properties/City'
+                          type: string
+                          title: The City Schema
+                          default: ''
+                          examples:
+                          - ATLANTA
+                          pattern: ^(.*)$
+                        State:
+                          $id: '#/properties/Companies/items/properties/AreaCompanies/items/properties/Address/properties/State'
+                          type: string
+                          title: The State Schema
+                          default: ''
+                          examples:
+                          - GA
+                          pattern: ^(.*)$
+                        ZipCode:
+                          $id: '#/properties/Companies/items/properties/AreaCompanies/items/properties/Address/properties/ZipCode'
+                          type: string
+                          title: The Zipcode Schema
+                          default: ''
+                          examples:
+                          - '30342'
+                          pattern: ^(.*)$
+                        ZipFour:
+                          $id: '#/properties/Companies/items/properties/AreaCompanies/items/properties/Address/properties/ZipFour'
+                          type: string
+                          title: The Zipfour Schema
+                          default: ''
+                          examples:
+                          - '3316'
+                          pattern: ^(.*)$
+                        FullAddress:
+                          $id: '#/properties/Companies/items/properties/AreaCompanies/items/properties/Address/properties/FullAddress'
+                          type: string
+                          title: The Fulladdress Schema
+                          default: ''
+                          examples:
+                          - 4415 ROSWELL RD NE ATLANTA, GA 30342-3316
+                          pattern: ^(.*)$
+                    PhoneNumber:
+                      $id: '#/properties/Companies/items/properties/AreaCompanies/items/properties/PhoneNumber'
+                      type: object
+                      title: The Phonenumber Schema
+                      required:
+                      - PhoneType
+                      - PhoneNumber
+                      properties:
+                        PhoneType:
+                          $id: '#/properties/Companies/items/properties/AreaCompanies/items/properties/PhoneNumber/properties/PhoneType'
+                          type: string
+                          title: The Phonetype Schema
+                          default: ''
+                          examples:
+                          - Work
+                          pattern: ^(.*)$
+                        PhoneNumber:
+                          $id: '#/properties/Companies/items/properties/AreaCompanies/items/properties/PhoneNumber/properties/PhoneNumber'
+                          type: string
+                          title: The Phonenumber Schema
+                          default: ''
+                          examples:
+                          - (404) 843-2729
+                          pattern: ^(.*)$
+                    ABINumber:
+                      $id: '#/properties/Companies/items/properties/AreaCompanies/items/properties/ABINumber'
+                      type: string
+                      title: The Abinumber Schema
+                      default: ''
+                      examples:
+                      - '661884049'
+                      pattern: ^(.*)$
+                    FortuneRanking:
+                      $id: '#/properties/Companies/items/properties/AreaCompanies/items/properties/FortuneRanking'
+                      type: string
+                      title: The Fortuneranking Schema
+                      default: ''
+                      examples:
+                      - '0000'
+                      pattern: ^(.*)$
+                    TeleresearchDate:
+                      $id: '#/properties/Companies/items/properties/AreaCompanies/items/properties/TeleresearchDate'
+                      type: string
+                      title: The Teleresearchdate Schema
+                      default: ''
+                      examples:
+                      - '201904'
+                      pattern: ^(.*)$
+                    ContactInformation:
+                      $id: '#/properties/Companies/items/properties/AreaCompanies/items/properties/ContactInformation'
+                      type: object
+                      title: The Contactinformation Schema
+                      required:
+                      - LastName
+                      - FirstName
+                      - Title
+                      - ProfessionalTitle
+                      - Gender
+                      properties:
+                        LastName:
+                          $id: '#/properties/Companies/items/properties/AreaCompanies/items/properties/ContactInformation/properties/LastName'
+                          type: string
+                          title: The Lastname Schema
+                          default: ''
+                          examples:
+                          - ''
+                          pattern: ^(.*)$
+                        FirstName:
+                          $id: '#/properties/Companies/items/properties/AreaCompanies/items/properties/ContactInformation/properties/FirstName'
+                          type: string
+                          title: The Firstname Schema
+                          default: ''
+                          examples:
+                          - ''
+                          pattern: ^(.*)$
+                        Title:
+                          $id: '#/properties/Companies/items/properties/AreaCompanies/items/properties/ContactInformation/properties/Title'
+                          type: string
+                          title: The Title Schema
+                          default: ''
+                          examples:
+                          - ''
+                          pattern: ^(.*)$
+                        ProfessionalTitle:
+                          $id: '#/properties/Companies/items/properties/AreaCompanies/items/properties/ContactInformation/properties/ProfessionalTitle'
+                          type: string
+                          title: The Professionaltitle Schema
+                          default: ''
+                          examples:
+                          - ''
+                          pattern: ^(.*)$
+                        Gender:
+                          $id: '#/properties/Companies/items/properties/AreaCompanies/items/properties/ContactInformation/properties/Gender'
+                          type: string
+                          title: The Gender Schema
+                          default: ''
+                          examples:
+                          - ''
+                          pattern: ^(.*)$
+              ListMatchConfidenceScore:
+                $id: '#/properties/Companies/items/properties/ListMatchConfidenceScore'
+                type: integer
+                title: The Listmatchconfidencescore Schema
+                default: 0
+                examples:
+                - 0
+              YearEstablished:
+                $id: '#/properties/Companies/items/properties/YearEstablished'
+                type: integer
+                title: The Yearestablished Schema
+                default: 0
+                examples:
+                - 0
+    ErrorResponse:
+      type: object
+      properties:
+        Code:
+          type: string
+        Message:
+          type: string
+    AffiliationResponse:
+      type: object
+      properties:
+        Name:
+          type: string
+        Description:
+          type: string
+    ServiceResponse_3:
+      type: object
+      properties:
+        TransactionID:
+          type: string
+        RequestorID:
+          type: string
+        Error:
+          $ref: '#/components/schemas/ErrorResponse'
+        External:
+          type: boolean
+        Verified:
+          type: boolean
+        Affiliation:
+          $ref: '#/components/schemas/AffiliationResponse'
+    NameRequest:
+      type: object
+      properties:
+        First:
+          type: string
+        Last:
+          type: string
+        Middle:
+          type: string
+    ServiceRequest_3:
+      type: object
+      required:
+      - RequestorID
+      - Employer
+      properties:
+        RequestorID:
+          type: string
+        Person:
+          $ref: '#/components/schemas/PersonRequest'
+        ServiceDay:
+          $ref: '#/components/schemas/DateRequest'
+      example:
+        RequestorID: '123'
+        Person:
+          Name:
+            First: harry
+            Last: dune
+          SSN: 000905188
+          DOB:
+            Year: '1963'
+            Month: '10'
+            Day: '25'
+        ServiceDay:
+          Year: '2016'
+          Month: '01'
+          Day: '01'
+    PersonRequest:
+      type: object
+      properties:
+        Name:
+          $ref: '#/components/schemas/NameRequest'
+        SSN:
+          type: string
+        DOB:
+          $ref: '#/components/schemas/DateRequest'
+    Address_4:
+      properties:
+        Type:
+          type: string
+        StreetAddress1:
+          type: string
+        StreetAddress2:
+          type: string
+        StreetAddress3:
+          type: string
+        StreetAddress4:
+          type: string
+        UnitNumber:
+          type: string
+        UnitDesignation:
+          type: string
+        StreetPostDirection:
+          type: string
+        StreetSuffix:
+          type: string
+        StreetName:
+          type: string
+        StreetPreDirection:
+          type: string
+        StreetNumber:
+          type: string
+        City:
+          type: string
+        FullAddress:
+          type: string
+        APN:
+          type: string
+        Longitude:
+          type: string
+        Latitude:
+          type: string
+        StateCityZip:
+          type: string
+        PostalCode:
+          type: string
+        Country:
+          type: string
+        County:
+          type: string
+        ZipFour:
+          type: string
+        ZipCode:
+          type: string
+        Hash:
+          type: string
+        State:
+          type: string
+        Province:
+          type: string
+    HUDEPLS:
+      type: object
+      properties:
+        ConfidenceScore:
+          type: integer
+        EntityType:
+          type: string
+        Name:
+          $ref: '#/components/schemas/Name_4'
+        Address:
+          $ref: '#/components/schemas/Address_4'
+        DUNS:
+          type: string
+        ExclusionProgram:
+          type: string
+        ExcludingAgency:
+          type: string
+        CTCode:
+          type: string
+        ExclusionType:
+          type: string
+        AdditionalComments:
+          type: string
+        ActiveDate:
+          type: string
+        TerminationDate:
+          type: string
+        CrossReference:
+          type: string
+        SAMNumber:
+          type: string
+        RecordStatus:
+          type: string
+        Cage:
+          type: string
+        NPI:
+          type: string
+        CreationDate:
+          type: string
+    ServiceRequestHUDEPLS:
+      type: object
+      required:
+      - EntityType
+      - Name
+      - RequestorID
+      properties:
+        RequestorID:
+          type: string
+        IncludeAnalytics:
+          type: boolean
+        Search:
+          $ref: '#/components/schemas/SearchRequest'
+      example:
+        RequestorID: ID123
+        Search:
+          EntityType: Individual
+          Name:
+            First: John
+            Middle: ''
+            LastOrCompanyName: Smith
+          ConfidenceScore: 80
+    ServiceResponseHUDEPLS:
+      type: object
+      properties:
+        TransactionID:
+          type: string
+        RequestorID:
+          type: string
+        Result:
+          type: string
+          enum:
+          - RecordsFound
+          - NoRecordsFound
+        HUDEPLS:
+          type: array
+          items:
+            $ref: '#/components/schemas/HUDEPLS'
+        Alerts:
+          type: array
+          items:
+            $ref: '#/components/schemas/AlertType'
+    Ineligible:
+      type: object
+      properties:
+        ConfidenceScore:
+          type: integer
+        EntityType:
+          type: string
+        Name:
+          $ref: '#/components/schemas/Name_4'
+        SSN:
+          type: string
+        Role:
+          type: string
+        Address:
+          $ref: '#/components/schemas/Address_4'
+        MPNumber:
+          type: string
+        Comments:
+          type: string
+        DateRecorded:
+          type: string
+        EffectiveStartDate:
+          type: string
+        EffectiveEndDate:
+          type: string
+        LicenseNumber:
+          type: string
+        LenderIdentifier:
+          type: string
+        BrokerID:
+          type: string
+        NMLSID:
+          type: string
+    HUDLDP:
+      type: object
+      properties:
+        ConfidenceScore:
+          type: integer
+        EntityType:
+          type: string
+        Name:
+          $ref: '#/components/schemas/Name_4'
+        OtherNames:
+          type: array
+          items:
+            $ref: '#/components/schemas/Name_4'
+        EffectiveStartDate:
+          type: string
+        EffectiveEndDate:
+          type: string
+        ListDate:
+          type: string
+        Comments:
+          type: string
+        AddressInfo:
+          $ref: '#/components/schemas/Address_4'
+    ServiceResponseIneligible:
+      type: object
+      properties:
+        TransactionID:
+          type: string
+        RequestorID:
+          type: string
+        Result:
+          type: string
+          enum:
+          - RecordsFound
+          - NoRecordsFound
+        Ineligible:
+          type: array
+          items:
+            $ref: '#/components/schemas/Ineligible'
+        Alerts:
+          type: array
+          items:
+            $ref: '#/components/schemas/AlertType'
+    OFAC:
+      type: object
+      properties:
+        ConfidenceScore:
+          type: integer
+        Name:
+          $ref: '#/components/schemas/Name_4'
+        EntryNumber:
+          type: string
+        SdnType:
+          type: string
+        Program:
+          type: string
+        Title:
+          type: string
+        CallSign:
+          type: string
+        VesselType:
+          type: string
+        Tonnage:
+          type: string
+        GRT:
+          type: string
+        VesselFlag:
+          type: string
+        VesselOwner:
+          type: string
+        Remarks:
+          type: string
+        AlternateNames:
+          type: string
+        AddresssList:
+          type: array
+          items:
+            type: string
+    ServiceResponseNFPD:
+      type: object
+      properties:
+        TransactionID:
+          type: string
+        RequestorID:
+          type: string
+        Result:
+          type: string
+          enum:
+          - RecordsFound
+          - NoRecordsFound
+        NFPD:
+          type: array
+          items:
+            $ref: '#/components/schemas/NFPD'
+        Alerts:
+          type: array
+          items:
+            $ref: '#/components/schemas/AlertType'
+    FreddieMac:
+      type: object
+      properties:
+        ConfidenceScore:
+          type: integer
+        Name:
+          $ref: '#/components/schemas/Name_4'
+        EntityType:
+          type: string
+        AKAorDBA:
+          type: string
+        DateofInclusion:
+          type: string
+        DateofLastUpdate:
+          type: string
+        AddressType:
+          type: string
+        Address:
+          $ref: '#/components/schemas/Address_4'
+        Comments:
+          type: string
+        License:
+          $ref: '#/components/schemas/License'
+        IssuingState:
+          type: string
+        DateRemoved:
+          type: string
+    NFPDIncident:
+      type: object
+      properties:
+        BatchNumber:
+          type: string
+        IncNumber:
+          type: string
+        PartyNumber:
+          type: string
+        OrderNumber:
+          type: string
+        AgencyCodeField:
+          type: string
+        CaseNumberField:
+          type: string
+        IncidentDateField:
+          type: string
+        JurisductionField:
+          type: string
+        SrcDocField:
+          type: string
+        AdditionalInfoField:
+          type: string
+        AgencyField:
+          type: string
+        AllamtField:
+          type: string
+        EstimatedLossField:
+          type: string
+        FcrDateField:
+          type: string
+        OkForFcrField:
+          type: string
+        IncidentText:
+          type: string
+    NFPDParty:
+      type: object
+      properties:
+        BatchNumber:
+          type: string
+        IncNumber:
+          type: string
+        PartyNumber:
+          type: string
+        OrderNumber:
+          type: string
+        PNameField:
+          type: string
+        PositionField:
+          type: string
+        VocationField:
+          type: string
+        FirmField:
+          type: string
+        AddressField:
+          type: string
+        CityField:
+          type: string
+        StateField:
+          type: string
+        FinesField:
+          type: string
+        RestitutionField:
+          type: string
+        OkForFcField:
+          type: string
+        LastNameField:
+          type: string
+        FirstNameField:
+          type: string
+        MiddleNameField:
+          type: string
+        SuffixField:
+          type: string
+        PartyText:
+          type: string
+    ServiceResponseFreddieMac:
+      type: object
+      properties:
+        TransactionID:
+          type: string
+        RequestorID:
+          type: string
+        Result:
+          type: string
+          enum:
+          - RecordsFound
+          - NoRecordsFound
+        FreddieMac:
+          type: array
+          items:
+            $ref: '#/components/schemas/FreddieMac'
+        Alerts:
+          type: array
+          items:
+            $ref: '#/components/schemas/AlertType'
+    ServiceResponseFHFASCP:
+      type: object
+      properties:
+        TransactionID:
+          type: string
+        RequestorID:
+          type: string
+        Result:
+          type: string
+          enum:
+          - RecordsFound
+          - NoRecordsFound
+        FHFASCP:
+          type: array
+          items:
+            $ref: '#/components/schemas/FHFASCP'
+        Alerts:
+          type: array
+          items:
+            $ref: '#/components/schemas/AlertType'
+    SearchRequest:
+      type: object
+      required:
+      - EntityType
+      - Name
+      - RequestorID
+      properties:
+        Name:
+          $ref: '#/components/schemas/Name_4'
+        ConfidenceScore:
+          type: integer
+        EntityType:
+          type: string
+          enum:
+          - Company
+          - Individual
+        State:
+          type: string
+    ServiceResponseOFAC:
+      type: object
+      properties:
+        TransactionID:
+          type: string
+        RequestorID:
+          type: string
+        Result:
+          type: string
+          enum:
+          - RecordsFound
+          - NoRecordsFound
+        OFAC:
+          type: array
+          items:
+            $ref: '#/components/schemas/OFAC'
+        Alerts:
+          type: array
+          items:
+            $ref: '#/components/schemas/AlertType'
+    ServiceRequestIneligible:
+      type: object
+      required:
+      - EntityType
+      - Name
+      - RequestorID
+      properties:
+        RequestorID:
+          type: string
+        IncludeAnalytics:
+          type: boolean
+        Search:
+          $ref: '#/components/schemas/SearchRequest'
+      example:
+        RequestorID: ID123
+        Search:
+          EntityType: Individual
+          Name:
+            First: John
+            Middle: ''
+            LastOrCompanyName: Smith
+          ConfidenceScore: 80
+    License:
+      properties:
+        LicenseNumber:
+          type: string
+        LicenseState:
+          type: string
+        LicenseType:
+          type: string
+        ExpirationDate:
+          type: string
+        IssuedDate:
+          type: string
+    ServiceResponseHUDLDP:
+      type: object
+      properties:
+        TransactionID:
+          type: string
+        RequestorID:
+          type: string
+        Result:
+          type: string
+          enum:
+          - RecordsFound
+          - NoRecordsFound
+        HUDLDP:
+          type: array
+          items:
+            $ref: '#/components/schemas/HUDLDP'
+        Alerts:
+          type: array
+          items:
+            $ref: '#/components/schemas/AlertType'
+    Name_4:
+      type: object
+      required:
+      - LastOrCompanyName
+      properties:
+        First:
+          type: string
+        Middle:
+          type: string
+        LastOrCompanyName:
+          type: string
+    ServiceRequestOfac:
+      type: object
+      required:
+      - RequestorID
+      - Search
+      properties:
+        RequestorID:
+          type: string
+        IncludeAnalytics:
+          type: boolean
+        Search:
+          $ref: '#/components/schemas/SearchRequest'
+      example:
+        RequestorID: ID123
+        IncludeAnalytics: false
+        Search:
+          EntityType: Individual
+          Name:
+            First: Faquir
+            Middle: ''
+            LastOrCompanyName: Muhammed
+          ConfidenceScore: 80
+    ServiceRequestNFPD:
+      type: object
+      required:
+      - EntityType
+      - Name
+      - RequestorID
+      properties:
+        RequestorID:
+          type: string
+        IncludeAnalytics:
+          type: boolean
+        Search:
+          $ref: '#/components/schemas/SearchRequest'
+      example:
+        RequestorID: ID123
+        Search:
+          EntityType: Individual
+          Name:
+            First: John
+            Middle: ''
+            LastOrCompanyName: Smith
+          ConfidenceScore: 80
+    FHFASCP:
+      type: object
+      properties:
+        ConfidenceScore:
+          type: integer
+        Name:
+          $ref: '#/components/schemas/Name_4'
+        Address:
+          $ref: '#/components/schemas/Address_4'
+        EffectiveDate:
+          type: string
+        SuspensionEndDate:
+          $ref: '#/components/schemas/License'
+        OrderLink:
+          type: string
+    NFPD:
+      type: object
+      properties:
+        ConfidenceScore:
+          type: integer
+        EntityType:
+          type: string
+        Name:
+          $ref: '#/components/schemas/Name_4'
+        CompanyName:
+          type: string
+        Title:
+          type: string
+        Address:
+          $ref: '#/components/schemas/Address_4'
+        SSN:
+          type: string
+        RefDate:
+          type: string
+        Document:
+          type: string
+        Source:
+          type: string
+        Party:
+          $ref: '#/components/schemas/NFPDParty'
+        Incident:
+          $ref: '#/components/schemas/NFPDIncident'
+    ServiceRequestFHFASCP:
+      type: object
+      required:
+      - EntityType
+      - Name
+      - RequestorID
+      properties:
+        RequestorID:
+          type: string
+        IncludeAnalytics:
+          type: boolean
+        Search:
+          $ref: '#/components/schemas/SearchRequest'
+      example:
+        RequestorID: ID123
+        Search:
+          EntityType: Individual
+          Name:
+            First: Lee Bentley
+            Middle: ''
+            LastOrCompanyName: Farkas
+          ConfidenceScore: 80
+    ServiceRequestHUDLDP:
+      type: object
+      required:
+      - EntityType
+      - Name
+      - RequestorID
+      properties:
+        RequestorID:
+          type: string
+        IncludeAnalytics:
+          type: boolean
+        Search:
+          $ref: '#/components/schemas/SearchRequest'
+      example:
+        RequestorID: ID123
+        Search:
+          EntityType: Individual
+          Name:
+            First: John
+            Middle: ''
+            LastOrCompanyName: Smith
+          ConfidenceScore: 80
+    ServiceRequestFreddieMac:
+      type: object
+      required:
+      - EntityType
+      - Name
+      - RequestorID
+      properties:
+        RequestorID:
+          type: string
+        IncludeAnalytics:
+          type: boolean
+        Search:
+          $ref: '#/components/schemas/SearchRequest'
+      example:
+        RequestorID: ID123
+        Search:
+          EntityType: Individual
+          Name:
+            First: Khatra
+            Middle: ''
+            LastOrCompanyName: Muhammed
+          ConfidenceScore: 80
+x-refined-from:
+- first-american-financial-4506c-openapi.json
+- first-american-financial-bankruptcy-openapi.json
+- first-american-financial-income-estimate-openapi.json
+- first-american-financial-liens-judgments-fcra-openapi.json
+- first-american-financial-liens-judgments-non-fcra-openapi.json
+- first-american-financial-reverse-address-openapi.json
+- first-american-financial-scra-openapi.json
+- first-american-financial-watchlist-openapi.json

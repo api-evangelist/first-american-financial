@@ -1,0 +1,324 @@
+openapi: 3.2.0
+info:
+  description: ClearSearch API
+  version: 1.0.0
+  title: ClearSearch Report API
+  contact:
+    email: clearsearch@firstam.com
+servers:
+- url: https://api.firstam.io/v1/clearsearch
+tags:
+- name: Report
+paths:
+  /report:
+    get:
+      tags:
+      - Report
+      summary: Retrieve a completed ClearSearch report
+      operationId: getReport
+      parameters:
+      - in: query
+        name: transactionID
+        description: Transaction ID of order
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Report found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Report'
+        '400':
+          description: Missing/Invalid TransactionID
+components:
+  schemas:
+    Address:
+      type: object
+      properties:
+        StreetAddress1:
+          type: string
+          example: 1234 Main Street
+        StreetAddress2:
+          type: string
+          example: Unit 5
+        City:
+          type: string
+          example: AnyTown
+        State:
+          type: string
+          example: CA
+        ZipCode:
+          type: string
+          example: 12345
+        County:
+          type: string
+          example: Some County
+    DocumentType:
+      type: string
+      enum:
+      - Affidavit
+      - Agreement
+      - AgreementContractForDeed
+      - Assignment
+      - Bond
+      - Certificate
+      - CertifiedCopyOfJudgment
+      - CondominiumDeclarationOf
+      - CourtPaper
+      - DeathCertificate
+      - Deed
+      - DeedTransfer
+      - Easement
+      - FinancingStatementUCC
+      - GovernmentRelated
+      - Judgment
+      - Lien
+      - LisPendens
+      - MarriageRecord
+      - MilitaryDischarge
+      - Modification
+      - Mortgage
+      - Notice
+      - NoticeOfCommencement
+      - NoticeOfContestOfLien
+      - NoticeOfDefault
+      - NoticeOfSale
+      - NoticeOfTrusteeSale
+      - Order
+      - Other
+      - PartialRelease
+      - Plat
+      - PlatMap
+      - PlatRelated
+      - PowerOfAttorney
+      - ProbateDocuments
+      - RecisionOfLisPendensNoticeOfSaleNoticeOfDefault
+      - RescissionOfNoticeOfDefault
+      - RescissionOfNoticeOfTrusteeSale
+      - Rescission
+      - Release
+      - ReleaseOrSatisfaction
+      - Restrictions
+      - Subordination
+      - Termination
+      - Transfer
+      - TrustDeedMortgage
+      - Unknown
+    ComplexityIndicator:
+      type: object
+      properties:
+        Result:
+          type: string
+          example: Streamlined
+          enum:
+          - Streamlined
+          - Traditional
+          - Exam
+          - Curative
+          - Search
+        Level:
+          type: integer
+          example: 1
+          minimum: 1
+        RequiresDocPull:
+          type: boolean
+          example: false
+        RequiresPlatMap:
+          type: boolean
+          example: true
+    PropertyType:
+      type: string
+      enum:
+      - SingleFamilyResidential
+      - Condo
+      - Townhouse
+      - Rowhouse
+      - PlannedUnitDevelopment
+      - MultiFamilyResidential24
+      - Duplex
+      - Triplex
+      - Quadraplex
+      - Cabin
+      - VacantLand
+      - MobileHome
+      - Commercial
+      - MultiFamilyResidential
+      - CoOp
+      - Unimproved
+      - Apartment
+      - Agriculture
+      - Other
+    Report:
+      type: object
+      properties:
+        OrderStatus:
+          $ref: '#/components/schemas/OrderStatus'
+        TransactionID:
+          type: string
+          example: c8f345c7-7757-4076-a2ca-e0483cef3d1f
+        RequestorID:
+          type: string
+          example: ABC123
+        ComplexityIndicator:
+          $ref: '#/components/schemas/ComplexityIndicator'
+        SubmittedData:
+          type: object
+          properties:
+            ClientName:
+              type: string
+              example: ABC Mortgage
+            Consumers:
+              type: array
+              items:
+                $ref: '#/components/schemas/Consumer'
+            Loan:
+              $ref: '#/components/schemas/Loan'
+            TitleOptions:
+              $ref: '#/components/schemas/TitleOptions'
+        PropertyInfo:
+          type: object
+          properties:
+            MailingAddress:
+              $ref: '#/components/schemas/Address'
+            LegalDescriptions:
+              type: array
+              items:
+                type: object
+                properties:
+                  Source:
+                    type: string
+                    example: PublicRecord
+                    enum:
+                    - PublicRecord
+                    - FAST
+                  Text:
+                    type: string
+                    example: REC SURV 22LSM12 POR PCL 4 & TR ADJ
+                  IsMetesAndBounds:
+                    type: boolean
+                    example: false
+                  LegalPropertyAddress:
+                    allOf:
+                    - $ref: '#/components/schemas/Address'
+                    - type: object
+                      properties:
+                        Municipality:
+                          type: string
+                        PropertyType:
+                          $ref: '#/components/schemas/PropertyType'
+        Documents:
+          type: array
+          items:
+            type: object
+            properties:
+              Type:
+                $ref: '#/components/schemas/DocumentType'
+              Description:
+                type: string
+                example: Affidavit
+              RecordedDate:
+                type: string
+                format: date
+              Url:
+                type: string
+                format: uri
+        AddOns:
+          type: array
+          items:
+            type: object
+            properties:
+              AlertName:
+                type: string
+                example: DNA Clear
+              AlertCode:
+                type: string
+                example: GI.28A
+              AlertDescription:
+                type: string
+                example: The DNA-Clear add-on will be added to workflow results when there is no hit on a consumer name in the do not associate list.
+    TitleOptions:
+      type: object
+      properties:
+        AttorneyTitleOpinion:
+          type: boolean
+          example: false
+        TwentyFourMonthChain:
+          type: boolean
+          example: true
+    OrderStatus:
+      type: object
+      properties:
+        StatusCode:
+          type: string
+          enum:
+          - Complete
+          - Failed
+          - Processing
+          - Queued
+        Description:
+          type: string
+          example: Order successfully processed
+        Errors:
+          type: array
+          items:
+            type: object
+            properties:
+              Code:
+                type: string
+              Description:
+                type: string
+    Loan:
+      type: object
+      properties:
+        LoanNumber:
+          type: string
+          example: ABD123
+        LoanAmount:
+          type: number
+          format: double
+          example: 300000
+        CashOutAmount:
+          type: number
+          format: double
+          example: 300000
+        LoanType:
+          type: string
+          enum:
+          - Refinance
+    Consumer:
+      type: object
+      properties:
+        IndividualName:
+          type: object
+          properties:
+            First:
+              type: string
+              example: John
+            Middle:
+              type: string
+              example: R
+            Last:
+              type: string
+              example: Doe
+            Suffix:
+              type: string
+              example: IV
+        CompanyName:
+          type: string
+          example: ABC Mortgage
+        MailingAddress:
+          $ref: '#/components/schemas/Address'
+        TaxId:
+          type: string
+          example: '999999990'
+        ConsumerId:
+          type: integer
+          minimum: 1
+          example: 1
+        ConsumerType:
+          type: string
+          enum:
+          - Individual
+          - Company
+          - Trust

@@ -1,0 +1,222 @@
+openapi: 3.2.0
+info:
+  description: ClearSearch API
+  version: 1.0.0
+  title: ClearSearch Order API
+  contact:
+    email: clearsearch@firstam.com
+servers:
+- url: https://api.firstam.io/v1/clearsearch
+tags:
+- name: Order
+paths:
+  /order:
+    post:
+      tags:
+      - Order
+      summary: Submits a new order
+      operationId: addOrder
+      responses:
+        '200':
+          description: Order successfully submitted
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/OrderStatus'
+        '400':
+          description: Bad request
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Order'
+        description: Order request
+components:
+  schemas:
+    Address:
+      type: object
+      properties:
+        StreetAddress1:
+          type: string
+          example: 1234 Main Street
+        StreetAddress2:
+          type: string
+          example: Unit 5
+        City:
+          type: string
+          example: AnyTown
+        State:
+          type: string
+          example: CA
+        ZipCode:
+          type: string
+          example: 12345
+        County:
+          type: string
+          example: Some County
+    Order:
+      type: object
+      properties:
+        RequestorID:
+          type: string
+          example: ABC4321
+        SearchType:
+          type: string
+          enum:
+          - SE-24 MO - Current Owner with 24 MO Chain
+          - ALTA - Current Owner Search
+          - ESP-P - Current Owner Search
+          - Search Plus - Current Owner Search
+          - Super Eagle - Current Owner Search
+          - ASP-24 MO - Current Owner Search w/24 mo Chain
+          - SE-EXT 24 - Current Owner Search w/24 mo Chain
+          - SP-24 MO - Current Owner Search w/24 mo Chain
+          - EPO No Close - Legal and Vesting Search
+          - SP-EXT-24 - Current Owner Search w/24 mo Chain
+        ProductType:
+          type: string
+          enum:
+          - ALTA Short Form Expanded Coverage Residential Loan Policy
+          - ALTA Short Form Residential Loan Policy
+          - ALTA Short Form Residential Loan Policy - 2006
+          - ALTA Short Form Residential Loan Policy - Extended
+          - Short Form Commitment
+          - Super Eagle
+          - Super Eagle-24 mo
+          - Texas Short Form Mortgagee Policy (T2R)
+        ClientName:
+          type: string
+          example: ABC Mortgage
+        ClientCode:
+          type: string
+          example: AbcMortCo
+        ClientReference:
+          type: string
+          example: ABC1234
+        Consumers:
+          type: array
+          items:
+            $ref: '#/components/schemas/Consumer'
+        SubjectProperty:
+          allOf:
+          - $ref: '#/components/schemas/Address'
+          - type: object
+            properties:
+              ParcelNumbers:
+                type: array
+                items:
+                  type: string
+                  example: '12345'
+              PropertyType:
+                $ref: '#/components/schemas/PropertyType'
+        Loan:
+          $ref: '#/components/schemas/Loan'
+        TitleOptions:
+          $ref: '#/components/schemas/TitleOptions'
+    PropertyType:
+      type: string
+      enum:
+      - SingleFamilyResidential
+      - Condo
+      - Townhouse
+      - Rowhouse
+      - PlannedUnitDevelopment
+      - MultiFamilyResidential24
+      - Duplex
+      - Triplex
+      - Quadraplex
+      - Cabin
+      - VacantLand
+      - MobileHome
+      - Commercial
+      - MultiFamilyResidential
+      - CoOp
+      - Unimproved
+      - Apartment
+      - Agriculture
+      - Other
+    TitleOptions:
+      type: object
+      properties:
+        AttorneyTitleOpinion:
+          type: boolean
+          example: false
+        TwentyFourMonthChain:
+          type: boolean
+          example: true
+    OrderStatus:
+      type: object
+      properties:
+        StatusCode:
+          type: string
+          enum:
+          - Complete
+          - Failed
+          - Processing
+          - Queued
+        Description:
+          type: string
+          example: Order successfully processed
+        Errors:
+          type: array
+          items:
+            type: object
+            properties:
+              Code:
+                type: string
+              Description:
+                type: string
+    Loan:
+      type: object
+      properties:
+        LoanNumber:
+          type: string
+          example: ABD123
+        LoanAmount:
+          type: number
+          format: double
+          example: 300000
+        CashOutAmount:
+          type: number
+          format: double
+          example: 300000
+        LoanType:
+          type: string
+          enum:
+          - Refinance
+    Consumer:
+      type: object
+      properties:
+        IndividualName:
+          type: object
+          properties:
+            First:
+              type: string
+              example: John
+            Middle:
+              type: string
+              example: R
+            Last:
+              type: string
+              example: Doe
+            Suffix:
+              type: string
+              example: IV
+        CompanyName:
+          type: string
+          example: ABC Mortgage
+        MailingAddress:
+          $ref: '#/components/schemas/Address'
+        TaxId:
+          type: string
+          example: '999999990'
+        ConsumerId:
+          type: integer
+          minimum: 1
+          example: 1
+        ConsumerType:
+          type: string
+          enum:
+          - Individual
+          - Company
+          - Trust

@@ -1,3 +1,5 @@
+# x-archived-from: first-american-financial-identity-openapi.yml
+# x-archived-on: 2026-09-16
 swagger: '2.0'
 info:
   description: Identity service for borrower(s) and/or participant information delivers data for the applicant’s

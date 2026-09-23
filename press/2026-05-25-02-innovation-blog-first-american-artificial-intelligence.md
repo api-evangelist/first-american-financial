@@ -1,7 +1,9 @@
 ---
 title: Innovation Blog | First American | Artificial Intelligence
 url: https://blog.firstam.com/innovation/tag/artificial-intelligence
-date: '2026-05-25'
+published: ''
+date_basis: harvested
+harvested: '2026-05-25'
 query: '"First American Financial" press release artificial intelligence'
 position: 2
 source: serpapi-google

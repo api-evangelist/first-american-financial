@@ -1,7 +1,9 @@
 ---
 title: Patents for artificial intelligence-driven analysis of property ...
 url: https://www.firstam.com/news/2021/faf-patents-ai-automated-title-production-20211201.html
-date: '2026-05-25'
+published: ''
+date_basis: harvested
+harvested: '2026-05-25'
 query: '"First American Financial" press release artificial intelligence'
 position: 4
 source: serpapi-google

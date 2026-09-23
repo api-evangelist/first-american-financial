@@ -1,0 +1,108 @@
+openapi: 3.2.0
+info:
+  title: Mortgage Services Employees API
+  version: 1.5.0
+servers:
+- url: https://settlement.stageapi.firstam.com
+  description: Stage Environment
+  variables: {}
+tags:
+- name: Employees
+paths:
+  /employees/escrowOfficers:
+    get:
+      security:
+      - bearerAuth: []
+      tags:
+      - Employees
+      summary: Get Escrow Officers by Office
+      description: Get multiple escrow officer employees by office id with First American
+      operationId: EscrowOfficers_Get
+      parameters:
+      - in: query
+        name: officeId
+        required: true
+        schema:
+          type: string
+        description: the specific office id
+        example: '191'
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Employee'
+              example:
+              - Code: DHTOM
+                FirstName: Tom
+                LastName: Dick
+                MiddleName: Harry
+              - Code: JSMARY
+                FirstName: Jane
+                LastName: Mary
+                MiddleName: Sue
+  /employees/titleOfficers:
+    get:
+      security:
+      - bearerAuth: []
+      tags:
+      - Employees
+      summary: Get Title Officers by Office
+      description: Get multiple title officer employees by office id with First American
+      operationId: TitleOfficers_Get
+      parameters:
+      - in: query
+        name: officeId
+        required: true
+        schema:
+          type: string
+        description: the specific office id
+        example: '191'
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Employee'
+              example:
+              - Code: DHTOM
+                FirstName: Tom
+                LastName: Dick
+                MiddleName: Harry
+              - Code: JSMARY
+                FirstName: Jane
+                LastName: Mary
+                MiddleName: Sue
+components:
+  schemas:
+    Employee:
+      type: object
+      properties:
+        Id:
+          type: integer
+          description: Field that contains a unique employee identifier
+          example: '123455'
+        Code:
+          type: string
+          description: Field that contains a unique employee identifier
+          example: ARGUMA
+        FirstName:
+          type: string
+          description: Field that contains employee first name
+          example: Tom
+        LastName:
+          type: string
+          description: Field that contains employee last name
+          example: Dick
+        MiddleName:
+          type: string
+          description: Field that contains employee middle name
+          example: Harry
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+      description: OAuth (a.k.a JWT) Authentication is **mandatory**. Please enter a valid access token

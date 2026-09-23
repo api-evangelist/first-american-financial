@@ -1,0 +1,283 @@
+openapi: 3.2.0
+info:
+  description: ''
+  version: 1.0.0
+  title: Property Service Request FEMA API
+servers:
+- url: https://api.firstam.io/v1
+tags:
+- name: Request FEMA
+paths:
+  /fema/order:
+    post:
+      tags:
+      - Request FEMA
+      summary: Request for Property FEMA Service
+      description: 'Identifies FEMA Major Disaster Declarations properties in designated counties under individual assistance: floods, fires, storms, mudslides etc. Alerts and Analytics can be added by setting the "IncludeAnalytics" flag in the request body to true.'
+      operationId: reqPropertyFEMA
+      parameters:
+      - in: header
+        name: x-app-id
+        description: Application ID
+        required: true
+        schema:
+          type: string
+      - in: header
+        name: x-app-key
+        description: Application Key
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/FEMAServiceResponse'
+            application/xml:
+              schema:
+                $ref: '#/components/schemas/FEMAServiceResponse'
+        '400':
+          description: Invalid Input, Object Invalid
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PropertyServiceRequest'
+          application/xml:
+            schema:
+              $ref: '#/components/schemas/PropertyServiceRequest'
+        description: Request for FEMA
+        required: true
+components:
+  schemas:
+    Address:
+      type: object
+      required:
+      - StreetAddress1
+      - City
+      - State
+      - Zip5
+      properties:
+        StreetNumber:
+          example: StreetNumber
+          type: string
+        StreetPreDirection:
+          example: StreetPreDirection
+          type: string
+        StreetName:
+          example: StreetName
+          type: string
+        StreetSuffix:
+          example: StreetSuffix
+          type: string
+        StreetPostDirection:
+          example: StreetPostDirection
+          type: string
+        UnitDesignation:
+          example: UnitDesignation
+          type: string
+        UnitNumber:
+          example: UnitNumber
+          type: string
+        StreetAddress1:
+          example: StreetAddress1
+          type: string
+        StreetAddress2:
+          example: StreetAddress2
+          type: string
+        City:
+          example: City
+          type: string
+        State:
+          example: State
+          type: string
+        ZipCode:
+          example: ZipCode
+          type: string
+        ZipFour:
+          example: ZipFour
+          type: string
+        County:
+          example: County
+          type: string
+        PostalCode:
+          example: PostalCode
+          type: string
+        StateCityZip:
+          example: StateCityZip
+          type: string
+        Latitude:
+          example: Latitude
+          type: string
+        Longitude:
+          example: Longitude
+          type: string
+        APN:
+          example: APN
+          type: string
+    FEMADisasterRecord:
+      properties:
+        DisasterNumber:
+          type: number
+        IHProgramDeclared:
+          type: boolean
+        IAProgramDeclared:
+          type: boolean
+        PAProgramDeclared:
+          type: boolean
+        HMProgramDeclared:
+          type: boolean
+        State:
+          type: string
+        DeclarationDate:
+          $ref: '#/components/schemas/ParsedDate'
+        DisasterType:
+          type: string
+        IncidentType:
+          type: string
+        Title:
+          type: string
+        IncidentBeginDate:
+          $ref: '#/components/schemas/ParsedDate'
+        IncidentEndDate:
+          $ref: '#/components/schemas/ParsedDate'
+        DisasterCloseOutDate:
+          type: string
+        PlaceCode:
+          type: number
+        DeclaredCountyArea:
+          type: string
+      example:
+        DisasterNumber: 217
+        IHProgramDeclared: false
+        IAProgramDeclared: true
+        PAProgramDeclared: true
+        HMProgramDeclared: false
+        State: State
+        DeclarationDate:
+          Year: 1966
+          Month: 4
+          Day: 30
+        DisasterType: DisasterType
+        IncidentType: IncidentType
+        Title: Title
+        IncidentBeginDate:
+          Year: 1966
+          Month: 4
+          Day: 30
+        IncidentEndDate:
+          Year: 1966
+          Month: 4
+          Day: 30
+        DisasterCloseOutDate:
+          Year: 1968
+          Month: 5
+          Day: 23
+        PlaceCode: 99013
+        DeclaredCountyArea: DeclaredCountyArea
+    AlertType:
+      type: object
+      properties:
+        Code:
+          example: AlertCode
+          type: string
+        Description:
+          example: ALERT - This is an alert description.
+          type: string
+        Status:
+          example: Fired
+          type: string
+        Evidence:
+          description: Collection of evidence fields that caused the alert to fire.
+          type: array
+          items:
+            $ref: '#/components/schemas/EvidenceType'
+    EvidenceType:
+      type: object
+      example:
+        Key: Value
+    PropertyServiceRequest:
+      type: object
+      required:
+      - RequestorID
+      - Address
+      properties:
+        RequestorID:
+          example: ID123
+          type: string
+          minLength: 1
+          maxLength: 100
+          description: LoanNumber or TransactionID
+        Address:
+          type: object
+          required:
+          - StreetAddress1
+          - City
+          - State
+          - ZipCode
+          properties:
+            StreetAddress1:
+              example: 123 Main St
+              type: string
+            StreetAddress2:
+              example: ''
+              type: string
+            City:
+              example: Mountainsee
+              type: string
+            State:
+              example: ZZ
+              type: string
+            ZipCode:
+              example: '90000'
+              type: string
+            ZipFour:
+              example: ''
+              type: string
+            County:
+              example: ''
+              type: string
+            APN:
+              example: ''
+              type: string
+        IncludeAnalytics:
+          type: boolean
+          example: false
+          description: Option to run analytics on data set.
+    FEMAServiceResponse:
+      type: object
+      properties:
+        TransactionID:
+          type: string
+          description: Unique identifier for the transaction
+        RequestorID:
+          type: string
+        Address:
+          $ref: '#/components/schemas/Address'
+        Result:
+          type: string
+          enum:
+          - NoDisastersFound
+          - DisastersFound
+        Disasters:
+          type: array
+          items:
+            $ref: '#/components/schemas/FEMADisasterRecord'
+        Alerts:
+          type: array
+          items:
+            $ref: '#/components/schemas/AlertType'
+    ParsedDate:
+      properties:
+        Year:
+          type: number
+        Month:
+          type: number
+        Day:
+          type: number
+      example:
+        Month: 1
+        Year: 2017
+        Day: 1

@@ -1,0 +1,489 @@
+openapi: 3.2.0
+info:
+  description: ''
+  version: 1.0.0
+  title: Property Service Request Listing Data API
+servers:
+- url: https://api.firstam.io/v1
+tags:
+- name: Request Listing Data
+paths:
+  /property/order/listinghistory:
+    post:
+      tags:
+      - Request Listing Data
+      summary: Request for Listing History
+      description: 'Listing History: Current status of listing, on/off market and as past sales history. Required fields: StreetAddress1, City, State, ZipCode.'
+      operationId: reqListingHistory
+      parameters:
+      - in: header
+        name: x-app-id
+        description: Application ID
+        required: true
+        schema:
+          type: string
+      - in: header
+        name: x-app-key
+        description: Application Key
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ListingDataResponse'
+            application/xml:
+              schema:
+                $ref: '#/components/schemas/ListingDataResponse'
+        '400':
+          description: Invalid Input, Object Invalid
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PropertyServiceRequest'
+          application/xml:
+            schema:
+              $ref: '#/components/schemas/PropertyServiceRequest'
+        description: Request for Property
+        required: true
+  /property/order/localmarkettrends:
+    post:
+      tags:
+      - Request Listing Data
+      summary: Request for Local Market Trends
+      description: 'Market Trends: Returns data related to local price related averages and trends. Required fields: StreetAddress1, City, State, ZipCode.'
+      operationId: reqLocalMarketTrend
+      parameters:
+      - in: header
+        name: x-app-id
+        description: Application ID
+        required: true
+        schema:
+          type: string
+      - in: header
+        name: x-app-key
+        description: Application Key
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ListingDataResponse'
+            application/xml:
+              schema:
+                $ref: '#/components/schemas/ListingDataResponse'
+        '400':
+          description: Invalid Input, Object Invalid
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PropertyServiceRequest'
+          application/xml:
+            schema:
+              $ref: '#/components/schemas/PropertyServiceRequest'
+        description: Request for Property
+        required: true
+  /property/order/nearbyactivelistings:
+    post:
+      tags:
+      - Request Listing Data
+      summary: Request for Nearby Active Listings
+      description: 'Nearby Listings: Returns listing results related to nearby properties for sale. Required fields: StreetAddress1, City, State, ZipCode.'
+      operationId: reqNearbyActiveListings
+      parameters:
+      - in: header
+        name: x-app-id
+        description: Application ID
+        required: true
+        schema:
+          type: string
+      - in: header
+        name: x-app-key
+        description: Application Key
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ListingDataResponse'
+            application/xml:
+              schema:
+                $ref: '#/components/schemas/ListingDataResponse'
+        '400':
+          description: Invalid Input, Object Invalid
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PropertyServiceRequest'
+          application/xml:
+            schema:
+              $ref: '#/components/schemas/PropertyServiceRequest'
+        description: Request for Property
+        required: true
+components:
+  schemas:
+    Address:
+      type: object
+      required:
+      - StreetAddress1
+      - City
+      - State
+      - Zip5
+      properties:
+        StreetNumber:
+          example: StreetNumber
+          type: string
+        StreetPreDirection:
+          example: StreetPreDirection
+          type: string
+        StreetName:
+          example: StreetName
+          type: string
+        StreetSuffix:
+          example: StreetSuffix
+          type: string
+        StreetPostDirection:
+          example: StreetPostDirection
+          type: string
+        UnitDesignation:
+          example: UnitDesignation
+          type: string
+        UnitNumber:
+          example: UnitNumber
+          type: string
+        StreetAddress1:
+          example: StreetAddress1
+          type: string
+        StreetAddress2:
+          example: StreetAddress2
+          type: string
+        City:
+          example: City
+          type: string
+        State:
+          example: State
+          type: string
+        ZipCode:
+          example: ZipCode
+          type: string
+        ZipFour:
+          example: ZipFour
+          type: string
+        County:
+          example: County
+          type: string
+        PostalCode:
+          example: PostalCode
+          type: string
+        StateCityZip:
+          example: StateCityZip
+          type: string
+        Latitude:
+          example: Latitude
+          type: string
+        Longitude:
+          example: Longitude
+          type: string
+        APN:
+          example: APN
+          type: string
+    ListingHistoryDefinition:
+      type: object
+      properties:
+        ListingID:
+          example: ListingID
+          type: string
+        ListingDate:
+          example: ListingDate
+          type: string
+        Status:
+          example: Status
+          type: string
+        Price:
+          example: Price
+          type: string
+        SoldPrice:
+          example: SoldPrice
+          type: string
+        SoldDate:
+          example: SoldDate
+          type: string
+        PricePerSqFt:
+          example: PricePerSqFt
+          type: string
+        ResidenceType:
+          example: ResidenceType
+          type: string
+        PropertySubType:
+          example: PropertySubType
+          type: string
+        Beds:
+          example: Beds
+          type: string
+        Baths:
+          example: Baths
+          type: string
+        ResidenceSqFt:
+          example: ResidenceSqFt
+          type: string
+        LotSqFt:
+          example: LotSqFt
+          type: string
+        LotFeatures:
+          example: LotFeatures
+          type: string
+        YearBuilt:
+          example: YearBuilt
+          type: string
+        DaysOnMarket:
+          example: DaysOnMarket
+          type: string
+        Address:
+          $ref: '#/components/schemas/Address'
+        Latitude:
+          example: Latitude
+          type: string
+        Longitude:
+          example: Longitude
+          type: string
+        APN:
+          example: APN
+          type: string
+        Style:
+          example: Style
+          type: string
+        NumberOfStories:
+          example: NumberOfStories
+          type: string
+        SchoolDistrict:
+          example: SchoolDistrict
+          type: string
+        ElementarySchool:
+          example: ElementarySchool
+          type: string
+        MiddleSchool:
+          example: MiddleSchool
+          type: string
+        HighSchool:
+          example: HighSchool
+          type: string
+        FireplaceFeatures:
+          example: FireplaceFeatures
+          type: string
+        HeatingFeatures:
+          example: HeatingFeatures
+          type: string
+        Roofing:
+          example: Roofing
+          type: string
+        Topography:
+          example: Topography
+          type: string
+        Subdivision:
+          example: Subdivision
+          type: string
+        ParkingFeatures:
+          example: ParkingFeatures
+          type: string
+        PoolFeatures:
+          example: PoolFeatures
+          type: string
+        WaterFrontFeatures:
+          example: WaterFrontFeatures
+          type: string
+        AirConditioners:
+          example: AirConditioners
+          type: string
+        View:
+          example: View
+          type: string
+        Appliances:
+          example: Appliances
+          type: string
+        Water:
+          example: Water
+          type: string
+        WaterAccess:
+          example: WaterAccess
+          type: string
+        MD_CensusTract:
+          example: MD_CensusTract
+          type: string
+        IsCurrent:
+          example: IsCurrent
+          type: string
+        Distance:
+          example: Distance
+          type: string
+        PricePerSqft:
+          example: PricePerSqft
+          type: string
+    PropertyServiceRequest:
+      type: object
+      required:
+      - RequestorID
+      - Address
+      properties:
+        RequestorID:
+          example: ID123
+          type: string
+          minLength: 1
+          maxLength: 100
+          description: LoanNumber or TransactionID
+        Address:
+          type: object
+          required:
+          - StreetAddress1
+          - City
+          - State
+          - ZipCode
+          properties:
+            StreetAddress1:
+              example: 123 Main St
+              type: string
+            StreetAddress2:
+              example: ''
+              type: string
+            City:
+              example: Mountainsee
+              type: string
+            State:
+              example: ZZ
+              type: string
+            ZipCode:
+              example: '90000'
+              type: string
+            ZipFour:
+              example: ''
+              type: string
+            County:
+              example: ''
+              type: string
+            APN:
+              example: ''
+              type: string
+        IncludeAnalytics:
+          type: boolean
+          example: false
+          description: Option to run analytics on data set.
+    ListingDataResponse:
+      properties:
+        TransactionID:
+          example: 82d9762b-70c3-4801-bd4b-8ffc8d358f77
+          type: string
+          description: TransactionID can be used to fetch data at later stage.
+        RequestorID:
+          example: RequestorID
+          type: string
+          minLength: 1
+          maxLength: 100
+          description: LoanNumber or TransactionID
+        StatusCode:
+          example: Success
+          type: string
+        ListingData:
+          type: array
+          items:
+            $ref: '#/components/schemas/ListingHistoryDefinition'
+        LocalMarketTrends:
+          type: array
+          items:
+            $ref: '#/components/schemas/LocalMarketTrendDefinition'
+    LocalMarketTrendDefinition:
+      type: object
+      properties:
+        City:
+          example: City
+          type: string
+        PriceMedian:
+          example: PriceMedian
+          type: string
+        PriceQuartile:
+          example: PriceQuartile
+          type: string
+        ResidenceType:
+          example: ResidenceType
+          type: string
+        RollingAverage:
+          example: RollingAverage
+          type: string
+        State:
+          example: State
+          type: string
+        StatsCaptureDate:
+          example: StatsCaptureDate
+          type: string
+        Zip:
+          example: Zip
+          type: string
+        AgeMean:
+          example: AgeMean
+          type: string
+        BathsMean:
+          example: BathsMean
+          type: string
+        BedsMean:
+          example: BedsMean
+          type: string
+        DaysOnMarketMean:
+          example: DaysOnMarketMean
+          type: string
+        PercentPriceDecreasedMedian:
+          example: PercentPriceDecreasedMedian
+          type: string
+        PercentPriceIncreasedMedian:
+          example: PercentPriceIncreasedMedian
+          type: string
+        PriceMax:
+          example: PriceMax
+          type: string
+        PriceMin:
+          example: PriceMin
+          type: string
+        PricePerBathroomMean:
+          example: PricePerBathroomMean
+          type: string
+        PricePerBedroomMean:
+          example: PricePerBedroomMean
+          type: string
+        PricePerSquareFootMean:
+          example: PricePerSquareFootMean
+          type: string
+        SquareFootMedian:
+          example: SquareFootMedian
+          type: string
+        PriceOfListingsAbsorbedMedian:
+          example: PriceOfListingsAbsorbedMedian
+          type: string
+        PriceOfNewListingsMean:
+          example: PriceOfNewListingsMean
+          type: string
+        PriceHigh:
+          example: PriceHigh
+          type: string
+        PriceMean:
+          example: PriceMean
+          type: string
+        PriceLow:
+          example: PriceLow
+          type: string
+        ListingPriceMean:
+          example: ListingPriceMean
+          type: string
+        SquareFtMean:
+          example: SquareFtMean
+          type: string

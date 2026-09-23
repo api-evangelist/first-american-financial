@@ -1,0 +1,523 @@
+openapi: 3.2.0
+info:
+  description: Identity service for borrower(s) and/or participant information delivers data for the applicant’s Social Security Number (SSN) usage, validation of SSN, identity and identity theft detection. Other names, addresses, employment, and associated dates reported including number of verifying sources.
+  version: 1.0.0
+  title: Identity Service Get Identity Response Base API
+servers:
+- url: https://api.firstam.io/v1
+tags:
+- name: GetIdentityResponseBase
+paths:
+  /identity/report:
+    get:
+      tags:
+      - GetIdentityResponseBase
+      summary: Retrieve by Transaction ID
+      operationId: retrieveIdentity
+      description: Retrieve existing Identity Response by Transaction ID
+      parameters:
+      - in: header
+        name: x-app-id
+        description: Application ID
+        required: true
+        schema:
+          type: string
+      - in: header
+        name: x-app-key
+        description: Application Key
+        required: true
+        schema:
+          type: string
+      - in: query
+        name: TransactionID
+        description: Transaction ID number provided
+        required: true
+        schema:
+          type: string
+          default: 82d9762b-70c3-4801-bd4b-8ffc8d358f77
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/IdentityResponseBase'
+            application/xml:
+              schema:
+                $ref: '#/components/schemas/IdentityResponseBase'
+        '400':
+          description: Invalid Request, object invalid.
+        '404':
+          description: No data found.
+components:
+  schemas:
+    Address:
+      type: object
+      properties:
+        StreetNumber:
+          type: string
+          example: '108'
+        StreetPreDirection:
+          type: string
+          example: W
+        StreetName:
+          type: string
+          example: 2nd St
+        StreetSuffix:
+          type: string
+          example: A
+        StreetPostDirection:
+          type: string
+          example: South
+        UnitDesignation:
+          type: string
+          example: Apt
+        UnitNumber:
+          type: string
+          example: '801'
+        StreetAddress1:
+          type: string
+          example: ''
+        StreetAddress2:
+          type: string
+          example: ''
+        City:
+          type: string
+          example: St. Louis
+        State:
+          type: string
+          example: MO
+        ZipCode:
+          type: string
+          example: '63101'
+        ZipFour:
+          type: string
+          example: '1423'
+        StateCityZip:
+          type: string
+          example: ''
+        FullAddress:
+          type: string
+          example: ''
+    ConsumerName:
+      allOf:
+      - $ref: '#/components/schemas/Name'
+      - type: object
+        properties:
+          Suffix:
+            type: string
+            example: Mr
+          Prefix:
+            type: string
+            example: Jr
+          FullName:
+            type: string
+            example: Mark Marsupial
+          Qualifier:
+            type: string
+            example: alsoKnownAs
+          DateFirstReported:
+            $ref: '#/components/schemas/ParsedDate'
+          DateLastReported:
+            $ref: '#/components/schemas/ParsedDate'
+      xml:
+        name: Name
+    DeceasedInfo:
+      type: object
+      properties:
+        Name:
+          $ref: '#/components/schemas/ConsumerName'
+        LastResidency:
+          $ref: '#/components/schemas/ConsumerAddress'
+        DateOfBirth:
+          $ref: '#/components/schemas/ParsedDate'
+        DateOfDeath:
+          $ref: '#/components/schemas/ParsedDate'
+        AgeAtDeath:
+          type: integer
+          example: 72
+        DeathLocation:
+          $ref: '#/components/schemas/ConsumerAddress'
+    AlertType:
+      type: object
+      properties:
+        Code:
+          example: AlertCode
+          type: string
+        Description:
+          example: ALERT - This is an alert description.
+          type: string
+        Status:
+          example: Fired
+          type: string
+        Evidence:
+          description: Collection of evidence fields that caused the alert to fire.
+          type: array
+          items:
+            $ref: '#/components/schemas/EvidenceType'
+    DoNotPromote:
+      type: object
+      properties:
+        PromotionIndicator:
+          type: boolean
+          example: true
+        PromotionDateOfExpiration:
+          $ref: '#/components/schemas/ParsedDate'
+    SSNInfo:
+      type: object
+      xml:
+        name: SSNInfo
+      properties:
+        SSN:
+          type: string
+          example: 999-99-9990
+          description: Individual's SSN
+        IdentificationType:
+          type: string
+          example: ssn
+          description: Identifies the type of identification returned.
+        AgeObtainedRangeStart:
+          type: integer
+          example: 1980
+          description: Identifies the beginning year of the age range in which the SSN was issued
+        AgeObtainedRangeEnd:
+          type: integer
+          example: 1990
+          description: Identifies the endining year of the age range in which the SSN was issued
+        IssuanceAlertCode:
+          type: string
+          example: '5503'
+        FirstPossibleIssuanceYear:
+          type: string
+          example: 1974
+          description: Year of first issuance of SSN
+        LastPossibleIssuanceYear:
+          type: string
+          example: 1980
+          description: Year of the last issuance of SSN
+        IssuanceExpirationDate:
+          $ref: '#/components/schemas/ParsedDate'
+        IssuanceStatus:
+          type: string
+          example: clear
+        IssuanceYearsCovered:
+          type: integer
+          example: 2
+          description: Specifies the number of years covered by this transaction
+        IssuedStartDate:
+          $ref: '#/components/schemas/ParsedDate'
+        IssuedEndDate:
+          $ref: '#/components/schemas/ParsedDate'
+        StateOfIssuance:
+          type: string
+          example: MO
+          description: State of SSN issuance
+        DateFirstReported:
+          $ref: '#/components/schemas/ParsedDate'
+        DateLastReported:
+          $ref: '#/components/schemas/ParsedDate'
+        Valid:
+          type: string
+    EvidenceType:
+      type: object
+      example:
+        Key: Value
+    CreditDataStatus:
+      type: object
+      properties:
+        CreditDataSuppressed:
+          type: boolean
+          example: 'true'
+        Freeze:
+          $ref: '#/components/schemas/Freeze'
+        DoNotPromote:
+          $ref: '#/components/schemas/DoNotPromote'
+    Position:
+      type: object
+      properties:
+        Title:
+          type: string
+          example: Engineer
+        Department:
+          type: string
+          example: Tech
+        DateFirstReported:
+          $ref: '#/components/schemas/ParsedDate'
+        DateLastReported:
+          $ref: '#/components/schemas/ParsedDate'
+      xml:
+        name: Position
+    ParsedDate:
+      type: object
+      properties:
+        Year:
+          type: integer
+          example: 2017
+        Month:
+          type: integer
+          example: 12
+        Day:
+          type: integer
+          example: 21
+    RiskIndicator:
+      type: object
+      properties:
+        RiskCode:
+          type: string
+          example: 1111
+        RiskMessage:
+          type: string
+          example: Risk found
+      xml:
+        name: RiskIndicator
+    ConsumerIdentity:
+      type: object
+      properties:
+        FileSummary:
+          $ref: '#/components/schemas/FileSummary'
+        Name:
+          $ref: '#/components/schemas/ConsumerName'
+        SSNInfo:
+          $ref: '#/components/schemas/SSNInfo'
+        Age:
+          type: integer
+          example: 34
+        DateOfBirth:
+          $ref: '#/components/schemas/ParsedDate'
+        DateOfDeath:
+          $ref: '#/components/schemas/ParsedDate'
+        DeceasedInfo:
+          $ref: '#/components/schemas/DeceasedInfo'
+        DriversLicense:
+          $ref: '#/components/schemas/License'
+        Addresses:
+          type: array
+          items:
+            $ref: '#/components/schemas/ConsumerAddress'
+          xml:
+            wrapped: true
+        Employers:
+          type: array
+          items:
+            $ref: '#/components/schemas/Employer'
+          xml:
+            wrapped: true
+        OtherNames:
+          type: array
+          items:
+            $ref: '#/components/schemas/ConsumerName'
+          xml:
+            wrapped: true
+        ConsumerStatements:
+          type: array
+          items:
+            $ref: '#/components/schemas/ConsumerStatement'
+          xml:
+            wrapped: true
+        DateFirstReported:
+          $ref: '#/components/schemas/ParsedDate'
+        DateLastReported:
+          $ref: '#/components/schemas/ParsedDate'
+        TypesOfSources:
+          type: array
+          items:
+            type: string
+            description: Verifying sources
+            xml:
+              name: Source
+          xml:
+            wrapped: true
+          example:
+          - file
+          - vendor
+        VerifyingSources:
+          type: integer
+          example: 2
+          description: Number of verifying sources
+        HighRiskIndicators:
+          type: array
+          items:
+            $ref: '#/components/schemas/RiskIndicator'
+          xml:
+            wrapped: true
+    ConsumerStatement:
+      type: object
+      properties:
+        Type:
+          type: string
+          example: regular
+        Text:
+          type: string
+      xml:
+        name: ConsumerStatement
+    IdentityResponseBase:
+      type: object
+      properties:
+        RequestorID:
+          example: loannumber1234
+          type: string
+          minLength: 1
+          maxLength: 100
+          description: LoanNumber or TransactionID
+        TransactionID:
+          example: 82d9762b-70c3-4801-bd4b-8ffc8d358f77
+          type: string
+          description: TransactionID can be used to fetch data at later stage
+        PrimaryIdentity:
+          $ref: '#/components/schemas/ConsumerIdentity'
+        Alerts:
+          type: array
+          items:
+            $ref: '#/components/schemas/AlertType'
+    License:
+      type: object
+      required:
+      - State
+      properties:
+        LicenseState:
+          example: CA
+          type: string
+          minLength: 0
+          maxLength: 2
+          pattern: '[A-Za-z]+'
+        LicenseNumber:
+          example: ABC1234
+          type: string
+          minLength: 0
+          maxLength: 21
+          pattern: '[A-Za-z0-9@#\*\+\s]+'
+        ExpirationDate:
+          $ref: '#/components/schemas/ParsedDate'
+        IssuedDate:
+          $ref: '#/components/schemas/ParsedDate'
+    Name:
+      required:
+      - Last
+      properties:
+        First:
+          example: Mark
+          type: string
+          maxLength: 32
+        Middle:
+          type: string
+          example: M
+          maxLength: 32
+        Last:
+          type: string
+          example: Marsupial
+          maxLength: 65
+    Freeze:
+      type: object
+      properties:
+        FreezeIndicator:
+          type: boolean
+          example: true
+        FreezeType:
+          type: string
+          example: exempt
+    FileSummary:
+      type: object
+      properties:
+        FileHitIndicator:
+          type: string
+        FileMatchIndicator:
+          type: string
+        SSNMatchIndicator:
+          type: string
+        InFileSinceDate:
+          $ref: '#/components/schemas/ParsedDate'
+        CreditDataStatus:
+          $ref: '#/components/schemas/CreditDataStatus'
+    Employer:
+      type: object
+      properties:
+        Name:
+          $ref: '#/components/schemas/ConsumerName'
+        DateFirstReported:
+          $ref: '#/components/schemas/ParsedDate'
+        DateLastReported:
+          $ref: '#/components/schemas/ParsedDate'
+        DateHired:
+          $ref: '#/components/schemas/ParsedDate'
+        DateTerminated:
+          $ref: '#/components/schemas/ParsedDate'
+        Address:
+          $ref: '#/components/schemas/ConsumerAddress'
+        Addresses:
+          type: array
+          items:
+            $ref: '#/components/schemas/ConsumerAddress'
+          xml:
+            wrapped: true
+        Positions:
+          type: array
+          items:
+            $ref: '#/components/schemas/Position'
+          xml:
+            wrapped: true
+        CompanyNames:
+          type: array
+          items:
+            type: string
+            xml:
+              name: CompanyName
+          xml:
+            wrapped: true
+        FEINs:
+          type: array
+          items:
+            type: string
+            xml:
+              name: FEIN
+          xml:
+            wrapped: true
+      xml:
+        name: Employer
+    ConsumerAddress:
+      allOf:
+      - $ref: '#/components/schemas/Address'
+      - type: object
+        properties:
+          County:
+            type: string
+            example: Ventura
+          StreetAddress1:
+            type: string
+            example: 108 W 2nd St
+          StreetAddress2:
+            type: string
+            example: Apt. 801
+          FirstReportedDate:
+            $ref: '#/components/schemas/ParsedDate'
+          LastReportedDate:
+            $ref: '#/components/schemas/ParsedDate'
+          ResidenceDuration:
+            type: integer
+            example: 1
+          ResidenceStatus:
+            type: string
+            example: own
+          VerifyingSources:
+            type: integer
+            example: 2
+            description: Number of verifying sources
+          TypesOfSources:
+            type: array
+            items:
+              type: string
+              description: Verifying sources
+              xml:
+                name: Source
+            xml:
+              wrapped: true
+            example:
+            - file
+            - vendor
+          HighRiskIndicators:
+            type: array
+            items:
+              $ref: '#/components/schemas/RiskIndicator'
+            xml:
+              wrapped: true
+      xml:
+        name: Address

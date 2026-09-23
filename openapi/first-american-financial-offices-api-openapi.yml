@@ -1,0 +1,170 @@
+openapi: 3.2.0
+info:
+  title: Mortgage Services Offices API
+  version: 1.5.0
+servers:
+- url: https://settlement.stageapi.firstam.com
+  description: Stage Environment
+  variables: {}
+tags:
+- name: Offices
+paths:
+  /offices:
+    get:
+      security:
+      - bearerAuth: []
+      tags:
+      - Offices
+      summary: Find an Office
+      operationId: FAoffices
+      parameters:
+      - in: query
+        name: appSource
+        required: true
+        schema:
+          type: string
+        description: A required unique application ID provided by First American Title to identify clients.
+        example: Source
+      - in: query
+        name: state
+        required: true
+        schema:
+          type: string
+        description: the specific state
+        example: CA
+      - in: query
+        name: county
+        required: true
+        schema:
+          type: string
+        description: the specific county
+        example: Orange
+      - in: query
+        name: transactionType
+        required: true
+        schema:
+          type: string
+        description: A required value that specifies the purpose for the transaction service request.
+        example: SaleWithMortgage
+      - in: query
+        name: zip
+        schema:
+          type: string
+        example: '92707'
+      - in: query
+        name: city
+        schema:
+          type: string
+        example: Santa Ana
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json; charset=utf-8:
+              schema:
+                $ref: '#/components/schemas/Offices'
+              examples:
+                offices:
+                  value: "[\n  {\n    \"officeId\": 545,\n    \"companyName\": \"First American Title Company\",\n    \"officeAddressLine1\": \"4 First American Way\",\n    \"officeCity\": \"Santa Ana\",\n    \"officeState\": \"CA\",\n    \"officeZipCode\": \"92702\"\n  },\n  {\n    \"officeId\": 11065,\n    \"companyName\": \"First American Title Company\",\n    \"officeAddressLine1\": \"3 First American Way\",\n    \"officeCity\": \"Santa Ana\",\n    \"officeState\": \"CA\",\n    \"officeZipCode\": \"92702\"\n  }\n]\n"
+components:
+  schemas:
+    Offices:
+      type: array
+      items:
+        $ref: '#/components/schemas/Office'
+    Office:
+      properties:
+        officeSource:
+          type: string
+          description: Internal FA System from which data is extracted
+          example: FAST
+        officeId:
+          type: string
+          description: Internal FA Office Identifier
+          example: '11065'
+        officeAltauniversalId:
+          type: string
+          description: ALTA (American Land Title Association) Identifier
+          example: '1164687'
+        officeName:
+          type: string
+          description: Name of Title/Escrow Office
+          example: FA Mortgage Solutions
+        officeDoingBusinessAsName:
+          type: string
+          description: DBA (Doing Business As) Name
+          example: Order Fulfillment Solutions (RLA)
+        officeStatus:
+          type: string
+          description: Current status of the of the office
+          example: ACTIVE
+        officeStatusDate:
+          type: string
+          description: Date of current status
+          example: '2018-11-02T16:00:01.47'
+        companyName:
+          type: string
+          description: Name of Company
+          example: First American Title Insurance Company
+        officeAddressLine1:
+          type: string
+          description: Company’s Office Address Line 1
+          example: 3 First American Way
+        officeAddressLine2:
+          type: string
+          description: Company’s Office Address Line 2
+          example: ''
+        officeCity:
+          type: string
+          description: Company’s City
+          example: Santa Ana
+        officeCounty:
+          type: string
+          description: Company’s County
+          example: Orange
+        officeState:
+          type: string
+          description: Company’s State
+          example: CA
+        officeZipCode:
+          type: string
+          description: Company’s Zip Code
+          example: '92707'
+        officeLatitude:
+          type: string
+          description: Latitude of company’s location
+          example: '33.7010837702385'
+        officeLongitude:
+          type: string
+          description: Longitude of company’s location
+          example: '-117.861241175957'
+        officePhoneAreaCode:
+          type: string
+          description: Office Phone Number Area Code
+          example: '714'
+        officePhoneNumber:
+          type: string
+          description: Office Phone Number
+          example: 250-3000
+        officeFaxAreaCode:
+          type: string
+          description: Office Fax Area Code
+          example: 'null'
+        officeFaxNumber:
+          type: string
+          description: Office Fax Number
+          example: 'null'
+        officeUnderwriters:
+          type: string
+          description: Underwriter(s) available to specific agent
+          example: First American Title Insurance Company
+        officeClientTypes:
+          type: string
+          description: Type of office/services allowed/approved of by First American
+          example: ''
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+      description: OAuth (a.k.a JWT) Authentication is **mandatory**. Please enter a valid access token

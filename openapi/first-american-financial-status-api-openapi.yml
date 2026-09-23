@@ -1,0 +1,55 @@
+openapi: 3.2.0
+info:
+  description: ClearSearch API
+  version: 1.0.0
+  title: ClearSearch Status API
+  contact:
+    email: clearsearch@firstam.com
+servers:
+- url: https://api.firstam.io/v1/clearsearch
+tags:
+- name: Status
+paths:
+  /status:
+    get:
+      tags:
+      - Status
+      summary: Retrieve status of submitted ClearSearch order
+      operationId: getStatus
+      parameters:
+      - in: query
+        name: transactionID
+        description: Transaction ID of submitted order
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Order status found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/OrderStatus'
+components:
+  schemas:
+    OrderStatus:
+      type: object
+      properties:
+        StatusCode:
+          type: string
+          enum:
+          - Complete
+          - Failed
+          - Processing
+          - Queued
+        Description:
+          type: string
+          example: Order successfully processed
+        Errors:
+          type: array
+          items:
+            type: object
+            properties:
+              Code:
+                type: string
+              Description:
+                type: string

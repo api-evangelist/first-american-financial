@@ -1,0 +1,611 @@
+openapi: 3.2.0
+info:
+  title: Mortgage Services Webhooks API
+  version: 1.5.0
+servers:
+- url: https://settlement.stageapi.firstam.com
+  description: Stage Environment
+  variables: {}
+tags:
+- name: Webhooks
+paths:
+  /webhooks:
+    post:
+      security:
+      - bearerAuth: []
+      tags:
+      - Webhooks
+      summary: Register a Webhook
+      description: 'The following events may be published during the life of an order and can be subscribed to by registering a webhook.
+
+
+        **Notes:**
+
+
+        Domain whitelisting required. Please contact LVIS.support@firstam.com for assistance.
+
+
+        Event Type | Description
+
+        ------------------- |-------------
+
+        OrderCreated | Status event indicating that the order has been created. Event will contain message detail such as file number and contacts.
+
+        CurativeCleared | Status event indicating title clearance, will include message detail.
+
+        DocumentDelivery | Delivery of a document as Base64-encoded pdf.
+
+        FundsDisbursed | Status event indicating that proceeds have been distributed to all parties, will include message detail.
+
+        MessageAdded | Status event indicating that a message has been sent. Message container holds up to 1048576 characters.
+
+        FundingApproved | Status event indicating that approval has been given to fund the loan, will include message detail.
+
+        Curative Pending | Status event indicating that there are outstanding items to be cleared on Title. The status can come before or after Title is cleared.
+
+        DisburseHold | Status event indicating that disbursement of funds has been delayed, will include message detail.
+
+        OrderRejected | Status event indicating that an order has been rejected for failing to meet business rules.
+
+        OrderCancelled | Status event indicating that an order has been cancelled.
+
+        OrderClosed | Status event indicating that an order has been closed.
+
+        TitleProductDelivered | Delivery of a requested title product, such as Title Commitment or Preliminary Report as a Base64-encoded pdf.
+
+        FinalPolicyDelivered | Delivery of a final title product, such as Owner''s Policy or Lender''s Policy as a Base64-encoded pdf.
+
+        CDDraft | Delivery of a draft Closing Disclosure as a Base64-encoded pdf.
+
+        AppointmentScheduled | Status event indicating that a signing has been scheduled.
+
+        CDBalanced | Status event indicating that this is the final Closing Disclosure from First American.
+
+        RecordingCompleted | Status event indicating that a document (example: Mortgage Deed of Trust) has been recorded.
+
+        SigningOrdered | Status event indicating that the signing request has been received by First American.
+
+        SigningBorrowerNotified | Status event indicating that a notary or signing agent has confirmed the signing appointment with the borrower.
+
+        SigningCompleted | Status event indicating that the borrower has completed the signing appointment with the notary or signing agent.
+
+        SigningFailed | Status event indicating the notary or signing agent was not able to complete the signing with the borrower on the scheduled date/ time due to an unforeseen event.
+
+
+        The example below shows a MessageAdded event notification. Events will be published in the format defined by the EventNotification schema described in the schemas section. The Notifications array will contain at least one Event instance with one of the above event type values in its Action field. This indicates the type of event that has occurred.
+
+        The Message field will contain a Message instance relevant to the event that has occurred. Once the integration partner system responds with a HTTP 200 status code, the EventNotification will be considered to have been successfully published.
+
+
+        Example of an event notification:
+
+        ```fa-sample
+
+        {
+
+        "id": "2daf73766c29459997d7c46bf2019af7",
+
+        "retryCount": 1,
+
+        "notifications": [
+
+        {
+
+        "action": "MessageAdded",
+
+        "externalTrackingId": "Client provided transaction ID used when opening order",
+
+        "message": {
+
+        "serviceType": "escrowTitle",
+
+        "message": "Sample Message Content"
+
+        }
+
+        }
+
+        ]
+
+        }
+
+        ```'
+      operationId: Webhooks_Post
+      requestBody:
+        description: Register a Webhook
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Webhook'
+            example:
+              AppSource: OpenAPI
+              Uri: notification endpoint URL
+              Secret: integrator's secret
+              Description: Subscription to DocumentDelivery event
+              IsPaused: false
+              Filter: DocumentDelivery
+              Headers:
+                x-api-key: integrator's key
+              Properties:
+                retryCount: 2
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Webhook'
+              example:
+                Uri: notification endpoint URL
+                Secret: integrator's secret
+                Description: Subscription endpoint for DocumentDelivery published event
+                IsPaused: false
+                Filter: DocumentDelivery
+                Headers:
+                  x-api-key: integrator's key
+                Properties:
+                  retryCount: 2
+    put:
+      security:
+      - bearerAuth: []
+      tags:
+      - Webhooks
+      summary: Update a Webhook
+      description: Update a webhook with First American
+      operationId: Webhooks_Put
+      requestBody:
+        description: Webhook Request
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Webhook'
+            example:
+              AppSource: OpenAPI
+              Uri: notification endpoint URL
+              Id: c869db8136f24634bbf3ba6d92c4e8ff
+              Secret: integrator's secret
+              Description: Subscription to DocumentDelivery event
+              IsPaused: false
+              Filter: DocumentDelivery
+              Headers:
+                x-api-key: integrator's key
+              Properties:
+                retryCount: 2
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Webhook'
+              example:
+                Uri: notification endpoint URL
+                Id: c869db8136f24634bbf3ba6d92c4e8ff
+                Secret: integrator's secret
+                Description: Subscription endpoint for DocumentDelivery published event
+                IsPaused: false
+                Filter: DocumentDelivery
+                Headers:
+                  x-api-key: integrator's key
+                Properties:
+                  retryCount: 2
+    get:
+      security:
+      - bearerAuth: []
+      tags:
+      - Webhooks
+      summary: Get all Webhooks
+      description: Get all webhooks with First American
+      operationId: Webhooks_GetAll
+      parameters:
+      - in: query
+        name: appSource
+        required: false
+        schema:
+          type: string
+        description: the subscription group
+        example: OpenAPI
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Webhooks'
+              example:
+                Uri: notification endpoint URL
+                Id: c869db8136f24634bbf3ba6d92c4e8ff
+                Secret: integrator's secret
+                Description: Subscription endpoint for DocumentDelivery published event
+                IsPaused: false
+                Filter: DocumentDelivery
+                Headers:
+                  x-api-key: integrator's key
+                Properties:
+                  retryCount: 2
+    delete:
+      security:
+      - bearerAuth: []
+      tags:
+      - Webhooks
+      summary: Delete all Webhooks
+      description: Delete all webhooks with First American
+      operationId: Webhooks_DelAll
+      parameters:
+      - in: query
+        name: appSource
+        required: false
+        schema:
+          type: string
+        description: the subscription group
+        example: OpenAPI
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                type: string
+              example: Success
+  /webhooks/{id}:
+    get:
+      security:
+      - bearerAuth: []
+      tags:
+      - Webhooks
+      summary: Get Webhook
+      description: Get single webhook with First American
+      operationId: Webhooks_Get
+      parameters:
+      - in: path
+        name: id
+        required: true
+        schema:
+          type: string
+        description: the specific webhook id
+        example: c869db8136f24634bbf3ba6d92c4e8ff
+      - in: query
+        name: appSource
+        required: false
+        schema:
+          type: string
+        description: the subscription group
+        example: OpenAPI
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Webhook'
+              example:
+                Uri: notification endpoint URL
+                Id: c869db8136f24634bbf3ba6d92c4e8ff
+                Secret: testsecretccc
+                Description: Subscription endpoint for DocumentDelivery published event
+                IsPaused: false
+                Filter: DocumentDelivery
+                Headers:
+                  x-api-key: integrator's key
+                Properties:
+                  retryCount: 2
+    delete:
+      security:
+      - bearerAuth: []
+      tags:
+      - Webhooks
+      summary: Delete Webhook
+      description: Delete webhook with First American
+      operationId: Webhooks_Del
+      parameters:
+      - in: path
+        name: id
+        required: true
+        schema:
+          type: string
+        description: the specific webhook id
+        example: c869db8136f24634bbf3ba6d92c4e8ff
+      - in: query
+        name: appSource
+        required: false
+        schema:
+          type: string
+        description: the subscription group
+        example: OpenAPI
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                type: string
+              example: Success
+  /webhooks/registerWebhooks:
+    post:
+      security:
+      - bearerAuth: []
+      tags:
+      - Webhooks
+      summary: Register mutiple Webhooks
+      description: Register mutiple Webhooks with First American
+      operationId: Webhooks_Post_Multiple
+      requestBody:
+        description: Webhook Request
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Webhooks'
+            example:
+            - AppSource: Offerpad
+              Uri: https://pdl.com/v1/FirstAmerican/order_different
+              Secret: integrator's secret
+              Description: Register multiple webhook 1
+              IsPaused: true
+              Filter: OrderClosed
+              Headers:
+                x-api-key: integrator's key
+              Properties:
+                retryCount: 2
+            - AppSource: Offerpad
+              Uri: https://pdl.com/v1/FirstAmerican/order_different
+              Secret: integrator's secret
+              Description: Register multiple webhook 1
+              IsPaused: false
+              Filter: FundingApproved
+              Headers:
+                x-api-key: integrator's key
+              Properties:
+                retryCount: 2
+            - AppSource: Offerpad
+              Uri: https://pdl.com/v1/FirstAmerican/order_different
+              Secret: integrator's secret
+              Description: Register multiple webhook 1
+              IsPaused: true
+              Filter: OrderClosed
+              Headers:
+                x-api-key: integrator's key
+              Properties:
+                retryCount: 2
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Webhooks'
+              example:
+              - AppSource: Offerpad
+                Uri: https://pdl.com/v1/FirstAmerican/order_different
+                Id: 9aaead9f0e2c4ca8af6d67be87a10272
+                Secret: integrator's secret
+                Description: Register multiple webhook 1
+                IsPaused: true
+                Filter: OrderClosed
+                Headers:
+                  x-api-key: integrator's key
+                Properties:
+                  retryCount: 2
+              - Status: Failed
+                Message: Filter:(FundingApproved) already exist.
+              - Status: Failed
+                Message: Invalid AppSource
+  /webhooks/webhooksList:
+    post:
+      security:
+      - bearerAuth: []
+      tags:
+      - Webhooks
+      summary: Delete multiple Webhooks
+      description: Delete multiple Webhooks with First American
+      operationId: Webhooks_Delete_Multiple
+      parameters:
+      - in: query
+        name: appSource
+        required: false
+        schema:
+          type: string
+        description: the subscription group
+        example: OpenAPI
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: array
+              items:
+                type: string
+            example:
+            - c869db8136f24634bbf3ba6d92c4e8ff
+            - 09048da2bb08499b9b5052e16907ba7c
+            - da117c76-jhd3-4ee5-a1c1-8fa5ccf1fd51
+          text/json:
+            schema:
+              type: array
+              items:
+                type: string
+            example:
+            - c869db8136f24634bbf3ba6d92c4e8ff
+            - 09048da2bb08499b9b5052e16907ba7c
+            - da117c76-jhd3-4ee5-a1c1-8fa5ccf1fd51
+          application/xml:
+            schema:
+              type: array
+              items:
+                type: string
+            example:
+            - c869db8136f24634bbf3ba6d92c4e8ff
+            - 09048da2bb08499b9b5052e16907ba7c
+            - da117c76-jhd3-4ee5-a1c1-8fa5ccf1fd51
+          text/xml:
+            schema:
+              type: array
+              items:
+                type: string
+            example:
+            - c869db8136f24634bbf3ba6d92c4e8ff
+            - 09048da2bb08499b9b5052e16907ba7c
+            - da117c76-jhd3-4ee5-a1c1-8fa5ccf1fd51
+          application/x-www-form-urlencoded:
+            schema:
+              type: array
+              items:
+                type: string
+            example:
+            - c869db8136f24634bbf3ba6d92c4e8ff
+            - 09048da2bb08499b9b5052e16907ba7c
+            - da117c76-jhd3-4ee5-a1c1-8fa5ccf1fd51
+        required: true
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                type: string
+              example:
+              - id: c869db8136f24634bbf3ba6d92c4e8ff
+                status: Success
+              - id: 09048da2bb08499b9b5052e16907ba7c
+                status: Success
+              - id: da117c76-jhd3-4ee5-a1c1-8fa5ccf1fd51
+                status: Not found
+  /webhooks/webhookRequests:
+    put:
+      security:
+      - bearerAuth: []
+      tags:
+      - Webhooks
+      summary: Update mutiple Webhooks
+      description: Update mutiple Webhooks with First American
+      operationId: Webhooks_MultipulePUT
+      requestBody:
+        description: Webhook Request
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Webhooks'
+            example:
+            - AppSource: OpenAPI
+              Uri: notification endpoint URL
+              Id: c869db8136f24634bbf3ba6d92c4e8ff
+              Secret: integrator's secret
+              Description: Subscription to OrderCreated event
+              IsPaused: false
+              Filter: OrderCreated
+              Headers:
+                x-api-key: integrator's key
+              Properties:
+                retryCount: 5
+            - AppSource: OpenAPI
+              Uri: notification endpoint URL
+              Id: 09048da2bb08499b9b5052e16907ba7c
+              Secret: integrator's secret
+              Description: Subscription to CurativeCleared event
+              IsPaused: false
+              Filter: CurativeCleared
+              Headers:
+                x-api-key: integrator's key
+              Properties:
+                retryCount: 2
+            - AppSource: OpenAPI
+              Uri: notification endpoint URL
+              Id: da117c76-jhd3-4ee5-a1c1-8fa5ccf1fd51
+              Secret: integrator's secret
+              Description: Subscription to DocumentDelivery event
+              IsPaused: false
+              Filter: DocumentDelivery
+              Headers:
+                x-api-key: integrator's key
+              Properties:
+                retryCount: 3
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Webhooks'
+              example:
+              - Id: c869db8136f24634bbf3ba6d92c4e8ff
+                Status: Success
+              - Id: 09048da2bb08499b9b5052e16907ba7c
+                Status: Uri/Domain Unauthorized
+              - Id: da117c76-jhd3-4ee5-a1c1-8fa5ccf1fd51
+                Status: integrator's secret
+components:
+  schemas:
+    Webhooks:
+      type: array
+      items:
+        $ref: '#/components/schemas/Webhook'
+    EventType:
+      enum:
+      - OrderCreated
+      - DocumentDelivery
+      - CurativeCleared
+      - FundsDisbursed
+      - MessageAdded
+      - OrderRejected
+      - OrderCancelled
+      - OrderClosed
+      - AppointmentScheduled
+      - TitleProductDelivered
+      - FinalPolicyDelivered
+      - CDDraft
+      - FundingApproved
+      - DisburseHold
+      - CurativePending
+      - RecordingCompleted
+      - SigningOrdered
+      - SigningBorrowerNotified
+      - SigningCompleted
+      - CDBalanced
+      type: string
+    Webhook:
+      type: object
+      properties:
+        AppSource:
+          type: string
+          description: Subscription grouping
+        Uri:
+          type: string
+          description: Subscription endpoint
+        Id:
+          type: string
+          description: Webhook unique identifier
+        Secret:
+          type: string
+          description: secret to be used when generating a message hash
+        Description:
+          type: string
+          description: string describing the webhook
+        IsPaused:
+          type: boolean
+          description: determines if the subscription is paused
+        Filter:
+          $ref: '#/components/schemas/EventType'
+        Headers:
+          type: object
+          properties:
+            x-api-key:
+              type: string
+              description: x-api-key header property/value pair
+          description: list of header key/value pairs
+        Properties:
+          type: object
+          properties:
+            retryCount:
+              type: integer
+              enum:
+              - 1
+              - 2
+              - 3
+              - 4
+              - 5
+              description: retry count properties property/value pair
+          description: list of properties key/value pairs
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+      description: OAuth (a.k.a JWT) Authentication is **mandatory**. Please enter a valid access token

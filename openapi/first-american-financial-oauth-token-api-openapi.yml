@@ -1,0 +1,90 @@
+openapi: 3.2.0
+info:
+  title: Mortgage Services OAuth Token API
+  version: 1.5.0
+servers:
+- url: https://settlement.stageapi.firstam.com
+  description: Stage Environment
+  variables: {}
+tags:
+- name: OAuth Token
+paths:
+  /api/token:
+    servers:
+    - url: https://lvis-oauth-swagger.lvisqa.firstam.com
+      description: THIS ENDPOINT IS FOR DEMONSTRATION PURPOSES ONLY
+    post:
+      tags:
+      - OAuth Token
+      summary: Get a Token
+      description: 'First American utilizes OAuth 2.0 authorization protocol for authentication.
+
+
+        Please contact **LVIS.support@firstam.com** to initiate the request for the URL and the values below.
+
+
+        `client_id `
+
+
+        `client_secret `
+
+
+        `scope `
+
+
+        `grant_type `
+
+
+        To generate a token, make a call to the First American authentication URL with these values.'
+      operationId: AAuthz_GetToken
+      requestBody:
+        required: true
+        content:
+          application/x-www-form-urlencoded:
+            schema:
+              type: object
+              properties:
+                client_id:
+                  type: string
+                client_secret:
+                  type: string
+                scope:
+                  type: string
+                grant_type:
+                  type: string
+              required:
+              - client_id
+              - client_secret
+              - grant_type
+              - scope
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TokenResult'
+              example:
+                token_type: Bearer
+                expires_in: 3599
+                ext_expires_in: 3599
+                access_token: eyJ0eXAiOiJKV1
+components:
+  schemas:
+    TokenResult:
+      type: object
+      properties:
+        token_type:
+          type: string
+        expires_in:
+          type: integer
+        ext_expires_in:
+          type: integer
+        access_token:
+          type: string
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+      description: OAuth (a.k.a JWT) Authentication is **mandatory**. Please enter a valid access token

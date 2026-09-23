@@ -1,7 +1,9 @@
 ---
 title: First American Title Launches AgentNet® Assist ...
 url: https://www.firstam.com/news/2025/agentnet-assist-gen-ai-tool-20250728.html
-date: '2026-05-25'
+published: ''
+date_basis: harvested
+harvested: '2026-05-25'
 query: '"First American Financial" press release artificial intelligence'
 position: 1
 source: serpapi-google

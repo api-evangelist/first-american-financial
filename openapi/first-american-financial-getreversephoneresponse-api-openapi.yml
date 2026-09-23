@@ -1,0 +1,274 @@
+openapi: 3.2.0
+info:
+  description: Reverse phone number search for borrower(s) that delivers data for the applicant's phone number.
+  version: 1.0.0
+  title: Reverse Phone Search Get Reverse Phone Response API
+servers:
+- url: https://api.firstam.io/v1
+tags:
+- name: GetReversePhoneResponse
+paths:
+  /reversephone/report:
+    get:
+      tags:
+      - GetReversePhoneResponse
+      summary: Retrieve existing report by Transaction ID
+      operationId: retrieveReversePhone
+      description: Retrieve existing Reverse Phone Response by Transaction ID.
+      parameters:
+      - in: header
+        name: x-app-id
+        description: Application ID
+        required: true
+        schema:
+          type: string
+      - in: header
+        name: x-app-key
+        description: Application Key
+        required: true
+        schema:
+          type: string
+      - in: query
+        name: TransactionID
+        description: Transaction ID number provided
+        required: true
+        schema:
+          type: string
+          default: ''
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ReversePhoneServiceResponse'
+            application/xml:
+              schema:
+                $ref: '#/components/schemas/ReversePhoneServiceResponse'
+        '400':
+          description: invalid Request, object invalid.
+        '404':
+          description: No data found.
+components:
+  schemas:
+    AssociatedPerson:
+      type: object
+      properties:
+        Relationship:
+          type: string
+        Full:
+          type: string
+          example: Mark M Marsupial
+        First:
+          type: string
+          example: Mark
+        Middle:
+          type: string
+          example: M
+        Last:
+          type: string
+          example: Marsupial
+        Suffix:
+          type: string
+        Prefix:
+          type: string
+        LastOrCompanyName:
+          type: string
+        FirstAndMiddleName:
+          type: string
+    SerializableDictionary_String_Object:
+      type: object
+      properties: {}
+    Subscriber:
+      type: object
+      properties:
+        AgeRange:
+          type: string
+        Gender:
+          type: string
+        Type:
+          type: string
+        Industry:
+          type: array
+          items:
+            type: string
+            example: Securities,Commodity Contracts
+        SubscriberStartDate:
+          $ref: '#/components/schemas/ParsedDate'
+        Full:
+          type: string
+        First:
+          type: string
+        Middle:
+          type: string
+        Last:
+          type: string
+        Suffix:
+          type: string
+        Prefix:
+          type: string
+        LastOrCompanyName:
+          type: string
+        FirstAndMiddleName:
+          type: string
+    ReversePhoneServiceResponse:
+      type: object
+      properties:
+        TransactionID:
+          example: 82d9762b-70c3-4801-bd4b-8ffc8d358f77
+          type: string
+          description: TransactionID can be used to fetch data at later stage
+        RequestorID:
+          example: loannumber1234
+          type: string
+          minLength: 1
+          maxLength: 100
+          description: LoanNumber or TransactionID
+        StatusCode:
+          type: string
+        PhoneNumber:
+          type: string
+        IsValid:
+          type: string
+        CountryCallingCode:
+          type: string
+        LineType:
+          format: int32
+          enum:
+          - Landline
+          - FixedVOIP
+          - Mobile
+          - Voicemail
+          - TollFree
+          - Premium
+          - NonFixedVOIP
+          - Other
+          type: integer
+        Carrier:
+          type: string
+        IsPrepaid:
+          type: string
+        IsCommercial:
+          type: string
+        Subscribers:
+          type: array
+          items:
+            $ref: '#/components/schemas/Subscriber'
+        CurrentAddresses:
+          type: array
+          items:
+            $ref: '#/components/schemas/SubscriberAddress'
+        PreviousAddresses:
+          type: array
+          items:
+            $ref: '#/components/schemas/SubscriberAddress'
+        AssociatedPeople:
+          type: array
+          items:
+            $ref: '#/components/schemas/AssociatedPerson'
+        AlternatePhones:
+          type: array
+          items:
+            type: string
+        Warnings:
+          type: array
+          items:
+            type: string
+        Alerts:
+          type: array
+          items:
+            $ref: '#/components/schemas/Alert'
+    SubscriberAddress:
+      type: object
+      properties:
+        IsActive:
+          type: string
+        DeliveryPoint:
+          type: string
+        Accuracy:
+          type: string
+        AddressStartDate:
+          $ref: '#/components/schemas/ParsedDate'
+        AddressEndDate:
+          $ref: '#/components/schemas/ParsedDate'
+        FullAddress:
+          type: string
+        Hash:
+          type: string
+        APN:
+          type: string
+        Longitude:
+          type: string
+        Latitude:
+          type: string
+        StateCityZip:
+          type: string
+        PostalCode:
+          type: string
+        Country:
+          type: string
+        County:
+          type: string
+        ZipFour:
+          type: string
+        CountyFIPSCode:
+          type: string
+        ZipCode:
+          type: string
+        City:
+          type: string
+        StreetAddress2:
+          type: string
+        StreetAddress1:
+          type: string
+        UnitNumber:
+          type: string
+        UnitDesignation:
+          type: string
+        StreetPostDirection:
+          type: string
+        StreetSuffix:
+          type: string
+        StreetName:
+          type: string
+        StreetPreDirection:
+          type: string
+        StreetNumber:
+          type: string
+        State:
+          type: string
+        StateFIPSCode:
+          type: string
+    ParsedDate:
+      type: object
+      properties:
+        Year:
+          format: int32
+          type: integer
+          example: 2017
+        Month:
+          format: int32
+          type: integer
+          example: 10
+        Day:
+          format: int32
+          type: integer
+          example: 21
+    Alert:
+      type: object
+      properties:
+        Code:
+          type: string
+        Description:
+          type: string
+        Status:
+          format: int32
+          enum:
+          - NotEvaluated
+          - Fired
+          - NotFired
+          type: integer
+        Evidence:
+          type: array
+          items:
+            $ref: '#/components/schemas/SerializableDictionary_String_Object'
