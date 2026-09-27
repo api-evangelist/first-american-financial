@@ -121,7 +121,7 @@ paths:
       - Get NMLS data by NMLS ID
       summary: Retrieve company NMLS data by NMLS ID
       description: Add a NMLS ID to the query string to retrieve NMLS data for a company. Optional alert analytics can be performed by appending '&includeanalytics=true' to the query string.
-      operationId: get
+      operationId: getNmlsLookupCompany
       parameters:
       - in: header
         name: x-app-id
@@ -169,12 +169,14 @@ paths:
           description: Internal Server Error
         '503':
           description: Usage Limit Exceeded
+      x-operation-id-source: normalized
+      x-operation-id-original: get
     post:
       tags:
       - Get NMLS data by NMLS ID
       summary: Retrieve NMLS company data by NMLS ID with added parameters for alert analytics
       description: Add a NMLS ID to the query string and add additional parameters in the request body for alert analytics. Must set "IncludeAnalytics" flag to true in the request body.
-      operationId: post
+      operationId: postNmlsLookupCompany
       parameters:
       - in: header
         name: x-app-id
@@ -222,13 +224,15 @@ paths:
               $ref: '#/components/schemas/ServiceRequest'
         description: Request for NMLS
         required: true
+      x-operation-id-source: normalized
+      x-operation-id-original: post
   /nmls/lookup/individual:
     get:
       tags:
       - Get NMLS data by NMLS ID
       summary: Retrieve individual NMLS data by NMLS ID
       description: Add a NMLS ID to the query string to retrieve NMLS data for an individual. Optional alert analytics can be performed by appending '&includeanalytics=true' to the query string.
-      operationId: get
+      operationId: getNmlsLookupIndividual
       parameters:
       - in: header
         name: x-app-id
@@ -276,12 +280,14 @@ paths:
           description: Internal Server Error
         '503':
           description: Usage Limit Exceeded
+      x-operation-id-source: normalized
+      x-operation-id-original: get
     post:
       tags:
       - Get NMLS data by NMLS ID
       summary: Retrieve NMLS individual data by NMLS ID with added parameters for alert…
       description: Add a NMLS ID to the query string and add additional parameters in the request body for alert analytics. Must set "IncludeAnalytics" flag to true in the request body.
-      operationId: post
+      operationId: postNmlsLookupIndividual
       parameters:
       - in: header
         name: x-app-id
@@ -329,8 +335,105 @@ paths:
               $ref: '#/components/schemas/ServiceRequest'
         description: Request for NMLS
         required: true
+      x-operation-id-source: normalized
+      x-operation-id-original: post
 components:
   schemas:
+    RegulatoryAction:
+      type: object
+      properties:
+        EntityType:
+          type: string
+        Regulator:
+          type: string
+        ActionType:
+          type: string
+        DateOfAction:
+          type: string
+        MultiStateActionID:
+          type: string
+        DocketNumber:
+          type: string
+        AssociatedDocumentURL:
+          type: string
+    IndividualAgencyRegistrationHistory:
+      type: object
+      properties:
+        PrimaryFederalRegulator:
+          type: string
+        StartDate:
+          type: string
+        EndDate:
+          type: string
+        IsAuthorized:
+          type: boolean
+    NMLSName:
+      type: object
+      properties:
+        NameType:
+          type: string
+        Name:
+          $ref: '#/components/schemas/Name'
+    IndividualRegistration:
+      type: object
+      properties:
+        RegistrationName:
+          type: string
+        RegistrationStatus:
+          type: string
+        IsAuthorizedToConductBusiness:
+          type: boolean
+    License:
+      type: object
+      properties:
+        Regulator:
+          type: string
+        RegulatorStateCode:
+          type: string
+        LicenseNumber:
+          type: string
+        LicenseType:
+          type: string
+        IssueDate:
+          type: string
+        Status:
+          type: string
+        StatusDate:
+          type: string
+        IsAuthorizedToConductBusiness:
+          type: boolean
+        RenewedThrough:
+          type: string
+        IsLatest:
+          type: boolean
+        LicenseHistory:
+          type: array
+          items:
+            $ref: '#/components/schemas/LicenseHistory'
+    ServiceRequest:
+      type: object
+      properties:
+        Name:
+          $ref: '#/components/schemas/Name'
+        Address:
+          $ref: '#/components/schemas/Address'
+        NMLSID:
+          type: integer
+        ConfidenceScore:
+          type: integer
+        IncludeAnalytics:
+          type: boolean
+      example:
+        RequestorID: ID123
+        IncludeAnalytics: false
+        NMLSID: 349974
+        Name:
+          First: John
+          Middle: Travis
+          LastOrCompanyName: Harrison
+        Address:
+          State: CO
+        ConfidenceScore: 90
     Address:
       type: object
       properties:
@@ -391,23 +494,13 @@ components:
           type: array
           items:
             type: string
-    Sponsor:
+    ServiceResponse:
       type: object
       properties:
-        NMLSID:
-          type: string
-        Name:
-          type: string
-        Regulator:
-          type: string
-        RegulatorStateCode:
-          type: string
-        LicenseType:
-          type: string
-        StartDate:
-          type: string
-        EndDate:
-          type: string
+        Company:
+          $ref: '#/components/schemas/CompanyResponse'
+        Individual:
+          $ref: '#/components/schemas/IndividualResponse'
     IndividualResponse:
       type: object
       properties:
@@ -443,6 +536,19 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/RegulatoryAction'
+    IndividualAgencyRegistration:
+      type: object
+      properties:
+        PrimaryFederalRegulator:
+          type: string
+        Status:
+          type: string
+        StatusDate:
+          type: string
+        RegistrationHistory:
+          type: array
+          items:
+            $ref: '#/components/schemas/IndividualAgencyRegistrationHistory'
     IndividualRegistrationDetail:
       type: object
       properties:
@@ -458,59 +564,6 @@ components:
           type: string
         EndDate:
           type: string
-    NMLSIndividualLicense:
-      type: object
-      properties:
-        License:
-          $ref: '#/components/schemas/License'
-        Sponsorships:
-          type: array
-          items:
-            $ref: '#/components/schemas/Sponsor'
-    NMLSName:
-      type: object
-      properties:
-        NameType:
-          type: string
-        Name:
-          $ref: '#/components/schemas/Name'
-    LicenseHistory:
-      type: object
-      properties:
-        StartDate:
-          type: string
-        EndDate:
-          type: string
-        IsAuthorized:
-          type: boolean
-    IndividualAgencyRegistration:
-      type: object
-      properties:
-        PrimaryFederalRegulator:
-          type: string
-        Status:
-          type: string
-        StatusDate:
-          type: string
-        RegistrationHistory:
-          type: array
-          items:
-            $ref: '#/components/schemas/IndividualAgencyRegistrationHistory'
-    Location:
-      type: object
-      properties:
-        CompanyName:
-          type: string
-        LocationNMLSID:
-          type: string
-        LocationType:
-          type: string
-        Street:
-          type: string
-        StartDate:
-          type: string
-        Address:
-          $ref: '#/components/schemas/Address'
     OtherTradeName:
       type: object
       properties:
@@ -520,33 +573,15 @@ components:
           type: string
         NameType:
           type: string
-    License:
+    LicenseHistory:
       type: object
       properties:
-        Regulator:
+        StartDate:
           type: string
-        RegulatorStateCode:
+        EndDate:
           type: string
-        LicenseNumber:
-          type: string
-        LicenseType:
-          type: string
-        IssueDate:
-          type: string
-        Status:
-          type: string
-        StatusDate:
-          type: string
-        IsAuthorizedToConductBusiness:
+        IsAuthorized:
           type: boolean
-        RenewedThrough:
-          type: string
-        IsLatest:
-          type: boolean
-        LicenseHistory:
-          type: array
-          items:
-            $ref: '#/components/schemas/LicenseHistory'
     Name:
       type: object
       properties:
@@ -566,73 +601,6 @@ components:
           type: string
         FirstAndMiddleName:
           type: string
-    IndividualDisciplinaryActions:
-      type: object
-      properties:
-        AuthorityType:
-          type: string
-        ActionType:
-          type: string
-        DateOfAction:
-          type: string
-        NameOfAuthority:
-          type: string
-        DisciplinaryActionDetail:
-          type: string
-        AssociatedDocumentURL:
-          type: string
-    RegulatoryAction:
-      type: object
-      properties:
-        EntityType:
-          type: string
-        Regulator:
-          type: string
-        ActionType:
-          type: string
-        DateOfAction:
-          type: string
-        MultiStateActionID:
-          type: string
-        DocketNumber:
-          type: string
-        AssociatedDocumentURL:
-          type: string
-    ServiceRequest:
-      type: object
-      properties:
-        Name:
-          $ref: '#/components/schemas/Name'
-        Address:
-          $ref: '#/components/schemas/Address'
-        NMLSID:
-          type: integer
-        ConfidenceScore:
-          type: integer
-        IncludeAnalytics:
-          type: boolean
-      example:
-        RequestorID: ID123
-        IncludeAnalytics: false
-        NMLSID: 349974
-        Name:
-          First: John
-          Middle: Travis
-          LastOrCompanyName: Harrison
-        Address:
-          State: CO
-        ConfidenceScore: 90
-    IndividualAgencyRegistrationHistory:
-      type: object
-      properties:
-        PrimaryFederalRegulator:
-          type: string
-        StartDate:
-          type: string
-        EndDate:
-          type: string
-        IsAuthorized:
-          type: boolean
     CompanyResponse:
       type: object
       properties:
@@ -692,19 +660,59 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/RegulatoryAction'
-    IndividualRegistration:
+    Sponsor:
       type: object
       properties:
-        RegistrationName:
+        NMLSID:
           type: string
-        RegistrationStatus:
+        Name:
           type: string
-        IsAuthorizedToConductBusiness:
-          type: boolean
-    ServiceResponse:
+        Regulator:
+          type: string
+        RegulatorStateCode:
+          type: string
+        LicenseType:
+          type: string
+        StartDate:
+          type: string
+        EndDate:
+          type: string
+    NMLSIndividualLicense:
       type: object
       properties:
-        Company:
-          $ref: '#/components/schemas/CompanyResponse'
-        Individual:
-          $ref: '#/components/schemas/IndividualResponse'
+        License:
+          $ref: '#/components/schemas/License'
+        Sponsorships:
+          type: array
+          items:
+            $ref: '#/components/schemas/Sponsor'
+    Location:
+      type: object
+      properties:
+        CompanyName:
+          type: string
+        LocationNMLSID:
+          type: string
+        LocationType:
+          type: string
+        Street:
+          type: string
+        StartDate:
+          type: string
+        Address:
+          $ref: '#/components/schemas/Address'
+    IndividualDisciplinaryActions:
+      type: object
+      properties:
+        AuthorityType:
+          type: string
+        ActionType:
+          type: string
+        DateOfAction:
+          type: string
+        NameOfAuthority:
+          type: string
+        DisciplinaryActionDetail:
+          type: string
+        AssociatedDocumentURL:
+          type: string

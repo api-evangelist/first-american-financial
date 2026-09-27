@@ -136,6 +136,54 @@ paths:
         required: true
 components:
   schemas:
+    PropertyServiceRequest:
+      type: object
+      required:
+      - RequestorID
+      - Address
+      properties:
+        RequestorID:
+          example: ID123
+          type: string
+          minLength: 1
+          maxLength: 100
+          description: LoanNumber or TransactionID
+        Address:
+          type: object
+          required:
+          - StreetAddress1
+          - City
+          - State
+          - ZipCode
+          properties:
+            StreetAddress1:
+              example: 123 Main St
+              type: string
+            StreetAddress2:
+              example: ''
+              type: string
+            City:
+              example: Mountainsee
+              type: string
+            State:
+              example: ZZ
+              type: string
+            ZipCode:
+              example: '90000'
+              type: string
+            ZipFour:
+              example: ''
+              type: string
+            County:
+              example: ''
+              type: string
+            APN:
+              example: ''
+              type: string
+        IncludeAnalytics:
+          type: boolean
+          example: false
+          description: Option to run analytics on data set.
     Address:
       type: object
       required:
@@ -201,6 +249,29 @@ components:
         APN:
           example: APN
           type: string
+    ListingDataResponse:
+      properties:
+        TransactionID:
+          example: 82d9762b-70c3-4801-bd4b-8ffc8d358f77
+          type: string
+          description: TransactionID can be used to fetch data at later stage.
+        RequestorID:
+          example: RequestorID
+          type: string
+          minLength: 1
+          maxLength: 100
+          description: LoanNumber or TransactionID
+        StatusCode:
+          example: Success
+          type: string
+        ListingData:
+          type: array
+          items:
+            $ref: '#/components/schemas/ListingHistoryDefinition'
+        LocalMarketTrends:
+          type: array
+          items:
+            $ref: '#/components/schemas/LocalMarketTrendDefinition'
     ListingHistoryDefinition:
       type: object
       properties:
@@ -332,77 +403,6 @@ components:
         PricePerSqft:
           example: PricePerSqft
           type: string
-    PropertyServiceRequest:
-      type: object
-      required:
-      - RequestorID
-      - Address
-      properties:
-        RequestorID:
-          example: ID123
-          type: string
-          minLength: 1
-          maxLength: 100
-          description: LoanNumber or TransactionID
-        Address:
-          type: object
-          required:
-          - StreetAddress1
-          - City
-          - State
-          - ZipCode
-          properties:
-            StreetAddress1:
-              example: 123 Main St
-              type: string
-            StreetAddress2:
-              example: ''
-              type: string
-            City:
-              example: Mountainsee
-              type: string
-            State:
-              example: ZZ
-              type: string
-            ZipCode:
-              example: '90000'
-              type: string
-            ZipFour:
-              example: ''
-              type: string
-            County:
-              example: ''
-              type: string
-            APN:
-              example: ''
-              type: string
-        IncludeAnalytics:
-          type: boolean
-          example: false
-          description: Option to run analytics on data set.
-    ListingDataResponse:
-      properties:
-        TransactionID:
-          example: 82d9762b-70c3-4801-bd4b-8ffc8d358f77
-          type: string
-          description: TransactionID can be used to fetch data at later stage.
-        RequestorID:
-          example: RequestorID
-          type: string
-          minLength: 1
-          maxLength: 100
-          description: LoanNumber or TransactionID
-        StatusCode:
-          example: Success
-          type: string
-        ListingData:
-          type: array
-          items:
-            $ref: '#/components/schemas/ListingHistoryDefinition'
-        LocalMarketTrends:
-          type: array
-          items:
-            $ref: '#/components/schemas/LocalMarketTrendDefinition'
     LocalMarketTrendDefinition:
       type: object
       properties:

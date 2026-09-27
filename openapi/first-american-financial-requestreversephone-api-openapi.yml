@@ -53,66 +53,9 @@ paths:
         description: Request for Reverse Phone
 components:
   schemas:
-    AssociatedPerson:
-      type: object
-      properties:
-        Relationship:
-          type: string
-        Full:
-          type: string
-          example: Mark M Marsupial
-        First:
-          type: string
-          example: Mark
-        Middle:
-          type: string
-          example: M
-        Last:
-          type: string
-          example: Marsupial
-        Suffix:
-          type: string
-        Prefix:
-          type: string
-        LastOrCompanyName:
-          type: string
-        FirstAndMiddleName:
-          type: string
     SerializableDictionary_String_Object:
       type: object
       properties: {}
-    Subscriber:
-      type: object
-      properties:
-        AgeRange:
-          type: string
-        Gender:
-          type: string
-        Type:
-          type: string
-        Industry:
-          type: array
-          items:
-            type: string
-            example: Securities,Commodity Contracts
-        SubscriberStartDate:
-          $ref: '#/components/schemas/ParsedDate'
-        Full:
-          type: string
-        First:
-          type: string
-        Middle:
-          type: string
-        Last:
-          type: string
-        Suffix:
-          type: string
-        Prefix:
-          type: string
-        LastOrCompanyName:
-          type: string
-        FirstAndMiddleName:
-          type: string
     ReversePhoneServiceResponse:
       type: object
       properties:
@@ -180,6 +123,21 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/Alert'
+    ParsedDate:
+      type: object
+      properties:
+        Year:
+          format: int32
+          type: integer
+          example: 2017
+        Month:
+          format: int32
+          type: integer
+          example: 10
+        Day:
+          format: int32
+          type: integer
+          example: 21
     ReversePhoneServiceRequest:
       type: object
       properties:
@@ -192,6 +150,56 @@ components:
       example:
         RequestorID: ID123
         PhoneNumber: '0001234567'
+    Subscriber:
+      type: object
+      properties:
+        AgeRange:
+          type: string
+        Gender:
+          type: string
+        Type:
+          type: string
+        Industry:
+          type: array
+          items:
+            type: string
+            example: Securities,Commodity Contracts
+        SubscriberStartDate:
+          $ref: '#/components/schemas/ParsedDate'
+        Full:
+          type: string
+        First:
+          type: string
+        Middle:
+          type: string
+        Last:
+          type: string
+        Suffix:
+          type: string
+        Prefix:
+          type: string
+        LastOrCompanyName:
+          type: string
+        FirstAndMiddleName:
+          type: string
+    Alert:
+      type: object
+      properties:
+        Code:
+          type: string
+        Description:
+          type: string
+        Status:
+          format: int32
+          enum:
+          - NotEvaluated
+          - Fired
+          - NotFired
+          type: integer
+        Evidence:
+          type: array
+          items:
+            $ref: '#/components/schemas/SerializableDictionary_String_Object'
     SubscriberAddress:
       type: object
       properties:
@@ -253,36 +261,28 @@ components:
           type: string
         StateFIPSCode:
           type: string
-    ParsedDate:
+    AssociatedPerson:
       type: object
       properties:
-        Year:
-          format: int32
-          type: integer
-          example: 2017
-        Month:
-          format: int32
-          type: integer
-          example: 10
-        Day:
-          format: int32
-          type: integer
-          example: 21
-    Alert:
-      type: object
-      properties:
-        Code:
+        Relationship:
           type: string
-        Description:
+        Full:
           type: string
-        Status:
-          format: int32
-          enum:
-          - NotEvaluated
-          - Fired
-          - NotFired
-          type: integer
-        Evidence:
-          type: array
-          items:
-            $ref: '#/components/schemas/SerializableDictionary_String_Object'
+          example: Mark M Marsupial
+        First:
+          type: string
+          example: Mark
+        Middle:
+          type: string
+          example: M
+        Last:
+          type: string
+          example: Marsupial
+        Suffix:
+          type: string
+        Prefix:
+          type: string
+        LastOrCompanyName:
+          type: string
+        FirstAndMiddleName:
+          type: string

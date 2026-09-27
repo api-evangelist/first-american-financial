@@ -48,9 +48,9 @@ modified: '2026-09-09'
 position: Producing
 tags:
 - Title Insurance
-- Real-Estate
+- Real Estate
 - Settlement Services
-- Financial-Services
+- Financial Services
 - Mortgage
 - Property Data
 - Identity Verification
@@ -66,6 +66,8 @@ tags_raw:
 - Identity Verification
 - Regulatory Compliance
 - Fortune 1000
+- Real-Estate
+- Financial-Services
 url: https://raw.githubusercontent.com/api-evangelist/first-american-financial/refs/heads/main/apis.yml
 specificationVersion: '0.23'
 apis:

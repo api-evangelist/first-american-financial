@@ -33,27 +33,6 @@ paths:
           description: Missing/Invalid TransactionID
 components:
   schemas:
-    Address:
-      type: object
-      properties:
-        StreetAddress1:
-          type: string
-          example: 1234 Main Street
-        StreetAddress2:
-          type: string
-          example: Unit 5
-        City:
-          type: string
-          example: AnyTown
-        State:
-          type: string
-          example: CA
-        ZipCode:
-          type: string
-          example: 12345
-        County:
-          type: string
-          example: Some County
     DocumentType:
       type: string
       enum:
@@ -105,28 +84,45 @@ components:
       - Transfer
       - TrustDeedMortgage
       - Unknown
-    ComplexityIndicator:
+    Loan:
       type: object
       properties:
-        Result:
+        LoanNumber:
           type: string
-          example: Streamlined
+          example: ABD123
+        LoanAmount:
+          type: number
+          format: double
+          example: 300000
+        CashOutAmount:
+          type: number
+          format: double
+          example: 300000
+        LoanType:
+          type: string
           enum:
-          - Streamlined
-          - Traditional
-          - Exam
-          - Curative
-          - Search
-        Level:
-          type: integer
-          example: 1
-          minimum: 1
-        RequiresDocPull:
-          type: boolean
-          example: false
-        RequiresPlatMap:
-          type: boolean
-          example: true
+          - Refinance
+    Address:
+      type: object
+      properties:
+        StreetAddress1:
+          type: string
+          example: 1234 Main Street
+        StreetAddress2:
+          type: string
+          example: Unit 5
+        City:
+          type: string
+          example: AnyTown
+        State:
+          type: string
+          example: CA
+        ZipCode:
+          type: string
+          example: 12345
+        County:
+          type: string
+          example: Some County
     PropertyType:
       type: string
       enum:
@@ -237,6 +233,28 @@ components:
               AlertDescription:
                 type: string
                 example: The DNA-Clear add-on will be added to workflow results when there is no hit on a consumer name in the do not associate list.
+    ComplexityIndicator:
+      type: object
+      properties:
+        Result:
+          type: string
+          example: Streamlined
+          enum:
+          - Streamlined
+          - Traditional
+          - Exam
+          - Curative
+          - Search
+        Level:
+          type: integer
+          example: 1
+          minimum: 1
+        RequiresDocPull:
+          type: boolean
+          example: false
+        RequiresPlatMap:
+          type: boolean
+          example: true
     TitleOptions:
       type: object
       properties:
@@ -268,24 +286,6 @@ components:
                 type: string
               Description:
                 type: string
-    Loan:
-      type: object
-      properties:
-        LoanNumber:
-          type: string
-          example: ABD123
-        LoanAmount:
-          type: number
-          format: double
-          example: 300000
-        CashOutAmount:
-          type: number
-          format: double
-          example: 300000
-        LoanType:
-          type: string
-          enum:
-          - Refinance
     Consumer:
       type: object
       properties:
