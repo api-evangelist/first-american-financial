@@ -52,42 +52,6 @@ paths:
         required: true
 components:
   schemas:
-    Phone:
-      properties:
-        PhoneType:
-          example: PhoneType
-          type: string
-        PhoneNumber:
-          example: PhoneNumber
-          type: string
-    HoaInfoDefinition:
-      properties:
-        Name:
-          example: Name
-          type: string
-        HoaType:
-          example: Hoatype
-          type: string
-        City:
-          example: City
-          type: string
-        Amount:
-          example: Amount
-          type: string
-        MinAmount:
-          example: MinAmount
-          type: string
-        MaxAmount:
-          example: MaxAmount
-          type: string
-        FeeFrequency:
-          example: FeeFrequency
-          type: string
-        FeeType:
-          example: FeeType
-          type: string
-        Contacts:
-          $ref: '#/components/schemas/Contact'
     PropertyServiceRequest:
       type: object
       required:
@@ -227,3 +191,39 @@ components:
           $ref: '#/components/schemas/Address'
         Phone:
           $ref: '#/components/schemas/Phone'
+    Phone:
+      properties:
+        PhoneType:
+          example: PhoneType
+          type: string
+        PhoneNumber:
+          example: PhoneNumber
+          type: string
+    HoaInfoDefinition:
+      properties:
+        Name:
+          example: Name
+          type: string
+        HoaType:
+          example: Hoatype
+          type: string
+        City:
+          example: City
+          type: string
+        Amount:
+          example: Amount
+          type: string
+        MinAmount:
+          example: MinAmount
+          type: string
+        MaxAmount:
+          example: MaxAmount
+          type: string
+        FeeFrequency:
+          example: FeeFrequency
+          type: string
+        FeeType:
+          example: FeeType
+          type: string
+        Contacts:
+          $ref: '#/components/schemas/Contact'

@@ -296,122 +296,6 @@ paths:
                 Message: Successful
 components:
   schemas:
-    OrderRequest:
-      type: object
-      properties:
-        appSource:
-          type: string
-          description: A required unique application ID provided by First American Title to identify clients.
-        service:
-          enum:
-          - Escrow
-          - Title
-          - EscrowTitle
-          type: string
-          description: A required value of available service options provided by First American Title.
-          example: TitleEscrow
-        parties:
-          uniqueItems: false
-          type: array
-          items:
-            anyOf:
-            - $ref: '#/components/schemas/IndividualParty'
-            - $ref: '#/components/schemas/LegalEntityParty'
-          description: List of parties involved in the transaction. Party type can be either LegalEntityParty or IndividualParty
-        propertyAddress:
-          $ref: '#/components/schemas/PropertyAddress'
-        officeId:
-          type: string
-          description: An optional field that can be provided if a preference of service location exists. An officeId can be obtained via the Offices resource.
-          example: 4356
-        escrowOfficerCode:
-          type: string
-          description: An optional field that can be provided for escrow officer.  An escrowOfficerCode can be obtained via the employees/escrowOfficers resource.
-          example: CJCLEMENS
-        titleOfficerCode:
-          type: string
-          description: An optional field that can be provided for title officer.  A titleOfficerCode can be obtained via the employees/titleOfficers resource.
-          example: CJCLEMENS
-        transactionType:
-          enum:
-          - SaleWithMortgage
-          - SaleCash
-          - Refinance
-          - EquityLoan
-          - SaleWithConstructionLoan
-          - ConstructionFinance
-          - SearchPackage
-          - Other
-          type: string
-          description: A required value that specifies the purpose for the transaction service request.
-          example: SaleWithMortgage
-        notes:
-          type: string
-          description: An optional free text field for additional service request information.
-        externalTrackingId:
-          type: string
-          description: Client provided transaction ID used to communicate inbound and outbound.
-        loan:
-          $ref: '#/components/schemas/Loan'
-        Documents:
-          type: array
-          items:
-            $ref: '#/components/schemas/Document'
-          description: List of documents involved in the transaction.
-        transactionDetails:
-          $ref: '#/components/schemas/TransactionDetails'
-      required:
-      - appSource
-      - service
-      - parties
-      - propertyAddress
-      - transactionType
-      - externalTrackingId
-    OrderCancelResponse:
-      type: object
-      properties:
-        ID:
-          format: uuid
-          type: string
-          example: 00000000-0000-0000-0000-000000000000
-          description: A unique message ID used for troubleshooting.
-        externalReferenceId:
-          type: string
-          description: An echo of the externalReferenceId provided in the request.
-        DateTime:
-          $ref: '#/components/schemas/UtcDateTime'
-        Status:
-          format: int32
-          type: integer
-          description: 1 indicates success. 0 indicates failure. Review Message field for details.
-        Message:
-          type: string
-          description: Provides a detailed desciption of the Status field.
-    OtherRole:
-      enum:
-      - NotApplicable
-      - BuyerBorrower
-      - Seller
-      - BuyerRealEstateAgent
-      - SellerRealEstateAgent
-      - Lender
-      - PayoffLender
-      - MortgageBroker
-      - Other
-      - BuyerRealEstateBroker
-      - BuyerAttorney
-      - BuyerTransactionCoordinator
-      - NewLender
-      - SellerAttorney
-      - SellerRealEstateBroker
-      - SellerTransactionCoordinator
-      - OutsideTitle
-      - OutsideEscrow
-      - Builder
-      - Investor
-      type: string
-      description: Only use this when RequestingSource is provided as the role. Consult with First American before using.
-      example: BuyerBorrower
     IndividualParty:
       type: object
       properties:
@@ -494,52 +378,16 @@ components:
       - role
       - firstName
       - lastName
-    Address:
-      type: object
-      properties:
-        addressType:
-          enum:
-          - Other
-          - Billing
-          - Business
-          - CurrentAddress
-          - ForwardingAddress
-          - Home
-          - Mailing
-          - NotaryAddress
-          - SigningLocation
-          - SubjectProperty
-          type: string
-          description: Address Type
-          example: CurrentAddress
-        addressLine1:
-          type: string
-          description: Address Line 1
-          example: 2 First American Way
-        addressLine2:
-          type: string
-          description: Address Line 2
-          example: Unit 123
-        cityName:
-          type: string
-          description: City of an address
-          example: Santa Ana
-        countyName:
-          type: string
-          description: County Name
-          example: Orange
-        postalCode:
-          type: string
-          description: Postal Code
-          example: 92706
-        stateCode:
-          type: string
-          description: State Code
-          example: CA
-      description: Address Definition
-      required:
-      - postalCode
-      - stateCode
+    ServiceType:
+      title: ServiceType
+      enum:
+      - Escrow
+      - Title
+      - EscrowTitle
+      - Other
+      type: string
+      description: The required service type associated with the payload.
+      example: Escrow
     LegalEntityParty:
       type: object
       properties:
@@ -578,60 +426,62 @@ components:
       - role
       - primaryName
       - legalEntity
-    LegalEntityPartyRole:
-      enum:
-      - RequestingSource
-      - BuyerBorrower
-      - Seller
-      - BuyerRealEstateAgent
-      - SellerRealEstateAgent
-      - Lender
-      - PayoffLender
-      - MortgageBroker
-      - HomeOwnerAssociation
-      - HomeOwnerInsurance
-      - Other
-      - BuyerRealEstateBroker
-      - BuyerAttorney
-      - BuyerTransactionCoordinator
-      - NewLender
-      - SellerAttorney
-      - SellerRealEstateBroker
-      - SellerTransactionCoordinator
+    UtcDateTime:
       type: string
-      description: "The role of the party in the transaction.  BuyerBorrower required. \n\nRequestingSource is a special case for supporting iBuyers. Consult with First American before using."
-    ContactPoint:
+      format: date-time
+      example: '2018-03-20T09:12:28Z'
+    PropertyAddress:
+      description: A required field providing the site location of the property in question.
       type: object
       properties:
-        contactPointType:
+        addressLine1:
+          type: string
+          description: Address Line 1
+          example: 2 First American Way
+        addressLine2:
+          type: string
+          description: Address Line 2
+          example: Unit 123
+        cityName:
+          type: string
+          description: City of an Address
+          example: Santa Ana
+        countyName:
+          type: string
+          description: County Name
+          example: Orange
+        countyFips:
+          type: string
+          description: County FIPS
+          example: 059
+        postalCode:
+          type: string
+          pattern: ^[0-9]{5}(-[0-9]{4})?$
+          description: Postal Code
+          example: 92706
+        stateCode:
+          type: string
+          description: State Code
+          example: CA
+        PropertyType:
           enum:
-          - Work
-          - Mobile
-          - Home
-          - Other
+          - SingleFamilyResidence
+          - MultiResidential
+          - Townhouse
+          - Condominium
+          - ManufacturedHome
+          - VacantLand
           type: string
-          description: Type of Contact Point
-          example: Work
-        emailAccount:
+          description: Property Type
+          example: SingleFamilyResidence
+        APN:
           type: string
-          description: Contact's email address.
-        faxNumber:
-          type: string
-          description: Contact's Fax Number.
-          example: 714-250-0000
-        faxNumberExt:
-          type: string
-          description: Fax Number Extension
-        phoneNumber:
-          type: string
-          description: Contact's phone number
-          example: 714-250-0000
-        phoneNumberExt:
-          type: string
-          description: Phone Number Extension
-      description: Contact Point Definition
+          description: Property APN
+          example: 006-007-001-000
       required:
-      - contactPointType
+      - countyName
+      - postalCode
+      - stateCode
     Document:
       type: object
       properties:
@@ -692,90 +542,149 @@ components:
       - Name
       - FileExtension
       - EmbeddedContent
-    Loan:
+    MessagePayload:
+      title: MessagePayload
       type: object
       properties:
-        loanNumber:
+        appSource:
           type: string
-          description: An optional field that contains a  unique loan identifier
-          example: Loan12345-345
-        loanAmount:
-          type: number
-          format: decimal
-          description: An optional field for the total dollar amount of the mortgage note that is being requested by the borrower
-          example: 1234
-        LoanType:
-          enum:
-          - Conventional
-          - FHA
-          - VA
+          example: Replace with FA Provided ID
+        ServiceType:
+          $ref: '#/components/schemas/ServiceType'
+        Message:
           type: string
-          description: An optional field that contains a unique different loan types
-          example: Conventional
-    PayoffInformation:
+          description: The required message content.
+        MessageType:
+          type: string
+          description: The required message type.
+      required:
+      - AppSource
+      - ServiceType
+      - Message
+    OrderRequest:
       type: object
       properties:
-        payoffType:
+        appSource:
+          type: string
+          description: A required unique application ID provided by First American Title to identify clients.
+        service:
           enum:
-          - LenderOrderBothPayoffSubordinate
-          - LenderOrderPayoff
-          - LenderOrderSubordinate
-          - Other
-          - TitleCompanyOrderBothPayoffSubordinate
-          - TitleCompanyOrderPayoff
-          - TitleCompanyOrderSubordinate
+          - Escrow
+          - Title
+          - EscrowTitle
           type: string
-          description: Payoff Type
-          example: LenderOrderSubordinate
-        loanNumber:
+          description: A required value of available service options provided by First American Title.
+          example: TitleEscrow
+        parties:
+          uniqueItems: false
+          type: array
+          items:
+            anyOf:
+            - $ref: '#/components/schemas/IndividualParty'
+            - $ref: '#/components/schemas/LegalEntityParty'
+          description: List of parties involved in the transaction. Party type can be either LegalEntityParty or IndividualParty
+        propertyAddress:
+          $ref: '#/components/schemas/PropertyAddress'
+        officeId:
           type: string
-          description: Loan Number
-          example: '787782232'
-        loanAmount:
-          type: number
-          format: decimal
-          description: Loan Amount
-          example: '70000'
-        lienPosition:
-          type: number
-          format: integer
-          description: Lien Position
-          example: '1'
-        liabilityType:
+          description: An optional field that can be provided if a preference of service location exists. An officeId can be obtained via the Offices resource.
+          example: 4356
+        escrowOfficerCode:
+          type: string
+          description: An optional field that can be provided for escrow officer.  An escrowOfficerCode can be obtained via the employees/escrowOfficers resource.
+          example: CJCLEMENS
+        titleOfficerCode:
+          type: string
+          description: An optional field that can be provided for title officer.  A titleOfficerCode can be obtained via the employees/titleOfficers resource.
+          example: CJCLEMENS
+        transactionType:
           enum:
-          - BorrowerEstimatedTotalMonthlyLiabilityPayment
-          - CollectionsJudgementsAndLiens
-          - DeferredStudentLoan
-          - DelinquentTaxes
-          - FirstPositionMortgageLien
-          - Garnishments
-          - HELOC
-          - HomeownersAssociationLien
-          - Installment
-          - LeasePayment
-          - MonetaryJudgment
-          - MortgageLoan
-          - Open30DayChargeAccount
+          - SaleWithMortgage
+          - SaleCash
+          - Refinance
+          - EquityLoan
+          - SaleWithConstructionLoan
+          - ConstructionFinance
+          - SearchPackage
           - Other
-          - PersonalLoan
-          - Revolving
-          - SecondPositionMortgageLien
-          - Taxes
-          - TaxLien
-          - ThirdPositionMortgageLien
-          - UnsecuredHomeImprovementLoanInstallment
-          - UnsecuredHomeImprovementLoanRevolving
           type: string
-          description: Payoff Type
-          example: MortgageLoan
-        lenderName:
+          description: A required value that specifies the purpose for the transaction service request.
+          example: SaleWithMortgage
+        notes:
           type: string
-          description: Lender Name
-          example: Wells Fargo
-        lenderPhone:
+          description: An optional free text field for additional service request information.
+        externalTrackingId:
           type: string
-          description: Lender Phone
-          example: 123-123-1234
+          description: Client provided transaction ID used to communicate inbound and outbound.
+        loan:
+          $ref: '#/components/schemas/Loan'
+        Documents:
+          type: array
+          items:
+            $ref: '#/components/schemas/Document'
+          description: List of documents involved in the transaction.
+        transactionDetails:
+          $ref: '#/components/schemas/TransactionDetails'
+      required:
+      - appSource
+      - service
+      - parties
+      - propertyAddress
+      - transactionType
+      - externalTrackingId
+    OrderCancelRequest:
+      type: object
+      properties:
+        AppSource:
+          type: string
+          example: Replace with FA Provide ID
+          description: Subscription grouping
+        ServiceType:
+          $ref: '#/components/schemas/ServiceType'
+        ReasonForCancel:
+          type: string
+          description: Reason for cancel
+      required:
+      - ServiceType
+    PartyContact:
+      type: object
+      properties:
+        firstName:
+          type: string
+          description: 'The first name of the party contact. '
+        lastName:
+          type: string
+          description: 'The last name of the party contact. '
+        contactPoints:
+          uniqueItems: false
+          type: array
+          items:
+            $ref: '#/components/schemas/ContactPoint'
+          description: A list of contact points.
+        role:
+          $ref: '#/components/schemas/LegalEntityPartyContactRole'
+    LegalEntityPartyRole:
+      enum:
+      - RequestingSource
+      - BuyerBorrower
+      - Seller
+      - BuyerRealEstateAgent
+      - SellerRealEstateAgent
+      - Lender
+      - PayoffLender
+      - MortgageBroker
+      - HomeOwnerAssociation
+      - HomeOwnerInsurance
+      - Other
+      - BuyerRealEstateBroker
+      - BuyerAttorney
+      - BuyerTransactionCoordinator
+      - NewLender
+      - SellerAttorney
+      - SellerRealEstateBroker
+      - SellerTransactionCoordinator
+      type: string
+      description: "The role of the party in the transaction.  BuyerBorrower required. \n\nRequestingSource is a special case for supporting iBuyers. Consult with First American before using."
     LegalEntityPartyContactRole:
       enum:
       - BuyerBorrower
@@ -800,36 +709,74 @@ components:
       - SellerTransactionCoordinator
       type: string
       description: The role of the party in the transaction.  BuyerBorrower required.
-    ResourceResponse:
+    TransactionDetails:
       type: object
       properties:
-        ID:
-          format: uuid
+        contractSignedDate:
           type: string
-          example: 00000000-0000-0000-0000-000000000000
-          description: A unique message ID used for troubleshooting.
-        externalReferenceId:
+          format: date
+          description: An optional field for the date on which the purchase agreement was signed
+          example: '2020-02-03T00:00:00.000Z'
+        earnestMoneyDeposit:
+          type: number
+          format: decimal
+          description: An optional field for the amount of earnest money specified in the purchase agreement
+          example: 234
+        inspectionEndDate:
           type: string
-          description: An echo of the externalReferenceId provided in the request.
-        DateTime:
-          $ref: '#/components/schemas/UtcDateTime'
-        Status:
-          format: int32
-          type: integer
-          description: 1 indicates success. 0 indicates failure. Review Message field for details.
-        Message:
+          format: date
+          description: An optional field for the buyer's inspection deadline as specified in the purchase agreement
+          example: '2020-02-05T00:00:00.000Z'
+        homeOwnersAssociation:
+          type: boolean
+          description: An optional field to indicate whether the subject property is part of an HOA
+          example: false
+        closeOfEscrowDate:
           type: string
-          description: Provides a detailed desciption of the Status field.
-    ServiceType:
-      title: ServiceType
-      enum:
-      - Escrow
-      - Title
-      - EscrowTitle
-      - Other
-      type: string
-      description: The required service type associated with the payload.
-      example: Escrow
+          format: date
+          description: An optional field for estimated settlement date for the transaction
+          example: '2020-02-11T00:00:00.000Z'
+        acquisitionPrice:
+          type: number
+          format: decimal
+          description: An optional field for sale price of the subject property
+          example: 1290
+        payoffInformations:
+          type: array
+          items:
+            $ref: '#/components/schemas/PayoffInformation'
+    ContactPoint:
+      type: object
+      properties:
+        contactPointType:
+          enum:
+          - Work
+          - Mobile
+          - Home
+          - Other
+          type: string
+          description: Type of Contact Point
+          example: Work
+        emailAccount:
+          type: string
+          description: Contact's email address.
+        faxNumber:
+          type: string
+          description: Contact's Fax Number.
+          example: 714-250-0000
+        faxNumberExt:
+          type: string
+          description: Fax Number Extension
+        phoneNumber:
+          type: string
+          description: Contact's phone number
+          example: 714-250-0000
+        phoneNumberExt:
+          type: string
+          description: Phone Number Extension
+      description: Contact Point Definition
+      required:
+      - contactPointType
     DocumentPayload:
       type: object
       properties:
@@ -905,62 +852,71 @@ components:
       - ServiceType
       - FileExtension
       - EmbeddedContent
-    UtcDateTime:
-      type: string
-      format: date-time
-      example: '2018-03-20T09:12:28Z'
-    PropertyAddress:
-      description: A required field providing the site location of the property in question.
+    OrderCancelResponse:
       type: object
       properties:
-        addressLine1:
+        ID:
+          format: uuid
           type: string
-          description: Address Line 1
-          example: 2 First American Way
-        addressLine2:
+          example: 00000000-0000-0000-0000-000000000000
+          description: A unique message ID used for troubleshooting.
+        externalReferenceId:
           type: string
-          description: Address Line 2
-          example: Unit 123
-        cityName:
+          description: An echo of the externalReferenceId provided in the request.
+        DateTime:
+          $ref: '#/components/schemas/UtcDateTime'
+        Status:
+          format: int32
+          type: integer
+          description: 1 indicates success. 0 indicates failure. Review Message field for details.
+        Message:
           type: string
-          description: City of an Address
-          example: Santa Ana
-        countyName:
+          description: Provides a detailed desciption of the Status field.
+    ResourceResponse:
+      type: object
+      properties:
+        ID:
+          format: uuid
           type: string
-          description: County Name
-          example: Orange
-        countyFips:
+          example: 00000000-0000-0000-0000-000000000000
+          description: A unique message ID used for troubleshooting.
+        externalReferenceId:
           type: string
-          description: County FIPS
-          example: 059
-        postalCode:
+          description: An echo of the externalReferenceId provided in the request.
+        DateTime:
+          $ref: '#/components/schemas/UtcDateTime'
+        Status:
+          format: int32
+          type: integer
+          description: 1 indicates success. 0 indicates failure. Review Message field for details.
+        Message:
           type: string
-          pattern: ^[0-9]{5}(-[0-9]{4})?$
-          description: Postal Code
-          example: 92706
-        stateCode:
-          type: string
-          description: State Code
-          example: CA
-        PropertyType:
-          enum:
-          - SingleFamilyResidence
-          - MultiResidential
-          - Townhouse
-          - Condominium
-          - ManufacturedHome
-          - VacantLand
-          type: string
-          description: Property Type
-          example: SingleFamilyResidence
-        APN:
-          type: string
-          description: Property APN
-          example: 006-007-001-000
-      required:
-      - countyName
-      - postalCode
-      - stateCode
+          description: Provides a detailed desciption of the Status field.
+    OtherRole:
+      enum:
+      - NotApplicable
+      - BuyerBorrower
+      - Seller
+      - BuyerRealEstateAgent
+      - SellerRealEstateAgent
+      - Lender
+      - PayoffLender
+      - MortgageBroker
+      - Other
+      - BuyerRealEstateBroker
+      - BuyerAttorney
+      - BuyerTransactionCoordinator
+      - NewLender
+      - SellerAttorney
+      - SellerRealEstateBroker
+      - SellerTransactionCoordinator
+      - OutsideTitle
+      - OutsideEscrow
+      - Builder
+      - Investor
+      type: string
+      description: Only use this when RequestingSource is provided as the role. Consult with First American before using.
+      example: BuyerBorrower
     IndividualPartyRole:
       enum:
       - LoanOfficer
@@ -982,92 +938,136 @@ components:
       - SellerTransactionCoordinator
       type: string
       description: "The role of the party in the transaction.  BuyerBorrower required. \n\nRequestingSource is a special case for supporting iBuyers. Consult with First American before using."
-    TransactionDetails:
+    PayoffInformation:
       type: object
       properties:
-        contractSignedDate:
+        payoffType:
+          enum:
+          - LenderOrderBothPayoffSubordinate
+          - LenderOrderPayoff
+          - LenderOrderSubordinate
+          - Other
+          - TitleCompanyOrderBothPayoffSubordinate
+          - TitleCompanyOrderPayoff
+          - TitleCompanyOrderSubordinate
           type: string
-          format: date
-          description: An optional field for the date on which the purchase agreement was signed
-          example: '2020-02-03T00:00:00.000Z'
-        earnestMoneyDeposit:
+          description: Payoff Type
+          example: LenderOrderSubordinate
+        loanNumber:
+          type: string
+          description: Loan Number
+          example: '787782232'
+        loanAmount:
           type: number
           format: decimal
-          description: An optional field for the amount of earnest money specified in the purchase agreement
-          example: 234
-        inspectionEndDate:
+          description: Loan Amount
+          example: '70000'
+        lienPosition:
+          type: number
+          format: integer
+          description: Lien Position
+          example: '1'
+        liabilityType:
+          enum:
+          - BorrowerEstimatedTotalMonthlyLiabilityPayment
+          - CollectionsJudgementsAndLiens
+          - DeferredStudentLoan
+          - DelinquentTaxes
+          - FirstPositionMortgageLien
+          - Garnishments
+          - HELOC
+          - HomeownersAssociationLien
+          - Installment
+          - LeasePayment
+          - MonetaryJudgment
+          - MortgageLoan
+          - Open30DayChargeAccount
+          - Other
+          - PersonalLoan
+          - Revolving
+          - SecondPositionMortgageLien
+          - Taxes
+          - TaxLien
+          - ThirdPositionMortgageLien
+          - UnsecuredHomeImprovementLoanInstallment
+          - UnsecuredHomeImprovementLoanRevolving
           type: string
-          format: date
-          description: An optional field for the buyer's inspection deadline as specified in the purchase agreement
-          example: '2020-02-05T00:00:00.000Z'
-        homeOwnersAssociation:
-          type: boolean
-          description: An optional field to indicate whether the subject property is part of an HOA
-          example: false
-        closeOfEscrowDate:
+          description: Payoff Type
+          example: MortgageLoan
+        lenderName:
           type: string
-          format: date
-          description: An optional field for estimated settlement date for the transaction
-          example: '2020-02-11T00:00:00.000Z'
-        acquisitionPrice:
+          description: Lender Name
+          example: Wells Fargo
+        lenderPhone:
+          type: string
+          description: Lender Phone
+          example: 123-123-1234
+    Address:
+      type: object
+      properties:
+        addressType:
+          enum:
+          - Other
+          - Billing
+          - Business
+          - CurrentAddress
+          - ForwardingAddress
+          - Home
+          - Mailing
+          - NotaryAddress
+          - SigningLocation
+          - SubjectProperty
+          type: string
+          description: Address Type
+          example: CurrentAddress
+        addressLine1:
+          type: string
+          description: Address Line 1
+          example: 2 First American Way
+        addressLine2:
+          type: string
+          description: Address Line 2
+          example: Unit 123
+        cityName:
+          type: string
+          description: City of an address
+          example: Santa Ana
+        countyName:
+          type: string
+          description: County Name
+          example: Orange
+        postalCode:
+          type: string
+          description: Postal Code
+          example: 92706
+        stateCode:
+          type: string
+          description: State Code
+          example: CA
+      description: Address Definition
+      required:
+      - postalCode
+      - stateCode
+    Loan:
+      type: object
+      properties:
+        loanNumber:
+          type: string
+          description: An optional field that contains a  unique loan identifier
+          example: Loan12345-345
+        loanAmount:
           type: number
           format: decimal
-          description: An optional field for sale price of the subject property
-          example: 1290
-        payoffInformations:
-          type: array
-          items:
-            $ref: '#/components/schemas/PayoffInformation'
-    PartyContact:
-      type: object
-      properties:
-        firstName:
+          description: An optional field for the total dollar amount of the mortgage note that is being requested by the borrower
+          example: 1234
+        LoanType:
+          enum:
+          - Conventional
+          - FHA
+          - VA
           type: string
-          description: 'The first name of the party contact. '
-        lastName:
-          type: string
-          description: 'The last name of the party contact. '
-        contactPoints:
-          uniqueItems: false
-          type: array
-          items:
-            $ref: '#/components/schemas/ContactPoint'
-          description: A list of contact points.
-        role:
-          $ref: '#/components/schemas/LegalEntityPartyContactRole'
-    OrderCancelRequest:
-      type: object
-      properties:
-        AppSource:
-          type: string
-          example: Replace with FA Provide ID
-          description: Subscription grouping
-        ServiceType:
-          $ref: '#/components/schemas/ServiceType'
-        ReasonForCancel:
-          type: string
-          description: Reason for cancel
-      required:
-      - ServiceType
-    MessagePayload:
-      title: MessagePayload
-      type: object
-      properties:
-        appSource:
-          type: string
-          example: Replace with FA Provided ID
-        ServiceType:
-          $ref: '#/components/schemas/ServiceType'
-        Message:
-          type: string
-          description: The required message content.
-        MessageType:
-          type: string
-          description: The required message type.
-      required:
-      - AppSource
-      - ServiceType
-      - Message
+          description: An optional field that contains a unique different loan types
+          example: Conventional
   securitySchemes:
     bearerAuth:
       type: http

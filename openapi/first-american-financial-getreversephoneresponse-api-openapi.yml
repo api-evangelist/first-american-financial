@@ -51,9 +51,160 @@ paths:
           description: No data found.
 components:
   schemas:
+    AssociatedPerson:
+      type: object
+      properties:
+        Relationship:
+          type: string
+        Full:
+          type: string
+          example: Mark M Marsupial
+        First:
+          type: string
+          example: Mark
+        Middle:
+          type: string
+          example: M
+        Last:
+          type: string
+          example: Marsupial
+        Suffix:
+          type: string
+        Prefix:
+          type: string
+        LastOrCompanyName:
+          type: string
+        FirstAndMiddleName:
+          type: string
+    SubscriberAddress:
+      type: object
+      properties:
+        IsActive:
+          type: string
+        DeliveryPoint:
+          type: string
+        Accuracy:
+          type: string
+        AddressStartDate:
+          $ref: '#/components/schemas/ParsedDate'
+        AddressEndDate:
+          $ref: '#/components/schemas/ParsedDate'
+        FullAddress:
+          type: string
+        Hash:
+          type: string
+        APN:
+          type: string
+        Longitude:
+          type: string
+        Latitude:
+          type: string
+        StateCityZip:
+          type: string
+        PostalCode:
+          type: string
+        Country:
+          type: string
+        County:
+          type: string
+        ZipFour:
+          type: string
+        CountyFIPSCode:
+          type: string
+        ZipCode:
+          type: string
+        City:
+          type: string
+        StreetAddress2:
+          type: string
+        StreetAddress1:
+          type: string
+        UnitNumber:
+          type: string
+        UnitDesignation:
+          type: string
+        StreetPostDirection:
+          type: string
+        StreetSuffix:
+          type: string
+        StreetName:
+          type: string
+        StreetPreDirection:
+          type: string
+        StreetNumber:
+          type: string
+        State:
+          type: string
+        StateFIPSCode:
+          type: string
+    Subscriber:
+      type: object
+      properties:
+        AgeRange:
+          type: string
+        Gender:
+          type: string
+        Type:
+          type: string
+        Industry:
+          type: array
+          items:
+            type: string
+            example: Securities,Commodity Contracts
+        SubscriberStartDate:
+          $ref: '#/components/schemas/ParsedDate'
+        Full:
+          type: string
+        First:
+          type: string
+        Middle:
+          type: string
+        Last:
+          type: string
+        Suffix:
+          type: string
+        Prefix:
+          type: string
+        LastOrCompanyName:
+          type: string
+        FirstAndMiddleName:
+          type: string
+    Alert:
+      type: object
+      properties:
+        Code:
+          type: string
+        Description:
+          type: string
+        Status:
+          format: int32
+          enum:
+          - NotEvaluated
+          - Fired
+          - NotFired
+          type: integer
+        Evidence:
+          type: array
+          items:
+            $ref: '#/components/schemas/SerializableDictionary_String_Object'
     SerializableDictionary_String_Object:
       type: object
       properties: {}
+    ParsedDate:
+      type: object
+      properties:
+        Year:
+          format: int32
+          type: integer
+          example: 2017
+        Month:
+          format: int32
+          type: integer
+          example: 10
+        Day:
+          format: int32
+          type: integer
+          example: 21
     ReversePhoneServiceResponse:
       type: object
       properties:
@@ -121,154 +272,3 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/Alert'
-    ParsedDate:
-      type: object
-      properties:
-        Year:
-          format: int32
-          type: integer
-          example: 2017
-        Month:
-          format: int32
-          type: integer
-          example: 10
-        Day:
-          format: int32
-          type: integer
-          example: 21
-    Subscriber:
-      type: object
-      properties:
-        AgeRange:
-          type: string
-        Gender:
-          type: string
-        Type:
-          type: string
-        Industry:
-          type: array
-          items:
-            type: string
-            example: Securities,Commodity Contracts
-        SubscriberStartDate:
-          $ref: '#/components/schemas/ParsedDate'
-        Full:
-          type: string
-        First:
-          type: string
-        Middle:
-          type: string
-        Last:
-          type: string
-        Suffix:
-          type: string
-        Prefix:
-          type: string
-        LastOrCompanyName:
-          type: string
-        FirstAndMiddleName:
-          type: string
-    Alert:
-      type: object
-      properties:
-        Code:
-          type: string
-        Description:
-          type: string
-        Status:
-          format: int32
-          enum:
-          - NotEvaluated
-          - Fired
-          - NotFired
-          type: integer
-        Evidence:
-          type: array
-          items:
-            $ref: '#/components/schemas/SerializableDictionary_String_Object'
-    SubscriberAddress:
-      type: object
-      properties:
-        IsActive:
-          type: string
-        DeliveryPoint:
-          type: string
-        Accuracy:
-          type: string
-        AddressStartDate:
-          $ref: '#/components/schemas/ParsedDate'
-        AddressEndDate:
-          $ref: '#/components/schemas/ParsedDate'
-        FullAddress:
-          type: string
-        Hash:
-          type: string
-        APN:
-          type: string
-        Longitude:
-          type: string
-        Latitude:
-          type: string
-        StateCityZip:
-          type: string
-        PostalCode:
-          type: string
-        Country:
-          type: string
-        County:
-          type: string
-        ZipFour:
-          type: string
-        CountyFIPSCode:
-          type: string
-        ZipCode:
-          type: string
-        City:
-          type: string
-        StreetAddress2:
-          type: string
-        StreetAddress1:
-          type: string
-        UnitNumber:
-          type: string
-        UnitDesignation:
-          type: string
-        StreetPostDirection:
-          type: string
-        StreetSuffix:
-          type: string
-        StreetName:
-          type: string
-        StreetPreDirection:
-          type: string
-        StreetNumber:
-          type: string
-        State:
-          type: string
-        StateFIPSCode:
-          type: string
-    AssociatedPerson:
-      type: object
-      properties:
-        Relationship:
-          type: string
-        Full:
-          type: string
-          example: Mark M Marsupial
-        First:
-          type: string
-          example: Mark
-        Middle:
-          type: string
-          example: M
-        Last:
-          type: string
-          example: Marsupial
-        Suffix:
-          type: string
-        Prefix:
-          type: string
-        LastOrCompanyName:
-          type: string
-        FirstAndMiddleName:
-          type: string

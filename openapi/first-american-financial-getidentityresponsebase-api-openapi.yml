@@ -51,336 +51,6 @@ paths:
           description: No data found.
 components:
   schemas:
-    ParsedDate:
-      type: object
-      properties:
-        Year:
-          type: integer
-          example: 2017
-        Month:
-          type: integer
-          example: 12
-        Day:
-          type: integer
-          example: 21
-    Employer:
-      type: object
-      properties:
-        Name:
-          $ref: '#/components/schemas/ConsumerName'
-        DateFirstReported:
-          $ref: '#/components/schemas/ParsedDate'
-        DateLastReported:
-          $ref: '#/components/schemas/ParsedDate'
-        DateHired:
-          $ref: '#/components/schemas/ParsedDate'
-        DateTerminated:
-          $ref: '#/components/schemas/ParsedDate'
-        Address:
-          $ref: '#/components/schemas/ConsumerAddress'
-        Addresses:
-          type: array
-          items:
-            $ref: '#/components/schemas/ConsumerAddress'
-          xml:
-            wrapped: true
-        Positions:
-          type: array
-          items:
-            $ref: '#/components/schemas/Position'
-          xml:
-            wrapped: true
-        CompanyNames:
-          type: array
-          items:
-            type: string
-            xml:
-              name: CompanyName
-          xml:
-            wrapped: true
-        FEINs:
-          type: array
-          items:
-            type: string
-            xml:
-              name: FEIN
-          xml:
-            wrapped: true
-      xml:
-        name: Employer
-    EvidenceType:
-      type: object
-      example:
-        Key: Value
-    License:
-      type: object
-      required:
-      - State
-      properties:
-        LicenseState:
-          example: CA
-          type: string
-          minLength: 0
-          maxLength: 2
-          pattern: '[A-Za-z]+'
-        LicenseNumber:
-          example: ABC1234
-          type: string
-          minLength: 0
-          maxLength: 21
-          pattern: '[A-Za-z0-9@#\*\+\s]+'
-        ExpirationDate:
-          $ref: '#/components/schemas/ParsedDate'
-        IssuedDate:
-          $ref: '#/components/schemas/ParsedDate'
-    ConsumerName:
-      allOf:
-      - $ref: '#/components/schemas/Name'
-      - type: object
-        properties:
-          Suffix:
-            type: string
-            example: Mr
-          Prefix:
-            type: string
-            example: Jr
-          FullName:
-            type: string
-            example: Mark Marsupial
-          Qualifier:
-            type: string
-            example: alsoKnownAs
-          DateFirstReported:
-            $ref: '#/components/schemas/ParsedDate'
-          DateLastReported:
-            $ref: '#/components/schemas/ParsedDate'
-      xml:
-        name: Name
-    ConsumerAddress:
-      allOf:
-      - $ref: '#/components/schemas/Address'
-      - type: object
-        properties:
-          County:
-            type: string
-            example: Ventura
-          StreetAddress1:
-            type: string
-            example: 108 W 2nd St
-          StreetAddress2:
-            type: string
-            example: Apt. 801
-          FirstReportedDate:
-            $ref: '#/components/schemas/ParsedDate'
-          LastReportedDate:
-            $ref: '#/components/schemas/ParsedDate'
-          ResidenceDuration:
-            type: integer
-            example: 1
-          ResidenceStatus:
-            type: string
-            example: own
-          VerifyingSources:
-            type: integer
-            example: 2
-            description: Number of verifying sources
-          TypesOfSources:
-            type: array
-            items:
-              type: string
-              description: Verifying sources
-              xml:
-                name: Source
-            xml:
-              wrapped: true
-            example:
-            - file
-            - vendor
-          HighRiskIndicators:
-            type: array
-            items:
-              $ref: '#/components/schemas/RiskIndicator'
-            xml:
-              wrapped: true
-      xml:
-        name: Address
-    ConsumerStatement:
-      type: object
-      properties:
-        Type:
-          type: string
-          example: regular
-        Text:
-          type: string
-      xml:
-        name: ConsumerStatement
-    CreditDataStatus:
-      type: object
-      properties:
-        CreditDataSuppressed:
-          type: boolean
-          example: 'true'
-        Freeze:
-          $ref: '#/components/schemas/Freeze'
-        DoNotPromote:
-          $ref: '#/components/schemas/DoNotPromote'
-    ConsumerIdentity:
-      type: object
-      properties:
-        FileSummary:
-          $ref: '#/components/schemas/FileSummary'
-        Name:
-          $ref: '#/components/schemas/ConsumerName'
-        SSNInfo:
-          $ref: '#/components/schemas/SSNInfo'
-        Age:
-          type: integer
-          example: 34
-        DateOfBirth:
-          $ref: '#/components/schemas/ParsedDate'
-        DateOfDeath:
-          $ref: '#/components/schemas/ParsedDate'
-        DeceasedInfo:
-          $ref: '#/components/schemas/DeceasedInfo'
-        DriversLicense:
-          $ref: '#/components/schemas/License'
-        Addresses:
-          type: array
-          items:
-            $ref: '#/components/schemas/ConsumerAddress'
-          xml:
-            wrapped: true
-        Employers:
-          type: array
-          items:
-            $ref: '#/components/schemas/Employer'
-          xml:
-            wrapped: true
-        OtherNames:
-          type: array
-          items:
-            $ref: '#/components/schemas/ConsumerName'
-          xml:
-            wrapped: true
-        ConsumerStatements:
-          type: array
-          items:
-            $ref: '#/components/schemas/ConsumerStatement'
-          xml:
-            wrapped: true
-        DateFirstReported:
-          $ref: '#/components/schemas/ParsedDate'
-        DateLastReported:
-          $ref: '#/components/schemas/ParsedDate'
-        TypesOfSources:
-          type: array
-          items:
-            type: string
-            description: Verifying sources
-            xml:
-              name: Source
-          xml:
-            wrapped: true
-          example:
-          - file
-          - vendor
-        VerifyingSources:
-          type: integer
-          example: 2
-          description: Number of verifying sources
-        HighRiskIndicators:
-          type: array
-          items:
-            $ref: '#/components/schemas/RiskIndicator'
-          xml:
-            wrapped: true
-    AlertType:
-      type: object
-      properties:
-        Code:
-          example: AlertCode
-          type: string
-        Description:
-          example: ALERT - This is an alert description.
-          type: string
-        Status:
-          example: Fired
-          type: string
-        Evidence:
-          description: Collection of evidence fields that caused the alert to fire.
-          type: array
-          items:
-            $ref: '#/components/schemas/EvidenceType'
-    Address:
-      type: object
-      properties:
-        StreetNumber:
-          type: string
-          example: '108'
-        StreetPreDirection:
-          type: string
-          example: W
-        StreetName:
-          type: string
-          example: 2nd St
-        StreetSuffix:
-          type: string
-          example: A
-        StreetPostDirection:
-          type: string
-          example: South
-        UnitDesignation:
-          type: string
-          example: Apt
-        UnitNumber:
-          type: string
-          example: '801'
-        StreetAddress1:
-          type: string
-          example: ''
-        StreetAddress2:
-          type: string
-          example: ''
-        City:
-          type: string
-          example: St. Louis
-        State:
-          type: string
-          example: MO
-        ZipCode:
-          type: string
-          example: '63101'
-        ZipFour:
-          type: string
-          example: '1423'
-        StateCityZip:
-          type: string
-          example: ''
-        FullAddress:
-          type: string
-          example: ''
-    FileSummary:
-      type: object
-      properties:
-        FileHitIndicator:
-          type: string
-        FileMatchIndicator:
-          type: string
-        SSNMatchIndicator:
-          type: string
-        InFileSinceDate:
-          $ref: '#/components/schemas/ParsedDate'
-        CreditDataStatus:
-          $ref: '#/components/schemas/CreditDataStatus'
-    Freeze:
-      type: object
-      properties:
-        FreezeIndicator:
-          type: boolean
-          example: true
-        FreezeType:
-          type: string
-          example: exempt
     SSNInfo:
       type: object
       xml:
@@ -452,6 +122,28 @@ components:
           example: 72
         DeathLocation:
           $ref: '#/components/schemas/ConsumerAddress'
+    ParsedDate:
+      type: object
+      properties:
+        Year:
+          type: integer
+          example: 2017
+        Month:
+          type: integer
+          example: 12
+        Day:
+          type: integer
+          example: 21
+    CreditDataStatus:
+      type: object
+      properties:
+        CreditDataSuppressed:
+          type: boolean
+          example: 'true'
+        Freeze:
+          $ref: '#/components/schemas/Freeze'
+        DoNotPromote:
+          $ref: '#/components/schemas/DoNotPromote'
     Position:
       type: object
       properties:
@@ -467,22 +159,6 @@ components:
           $ref: '#/components/schemas/ParsedDate'
       xml:
         name: Position
-    Name:
-      required:
-      - Last
-      properties:
-        First:
-          example: Mark
-          type: string
-          maxLength: 32
-        Middle:
-          type: string
-          example: M
-          maxLength: 32
-        Last:
-          type: string
-          example: Marsupial
-          maxLength: 65
     DoNotPromote:
       type: object
       properties:
@@ -491,6 +167,147 @@ components:
           example: true
         PromotionDateOfExpiration:
           $ref: '#/components/schemas/ParsedDate'
+    ConsumerAddress:
+      allOf:
+      - $ref: '#/components/schemas/Address'
+      - type: object
+        properties:
+          County:
+            type: string
+            example: Ventura
+          StreetAddress1:
+            type: string
+            example: 108 W 2nd St
+          StreetAddress2:
+            type: string
+            example: Apt. 801
+          FirstReportedDate:
+            $ref: '#/components/schemas/ParsedDate'
+          LastReportedDate:
+            $ref: '#/components/schemas/ParsedDate'
+          ResidenceDuration:
+            type: integer
+            example: 1
+          ResidenceStatus:
+            type: string
+            example: own
+          VerifyingSources:
+            type: integer
+            example: 2
+            description: Number of verifying sources
+          TypesOfSources:
+            type: array
+            items:
+              type: string
+              description: Verifying sources
+              xml:
+                name: Source
+            xml:
+              wrapped: true
+            example:
+            - file
+            - vendor
+          HighRiskIndicators:
+            type: array
+            items:
+              $ref: '#/components/schemas/RiskIndicator'
+            xml:
+              wrapped: true
+      xml:
+        name: Address
+    License:
+      type: object
+      required:
+      - State
+      properties:
+        LicenseState:
+          example: CA
+          type: string
+          minLength: 0
+          maxLength: 2
+          pattern: '[A-Za-z]+'
+        LicenseNumber:
+          example: ABC1234
+          type: string
+          minLength: 0
+          maxLength: 21
+          pattern: '[A-Za-z0-9@#\*\+\s]+'
+        ExpirationDate:
+          $ref: '#/components/schemas/ParsedDate'
+        IssuedDate:
+          $ref: '#/components/schemas/ParsedDate'
+    RiskIndicator:
+      type: object
+      properties:
+        RiskCode:
+          type: string
+          example: 1111
+        RiskMessage:
+          type: string
+          example: Risk found
+      xml:
+        name: RiskIndicator
+    Freeze:
+      type: object
+      properties:
+        FreezeIndicator:
+          type: boolean
+          example: true
+        FreezeType:
+          type: string
+          example: exempt
+    EvidenceType:
+      type: object
+      example:
+        Key: Value
+    Address:
+      type: object
+      properties:
+        StreetNumber:
+          type: string
+          example: '108'
+        StreetPreDirection:
+          type: string
+          example: W
+        StreetName:
+          type: string
+          example: 2nd St
+        StreetSuffix:
+          type: string
+          example: A
+        StreetPostDirection:
+          type: string
+          example: South
+        UnitDesignation:
+          type: string
+          example: Apt
+        UnitNumber:
+          type: string
+          example: '801'
+        StreetAddress1:
+          type: string
+          example: ''
+        StreetAddress2:
+          type: string
+          example: ''
+        City:
+          type: string
+          example: St. Louis
+        State:
+          type: string
+          example: MO
+        ZipCode:
+          type: string
+          example: '63101'
+        ZipFour:
+          type: string
+          example: '1423'
+        StateCityZip:
+          type: string
+          example: ''
+        FullAddress:
+          type: string
+          example: ''
     IdentityResponseBase:
       type: object
       properties:
@@ -510,14 +327,197 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/AlertType'
-    RiskIndicator:
+    ConsumerName:
+      allOf:
+      - $ref: '#/components/schemas/Name'
+      - type: object
+        properties:
+          Suffix:
+            type: string
+            example: Mr
+          Prefix:
+            type: string
+            example: Jr
+          FullName:
+            type: string
+            example: Mark Marsupial
+          Qualifier:
+            type: string
+            example: alsoKnownAs
+          DateFirstReported:
+            $ref: '#/components/schemas/ParsedDate'
+          DateLastReported:
+            $ref: '#/components/schemas/ParsedDate'
+      xml:
+        name: Name
+    Employer:
       type: object
       properties:
-        RiskCode:
-          type: string
-          example: 1111
-        RiskMessage:
-          type: string
-          example: Risk found
+        Name:
+          $ref: '#/components/schemas/ConsumerName'
+        DateFirstReported:
+          $ref: '#/components/schemas/ParsedDate'
+        DateLastReported:
+          $ref: '#/components/schemas/ParsedDate'
+        DateHired:
+          $ref: '#/components/schemas/ParsedDate'
+        DateTerminated:
+          $ref: '#/components/schemas/ParsedDate'
+        Address:
+          $ref: '#/components/schemas/ConsumerAddress'
+        Addresses:
+          type: array
+          items:
+            $ref: '#/components/schemas/ConsumerAddress'
+          xml:
+            wrapped: true
+        Positions:
+          type: array
+          items:
+            $ref: '#/components/schemas/Position'
+          xml:
+            wrapped: true
+        CompanyNames:
+          type: array
+          items:
+            type: string
+            xml:
+              name: CompanyName
+          xml:
+            wrapped: true
+        FEINs:
+          type: array
+          items:
+            type: string
+            xml:
+              name: FEIN
+          xml:
+            wrapped: true
       xml:
-        name: RiskIndicator
+        name: Employer
+    Name:
+      required:
+      - Last
+      properties:
+        First:
+          example: Mark
+          type: string
+          maxLength: 32
+        Middle:
+          type: string
+          example: M
+          maxLength: 32
+        Last:
+          type: string
+          example: Marsupial
+          maxLength: 65
+    AlertType:
+      type: object
+      properties:
+        Code:
+          example: AlertCode
+          type: string
+        Description:
+          example: ALERT - This is an alert description.
+          type: string
+        Status:
+          example: Fired
+          type: string
+        Evidence:
+          description: Collection of evidence fields that caused the alert to fire.
+          type: array
+          items:
+            $ref: '#/components/schemas/EvidenceType'
+    ConsumerIdentity:
+      type: object
+      properties:
+        FileSummary:
+          $ref: '#/components/schemas/FileSummary'
+        Name:
+          $ref: '#/components/schemas/ConsumerName'
+        SSNInfo:
+          $ref: '#/components/schemas/SSNInfo'
+        Age:
+          type: integer
+          example: 34
+        DateOfBirth:
+          $ref: '#/components/schemas/ParsedDate'
+        DateOfDeath:
+          $ref: '#/components/schemas/ParsedDate'
+        DeceasedInfo:
+          $ref: '#/components/schemas/DeceasedInfo'
+        DriversLicense:
+          $ref: '#/components/schemas/License'
+        Addresses:
+          type: array
+          items:
+            $ref: '#/components/schemas/ConsumerAddress'
+          xml:
+            wrapped: true
+        Employers:
+          type: array
+          items:
+            $ref: '#/components/schemas/Employer'
+          xml:
+            wrapped: true
+        OtherNames:
+          type: array
+          items:
+            $ref: '#/components/schemas/ConsumerName'
+          xml:
+            wrapped: true
+        ConsumerStatements:
+          type: array
+          items:
+            $ref: '#/components/schemas/ConsumerStatement'
+          xml:
+            wrapped: true
+        DateFirstReported:
+          $ref: '#/components/schemas/ParsedDate'
+        DateLastReported:
+          $ref: '#/components/schemas/ParsedDate'
+        TypesOfSources:
+          type: array
+          items:
+            type: string
+            description: Verifying sources
+            xml:
+              name: Source
+          xml:
+            wrapped: true
+          example:
+          - file
+          - vendor
+        VerifyingSources:
+          type: integer
+          example: 2
+          description: Number of verifying sources
+        HighRiskIndicators:
+          type: array
+          items:
+            $ref: '#/components/schemas/RiskIndicator'
+          xml:
+            wrapped: true
+    ConsumerStatement:
+      type: object
+      properties:
+        Type:
+          type: string
+          example: regular
+        Text:
+          type: string
+      xml:
+        name: ConsumerStatement
+    FileSummary:
+      type: object
+      properties:
+        FileHitIndicator:
+          type: string
+        FileMatchIndicator:
+          type: string
+        SSNMatchIndicator:
+          type: string
+        InFileSinceDate:
+          $ref: '#/components/schemas/ParsedDate'
+        CreditDataStatus:
+          $ref: '#/components/schemas/CreditDataStatus'

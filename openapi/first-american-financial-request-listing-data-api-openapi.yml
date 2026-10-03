@@ -184,6 +184,90 @@ components:
           type: boolean
           example: false
           description: Option to run analytics on data set.
+    LocalMarketTrendDefinition:
+      type: object
+      properties:
+        City:
+          example: City
+          type: string
+        PriceMedian:
+          example: PriceMedian
+          type: string
+        PriceQuartile:
+          example: PriceQuartile
+          type: string
+        ResidenceType:
+          example: ResidenceType
+          type: string
+        RollingAverage:
+          example: RollingAverage
+          type: string
+        State:
+          example: State
+          type: string
+        StatsCaptureDate:
+          example: StatsCaptureDate
+          type: string
+        Zip:
+          example: Zip
+          type: string
+        AgeMean:
+          example: AgeMean
+          type: string
+        BathsMean:
+          example: BathsMean
+          type: string
+        BedsMean:
+          example: BedsMean
+          type: string
+        DaysOnMarketMean:
+          example: DaysOnMarketMean
+          type: string
+        PercentPriceDecreasedMedian:
+          example: PercentPriceDecreasedMedian
+          type: string
+        PercentPriceIncreasedMedian:
+          example: PercentPriceIncreasedMedian
+          type: string
+        PriceMax:
+          example: PriceMax
+          type: string
+        PriceMin:
+          example: PriceMin
+          type: string
+        PricePerBathroomMean:
+          example: PricePerBathroomMean
+          type: string
+        PricePerBedroomMean:
+          example: PricePerBedroomMean
+          type: string
+        PricePerSquareFootMean:
+          example: PricePerSquareFootMean
+          type: string
+        SquareFootMedian:
+          example: SquareFootMedian
+          type: string
+        PriceOfListingsAbsorbedMedian:
+          example: PriceOfListingsAbsorbedMedian
+          type: string
+        PriceOfNewListingsMean:
+          example: PriceOfNewListingsMean
+          type: string
+        PriceHigh:
+          example: PriceHigh
+          type: string
+        PriceMean:
+          example: PriceMean
+          type: string
+        PriceLow:
+          example: PriceLow
+          type: string
+        ListingPriceMean:
+          example: ListingPriceMean
+          type: string
+        SquareFtMean:
+          example: SquareFtMean
+          type: string
     Address:
       type: object
       required:
@@ -402,88 +486,4 @@ components:
           type: string
         PricePerSqft:
           example: PricePerSqft
-          type: string
-    LocalMarketTrendDefinition:
-      type: object
-      properties:
-        City:
-          example: City
-          type: string
-        PriceMedian:
-          example: PriceMedian
-          type: string
-        PriceQuartile:
-          example: PriceQuartile
-          type: string
-        ResidenceType:
-          example: ResidenceType
-          type: string
-        RollingAverage:
-          example: RollingAverage
-          type: string
-        State:
-          example: State
-          type: string
-        StatsCaptureDate:
-          example: StatsCaptureDate
-          type: string
-        Zip:
-          example: Zip
-          type: string
-        AgeMean:
-          example: AgeMean
-          type: string
-        BathsMean:
-          example: BathsMean
-          type: string
-        BedsMean:
-          example: BedsMean
-          type: string
-        DaysOnMarketMean:
-          example: DaysOnMarketMean
-          type: string
-        PercentPriceDecreasedMedian:
-          example: PercentPriceDecreasedMedian
-          type: string
-        PercentPriceIncreasedMedian:
-          example: PercentPriceIncreasedMedian
-          type: string
-        PriceMax:
-          example: PriceMax
-          type: string
-        PriceMin:
-          example: PriceMin
-          type: string
-        PricePerBathroomMean:
-          example: PricePerBathroomMean
-          type: string
-        PricePerBedroomMean:
-          example: PricePerBedroomMean
-          type: string
-        PricePerSquareFootMean:
-          example: PricePerSquareFootMean
-          type: string
-        SquareFootMedian:
-          example: SquareFootMedian
-          type: string
-        PriceOfListingsAbsorbedMedian:
-          example: PriceOfListingsAbsorbedMedian
-          type: string
-        PriceOfNewListingsMean:
-          example: PriceOfNewListingsMean
-          type: string
-        PriceHigh:
-          example: PriceHigh
-          type: string
-        PriceMean:
-          example: PriceMean
-          type: string
-        PriceLow:
-          example: PriceLow
-          type: string
-        ListingPriceMean:
-          example: ListingPriceMean
-          type: string
-        SquareFtMean:
-          example: SquareFtMean
           type: string

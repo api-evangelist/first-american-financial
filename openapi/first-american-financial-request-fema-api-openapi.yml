@@ -52,58 +52,58 @@ paths:
         required: true
 components:
   schemas:
-    FEMAServiceResponse:
+    PropertyServiceRequest:
       type: object
+      required:
+      - RequestorID
+      - Address
       properties:
-        TransactionID:
-          type: string
-          description: Unique identifier for the transaction
         RequestorID:
+          example: ID123
           type: string
+          minLength: 1
+          maxLength: 100
+          description: LoanNumber or TransactionID
         Address:
-          $ref: '#/components/schemas/Address'
-        Result:
-          type: string
-          enum:
-          - NoDisastersFound
-          - DisastersFound
-        Disasters:
-          type: array
-          items:
-            $ref: '#/components/schemas/FEMADisasterRecord'
-        Alerts:
-          type: array
-          items:
-            $ref: '#/components/schemas/AlertType'
-    ParsedDate:
-      properties:
-        Year:
-          type: number
-        Month:
-          type: number
-        Day:
-          type: number
-      example:
-        Month: 1
-        Year: 2017
-        Day: 1
-    AlertType:
+          type: object
+          required:
+          - StreetAddress1
+          - City
+          - State
+          - ZipCode
+          properties:
+            StreetAddress1:
+              example: 123 Main St
+              type: string
+            StreetAddress2:
+              example: ''
+              type: string
+            City:
+              example: Mountainsee
+              type: string
+            State:
+              example: ZZ
+              type: string
+            ZipCode:
+              example: '90000'
+              type: string
+            ZipFour:
+              example: ''
+              type: string
+            County:
+              example: ''
+              type: string
+            APN:
+              example: ''
+              type: string
+        IncludeAnalytics:
+          type: boolean
+          example: false
+          description: Option to run analytics on data set.
+    EvidenceType:
       type: object
-      properties:
-        Code:
-          example: AlertCode
-          type: string
-        Description:
-          example: ALERT - This is an alert description.
-          type: string
-        Status:
-          example: Fired
-          type: string
-        Evidence:
-          description: Collection of evidence fields that caused the alert to fire.
-          type: array
-          items:
-            $ref: '#/components/schemas/EvidenceType'
+      example:
+        Key: Value
     FEMADisasterRecord:
       properties:
         DisasterNumber:
@@ -164,54 +164,6 @@ components:
           Day: 23
         PlaceCode: 99013
         DeclaredCountyArea: DeclaredCountyArea
-    PropertyServiceRequest:
-      type: object
-      required:
-      - RequestorID
-      - Address
-      properties:
-        RequestorID:
-          example: ID123
-          type: string
-          minLength: 1
-          maxLength: 100
-          description: LoanNumber or TransactionID
-        Address:
-          type: object
-          required:
-          - StreetAddress1
-          - City
-          - State
-          - ZipCode
-          properties:
-            StreetAddress1:
-              example: 123 Main St
-              type: string
-            StreetAddress2:
-              example: ''
-              type: string
-            City:
-              example: Mountainsee
-              type: string
-            State:
-              example: ZZ
-              type: string
-            ZipCode:
-              example: '90000'
-              type: string
-            ZipFour:
-              example: ''
-              type: string
-            County:
-              example: ''
-              type: string
-            APN:
-              example: ''
-              type: string
-        IncludeAnalytics:
-          type: boolean
-          example: false
-          description: Option to run analytics on data set.
     Address:
       type: object
       required:
@@ -277,7 +229,55 @@ components:
         APN:
           example: APN
           type: string
-    EvidenceType:
-      type: object
+    ParsedDate:
+      properties:
+        Year:
+          type: number
+        Month:
+          type: number
+        Day:
+          type: number
       example:
-        Key: Value
+        Month: 1
+        Year: 2017
+        Day: 1
+    AlertType:
+      type: object
+      properties:
+        Code:
+          example: AlertCode
+          type: string
+        Description:
+          example: ALERT - This is an alert description.
+          type: string
+        Status:
+          example: Fired
+          type: string
+        Evidence:
+          description: Collection of evidence fields that caused the alert to fire.
+          type: array
+          items:
+            $ref: '#/components/schemas/EvidenceType'
+    FEMAServiceResponse:
+      type: object
+      properties:
+        TransactionID:
+          type: string
+          description: Unique identifier for the transaction
+        RequestorID:
+          type: string
+        Address:
+          $ref: '#/components/schemas/Address'
+        Result:
+          type: string
+          enum:
+          - NoDisastersFound
+          - DisastersFound
+        Disasters:
+          type: array
+          items:
+            $ref: '#/components/schemas/FEMADisasterRecord'
+        Alerts:
+          type: array
+          items:
+            $ref: '#/components/schemas/AlertType'

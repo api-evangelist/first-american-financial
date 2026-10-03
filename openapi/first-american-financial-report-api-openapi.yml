@@ -84,24 +84,15 @@ components:
       - Transfer
       - TrustDeedMortgage
       - Unknown
-    Loan:
+    TitleOptions:
       type: object
       properties:
-        LoanNumber:
-          type: string
-          example: ABD123
-        LoanAmount:
-          type: number
-          format: double
-          example: 300000
-        CashOutAmount:
-          type: number
-          format: double
-          example: 300000
-        LoanType:
-          type: string
-          enum:
-          - Refinance
+        AttorneyTitleOpinion:
+          type: boolean
+          example: false
+        TwentyFourMonthChain:
+          type: boolean
+          example: true
     Address:
       type: object
       properties:
@@ -123,28 +114,6 @@ components:
         County:
           type: string
           example: Some County
-    PropertyType:
-      type: string
-      enum:
-      - SingleFamilyResidential
-      - Condo
-      - Townhouse
-      - Rowhouse
-      - PlannedUnitDevelopment
-      - MultiFamilyResidential24
-      - Duplex
-      - Triplex
-      - Quadraplex
-      - Cabin
-      - VacantLand
-      - MobileHome
-      - Commercial
-      - MultiFamilyResidential
-      - CoOp
-      - Unimproved
-      - Apartment
-      - Agriculture
-      - Other
     Report:
       type: object
       properties:
@@ -233,6 +202,28 @@ components:
               AlertDescription:
                 type: string
                 example: The DNA-Clear add-on will be added to workflow results when there is no hit on a consumer name in the do not associate list.
+    PropertyType:
+      type: string
+      enum:
+      - SingleFamilyResidential
+      - Condo
+      - Townhouse
+      - Rowhouse
+      - PlannedUnitDevelopment
+      - MultiFamilyResidential24
+      - Duplex
+      - Triplex
+      - Quadraplex
+      - Cabin
+      - VacantLand
+      - MobileHome
+      - Commercial
+      - MultiFamilyResidential
+      - CoOp
+      - Unimproved
+      - Apartment
+      - Agriculture
+      - Other
     ComplexityIndicator:
       type: object
       properties:
@@ -255,15 +246,24 @@ components:
         RequiresPlatMap:
           type: boolean
           example: true
-    TitleOptions:
+    Loan:
       type: object
       properties:
-        AttorneyTitleOpinion:
-          type: boolean
-          example: false
-        TwentyFourMonthChain:
-          type: boolean
-          example: true
+        LoanNumber:
+          type: string
+          example: ABD123
+        LoanAmount:
+          type: number
+          format: double
+          example: 300000
+        CashOutAmount:
+          type: number
+          format: double
+          example: 300000
+        LoanType:
+          type: string
+          enum:
+          - Refinance
     OrderStatus:
       type: object
       properties:

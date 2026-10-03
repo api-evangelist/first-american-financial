@@ -33,67 +33,6 @@ paths:
         description: Order request
 components:
   schemas:
-    Loan:
-      type: object
-      properties:
-        LoanNumber:
-          type: string
-          example: ABD123
-        LoanAmount:
-          type: number
-          format: double
-          example: 300000
-        CashOutAmount:
-          type: number
-          format: double
-          example: 300000
-        LoanType:
-          type: string
-          enum:
-          - Refinance
-    Address:
-      type: object
-      properties:
-        StreetAddress1:
-          type: string
-          example: 1234 Main Street
-        StreetAddress2:
-          type: string
-          example: Unit 5
-        City:
-          type: string
-          example: AnyTown
-        State:
-          type: string
-          example: CA
-        ZipCode:
-          type: string
-          example: 12345
-        County:
-          type: string
-          example: Some County
-    PropertyType:
-      type: string
-      enum:
-      - SingleFamilyResidential
-      - Condo
-      - Townhouse
-      - Rowhouse
-      - PlannedUnitDevelopment
-      - MultiFamilyResidential24
-      - Duplex
-      - Triplex
-      - Quadraplex
-      - Cabin
-      - VacantLand
-      - MobileHome
-      - Commercial
-      - MultiFamilyResidential
-      - CoOp
-      - Unimproved
-      - Apartment
-      - Agriculture
-      - Other
     TitleOptions:
       type: object
       properties:
@@ -184,6 +123,67 @@ components:
                 type: string
               Description:
                 type: string
+    Address:
+      type: object
+      properties:
+        StreetAddress1:
+          type: string
+          example: 1234 Main Street
+        StreetAddress2:
+          type: string
+          example: Unit 5
+        City:
+          type: string
+          example: AnyTown
+        State:
+          type: string
+          example: CA
+        ZipCode:
+          type: string
+          example: 12345
+        County:
+          type: string
+          example: Some County
+    PropertyType:
+      type: string
+      enum:
+      - SingleFamilyResidential
+      - Condo
+      - Townhouse
+      - Rowhouse
+      - PlannedUnitDevelopment
+      - MultiFamilyResidential24
+      - Duplex
+      - Triplex
+      - Quadraplex
+      - Cabin
+      - VacantLand
+      - MobileHome
+      - Commercial
+      - MultiFamilyResidential
+      - CoOp
+      - Unimproved
+      - Apartment
+      - Agriculture
+      - Other
+    Loan:
+      type: object
+      properties:
+        LoanNumber:
+          type: string
+          example: ABD123
+        LoanAmount:
+          type: number
+          format: double
+          example: 300000
+        CashOutAmount:
+          type: number
+          format: double
+          example: 300000
+        LoanType:
+          type: string
+          enum:
+          - Refinance
     Consumer:
       type: object
       properties:

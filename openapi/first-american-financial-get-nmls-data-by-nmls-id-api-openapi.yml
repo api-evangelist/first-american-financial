@@ -356,6 +356,15 @@ components:
           type: string
         AssociatedDocumentURL:
           type: string
+    OtherTradeName:
+      type: object
+      properties:
+        Regulator:
+          type: string
+        Name:
+          type: string
+        NameType:
+          type: string
     IndividualAgencyRegistrationHistory:
       type: object
       properties:
@@ -367,22 +376,37 @@ components:
           type: string
         IsAuthorized:
           type: boolean
-    NMLSName:
+    ServiceRequest:
       type: object
       properties:
-        NameType:
-          type: string
         Name:
           $ref: '#/components/schemas/Name'
-    IndividualRegistration:
+        Address:
+          $ref: '#/components/schemas/Address'
+        NMLSID:
+          type: integer
+        ConfidenceScore:
+          type: integer
+        IncludeAnalytics:
+          type: boolean
+      example:
+        RequestorID: ID123
+        IncludeAnalytics: false
+        NMLSID: 349974
+        Name:
+          First: John
+          Middle: Travis
+          LastOrCompanyName: Harrison
+        Address:
+          State: CO
+        ConfidenceScore: 90
+    ServiceResponse:
       type: object
       properties:
-        RegistrationName:
-          type: string
-        RegistrationStatus:
-          type: string
-        IsAuthorizedToConductBusiness:
-          type: boolean
+        Company:
+          $ref: '#/components/schemas/CompanyResponse'
+        Individual:
+          $ref: '#/components/schemas/IndividualResponse'
     License:
       type: object
       properties:
@@ -410,97 +434,89 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/LicenseHistory'
-    ServiceRequest:
+    NMLSName:
       type: object
       properties:
+        NameType:
+          type: string
         Name:
           $ref: '#/components/schemas/Name'
+    IndividualRegistration:
+      type: object
+      properties:
+        RegistrationName:
+          type: string
+        RegistrationStatus:
+          type: string
+        IsAuthorizedToConductBusiness:
+          type: boolean
+    IndividualRegistrationDetail:
+      type: object
+      properties:
+        EmployerName:
+          type: string
+        InstitutionName:
+          type: string
+        InstitutionNMLSID:
+          type: integer
+        PrimaryFederalRegulator:
+          type: string
+        StartDate:
+          type: string
+        EndDate:
+          type: string
+    IndividualDisciplinaryActions:
+      type: object
+      properties:
+        AuthorityType:
+          type: string
+        ActionType:
+          type: string
+        DateOfAction:
+          type: string
+        NameOfAuthority:
+          type: string
+        DisciplinaryActionDetail:
+          type: string
+        AssociatedDocumentURL:
+          type: string
+    Location:
+      type: object
+      properties:
+        CompanyName:
+          type: string
+        LocationNMLSID:
+          type: string
+        LocationType:
+          type: string
+        Street:
+          type: string
+        StartDate:
+          type: string
         Address:
           $ref: '#/components/schemas/Address'
-        NMLSID:
-          type: integer
-        ConfidenceScore:
-          type: integer
-        IncludeAnalytics:
-          type: boolean
-      example:
-        RequestorID: ID123
-        IncludeAnalytics: false
-        NMLSID: 349974
-        Name:
-          First: John
-          Middle: Travis
-          LastOrCompanyName: Harrison
-        Address:
-          State: CO
-        ConfidenceScore: 90
-    Address:
+    IndividualAgencyRegistration:
       type: object
       properties:
-        APN:
+        PrimaryFederalRegulator:
           type: string
-        Longitude:
+        Status:
           type: string
-        Latitude:
+        StatusDate:
           type: string
-        StateCityZip:
-          type: string
-        PostalCode:
-          type: string
-        Country:
-          type: string
-        County:
-          type: string
-        ZipFour:
-          type: string
-        ZipCode:
-          type: string
-        Hash:
-          type: string
-        State:
-          type: string
-        StreetAddress2:
-          type: string
-        StreetAddress1:
-          type: string
-        UnitNumber:
-          type: string
-        UnitDesignation:
-          type: string
-        StreetPostDirection:
-          type: string
-        StreetSuffix:
-          type: string
-        StreetName:
-          type: string
-        StreetPreDirection:
-          type: string
-        StreetNumber:
-          type: string
-        City:
-          type: string
-        FullAddress:
-          type: string
-    BranchManager:
-      type: object
-      properties:
-        NMLSID:
-          type: integer
-        Name:
-          type: string
-        Industry:
-          type: string
-        States:
+        RegistrationHistory:
           type: array
           items:
-            type: string
-    ServiceResponse:
+            $ref: '#/components/schemas/IndividualAgencyRegistrationHistory'
+    NMLSIndividualLicense:
       type: object
       properties:
-        Company:
-          $ref: '#/components/schemas/CompanyResponse'
-        Individual:
-          $ref: '#/components/schemas/IndividualResponse'
+        License:
+          $ref: '#/components/schemas/License'
+        Sponsorships:
+          type: array
+          items:
+            $ref: '#/components/schemas/Sponsor'
     IndividualResponse:
       type: object
       properties:
@@ -536,70 +552,35 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/RegulatoryAction'
-    IndividualAgencyRegistration:
+    BranchManager:
       type: object
       properties:
-        PrimaryFederalRegulator:
+        NMLSID:
+          type: integer
+        Name:
           type: string
-        Status:
+        Industry:
           type: string
-        StatusDate:
-          type: string
-        RegistrationHistory:
+        States:
           type: array
           items:
-            $ref: '#/components/schemas/IndividualAgencyRegistrationHistory'
-    IndividualRegistrationDetail:
+            type: string
+    Sponsor:
       type: object
       properties:
-        EmployerName:
-          type: string
-        InstitutionName:
-          type: string
-        InstitutionNMLSID:
-          type: integer
-        PrimaryFederalRegulator:
-          type: string
-        StartDate:
-          type: string
-        EndDate:
-          type: string
-    OtherTradeName:
-      type: object
-      properties:
-        Regulator:
+        NMLSID:
           type: string
         Name:
           type: string
-        NameType:
+        Regulator:
           type: string
-    LicenseHistory:
-      type: object
-      properties:
+        RegulatorStateCode:
+          type: string
+        LicenseType:
+          type: string
         StartDate:
           type: string
         EndDate:
-          type: string
-        IsAuthorized:
-          type: boolean
-    Name:
-      type: object
-      properties:
-        Full:
-          type: string
-        First:
-          type: string
-        Middle:
-          type: string
-        Last:
-          type: string
-        Suffix:
-          type: string
-        Prefix:
-          type: string
-        LastOrCompanyName:
-          type: string
-        FirstAndMiddleName:
           type: string
     CompanyResponse:
       type: object
@@ -660,59 +641,78 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/RegulatoryAction'
-    Sponsor:
+    Address:
       type: object
       properties:
-        NMLSID:
+        APN:
           type: string
-        Name:
+        Longitude:
           type: string
-        Regulator:
+        Latitude:
           type: string
-        RegulatorStateCode:
+        StateCityZip:
           type: string
-        LicenseType:
+        PostalCode:
           type: string
+        Country:
+          type: string
+        County:
+          type: string
+        ZipFour:
+          type: string
+        ZipCode:
+          type: string
+        Hash:
+          type: string
+        State:
+          type: string
+        StreetAddress2:
+          type: string
+        StreetAddress1:
+          type: string
+        UnitNumber:
+          type: string
+        UnitDesignation:
+          type: string
+        StreetPostDirection:
+          type: string
+        StreetSuffix:
+          type: string
+        StreetName:
+          type: string
+        StreetPreDirection:
+          type: string
+        StreetNumber:
+          type: string
+        City:
+          type: string
+        FullAddress:
+          type: string
+    LicenseHistory:
+      type: object
+      properties:
         StartDate:
           type: string
         EndDate:
           type: string
-    NMLSIndividualLicense:
+        IsAuthorized:
+          type: boolean
+    Name:
       type: object
       properties:
-        License:
-          $ref: '#/components/schemas/License'
-        Sponsorships:
-          type: array
-          items:
-            $ref: '#/components/schemas/Sponsor'
-    Location:
-      type: object
-      properties:
-        CompanyName:
+        Full:
           type: string
-        LocationNMLSID:
+        First:
           type: string
-        LocationType:
+        Middle:
           type: string
-        Street:
+        Last:
           type: string
-        StartDate:
+        Suffix:
           type: string
-        Address:
-          $ref: '#/components/schemas/Address'
-    IndividualDisciplinaryActions:
-      type: object
-      properties:
-        AuthorityType:
+        Prefix:
           type: string
-        ActionType:
+        LastOrCompanyName:
           type: string
-        DateOfAction:
-          type: string
-        NameOfAuthority:
-          type: string
-        DisciplinaryActionDetail:
-          type: string
-        AssociatedDocumentURL:
+        FirstAndMiddleName:
           type: string

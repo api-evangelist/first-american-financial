@@ -533,10 +533,6 @@ paths:
                 Status: integrator's secret
 components:
   schemas:
-    Webhooks:
-      type: array
-      items:
-        $ref: '#/components/schemas/Webhook'
     EventType:
       enum:
       - OrderCreated
@@ -560,6 +556,10 @@ components:
       - SigningCompleted
       - CDBalanced
       type: string
+    Webhooks:
+      type: array
+      items:
+        $ref: '#/components/schemas/Webhook'
     Webhook:
       type: object
       properties:

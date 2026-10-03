@@ -352,1300 +352,18 @@ paths:
       x-operation-id-original: retreiveOwnership
 components:
   schemas:
-    OwnershipForeclosureResponse:
+    ActiveDefault:
       type: object
       properties:
-        RequestorID:
-          type: string
-          example: loannumber1234
-          description: LoanNumber or TransactionID
-          minLength: 1
-          maxLength: 100
-        TransactionID:
-          type: string
-          example: 82d9762b-70c3-4801-bd4b-8ffc8d358f77
-          description: TransactionID can be used to fetach data at later stage
-        Properties:
-          type: array
-          items:
-            $ref: '#/components/schemas/PropertyForeclosureType'
-        Status:
-          type: string
-          example: Hit
-          description: Search Status
-        Message:
-          type: string
-          example: Results are Incomplete.
-          description: Order Status
-        Alerts:
-          type: array
-          items:
-            $ref: '#/components/schemas/AlertType'
-    AVMInformation:
-      type: object
-      properties:
-        AVMType:
-          example: AVMType
-          type: string
-        AVMLow:
-          example: AVMLow
-          type: string
-        ConfiAVMHigh:
-          example: ConfiAVMHigh
-          type: string
-        AVMValue:
-          example: AVMValue
-          type: string
-        AVMConfidenceDescr:
-          example: AVMConfidenceDescr
-          type: string
-        AVMConfScore:
-          example: AVMConfScore
-          type: string
-        AVMFSD:
-          example: AVMFSD
-          type: string
-    PropertyType:
-      type: object
-      properties:
-        StatusCode:
-          example: Success
-          type: string
-        ProductMessage:
-          $ref: '#/components/schemas/ProductMessage'
-        PropertyLocationData:
-          $ref: '#/components/schemas/PropertyLocationData'
-        Locations:
-          type: array
-          items:
-            $ref: '#/components/schemas/PropertyLocationData'
-        PropertyTaxInformation:
-          $ref: '#/components/schemas/PropertyTaxInformation'
-        PropertyOwnerInformation:
-          $ref: '#/components/schemas/PropertyOwnerInformation'
-        AssesseeContactInformation:
-          $ref: '#/components/schemas/AssesseeContactInformation'
-        PropertyCharacteristics:
-          $ref: '#/components/schemas/PropertyCharacteristics'
-        AssessorLegal:
-          $ref: '#/components/schemas/AssessorLegal'
-        PropertyTransactionHistory:
-          $ref: '#/components/schemas/PropertyTransactionHistory'
-        LoanTransactionHistory:
-          $ref: '#/components/schemas/LoanTransactionHistory'
-        NearbyComparableSales:
-          type: array
-          items:
-            $ref: '#/components/schemas/ComparableSale'
-        AVMInformation:
-          $ref: '#/components/schemas/AVMInformation'
-        PropertyValueRange:
-          $ref: '#/components/schemas/PropertyValueRange'
-        ActiveDefault:
-          $ref: '#/components/schemas/ActiveDefault'
-        ActiveForeclosuresByZip:
-          type: array
-          items:
-            $ref: '#/components/schemas/ActiveForeclosureByZip'
-        NormalizedAddress:
-          $ref: '#/components/schemas/Address'
-        AssessorTaxInfo:
-          $ref: '#/components/schemas/AssessorTaxInfo'
-    EvidenceType:
-      description: Dictionary of evidence fields that caused the alert to fire.
-      type: object
-      example:
-        Key: Value
-    EntityInfo:
-      type: object
-      properties:
-        EntityCodeDesc:
-          example: EntityCodeDesc
-          type: string
-        EntityCode:
-          example: EntityCode
-          type: string
-        Name:
-          $ref: '#/components/schemas/NameDefinition'
-    ProductMessage:
-      properties:
-        MessageCode:
-          example: S
-          type: string
-        MessageDescription:
-          example: Complete
-          type: string
-        Reason:
-          example: Reason
-          type: string
-        MatchCode:
-          example: OK
-          type: string
-    LoanTransactionHistory:
-      type: array
-      items:
-        $ref: '#/components/schemas/LoanTransaction'
-    PropertyScheduleREOType:
-      type: object
-      properties:
-        StatusCode:
-          example: Success
-          type: string
-        PropertyAddress:
-          $ref: '#/components/schemas/Address'
-        Buyers:
-          type: array
-          items:
-            $ref: '#/components/schemas/EntityInfo'
-        Sellers:
-          type: array
-          items:
-            $ref: '#/components/schemas/EntityInfo'
-        RecordingDate:
-          example: '20171231'
-          type: string
-        ForeclosureStatus:
-          example: Preforeclosure
-          type: string
-        TypeofSale:
-          example: Refi
-          type: string
-        SaleDate:
-          example: '20161031'
-          type: string
-        SalesPrice:
-          example: '215292'
-          type: string
-        LenderName:
-          example: Don Draper
-          type: string
-        LoanAmount:
-          example: '215292'
-          type: string
-        LoanTerms:
-          example: 20 Years
-          type: string
-        LoanType:
-          example: Refi
-          type: string
-        MaturityDate:
-          example: '20161031'
-          type: string
-        LandUse:
-          example: Land Use Description
-          type: string
-        PropertyTaxYear:
-          example: '2016'
-          type: string
-        PropertyTaxAmount:
-          example: '3500'
-          type: string
-        OwnershipStatus:
-          example: Previously Foreclosed
-          type: string
-        OwnerName1:
-          example: OwnerName1
-          type: string
-        OwnerName2:
-          example: OwnerName2
-          type: string
-        OwnerName3:
-          example: OwnerName3
-          type: string
-        OwnerName4:
-          example: OwnerName4
-          type: string
-        FinancingTypeCode:
-          example: code
-          type: string
-        FinancingTypeDesc:
-          example: financing desc
-          type: string
-        OwnerOccupied:
-          example: 'True'
-          type: string
-        Valuations:
-          $ref: '#/components/schemas/AVMInformation'
-        MailingAddress:
-          $ref: '#/components/schemas/Address'
-        CurrentOwnerAsOf:
-          example: '20171231'
-          type: string
-        TransactionHistory:
-          type: array
-          items:
-            $ref: '#/components/schemas/Transaction'
-    PropertyTransactionHistory:
-      type: array
-      items:
-        $ref: '#/components/schemas/Transaction'
-    AlertType:
-      type: object
-      properties:
-        Code:
-          example: AlertCode
-          type: string
-        Description:
-          example: ALERT - This is an alert description.
-          type: string
-        Status:
-          example: Fired
-          type: string
-        Evidence:
-          type: array
-          items:
-            $ref: '#/components/schemas/EvidenceType'
-    PropertyCharacteristics:
-      type: object
-      properties:
-        LandUseAssessorCode:
-          example: LandUseAssessorCode
-          type: string
-        LandUseAssessorDesc:
-          example: LandUseAssessorDesc
-          type: string
-        LandUseStandardizedCode:
-          example: LandUseStandardizedCode
-          type: string
-        LandUseStandardizedDesc:
-          example: LandUseStandardizedDesc
-          type: string
-        LandUseStateCode:
-          example: LandUseStateCode
-          type: string
-        ZoningAssessorDescription:
-          example: ZoningAssessorDescription
-          type: string
-        TotalRooms:
-          example: TotalRooms
-          type: string
-        Bedrooms:
-          example: Bedrooms
-          type: string
-        BathsHalf:
-          example: BathsHalf
-          type: string
-        BathsPlumbingFixturesCount:
-          example: BathsPlumbingFixturesCount
-          type: string
-        BathsTotalCount:
-          example: BathsTotalCount
-          type: string
-        OtherRooms1Code:
-          example: OtherRooms1Code
-          type: string
-        OtherRooms1Desc:
-          example: OtherRooms1Desc
-          type: string
-        BuildingCount:
-          example: BuildingCount
-          type: string
-        UnitCount:
-          example: UnitCount
-          type: string
-        BuildingArchitecturalStyleCode:
-          example: BuildingArchitecturalStyleCode
-          type: string
-        BuildingArchitecturalStyleDesc:
-          example: BuildingArchitecturalStyleDesc
-          type: string
-        Buildings:
-          type: array
-          items:
-            $ref: '#/components/schemas/Building'
-        BuildingAreaTotal:
-          example: BuildingAreaTotal
-          type: string
-        BuildingAreaTotalCode:
-          example: BuildingAreaTotalCode
-          type: string
-        BuildingAreaTotalDesc:
-          example: BuildingAreaTotalDesc
-          type: string
-        BuildingClassCode:
-          example: BuildingClassCode
-          type: string
-        BuildingClassDesc:
-          example: BuildingClassDesc
-          type: string
-        BuildingConditionCode:
-          example: BuildingConditionCode
-          type: string
-        BuildingConditionDesc:
-          example: BuildingConditionDesc
-          type: string
-        BuildingQualityCode:
-          example: BuildingQualityCode
-          type: string
-        OtherImprBuildings:
-          type: array
-          items:
-            $ref: '#/components/schemas/Building'
-        LotSizeAcres:
-          example: LotSizeAcres
-          type: string
-        LotSizeFrontageFeet:
-          example: LotSizeFrontageFeet
-          type: string
-        LotSizeDepthFeet:
-          example: LotSizeDepthFeet
-          type: string
-        LotSizeOrArea:
-          example: LotSizeOrArea
-          type: string
-        LotSizeValue:
-          example: LotSizeValue
-          type: string
-        LotSizeUnit:
-          example: LotSizeUnit
-          type: string
-        LotSizeSquareFeet:
-          example: LotSizeSquareFeet
-          type: string
-        ConstructionTypeCode:
-          example: ConstructionTypeCode
-          type: string
-        ConstructionTypeDesc:
-          example: ConstructionTypeDesc
-          type: string
-        FoundationTypeCode:
-          example: FoundationTypeCode
-          type: string
-        FoundationTypeDesc:
-          example: FoundationTypeDesc
-          type: string
-        ExteriorWallTypeCode:
-          example: ExteriorWallTypeCode
-          type: string
-        ExteriorWallTypeDesc:
-          example: ExteriorWallTypeDesc
-          type: string
-        InteriorWallTypeCode:
-          example: InteriorWallTypeCode
-          type: string
-        InteriorWallTypeDesc:
-          example: InteriorWallTypeDesc
-          type: string
-        FloorCoverType1Code:
-          example: FloorCoverType1Code
-          type: string
-        FloorCoverType1Desc:
-          example: FloorCoverType1Desc
-          type: string
-        StoryCountCode:
-          example: StoryCountCode
-          type: string
-        StoryCountDesc:
-          example: StoryCountDesc
-          type: string
-        YearBuilt:
-          example: YearBuilt
-          type: string
-        YearBuiltEffective:
-          example: YearBuiltEffective
-          type: string
-        AirConditioningMethodCode:
-          example: AirConditioningMethodCode
-          type: string
-        AirConditioningMethodDesc:
-          example: AirConditioningMethodDesc
-          type: string
-        AirConditioningTypeCode:
-          example: AirConditioningTypeCode
-          type: string
-        AirConditioningTypeDesc:
-          example: AirConditioningTypeDesc
-          type: string
-        HeatingTypeCode:
-          example: HeatingTypeCode
-          type: string
-        HeatingTypeDesc:
-          example: HeatingTypeDesc
-          type: string
-        HeatingFuelTypeCode:
-          example: HeatingFuelTypeCode
-          type: string
-        HeatingFuelTypeDesc:
-          example: HeatingFuelTypeDesc
-          type: string
-        BasementCode:
-          example: BasementCode
-          type: string
-        BasementDesc:
-          example: BasementDesc
-          type: string
-        Elevator:
-          example: Elevator
-          type: string
-        Fireplace:
-          example: Fireplace
-          type: string
-        PoolTypeCode:
-          example: PoolTypeCode
-          type: string
-        PoolTypeDesc:
-          example: PoolTypeDesc
-          type: string
-        RoofMaterialCode:
-          example: RoofMaterialCode
-          type: string
-        RoofMaterialDesc:
-          example: RoofMaterialDesc
-          type: string
-        RoofStructureTypeCode:
-          example: RoofStructureTypeCode
-          type: string
-        RoofStructureTypeDesc:
-          example: RoofStructureTypeDesc
-          type: string
-        Amenities:
-          type: array
-          items:
-            $ref: '#/components/schemas/Building'
-        GarageParkingNumberofCars:
-          example: GarageParkingNumberofCars
-          type: string
-        GarageTypeCode:
-          example: GarageTypeCode
-          type: string
-        GarageTypeDesc:
-          example: GarageTypeDesc
-          type: string
-        RBDI:
-          example: RBDI
-          type: string
-        AssessedTotalValue:
-          example: AssessedTotalValue
-          type: string
-        SewerTypeCode:
-          example: SewerTypeCode
-          type: string
-        SewerTypeDesc:
-          example: SewerTypeDesc
-          type: string
-        TopographyTypeCode:
-          example: TopographyTypeCode
-          type: string
-        TopographyTypeDesc:
-          example: TopographyTypeDesc
-          type: string
-        WaterSourceCode:
-          example: WaterSourceCode
-          type: string
-        WaterSourceDesc:
-          example: WaterSourceDesc
-          type: string
-        SiteInfluence1Code:
-          example: SiteInfluence1Code
-          type: string
-        SiteInfluence1Desc:
-          example: SiteInfluence1Desc
-          type: string
-        ExtraFeatures:
-          type: array
-          items:
-            $ref: '#/components/schemas/Building'
-        CondoProjectOrBuildingName:
-          example: CondoProjectOrBuildingName
-          type: string
-        AssessorParcelComments:
-          example: AssessorParcelComments
-          type: string
-    Address:
-      type: object
-      required:
-      - StreetAddress1
-      - City
-      - State
-      - Zip5
-      properties:
-        StreetNumber:
-          example: StreetNumber
-          type: string
-        StreetPreDirection:
-          example: StreetPreDirection
-          type: string
-        StreetName:
-          example: StreetName
-          type: string
-        StreetSuffix:
-          example: StreetSuffix
-          type: string
-        StreetPostDirection:
-          example: StreetPostDirection
-          type: string
-        UnitDesignation:
-          example: UnitDesignation
-          type: string
-        UnitNumber:
-          example: UnitNumber
-          type: string
-        StreetAddress1:
-          example: StreetAddress1
-          type: string
-        StreetAddress2:
-          example: StreetAddress2
-          type: string
-        City:
-          example: City
-          type: string
-        State:
-          example: State
-          type: string
-        ZipCode:
-          example: ZipCode
-          type: string
-        ZipFour:
-          example: ZipFour
-          type: string
-        County:
-          example: County
-          type: string
-        PostalCode:
-          example: PostalCode
-          type: string
-        StateCityZip:
-          example: StateCityZip
-          type: string
-        Latitude:
-          example: Latitude
-          type: string
-        Longitude:
-          example: Longitude
-          type: string
-        APN:
-          example: APN
-          type: string
-    ActiveForeclosureByZip:
-      type: object
-      properties:
-        MonthYear:
-          example: MonthYear
-          type: string
-        ActiveForeclosures:
-          type: array
-          items:
-            $ref: '#/components/schemas/ActiveForeclosure'
-    OwnershipPreforeclosureResponse:
-      type: object
-      properties:
-        RequestorID:
-          type: string
-          example: loannumber1234
-          description: LoanNumber or TransactionID
-          minLength: 1
-          maxLength: 100
-        TransactionID:
-          type: string
-          example: 82d9762b-70c3-4801-bd4b-8ffc8d358f77
-          description: TransactionID can be used to fetach data at later stage
-        Properties:
-          type: array
-          items:
-            $ref: '#/components/schemas/PropertyPreforeclosureType'
-        Status:
-          type: string
-          example: Hit
-          description: Search Status
-        Message:
-          type: string
-          example: Results are Incomplete.
-          description: Order Status
-        Alerts:
-          type: array
-          items:
-            $ref: '#/components/schemas/AlertType'
-    PropertyLocationData:
-      type: object
-      properties:
-        FIPSStateCountyCode:
-          example: FIPSStateCountyCode
-          type: string
-        RefId:
-          example: RefId
-          type: string
-        County:
-          example: County
-          type: string
-        APN:
-          example: APN
-          type: string
-        OldorAlternateAPN:
-          example: OldorAlternateAPN
-          type: string
-        Address:
-          $ref: '#/components/schemas/Address'
-        AddressStandardized:
-          example: AddressStandardized
-          type: string
-        AddressGeoMatchCode:
-          example: AddressGeoMatchCode
-          type: string
-        AddressGeoMatchCodeDesc:
-          example: AddressGeoMatchCodeDesc
-          type: string
-        CarrierRoute:
-          example: CarrierRoute
-          type: string
-        Latitude:
-          example: Latitude
-          type: string
-        Longitude:
-          example: Longitude
-          type: string
-        CensusTract:
-          example: CensusTract
-          type: string
-        Zoning:
-          example: Zoning
-          type: string
-        LandUse:
-          example: LandUse
-          type: string
-        LandUseDesc:
-          example: LandUseDesc
-          type: string
-        LegalDescription:
-          example: LegalDescription
-          type: string
-        ThomasBrosPage:
-          example: ThomasBrosPage
-          type: string
-        ThomasBrosGrid:
-          example: ThomasBrosGrid
-          type: string
-        TimeShare:
-          example: TimeShare
-          type: string
-    Building:
-      type: object
-      properties:
-        Description:
-          example: Description
-          type: string
-        Code:
-          example: Code
-          type: string
-        Value:
-          example: Value
-          type: string
-    ComparableSale:
-      type: object
-      properties:
-        Distance:
-          example: Distance
-          type: string
-        Latitude:
-          example: Latitude
-          type: string
-        Longitude:
-          example: Longitude
-          type: string
-        APN:
-          example: APN
-          type: string
-        Address:
-          $ref: '#/components/schemas/Address'
-        DocumentNumber:
-          example: DocumentNumber
-          type: string
-        Book:
-          example: Book
-          type: string
-        Page:
-          example: Page
-          type: string
-        DocumentType:
-          example: DocumentType
-          type: string
-        DocumentTypeDesc:
-          example: DocumentTypeDesc
-          type: string
-        ContractDate:
-          example: ContractDate
+        IsActiveDefault:
+          example: IsActiveDefault
+          type: string
+        LatestStatus:
+          example: LatestStatus
           type: string
         RecordingDate:
           example: RecordingDate
           type: string
-        SalesPrice:
-          example: SalesPrice
-          type: string
-        SalesPriceCode:
-          example: SalesPriceCode
-          type: string
-        SalesPriceCodeDesc:
-          example: SalesPriceCodeDesc
-          type: string
-        SalesPriceTypeDesc:
-          example: SalesPriceTypeDesc
-          type: string
-        PricePerSQFT:
-          example: PricePerSQFT
-          type: string
-        LotNumber:
-          example: LotNumber
-          type: string
-        LegalBriefDescription:
-          example: LegalBriefDescription
-          type: string
-        LotCodeDesc:
-          example: LotCodeDesc
-          type: string
-        LegalDistrict:
-          example: LegalDistrict
-          type: string
-        LegalLandLot:
-          example: LegalLandLot
-          type: string
-        Unit:
-          example: Unit
-          type: string
-        LegalCityMuniTownship:
-          example: LegalCityMuniTownship
-          type: string
-        Subdivision:
-          example: Subdivision
-          type: string
-        PhaseNumber:
-          example: PhaseNumber
-          type: string
-        TractNumber:
-          example: TractNumber
-          type: string
-        LegalBlockNumber:
-          example: LegalBlockNumber
-          type: string
-        Section:
-          example: Section
-          type: string
-        MapRef:
-          example: MapRef
-          type: string
-        Buyers:
-          type: array
-          items:
-            $ref: '#/components/schemas/EntityInfo'
-        Sellers:
-          type: array
-          items:
-            $ref: '#/components/schemas/EntityInfo'
-        LandUseAssessorCode:
-          example: LandUseAssessorCode
-          type: string
-        LandUseAssessorDesc:
-          example: LandUseAssessorDesc
-          type: string
-        LandUseStandardizedCode:
-          example: LandUseStandardizedCode
-          type: string
-        LandUseStandardizedDesc:
-          example: LandUseStandardizedDesc
-          type: string
-        LandUseStateDesc:
-          example: LandUseStateDesc
-          type: string
-        ZoningAssessorDescription:
-          example: ZoningAssessorDescription
-          type: string
-        RoomsTotalCount:
-          example: RoomsTotalCount
-          type: string
-        BedroomCount:
-          example: BedroomCount
-          type: string
-        BathsPartialCount:
-          example: BathsPartialCount
-          type: string
-        BathsPlumbingFixturesCount:
-          example: BathsPlumbingFixturesCount
-          type: string
-        BathsTotalCount:
-          example: BathsTotalCount
-          type: string
-        BuildingAreaTotal:
-          example: BuildingAreaTotal
-          type: string
-        LotSizeAcres:
-          example: LotSizeAcres
-          type: string
-        LotSizeOrArea:
-          example: LotSizeOrArea
-          type: string
-        LotSize:
-          example: LotSize
-          type: string
-        LotSizeUnits:
-          example: LotSizeUnits
-          type: string
-        ConstructionTypeCode:
-          example: ConstructionTypeCode
-          type: string
-        ConstructionTypeDesc:
-          example: ConstructionTypeDesc
-          type: string
-        FoundationTypeCode:
-          example: FoundationTypeCode
-          type: string
-        FoundationTypeDesc:
-          example: FoundationTypeDesc
-          type: string
-        ExteriorWallTypeCode:
-          example: ExteriorWallTypeCode
-          type: string
-        ExteriorWallTypeDesc:
-          example: ExteriorWallTypeDesc
-          type: string
-        InteriorWallTypeCode:
-          example: InteriorWallTypeCode
-          type: string
-        InteriorWallTypeDesc:
-          example: InteriorWallTypeDesc
-          type: string
-        FloorCoverTypeCode:
-          example: FloorCoverTypeCode
-          type: string
-        FloorCoverTypeDesc:
-          example: FloorCoverTypeDesc
-          type: string
-        StoryCountCode:
-          example: StoryCountCode
-          type: string
-        StoryCountDesc:
-          example: StoryCountDesc
-          type: string
-        YearBuiltActual:
-          example: YearBuiltActual
-          type: string
-        YearBuiltEffective:
-          example: YearBuiltEffective
-          type: string
-        AirConditioningMethodCode:
-          example: AirConditioningMethodCode
-          type: string
-        AirConditioningMethodDesc:
-          example: AirConditioningMethodDesc
-          type: string
-        AirConditioningTypeCode:
-          example: AirConditioningTypeCode
-          type: string
-        AirConditioningTypeDesc:
-          example: AirConditioningTypeDesc
-          type: string
-        HeatingTypeCode:
-          example: HeatingTypeCode
-          type: string
-        HeatingTypeDesc:
-          example: HeatingTypeDesc
-          type: string
-        HeatingFuelTypeCode:
-          example: HeatingFuelTypeCode
-          type: string
-        HeatingFuelTypeDesc:
-          example: HeatingFuelTypeDesc
-          type: string
-        BasementCode:
-          example: BasementCode
-          type: string
-        BasementDesc:
-          example: BasementDesc
-          type: string
-        Elevator:
-          example: Elevator
-          type: string
-        Fireplace:
-          example: Fireplace
-          type: string
-        PoolTypeCode:
-          example: PoolTypeCode
-          type: string
-        PoolTypeDesc:
-          example: PoolTypeDesc
-          type: string
-        RoofMaterialCode:
-          example: RoofMaterialCode
-          type: string
-        RoofMaterialDesc:
-          example: RoofMaterialDesc
-          type: string
-        RoofStructureTypeCode:
-          example: RoofStructureTypeCode
-          type: string
-        RoofStructureTypeDesc:
-          example: RoofStructureTypeDesc
-          type: string
-        GarageParkingNumberofCars:
-          example: GarageParkingNumberofCars
-          type: string
-        GarageTypeCode:
-          example: GarageTypeCode
-          type: string
-        GarageTypeDesc:
-          example: GarageTypeDesc
-          type: string
-        REOFlag:
-          example: REOFlag
-          type: string
-        TargetDate:
-          example: TargetDate
-          type: string
-        LenderName:
-          example: LenderName
-          type: string
-        Loan2Amount:
-          example: Loan2Amount
-          type: string
-        DeedTransactionType:
-          example: DeedTransactionType
-          type: string
-        DeedTransactionTypeDesc:
-          example: DeedTransactionTypeDesc
-          type: string
-        NonArmsLengthTransCount:
-          example: NonArmsLengthTransCount
-          type: string
-        NumberOfTimesSold:
-          example: NumberOfTimesSold
-          type: string
-        REOMultiFlag:
-          example: REOMultiFlag
-          type: string
-        AssessedLandValue:
-          example: AssessedLandValue
-          type: string
-        AssessedImprovedValue:
-          example: AssessedImprovedValue
-          type: string
-        AssessedTotalValue:
-          example: AssessedTotalValue
-          type: string
-        AssessmentYear:
-          example: AssessmentYear
-          type: string
-        MarketLandValue:
-          example: MarketLandValue
-          type: string
-        MarketImprovedValue:
-          example: MarketImprovedValue
-          type: string
-        MarketTotalValue:
-          example: MarketTotalValue
-          type: string
-        AssessorMarketYear:
-          example: AssessorMarketYear
-          type: string
-        Loan1Amount:
-          example: Loan1Amount
-          type: string
-        SecTwpRngMer:
-          example: SecTwpRngMer
-          type: string
-        PriorSale1Buyers:
-          type: array
-          items:
-            $ref: '#/components/schemas/EntityInfo'
-        PriorSale1Sellers:
-          type: array
-          items:
-            $ref: '#/components/schemas/EntityInfo'
-        PriorSale1TypeOfSale:
-          example: PriorSale1TypeOfSale
-          type: string
-        PriorSale1TypeOfSaleDesc:
-          example: PriorSale1TypeOfSaleDesc
-          type: string
-        PriorSale1DocumentType:
-          example: PriorSale1DocumentType
-          type: string
-        PriorSale1DocumentNumber:
-          example: PriorSale1DocumentNumber
-          type: string
-        PriorSale1Book:
-          example: PriorSale1Book
-          type: string
-        PriorSale1Page:
-          example: PriorSale1Page
-          type: string
-        PriorSale1ContractDate:
-          example: PriorSale1ContractDate
-          type: string
-        PriorSale1RecordingDate:
-          example: PriorSale1RecordingDate
-          type: string
-        PriorSale1Price:
-          example: PriorSale1Price
-          type: string
-        PriorSale1PriceCode:
-          example: PriorSale1PriceCode
-          type: string
-        PriorSale1PriceCodeDesc:
-          example: PriorSale1PriceCodeDesc
-          type: string
-        PriorSale2Buyers:
-          type: array
-          items:
-            $ref: '#/components/schemas/EntityInfo'
-        PriorSale2Sellers:
-          type: array
-          items:
-            $ref: '#/components/schemas/EntityInfo'
-        PriorSale2TypeOfSale:
-          example: PriorSale2TypeOfSale
-          type: string
-        PriorSale2TypeOfSaleDesc:
-          example: PriorSale2TypeOfSaleDesc
-          type: string
-        PriorSale2DocumentType:
-          example: PriorSale2DocumentType
-          type: string
-        PriorSale2DocumentNumber:
-          example: PriorSale2DocumentNumber
-          type: string
-        PriorSale2Book:
-          example: PriorSale2Book
-          type: string
-        PriorSale2Page:
-          example: PriorSale2Page
-          type: string
-        PriorSale2ContractDate:
-          example: PriorSale2ContractDate
-          type: string
-        PriorSale2RecordingDate:
-          example: PriorSale2RecordingDate
-          type: string
-        PriorSale2Price:
-          example: PriorSale2Price
-          type: string
-        PriorSale2PriceCode:
-          example: PriorSale2PriceCode
-          type: string
-        PriorSale2PriceCodeDesc:
-          example: PriorSale2PriceCodeDesc
-          type: string
-        ActiveDefault:
-          $ref: '#/components/schemas/ActiveDefault'
-    PropertyLocationDetailData:
-      type: object
-      properties:
-        Address:
-          $ref: '#/components/schemas/Address'
-    PropertyTaxInformation:
-      type: object
-      properties:
-        TaxAccountNumber:
-          example: TaxAccountNumber
-          type: string
-        CurrentYearTaxSourceCodeDesc:
-          example: CurrentYearTaxSourceCodeDesc
-          type: string
-        PropertyTaxYear:
-          example: PropertyTaxYear
-          type: string
-        PropertyTaxDelinquentYearPrior:
-          example: PropertyTaxDelinquentYearPrior
-          type: string
-        CurrentYearTaxSourceCode:
-          example: CurrentYearTaxSourceCode
-          type: string
-        PriorYearTaxSourceCode:
-          example: PriorYearTaxSourceCode
-          type: string
-        PriorYearTaxSourceCodeDesc:
-          example: PriorYearTaxSourceCodeDesc
-          type: string
-        PriorYearDelinquentStatusCode:
-          example: PriorYearDelinquentStatusCode
-          type: string
-        PropertyTaxDelinquentYearCurrent:
-          example: PropertyTaxDelinquentYearCurrent
-          type: string
-        PriorYearDelinquentStatusCodeDesc:
-          example: PriorYearDelinquentStatusCodeDesc
-          type: string
-        CurrentYearDelinquentStatus:
-          example: CurrentYearDelinquentStatus
-          type: string
-        CurrentYearDelinquentStatusCodeDesc:
-          example: CurrentYearDelinquentStatusCodeDesc
-          type: string
-        PropertyTaxAmount:
-          example: PropertyTaxAmount
-          type: string
-        StatusCurrentTaxAmountCode:
-          example: StatusCurrentTaxAmountCode
-          type: string
-        StatusCurrentTaxAmountCodeDesc:
-          example: StatusCurrentTaxAmountCodeDesc
-          type: string
-        TaxExemptionCodes:
-          type: array
-          items:
-            $ref: '#/components/schemas/TaxExemptionCode'
-        CAHomeownerExemption:
-          example: CAHomeownerExemption
-          type: string
-        TaxRateCodeArea:
-          example: TaxRateCodeArea
-          type: string
-        SchoolTaxDistricts:
-          type: array
-          items:
-            $ref: '#/components/schemas/SchoolTaxDistrict'
-        AssessmentYear:
-          example: AssessmentYear
-          type: string
-        AssessedLandValue:
-          example: AssessedLandValue
-          type: string
-        AssessedImprovedValue:
-          example: AssessedImprovedValue
-          type: string
-        AssessedTotalValue:
-          example: AssessedTotalValue
-          type: string
-        AssessedImprovedPercentage:
-          example: AssessedImprovedPercentage
-          type: string
-        AssessorMarketYear:
-          example: AssessorMarketYear
-          type: string
-        AssessorMarketValueLand:
-          example: AssessorMarketValueLand
-          type: string
-        AssessorMarketValueImprovements:
-          example: AssessorMarketValueImprovements
-          type: string
-        AssessorMarketValueTotal:
-          example: AssessorMarketValueTotal
-          type: string
-        MarketImprovedPercentage:
-          example: MarketImprovedPercentage
-          type: string
-    LoanDetails:
-      type: object
-      properties:
-        LenderAddress:
-          $ref: '#/components/schemas/Address'
-        LenderName:
-          example: Bob Smith
-          type: string
-        LoanAmount:
-          example: '3423.12'
-          type: string
-        LoanTerms:
-          example: '3'
-          type: string
-        LoanType:
-          example: LoanType
-          type: string
-        MaturityDate:
-          example: MaturityDate
-          type: string
-    PropertyAddressType:
-      type: object
-      properties:
-        StatusCode:
-          example: Success
-          type: string
-        PropertyAddress:
-          $ref: '#/components/schemas/Address'
-        Buyers:
-          type: array
-          items:
-            $ref: '#/components/schemas/EntityInfo'
-        Sellers:
-          type: array
-          items:
-            $ref: '#/components/schemas/EntityInfo'
-        RecordingDate:
-          example: '20171231'
-          type: string
-        SalesPrice:
-          example: '123412.01'
-          type: string
-        OwnerName1:
-          example: OwnerName1
-          type: string
-        OwnerName2:
-          example: OwnerName2
-          type: string
-        OwnerName3:
-          example: OwnerName3
-          type: string
-        OwnerName4:
-          example: OwnerName4
-          type: string
-        CurrentOwnerAsOf:
-          example: '20171231'
-          type: string
-        TransactionHistory:
-          type: array
-          items:
-            $ref: '#/components/schemas/Transaction'
-    PropertyDetails:
-      type: object
-      properties:
-        CountyData:
-          example: County
-          type: string
-        APN:
-          example: APN
-          type: string
-        Zoning:
-          example: Zoning
-          type: string
-        LandUse:
-          example: LandUse
-          type: string
-        LegalDescription:
-          example: LegalDescription
-          type: string
-        TimeShare:
-          example: TimeShare
-          type: string
-        YearBuilt:
-          example: '1977'
-          type: string
-        Bedrooms:
-          example: '1'
-          type: string
-        Baths:
-          example: '3'
-          type: string
-        TotalRooms:
-          example: '5'
-          type: string
-        LivingArea:
-          example: 2322sqft
-          type: string
-    OwnershipDetailResponse:
-      type: object
-      properties:
-        RequestorID:
-          type: string
-          example: loannumber1234
-          description: LoanNumber or TransactionID
-          minLength: 1
-          maxLength: 100
-        TransactionID:
-          type: string
-          example: 82d9762b-70c3-4801-bd4b-8ffc8d358f77
-          description: TransactionID can be used to fetach data at later stage
-        Properties:
-          type: array
-          items:
-            $ref: '#/components/schemas/PropertyDetailType'
-        Status:
-          type: string
-          example: Hit
-          description: Search Status
-        Message:
-          type: string
-          example: Results are Incomplete.
-          description: Order Status
-        Alerts:
-          type: array
-          items:
-            $ref: '#/components/schemas/AlertType'
     PropertyDetailType:
       type: object
       properties:
@@ -1668,433 +386,19 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/TransactionDetail'
-    NameDefinition:
-      type: object
+    ProductMessage:
       properties:
-        Full:
-          example: Full
+        MessageCode:
+          example: S
           type: string
-        First:
-          example: First
+        MessageDescription:
+          example: Complete
           type: string
-        FirstAndMiddleName:
-          example: FirstAndMiddleName
+        Reason:
+          example: Reason
           type: string
-        LastOrCompanyName:
-          example: LastOrCompanyName
-          type: string
-    PropertyOwnerInformation:
-      type: object
-      properties:
-        OwnerNames:
-          example: OwnerNames
-          type: string
-        OwnerName1:
-          example: OwnerName1
-          type: string
-        OwnerName2:
-          example: OwnerName2
-          type: string
-        OwnerName3:
-          example: OwnerName3
-          type: string
-        OwnerName4:
-          example: OwnerName4
-          type: string
-        AdditionalBuyerNameCount:
-          example: AdditionalBuyerNameCount
-          type: string
-        Buyer1IDCode:
-          example: Buyer1IDCode
-          type: string
-        Buyer1IDCodeDesc:
-          example: Buyer1IDCodeDesc
-          type: string
-        Buyer2IDCode:
-          example: Buyer2IDCode
-          type: string
-        Buyer2IDCodeDesc:
-          example: Buyer2IDCodeDesc
-          type: string
-        Vesting:
-          example: Vesting
-          type: string
-        VestingCodeDesc:
-          example: VestingCodeDesc
-          type: string
-        CurrentOwnerAsOf:
-          example: CurrentOwnerAsOf
-          type: string
-        OwnerOccupiedFlag:
-          example: OwnerOccupiedFlag
-          type: string
-        MailingCareOfName:
-          example: MailingCareOfName
-          type: string
-        MailingAddress:
-          $ref: '#/components/schemas/Address'
-        MailingCarrierRoute:
-          example: MailingCarrierRoute
-          type: string
-        MailingAddressStandardized:
-          example: MailingAddressStandardized
-          type: string
-        PhoneNumber:
-          example: PhoneNumber
-          type: string
-        YearsOwned:
-          example: YearsOwned
-          type: string
-        AssessorThroughDate:
-          example: AssessorThroughDate
-          type: string
-    OwnershipResponse:
-      type: object
-      properties:
-        RequestorID:
-          type: string
-          example: loannumber1234
-          description: LoanNumber or TransactionID
-          minLength: 1
-          maxLength: 100
-        TransactionID:
-          type: string
-          example: 82d9762b-70c3-4801-bd4b-8ffc8d358f77
-          description: TransactionID can be used to fetach data at later stage
-        Properties:
-          type: array
-          items:
-            $ref: '#/components/schemas/PropertyType'
-        Status:
-          type: string
-          example: Hit
-          description: Search Status
-        Message:
-          type: string
-          example: Results are Incomplete.
-          description: Order Status
-        Alerts:
-          type: array
-          items:
-            $ref: '#/components/schemas/AlertType'
-    ActiveDefault:
-      type: object
-      properties:
-        IsActiveDefault:
-          example: IsActiveDefault
-          type: string
-        LatestStatus:
-          example: LatestStatus
-          type: string
-        RecordingDate:
-          example: RecordingDate
-          type: string
-    LoanTransaction:
-      type: object
-      properties:
-        Description:
-          example: Description
-          type: string
-        Code:
-          example: Code
-          type: string
-        Value:
-          example: Value
-          type: string
-    OwnershipScheduleREOResponse:
-      type: object
-      properties:
-        RequestorID:
-          type: string
-          example: loannumber1234
-          description: LoanNumber or TransactionID
-          minLength: 1
-          maxLength: 100
-        TransactionID:
-          type: string
-          example: 82d9762b-70c3-4801-bd4b-8ffc8d358f77
-          description: TransactionID can be used to fetach data at later stage
-        Properties:
-          type: array
-          items:
-            $ref: '#/components/schemas/PropertyScheduleREOType'
-        Status:
-          type: string
-          example: Hit
-          description: Search Status
-        Message:
-          type: string
-          example: Results are Incomplete.
-          description: Order Status
-        Alerts:
-          type: array
-          items:
-            $ref: '#/components/schemas/AlertType'
-    TransactionDetail:
-      type: object
-      properties:
-        ContractDate:
-          example: ContractDate
-          type: string
-        RecordingDate:
-          example: RecordingDate
-          type: string
-        SalesPrice:
-          example: SalesPrice
-          type: string
-        Sellers:
-          type: array
-          items:
-            $ref: '#/components/schemas/EntityInfo'
-        SellerAddress:
-          $ref: '#/components/schemas/Address'
-        Buyers:
-          type: array
-          items:
-            $ref: '#/components/schemas/EntityInfo'
-        TypeofSale:
-          example: TypeofSale
-          type: string
-        ForeclosureStatus:
-          example: Foreclosure
-          type: string
-        TransactionID:
-          example: '123'
-          type: string
-        TransactionType:
-          example: Foreclosure
-          type: string
-        DocumentTypeCodeDesc:
-          example: Foreclosure
-          type: string
-    SchoolTaxDistrict:
-      type: object
-      properties:
-        Description:
-          example: Description
-          type: string
-        Code:
-          example: Code
-          type: string
-        Value:
-          example: Value
-          type: string
-    PropertyOwnerDetailInformation:
-      type: object
-      properties:
-        OwnerName1:
-          example: OwnerName1
-          type: string
-        OwnerName2:
-          example: OwnerName2
-          type: string
-        OwnerName3:
-          example: OwnerName3
-          type: string
-        OwnerName4:
-          example: OwnerName4
-          type: string
-        Vesting:
-          example: Vesting
-          type: string
-        OwnerOccupiedFlag:
-          example: 'Yes'
-          type: string
-        MailingAddress:
-          $ref: '#/components/schemas/Address'
-    OwnershipAddressResponse:
-      type: object
-      properties:
-        RequestorID:
-          type: string
-          example: loannumber1234
-          description: LoanNumber or TransactionID
-          minLength: 1
-          maxLength: 100
-        TransactionID:
-          type: string
-          example: 82d9762b-70c3-4801-bd4b-8ffc8d358f77
-          description: TransactionID can be used to fetach data at later stage
-        Properties:
-          type: array
-          items:
-            $ref: '#/components/schemas/PropertyAddressType'
-        Status:
-          type: string
-          example: Hit
-          description: Search Status
-        Message:
-          type: string
-          example: Results are Incomplete.
-          description: Order Status
-        Alerts:
-          type: array
-          items:
-            $ref: '#/components/schemas/AlertType'
-    PropertyPreforeclosureType:
-      type: object
-      properties:
-        StatusCode:
-          example: Success
-          type: string
-        PropertyAddress:
-          $ref: '#/components/schemas/Address'
-        Buyers:
-          type: array
-          items:
-            $ref: '#/components/schemas/EntityInfo'
-        Sellers:
-          type: array
-          items:
-            $ref: '#/components/schemas/EntityInfo'
-        RecordingDate:
-          example: '20171231'
-          type: string
-        ForeclosureStatus:
-          example: Preforeclosure
-          type: string
-        TypeofSale:
-          example: Refi
-          type: string
-        OwnerName1:
-          example: OwnerName1
-          type: string
-        OwnerName2:
-          example: OwnerName2
-          type: string
-        OwnerName3:
-          example: OwnerName3
-          type: string
-        OwnerName4:
-          example: OwnerName4
-          type: string
-        CurrentOwnerAsOf:
-          example: CurrentOwnerAsOf
-          type: string
-        TransactionHistory:
-          type: array
-          items:
-            $ref: '#/components/schemas/Transaction'
-    PropertyForeclosureType:
-      type: object
-      properties:
-        StatusCode:
-          example: Success
-          type: string
-        PropertyAddress:
-          $ref: '#/components/schemas/Address'
-        Buyers:
-          type: array
-          items:
-            $ref: '#/components/schemas/EntityInfo'
-        Sellers:
-          type: array
-          items:
-            $ref: '#/components/schemas/EntityInfo'
-        RecordingDate:
-          example: '20171231'
-          type: string
-        ForeclosureStatus:
-          example: Preforeclosure
-          type: string
-        TypeofSale:
-          example: Refi
-          type: string
-        SaleDate:
-          example: '20161031'
-          type: string
-        SalesPrice:
-          example: '215292'
-          type: string
-        OwnershipStatus:
-          example: Previously Foreclosed
-          type: string
-        CurrentOwnerAsOf:
-          example: '20171231'
-          type: string
-        TransactionHistory:
-          type: array
-          items:
-            $ref: '#/components/schemas/Transaction'
-    AssessorTaxInfo:
-      type: object
-      properties:
-        PropertyTaxYear:
-          example: PropertyTaxYear
-          type: string
-        PropertyTaxDelinquentYearPrior:
-          example: PropertyTaxDelinquentYearPrior
-          type: string
-        CurrentYearDelinquentStatusCodeDesc:
-          example: CurrentYearDelinquentStatusCodeDesc
-          type: string
-        PropertyTaxAmount:
-          example: PropertyTaxAmount
-          type: string
-        AssessmentYear:
-          example: AssessmentYear
-          type: string
-        AssessedLandValue:
-          example: AssessedLandValue
-          type: string
-        AssessedImprovedValue:
-          example: AssessedImprovedValue
-          type: string
-        AssessedTotalValue:
-          example: AssessedTotalValue
-          type: string
-        AssessedImprovedPercentage:
-          example: AssessedImprovedPercentage
-          type: string
-    AssessorLegal:
-      properties:
-        BriefDescription:
-          example: BriefDescription
-          type: string
-        FullDescription:
-          example: FullDescription
-          type: string
-        CityMuniTownship:
-          example: CityMuniTownship
-          type: string
-        District:
-          example: District
-          type: string
-        Section:
-          example: Section
-          type: string
-        SecTwnRngMer:
-          example: SecTwnRngMer
-          type: string
-        BlockNumber:
-          example: BlockNumber
-          type: string
-        LotNumber:
-          example: LotNumber
-          type: string
-        LandLot:
-          example: LandLot
-          type: string
-        LotCodeDesc:
-          example: LotCodeDesc
-          type: string
-        SubdivisionCode:
-          example: SubdivisionCode
-          type: string
-        SubdivisonName:
-          example: SubdivisonName
-          type: string
-        TractNumber:
-          example: TractNumber
-          type: string
-        PhaseNumber:
-          example: PhaseNumber
-          type: string
-        Unit:
-          example: Unit
-          type: string
-        RecordersMapRef:
-          example: RecordersMapRef
+        MatchCode:
+          example: OK
           type: string
     Transaction:
       type: object
@@ -2741,6 +1045,214 @@ components:
           type: string
         BorrowerMailingAddress:
           $ref: '#/components/schemas/Address'
+    AssessorTaxInfo:
+      type: object
+      properties:
+        PropertyTaxYear:
+          example: PropertyTaxYear
+          type: string
+        PropertyTaxDelinquentYearPrior:
+          example: PropertyTaxDelinquentYearPrior
+          type: string
+        CurrentYearDelinquentStatusCodeDesc:
+          example: CurrentYearDelinquentStatusCodeDesc
+          type: string
+        PropertyTaxAmount:
+          example: PropertyTaxAmount
+          type: string
+        AssessmentYear:
+          example: AssessmentYear
+          type: string
+        AssessedLandValue:
+          example: AssessedLandValue
+          type: string
+        AssessedImprovedValue:
+          example: AssessedImprovedValue
+          type: string
+        AssessedTotalValue:
+          example: AssessedTotalValue
+          type: string
+        AssessedImprovedPercentage:
+          example: AssessedImprovedPercentage
+          type: string
+    ActiveForeclosure:
+      type: object
+      properties:
+        ForeclosureType:
+          example: ForeclosureType
+          type: string
+        Count:
+          example: Count
+          type: string
+    OwnershipForeclosureResponse:
+      type: object
+      properties:
+        RequestorID:
+          type: string
+          example: loannumber1234
+          description: LoanNumber or TransactionID
+          minLength: 1
+          maxLength: 100
+        TransactionID:
+          type: string
+          example: 82d9762b-70c3-4801-bd4b-8ffc8d358f77
+          description: TransactionID can be used to fetach data at later stage
+        Properties:
+          type: array
+          items:
+            $ref: '#/components/schemas/PropertyForeclosureType'
+        Status:
+          type: string
+          example: Hit
+          description: Search Status
+        Message:
+          type: string
+          example: Results are Incomplete.
+          description: Order Status
+        Alerts:
+          type: array
+          items:
+            $ref: '#/components/schemas/AlertType'
+    PropertyLocationDetailData:
+      type: object
+      properties:
+        Address:
+          $ref: '#/components/schemas/Address'
+    LoanTransaction:
+      type: object
+      properties:
+        Description:
+          example: Description
+          type: string
+        Code:
+          example: Code
+          type: string
+        Value:
+          example: Value
+          type: string
+    PropertyTransactionHistory:
+      type: array
+      items:
+        $ref: '#/components/schemas/Transaction'
+    PropertyScheduleREOType:
+      type: object
+      properties:
+        StatusCode:
+          example: Success
+          type: string
+        PropertyAddress:
+          $ref: '#/components/schemas/Address'
+        Buyers:
+          type: array
+          items:
+            $ref: '#/components/schemas/EntityInfo'
+        Sellers:
+          type: array
+          items:
+            $ref: '#/components/schemas/EntityInfo'
+        RecordingDate:
+          example: '20171231'
+          type: string
+        ForeclosureStatus:
+          example: Preforeclosure
+          type: string
+        TypeofSale:
+          example: Refi
+          type: string
+        SaleDate:
+          example: '20161031'
+          type: string
+        SalesPrice:
+          example: '215292'
+          type: string
+        LenderName:
+          example: Don Draper
+          type: string
+        LoanAmount:
+          example: '215292'
+          type: string
+        LoanTerms:
+          example: 20 Years
+          type: string
+        LoanType:
+          example: Refi
+          type: string
+        MaturityDate:
+          example: '20161031'
+          type: string
+        LandUse:
+          example: Land Use Description
+          type: string
+        PropertyTaxYear:
+          example: '2016'
+          type: string
+        PropertyTaxAmount:
+          example: '3500'
+          type: string
+        OwnershipStatus:
+          example: Previously Foreclosed
+          type: string
+        OwnerName1:
+          example: OwnerName1
+          type: string
+        OwnerName2:
+          example: OwnerName2
+          type: string
+        OwnerName3:
+          example: OwnerName3
+          type: string
+        OwnerName4:
+          example: OwnerName4
+          type: string
+        FinancingTypeCode:
+          example: code
+          type: string
+        FinancingTypeDesc:
+          example: financing desc
+          type: string
+        OwnerOccupied:
+          example: 'True'
+          type: string
+        Valuations:
+          $ref: '#/components/schemas/AVMInformation'
+        MailingAddress:
+          $ref: '#/components/schemas/Address'
+        CurrentOwnerAsOf:
+          example: '20171231'
+          type: string
+        TransactionHistory:
+          type: array
+          items:
+            $ref: '#/components/schemas/Transaction'
+    OwnershipScheduleREOResponse:
+      type: object
+      properties:
+        RequestorID:
+          type: string
+          example: loannumber1234
+          description: LoanNumber or TransactionID
+          minLength: 1
+          maxLength: 100
+        TransactionID:
+          type: string
+          example: 82d9762b-70c3-4801-bd4b-8ffc8d358f77
+          description: TransactionID can be used to fetach data at later stage
+        Properties:
+          type: array
+          items:
+            $ref: '#/components/schemas/PropertyScheduleREOType'
+        Status:
+          type: string
+          example: Hit
+          description: Search Status
+        Message:
+          type: string
+          example: Results are Incomplete.
+          description: Order Status
+        Alerts:
+          type: array
+          items:
+            $ref: '#/components/schemas/AlertType'
     AssesseeContactInformation:
       type: object
       properties:
@@ -2771,6 +1283,1219 @@ components:
         AssessorTapeCutDate:
           example: AssessorTapeCutDate
           type: string
+    LoanDetails:
+      type: object
+      properties:
+        LenderAddress:
+          $ref: '#/components/schemas/Address'
+        LenderName:
+          example: Bob Smith
+          type: string
+        LoanAmount:
+          example: '3423.12'
+          type: string
+        LoanTerms:
+          example: '3'
+          type: string
+        LoanType:
+          example: LoanType
+          type: string
+        MaturityDate:
+          example: MaturityDate
+          type: string
+    SchoolTaxDistrict:
+      type: object
+      properties:
+        Description:
+          example: Description
+          type: string
+        Code:
+          example: Code
+          type: string
+        Value:
+          example: Value
+          type: string
+    AVMInformation:
+      type: object
+      properties:
+        AVMType:
+          example: AVMType
+          type: string
+        AVMLow:
+          example: AVMLow
+          type: string
+        ConfiAVMHigh:
+          example: ConfiAVMHigh
+          type: string
+        AVMValue:
+          example: AVMValue
+          type: string
+        AVMConfidenceDescr:
+          example: AVMConfidenceDescr
+          type: string
+        AVMConfScore:
+          example: AVMConfScore
+          type: string
+        AVMFSD:
+          example: AVMFSD
+          type: string
+    PropertyAddressType:
+      type: object
+      properties:
+        StatusCode:
+          example: Success
+          type: string
+        PropertyAddress:
+          $ref: '#/components/schemas/Address'
+        Buyers:
+          type: array
+          items:
+            $ref: '#/components/schemas/EntityInfo'
+        Sellers:
+          type: array
+          items:
+            $ref: '#/components/schemas/EntityInfo'
+        RecordingDate:
+          example: '20171231'
+          type: string
+        SalesPrice:
+          example: '123412.01'
+          type: string
+        OwnerName1:
+          example: OwnerName1
+          type: string
+        OwnerName2:
+          example: OwnerName2
+          type: string
+        OwnerName3:
+          example: OwnerName3
+          type: string
+        OwnerName4:
+          example: OwnerName4
+          type: string
+        CurrentOwnerAsOf:
+          example: '20171231'
+          type: string
+        TransactionHistory:
+          type: array
+          items:
+            $ref: '#/components/schemas/Transaction'
+    PropertyCharacteristics:
+      type: object
+      properties:
+        LandUseAssessorCode:
+          example: LandUseAssessorCode
+          type: string
+        LandUseAssessorDesc:
+          example: LandUseAssessorDesc
+          type: string
+        LandUseStandardizedCode:
+          example: LandUseStandardizedCode
+          type: string
+        LandUseStandardizedDesc:
+          example: LandUseStandardizedDesc
+          type: string
+        LandUseStateCode:
+          example: LandUseStateCode
+          type: string
+        ZoningAssessorDescription:
+          example: ZoningAssessorDescription
+          type: string
+        TotalRooms:
+          example: TotalRooms
+          type: string
+        Bedrooms:
+          example: Bedrooms
+          type: string
+        BathsHalf:
+          example: BathsHalf
+          type: string
+        BathsPlumbingFixturesCount:
+          example: BathsPlumbingFixturesCount
+          type: string
+        BathsTotalCount:
+          example: BathsTotalCount
+          type: string
+        OtherRooms1Code:
+          example: OtherRooms1Code
+          type: string
+        OtherRooms1Desc:
+          example: OtherRooms1Desc
+          type: string
+        BuildingCount:
+          example: BuildingCount
+          type: string
+        UnitCount:
+          example: UnitCount
+          type: string
+        BuildingArchitecturalStyleCode:
+          example: BuildingArchitecturalStyleCode
+          type: string
+        BuildingArchitecturalStyleDesc:
+          example: BuildingArchitecturalStyleDesc
+          type: string
+        Buildings:
+          type: array
+          items:
+            $ref: '#/components/schemas/Building'
+        BuildingAreaTotal:
+          example: BuildingAreaTotal
+          type: string
+        BuildingAreaTotalCode:
+          example: BuildingAreaTotalCode
+          type: string
+        BuildingAreaTotalDesc:
+          example: BuildingAreaTotalDesc
+          type: string
+        BuildingClassCode:
+          example: BuildingClassCode
+          type: string
+        BuildingClassDesc:
+          example: BuildingClassDesc
+          type: string
+        BuildingConditionCode:
+          example: BuildingConditionCode
+          type: string
+        BuildingConditionDesc:
+          example: BuildingConditionDesc
+          type: string
+        BuildingQualityCode:
+          example: BuildingQualityCode
+          type: string
+        OtherImprBuildings:
+          type: array
+          items:
+            $ref: '#/components/schemas/Building'
+        LotSizeAcres:
+          example: LotSizeAcres
+          type: string
+        LotSizeFrontageFeet:
+          example: LotSizeFrontageFeet
+          type: string
+        LotSizeDepthFeet:
+          example: LotSizeDepthFeet
+          type: string
+        LotSizeOrArea:
+          example: LotSizeOrArea
+          type: string
+        LotSizeValue:
+          example: LotSizeValue
+          type: string
+        LotSizeUnit:
+          example: LotSizeUnit
+          type: string
+        LotSizeSquareFeet:
+          example: LotSizeSquareFeet
+          type: string
+        ConstructionTypeCode:
+          example: ConstructionTypeCode
+          type: string
+        ConstructionTypeDesc:
+          example: ConstructionTypeDesc
+          type: string
+        FoundationTypeCode:
+          example: FoundationTypeCode
+          type: string
+        FoundationTypeDesc:
+          example: FoundationTypeDesc
+          type: string
+        ExteriorWallTypeCode:
+          example: ExteriorWallTypeCode
+          type: string
+        ExteriorWallTypeDesc:
+          example: ExteriorWallTypeDesc
+          type: string
+        InteriorWallTypeCode:
+          example: InteriorWallTypeCode
+          type: string
+        InteriorWallTypeDesc:
+          example: InteriorWallTypeDesc
+          type: string
+        FloorCoverType1Code:
+          example: FloorCoverType1Code
+          type: string
+        FloorCoverType1Desc:
+          example: FloorCoverType1Desc
+          type: string
+        StoryCountCode:
+          example: StoryCountCode
+          type: string
+        StoryCountDesc:
+          example: StoryCountDesc
+          type: string
+        YearBuilt:
+          example: YearBuilt
+          type: string
+        YearBuiltEffective:
+          example: YearBuiltEffective
+          type: string
+        AirConditioningMethodCode:
+          example: AirConditioningMethodCode
+          type: string
+        AirConditioningMethodDesc:
+          example: AirConditioningMethodDesc
+          type: string
+        AirConditioningTypeCode:
+          example: AirConditioningTypeCode
+          type: string
+        AirConditioningTypeDesc:
+          example: AirConditioningTypeDesc
+          type: string
+        HeatingTypeCode:
+          example: HeatingTypeCode
+          type: string
+        HeatingTypeDesc:
+          example: HeatingTypeDesc
+          type: string
+        HeatingFuelTypeCode:
+          example: HeatingFuelTypeCode
+          type: string
+        HeatingFuelTypeDesc:
+          example: HeatingFuelTypeDesc
+          type: string
+        BasementCode:
+          example: BasementCode
+          type: string
+        BasementDesc:
+          example: BasementDesc
+          type: string
+        Elevator:
+          example: Elevator
+          type: string
+        Fireplace:
+          example: Fireplace
+          type: string
+        PoolTypeCode:
+          example: PoolTypeCode
+          type: string
+        PoolTypeDesc:
+          example: PoolTypeDesc
+          type: string
+        RoofMaterialCode:
+          example: RoofMaterialCode
+          type: string
+        RoofMaterialDesc:
+          example: RoofMaterialDesc
+          type: string
+        RoofStructureTypeCode:
+          example: RoofStructureTypeCode
+          type: string
+        RoofStructureTypeDesc:
+          example: RoofStructureTypeDesc
+          type: string
+        Amenities:
+          type: array
+          items:
+            $ref: '#/components/schemas/Building'
+        GarageParkingNumberofCars:
+          example: GarageParkingNumberofCars
+          type: string
+        GarageTypeCode:
+          example: GarageTypeCode
+          type: string
+        GarageTypeDesc:
+          example: GarageTypeDesc
+          type: string
+        RBDI:
+          example: RBDI
+          type: string
+        AssessedTotalValue:
+          example: AssessedTotalValue
+          type: string
+        SewerTypeCode:
+          example: SewerTypeCode
+          type: string
+        SewerTypeDesc:
+          example: SewerTypeDesc
+          type: string
+        TopographyTypeCode:
+          example: TopographyTypeCode
+          type: string
+        TopographyTypeDesc:
+          example: TopographyTypeDesc
+          type: string
+        WaterSourceCode:
+          example: WaterSourceCode
+          type: string
+        WaterSourceDesc:
+          example: WaterSourceDesc
+          type: string
+        SiteInfluence1Code:
+          example: SiteInfluence1Code
+          type: string
+        SiteInfluence1Desc:
+          example: SiteInfluence1Desc
+          type: string
+        ExtraFeatures:
+          type: array
+          items:
+            $ref: '#/components/schemas/Building'
+        CondoProjectOrBuildingName:
+          example: CondoProjectOrBuildingName
+          type: string
+        AssessorParcelComments:
+          example: AssessorParcelComments
+          type: string
+    PropertyTaxInformation:
+      type: object
+      properties:
+        TaxAccountNumber:
+          example: TaxAccountNumber
+          type: string
+        CurrentYearTaxSourceCodeDesc:
+          example: CurrentYearTaxSourceCodeDesc
+          type: string
+        PropertyTaxYear:
+          example: PropertyTaxYear
+          type: string
+        PropertyTaxDelinquentYearPrior:
+          example: PropertyTaxDelinquentYearPrior
+          type: string
+        CurrentYearTaxSourceCode:
+          example: CurrentYearTaxSourceCode
+          type: string
+        PriorYearTaxSourceCode:
+          example: PriorYearTaxSourceCode
+          type: string
+        PriorYearTaxSourceCodeDesc:
+          example: PriorYearTaxSourceCodeDesc
+          type: string
+        PriorYearDelinquentStatusCode:
+          example: PriorYearDelinquentStatusCode
+          type: string
+        PropertyTaxDelinquentYearCurrent:
+          example: PropertyTaxDelinquentYearCurrent
+          type: string
+        PriorYearDelinquentStatusCodeDesc:
+          example: PriorYearDelinquentStatusCodeDesc
+          type: string
+        CurrentYearDelinquentStatus:
+          example: CurrentYearDelinquentStatus
+          type: string
+        CurrentYearDelinquentStatusCodeDesc:
+          example: CurrentYearDelinquentStatusCodeDesc
+          type: string
+        PropertyTaxAmount:
+          example: PropertyTaxAmount
+          type: string
+        StatusCurrentTaxAmountCode:
+          example: StatusCurrentTaxAmountCode
+          type: string
+        StatusCurrentTaxAmountCodeDesc:
+          example: StatusCurrentTaxAmountCodeDesc
+          type: string
+        TaxExemptionCodes:
+          type: array
+          items:
+            $ref: '#/components/schemas/TaxExemptionCode'
+        CAHomeownerExemption:
+          example: CAHomeownerExemption
+          type: string
+        TaxRateCodeArea:
+          example: TaxRateCodeArea
+          type: string
+        SchoolTaxDistricts:
+          type: array
+          items:
+            $ref: '#/components/schemas/SchoolTaxDistrict'
+        AssessmentYear:
+          example: AssessmentYear
+          type: string
+        AssessedLandValue:
+          example: AssessedLandValue
+          type: string
+        AssessedImprovedValue:
+          example: AssessedImprovedValue
+          type: string
+        AssessedTotalValue:
+          example: AssessedTotalValue
+          type: string
+        AssessedImprovedPercentage:
+          example: AssessedImprovedPercentage
+          type: string
+        AssessorMarketYear:
+          example: AssessorMarketYear
+          type: string
+        AssessorMarketValueLand:
+          example: AssessorMarketValueLand
+          type: string
+        AssessorMarketValueImprovements:
+          example: AssessorMarketValueImprovements
+          type: string
+        AssessorMarketValueTotal:
+          example: AssessorMarketValueTotal
+          type: string
+        MarketImprovedPercentage:
+          example: MarketImprovedPercentage
+          type: string
+    Building:
+      type: object
+      properties:
+        Description:
+          example: Description
+          type: string
+        Code:
+          example: Code
+          type: string
+        Value:
+          example: Value
+          type: string
+    TaxExemptionCode:
+      type: object
+      properties:
+        Description:
+          example: TaxDesc1
+          type: string
+        Code:
+          example: TaxCode1
+          type: string
+    LoanTransactionHistory:
+      type: array
+      items:
+        $ref: '#/components/schemas/LoanTransaction'
+    PropertyDetails:
+      type: object
+      properties:
+        CountyData:
+          example: County
+          type: string
+        APN:
+          example: APN
+          type: string
+        Zoning:
+          example: Zoning
+          type: string
+        LandUse:
+          example: LandUse
+          type: string
+        LegalDescription:
+          example: LegalDescription
+          type: string
+        TimeShare:
+          example: TimeShare
+          type: string
+        YearBuilt:
+          example: '1977'
+          type: string
+        Bedrooms:
+          example: '1'
+          type: string
+        Baths:
+          example: '3'
+          type: string
+        TotalRooms:
+          example: '5'
+          type: string
+        LivingArea:
+          example: 2322sqft
+          type: string
+    OwnershipPreforeclosureResponse:
+      type: object
+      properties:
+        RequestorID:
+          type: string
+          example: loannumber1234
+          description: LoanNumber or TransactionID
+          minLength: 1
+          maxLength: 100
+        TransactionID:
+          type: string
+          example: 82d9762b-70c3-4801-bd4b-8ffc8d358f77
+          description: TransactionID can be used to fetach data at later stage
+        Properties:
+          type: array
+          items:
+            $ref: '#/components/schemas/PropertyPreforeclosureType'
+        Status:
+          type: string
+          example: Hit
+          description: Search Status
+        Message:
+          type: string
+          example: Results are Incomplete.
+          description: Order Status
+        Alerts:
+          type: array
+          items:
+            $ref: '#/components/schemas/AlertType'
+    PropertyForeclosureType:
+      type: object
+      properties:
+        StatusCode:
+          example: Success
+          type: string
+        PropertyAddress:
+          $ref: '#/components/schemas/Address'
+        Buyers:
+          type: array
+          items:
+            $ref: '#/components/schemas/EntityInfo'
+        Sellers:
+          type: array
+          items:
+            $ref: '#/components/schemas/EntityInfo'
+        RecordingDate:
+          example: '20171231'
+          type: string
+        ForeclosureStatus:
+          example: Preforeclosure
+          type: string
+        TypeofSale:
+          example: Refi
+          type: string
+        SaleDate:
+          example: '20161031'
+          type: string
+        SalesPrice:
+          example: '215292'
+          type: string
+        OwnershipStatus:
+          example: Previously Foreclosed
+          type: string
+        CurrentOwnerAsOf:
+          example: '20171231'
+          type: string
+        TransactionHistory:
+          type: array
+          items:
+            $ref: '#/components/schemas/Transaction'
+    NameDefinition:
+      type: object
+      properties:
+        Full:
+          example: Full
+          type: string
+        First:
+          example: First
+          type: string
+        FirstAndMiddleName:
+          example: FirstAndMiddleName
+          type: string
+        LastOrCompanyName:
+          example: LastOrCompanyName
+          type: string
+    OwnershipDetailResponse:
+      type: object
+      properties:
+        RequestorID:
+          type: string
+          example: loannumber1234
+          description: LoanNumber or TransactionID
+          minLength: 1
+          maxLength: 100
+        TransactionID:
+          type: string
+          example: 82d9762b-70c3-4801-bd4b-8ffc8d358f77
+          description: TransactionID can be used to fetach data at later stage
+        Properties:
+          type: array
+          items:
+            $ref: '#/components/schemas/PropertyDetailType'
+        Status:
+          type: string
+          example: Hit
+          description: Search Status
+        Message:
+          type: string
+          example: Results are Incomplete.
+          description: Order Status
+        Alerts:
+          type: array
+          items:
+            $ref: '#/components/schemas/AlertType'
+    TransactionDetail:
+      type: object
+      properties:
+        ContractDate:
+          example: ContractDate
+          type: string
+        RecordingDate:
+          example: RecordingDate
+          type: string
+        SalesPrice:
+          example: SalesPrice
+          type: string
+        Sellers:
+          type: array
+          items:
+            $ref: '#/components/schemas/EntityInfo'
+        SellerAddress:
+          $ref: '#/components/schemas/Address'
+        Buyers:
+          type: array
+          items:
+            $ref: '#/components/schemas/EntityInfo'
+        TypeofSale:
+          example: TypeofSale
+          type: string
+        ForeclosureStatus:
+          example: Foreclosure
+          type: string
+        TransactionID:
+          example: '123'
+          type: string
+        TransactionType:
+          example: Foreclosure
+          type: string
+        DocumentTypeCodeDesc:
+          example: Foreclosure
+          type: string
+    PropertyOwnerDetailInformation:
+      type: object
+      properties:
+        OwnerName1:
+          example: OwnerName1
+          type: string
+        OwnerName2:
+          example: OwnerName2
+          type: string
+        OwnerName3:
+          example: OwnerName3
+          type: string
+        OwnerName4:
+          example: OwnerName4
+          type: string
+        Vesting:
+          example: Vesting
+          type: string
+        OwnerOccupiedFlag:
+          example: 'Yes'
+          type: string
+        MailingAddress:
+          $ref: '#/components/schemas/Address'
+    OwnershipResponse:
+      type: object
+      properties:
+        RequestorID:
+          type: string
+          example: loannumber1234
+          description: LoanNumber or TransactionID
+          minLength: 1
+          maxLength: 100
+        TransactionID:
+          type: string
+          example: 82d9762b-70c3-4801-bd4b-8ffc8d358f77
+          description: TransactionID can be used to fetach data at later stage
+        Properties:
+          type: array
+          items:
+            $ref: '#/components/schemas/PropertyType'
+        Status:
+          type: string
+          example: Hit
+          description: Search Status
+        Message:
+          type: string
+          example: Results are Incomplete.
+          description: Order Status
+        Alerts:
+          type: array
+          items:
+            $ref: '#/components/schemas/AlertType'
+    EntityInfo:
+      type: object
+      properties:
+        EntityCodeDesc:
+          example: EntityCodeDesc
+          type: string
+        EntityCode:
+          example: EntityCode
+          type: string
+        Name:
+          $ref: '#/components/schemas/NameDefinition'
+    ComparableSale:
+      type: object
+      properties:
+        Distance:
+          example: Distance
+          type: string
+        Latitude:
+          example: Latitude
+          type: string
+        Longitude:
+          example: Longitude
+          type: string
+        APN:
+          example: APN
+          type: string
+        Address:
+          $ref: '#/components/schemas/Address'
+        DocumentNumber:
+          example: DocumentNumber
+          type: string
+        Book:
+          example: Book
+          type: string
+        Page:
+          example: Page
+          type: string
+        DocumentType:
+          example: DocumentType
+          type: string
+        DocumentTypeDesc:
+          example: DocumentTypeDesc
+          type: string
+        ContractDate:
+          example: ContractDate
+          type: string
+        RecordingDate:
+          example: RecordingDate
+          type: string
+        SalesPrice:
+          example: SalesPrice
+          type: string
+        SalesPriceCode:
+          example: SalesPriceCode
+          type: string
+        SalesPriceCodeDesc:
+          example: SalesPriceCodeDesc
+          type: string
+        SalesPriceTypeDesc:
+          example: SalesPriceTypeDesc
+          type: string
+        PricePerSQFT:
+          example: PricePerSQFT
+          type: string
+        LotNumber:
+          example: LotNumber
+          type: string
+        LegalBriefDescription:
+          example: LegalBriefDescription
+          type: string
+        LotCodeDesc:
+          example: LotCodeDesc
+          type: string
+        LegalDistrict:
+          example: LegalDistrict
+          type: string
+        LegalLandLot:
+          example: LegalLandLot
+          type: string
+        Unit:
+          example: Unit
+          type: string
+        LegalCityMuniTownship:
+          example: LegalCityMuniTownship
+          type: string
+        Subdivision:
+          example: Subdivision
+          type: string
+        PhaseNumber:
+          example: PhaseNumber
+          type: string
+        TractNumber:
+          example: TractNumber
+          type: string
+        LegalBlockNumber:
+          example: LegalBlockNumber
+          type: string
+        Section:
+          example: Section
+          type: string
+        MapRef:
+          example: MapRef
+          type: string
+        Buyers:
+          type: array
+          items:
+            $ref: '#/components/schemas/EntityInfo'
+        Sellers:
+          type: array
+          items:
+            $ref: '#/components/schemas/EntityInfo'
+        LandUseAssessorCode:
+          example: LandUseAssessorCode
+          type: string
+        LandUseAssessorDesc:
+          example: LandUseAssessorDesc
+          type: string
+        LandUseStandardizedCode:
+          example: LandUseStandardizedCode
+          type: string
+        LandUseStandardizedDesc:
+          example: LandUseStandardizedDesc
+          type: string
+        LandUseStateDesc:
+          example: LandUseStateDesc
+          type: string
+        ZoningAssessorDescription:
+          example: ZoningAssessorDescription
+          type: string
+        RoomsTotalCount:
+          example: RoomsTotalCount
+          type: string
+        BedroomCount:
+          example: BedroomCount
+          type: string
+        BathsPartialCount:
+          example: BathsPartialCount
+          type: string
+        BathsPlumbingFixturesCount:
+          example: BathsPlumbingFixturesCount
+          type: string
+        BathsTotalCount:
+          example: BathsTotalCount
+          type: string
+        BuildingAreaTotal:
+          example: BuildingAreaTotal
+          type: string
+        LotSizeAcres:
+          example: LotSizeAcres
+          type: string
+        LotSizeOrArea:
+          example: LotSizeOrArea
+          type: string
+        LotSize:
+          example: LotSize
+          type: string
+        LotSizeUnits:
+          example: LotSizeUnits
+          type: string
+        ConstructionTypeCode:
+          example: ConstructionTypeCode
+          type: string
+        ConstructionTypeDesc:
+          example: ConstructionTypeDesc
+          type: string
+        FoundationTypeCode:
+          example: FoundationTypeCode
+          type: string
+        FoundationTypeDesc:
+          example: FoundationTypeDesc
+          type: string
+        ExteriorWallTypeCode:
+          example: ExteriorWallTypeCode
+          type: string
+        ExteriorWallTypeDesc:
+          example: ExteriorWallTypeDesc
+          type: string
+        InteriorWallTypeCode:
+          example: InteriorWallTypeCode
+          type: string
+        InteriorWallTypeDesc:
+          example: InteriorWallTypeDesc
+          type: string
+        FloorCoverTypeCode:
+          example: FloorCoverTypeCode
+          type: string
+        FloorCoverTypeDesc:
+          example: FloorCoverTypeDesc
+          type: string
+        StoryCountCode:
+          example: StoryCountCode
+          type: string
+        StoryCountDesc:
+          example: StoryCountDesc
+          type: string
+        YearBuiltActual:
+          example: YearBuiltActual
+          type: string
+        YearBuiltEffective:
+          example: YearBuiltEffective
+          type: string
+        AirConditioningMethodCode:
+          example: AirConditioningMethodCode
+          type: string
+        AirConditioningMethodDesc:
+          example: AirConditioningMethodDesc
+          type: string
+        AirConditioningTypeCode:
+          example: AirConditioningTypeCode
+          type: string
+        AirConditioningTypeDesc:
+          example: AirConditioningTypeDesc
+          type: string
+        HeatingTypeCode:
+          example: HeatingTypeCode
+          type: string
+        HeatingTypeDesc:
+          example: HeatingTypeDesc
+          type: string
+        HeatingFuelTypeCode:
+          example: HeatingFuelTypeCode
+          type: string
+        HeatingFuelTypeDesc:
+          example: HeatingFuelTypeDesc
+          type: string
+        BasementCode:
+          example: BasementCode
+          type: string
+        BasementDesc:
+          example: BasementDesc
+          type: string
+        Elevator:
+          example: Elevator
+          type: string
+        Fireplace:
+          example: Fireplace
+          type: string
+        PoolTypeCode:
+          example: PoolTypeCode
+          type: string
+        PoolTypeDesc:
+          example: PoolTypeDesc
+          type: string
+        RoofMaterialCode:
+          example: RoofMaterialCode
+          type: string
+        RoofMaterialDesc:
+          example: RoofMaterialDesc
+          type: string
+        RoofStructureTypeCode:
+          example: RoofStructureTypeCode
+          type: string
+        RoofStructureTypeDesc:
+          example: RoofStructureTypeDesc
+          type: string
+        GarageParkingNumberofCars:
+          example: GarageParkingNumberofCars
+          type: string
+        GarageTypeCode:
+          example: GarageTypeCode
+          type: string
+        GarageTypeDesc:
+          example: GarageTypeDesc
+          type: string
+        REOFlag:
+          example: REOFlag
+          type: string
+        TargetDate:
+          example: TargetDate
+          type: string
+        LenderName:
+          example: LenderName
+          type: string
+        Loan2Amount:
+          example: Loan2Amount
+          type: string
+        DeedTransactionType:
+          example: DeedTransactionType
+          type: string
+        DeedTransactionTypeDesc:
+          example: DeedTransactionTypeDesc
+          type: string
+        NonArmsLengthTransCount:
+          example: NonArmsLengthTransCount
+          type: string
+        NumberOfTimesSold:
+          example: NumberOfTimesSold
+          type: string
+        REOMultiFlag:
+          example: REOMultiFlag
+          type: string
+        AssessedLandValue:
+          example: AssessedLandValue
+          type: string
+        AssessedImprovedValue:
+          example: AssessedImprovedValue
+          type: string
+        AssessedTotalValue:
+          example: AssessedTotalValue
+          type: string
+        AssessmentYear:
+          example: AssessmentYear
+          type: string
+        MarketLandValue:
+          example: MarketLandValue
+          type: string
+        MarketImprovedValue:
+          example: MarketImprovedValue
+          type: string
+        MarketTotalValue:
+          example: MarketTotalValue
+          type: string
+        AssessorMarketYear:
+          example: AssessorMarketYear
+          type: string
+        Loan1Amount:
+          example: Loan1Amount
+          type: string
+        SecTwpRngMer:
+          example: SecTwpRngMer
+          type: string
+        PriorSale1Buyers:
+          type: array
+          items:
+            $ref: '#/components/schemas/EntityInfo'
+        PriorSale1Sellers:
+          type: array
+          items:
+            $ref: '#/components/schemas/EntityInfo'
+        PriorSale1TypeOfSale:
+          example: PriorSale1TypeOfSale
+          type: string
+        PriorSale1TypeOfSaleDesc:
+          example: PriorSale1TypeOfSaleDesc
+          type: string
+        PriorSale1DocumentType:
+          example: PriorSale1DocumentType
+          type: string
+        PriorSale1DocumentNumber:
+          example: PriorSale1DocumentNumber
+          type: string
+        PriorSale1Book:
+          example: PriorSale1Book
+          type: string
+        PriorSale1Page:
+          example: PriorSale1Page
+          type: string
+        PriorSale1ContractDate:
+          example: PriorSale1ContractDate
+          type: string
+        PriorSale1RecordingDate:
+          example: PriorSale1RecordingDate
+          type: string
+        PriorSale1Price:
+          example: PriorSale1Price
+          type: string
+        PriorSale1PriceCode:
+          example: PriorSale1PriceCode
+          type: string
+        PriorSale1PriceCodeDesc:
+          example: PriorSale1PriceCodeDesc
+          type: string
+        PriorSale2Buyers:
+          type: array
+          items:
+            $ref: '#/components/schemas/EntityInfo'
+        PriorSale2Sellers:
+          type: array
+          items:
+            $ref: '#/components/schemas/EntityInfo'
+        PriorSale2TypeOfSale:
+          example: PriorSale2TypeOfSale
+          type: string
+        PriorSale2TypeOfSaleDesc:
+          example: PriorSale2TypeOfSaleDesc
+          type: string
+        PriorSale2DocumentType:
+          example: PriorSale2DocumentType
+          type: string
+        PriorSale2DocumentNumber:
+          example: PriorSale2DocumentNumber
+          type: string
+        PriorSale2Book:
+          example: PriorSale2Book
+          type: string
+        PriorSale2Page:
+          example: PriorSale2Page
+          type: string
+        PriorSale2ContractDate:
+          example: PriorSale2ContractDate
+          type: string
+        PriorSale2RecordingDate:
+          example: PriorSale2RecordingDate
+          type: string
+        PriorSale2Price:
+          example: PriorSale2Price
+          type: string
+        PriorSale2PriceCode:
+          example: PriorSale2PriceCode
+          type: string
+        PriorSale2PriceCodeDesc:
+          example: PriorSale2PriceCodeDesc
+          type: string
+        ActiveDefault:
+          $ref: '#/components/schemas/ActiveDefault'
+    EvidenceType:
+      description: Dictionary of evidence fields that caused the alert to fire.
+      type: object
+      example:
+        Key: Value
+    AssessorLegal:
+      properties:
+        BriefDescription:
+          example: BriefDescription
+          type: string
+        FullDescription:
+          example: FullDescription
+          type: string
+        CityMuniTownship:
+          example: CityMuniTownship
+          type: string
+        District:
+          example: District
+          type: string
+        Section:
+          example: Section
+          type: string
+        SecTwnRngMer:
+          example: SecTwnRngMer
+          type: string
+        BlockNumber:
+          example: BlockNumber
+          type: string
+        LotNumber:
+          example: LotNumber
+          type: string
+        LandLot:
+          example: LandLot
+          type: string
+        LotCodeDesc:
+          example: LotCodeDesc
+          type: string
+        SubdivisionCode:
+          example: SubdivisionCode
+          type: string
+        SubdivisonName:
+          example: SubdivisonName
+          type: string
+        TractNumber:
+          example: TractNumber
+          type: string
+        PhaseNumber:
+          example: PhaseNumber
+          type: string
+        Unit:
+          example: Unit
+          type: string
+        RecordersMapRef:
+          example: RecordersMapRef
+          type: string
+    PropertyPreforeclosureType:
+      type: object
+      properties:
+        StatusCode:
+          example: Success
+          type: string
+        PropertyAddress:
+          $ref: '#/components/schemas/Address'
+        Buyers:
+          type: array
+          items:
+            $ref: '#/components/schemas/EntityInfo'
+        Sellers:
+          type: array
+          items:
+            $ref: '#/components/schemas/EntityInfo'
+        RecordingDate:
+          example: '20171231'
+          type: string
+        ForeclosureStatus:
+          example: Preforeclosure
+          type: string
+        TypeofSale:
+          example: Refi
+          type: string
+        OwnerName1:
+          example: OwnerName1
+          type: string
+        OwnerName2:
+          example: OwnerName2
+          type: string
+        OwnerName3:
+          example: OwnerName3
+          type: string
+        OwnerName4:
+          example: OwnerName4
+          type: string
+        CurrentOwnerAsOf:
+          example: CurrentOwnerAsOf
+          type: string
+        TransactionHistory:
+          type: array
+          items:
+            $ref: '#/components/schemas/Transaction'
     PropertyValueRange:
       type: object
       properties:
@@ -2795,21 +2520,296 @@ components:
         NeighborhoodMax:
           example: NeighborhoodMax
           type: string
-    TaxExemptionCode:
+    PropertyOwnerInformation:
       type: object
       properties:
-        Description:
-          example: TaxDesc1
+        OwnerNames:
+          example: OwnerNames
           type: string
+        OwnerName1:
+          example: OwnerName1
+          type: string
+        OwnerName2:
+          example: OwnerName2
+          type: string
+        OwnerName3:
+          example: OwnerName3
+          type: string
+        OwnerName4:
+          example: OwnerName4
+          type: string
+        AdditionalBuyerNameCount:
+          example: AdditionalBuyerNameCount
+          type: string
+        Buyer1IDCode:
+          example: Buyer1IDCode
+          type: string
+        Buyer1IDCodeDesc:
+          example: Buyer1IDCodeDesc
+          type: string
+        Buyer2IDCode:
+          example: Buyer2IDCode
+          type: string
+        Buyer2IDCodeDesc:
+          example: Buyer2IDCodeDesc
+          type: string
+        Vesting:
+          example: Vesting
+          type: string
+        VestingCodeDesc:
+          example: VestingCodeDesc
+          type: string
+        CurrentOwnerAsOf:
+          example: CurrentOwnerAsOf
+          type: string
+        OwnerOccupiedFlag:
+          example: OwnerOccupiedFlag
+          type: string
+        MailingCareOfName:
+          example: MailingCareOfName
+          type: string
+        MailingAddress:
+          $ref: '#/components/schemas/Address'
+        MailingCarrierRoute:
+          example: MailingCarrierRoute
+          type: string
+        MailingAddressStandardized:
+          example: MailingAddressStandardized
+          type: string
+        PhoneNumber:
+          example: PhoneNumber
+          type: string
+        YearsOwned:
+          example: YearsOwned
+          type: string
+        AssessorThroughDate:
+          example: AssessorThroughDate
+          type: string
+    Address:
+      type: object
+      required:
+      - StreetAddress1
+      - City
+      - State
+      - Zip5
+      properties:
+        StreetNumber:
+          example: StreetNumber
+          type: string
+        StreetPreDirection:
+          example: StreetPreDirection
+          type: string
+        StreetName:
+          example: StreetName
+          type: string
+        StreetSuffix:
+          example: StreetSuffix
+          type: string
+        StreetPostDirection:
+          example: StreetPostDirection
+          type: string
+        UnitDesignation:
+          example: UnitDesignation
+          type: string
+        UnitNumber:
+          example: UnitNumber
+          type: string
+        StreetAddress1:
+          example: StreetAddress1
+          type: string
+        StreetAddress2:
+          example: StreetAddress2
+          type: string
+        City:
+          example: City
+          type: string
+        State:
+          example: State
+          type: string
+        ZipCode:
+          example: ZipCode
+          type: string
+        ZipFour:
+          example: ZipFour
+          type: string
+        County:
+          example: County
+          type: string
+        PostalCode:
+          example: PostalCode
+          type: string
+        StateCityZip:
+          example: StateCityZip
+          type: string
+        Latitude:
+          example: Latitude
+          type: string
+        Longitude:
+          example: Longitude
+          type: string
+        APN:
+          example: APN
+          type: string
+    OwnershipAddressResponse:
+      type: object
+      properties:
+        RequestorID:
+          type: string
+          example: loannumber1234
+          description: LoanNumber or TransactionID
+          minLength: 1
+          maxLength: 100
+        TransactionID:
+          type: string
+          example: 82d9762b-70c3-4801-bd4b-8ffc8d358f77
+          description: TransactionID can be used to fetach data at later stage
+        Properties:
+          type: array
+          items:
+            $ref: '#/components/schemas/PropertyAddressType'
+        Status:
+          type: string
+          example: Hit
+          description: Search Status
+        Message:
+          type: string
+          example: Results are Incomplete.
+          description: Order Status
+        Alerts:
+          type: array
+          items:
+            $ref: '#/components/schemas/AlertType'
+    PropertyType:
+      type: object
+      properties:
+        StatusCode:
+          example: Success
+          type: string
+        ProductMessage:
+          $ref: '#/components/schemas/ProductMessage'
+        PropertyLocationData:
+          $ref: '#/components/schemas/PropertyLocationData'
+        Locations:
+          type: array
+          items:
+            $ref: '#/components/schemas/PropertyLocationData'
+        PropertyTaxInformation:
+          $ref: '#/components/schemas/PropertyTaxInformation'
+        PropertyOwnerInformation:
+          $ref: '#/components/schemas/PropertyOwnerInformation'
+        AssesseeContactInformation:
+          $ref: '#/components/schemas/AssesseeContactInformation'
+        PropertyCharacteristics:
+          $ref: '#/components/schemas/PropertyCharacteristics'
+        AssessorLegal:
+          $ref: '#/components/schemas/AssessorLegal'
+        PropertyTransactionHistory:
+          $ref: '#/components/schemas/PropertyTransactionHistory'
+        LoanTransactionHistory:
+          $ref: '#/components/schemas/LoanTransactionHistory'
+        NearbyComparableSales:
+          type: array
+          items:
+            $ref: '#/components/schemas/ComparableSale'
+        AVMInformation:
+          $ref: '#/components/schemas/AVMInformation'
+        PropertyValueRange:
+          $ref: '#/components/schemas/PropertyValueRange'
+        ActiveDefault:
+          $ref: '#/components/schemas/ActiveDefault'
+        ActiveForeclosuresByZip:
+          type: array
+          items:
+            $ref: '#/components/schemas/ActiveForeclosureByZip'
+        NormalizedAddress:
+          $ref: '#/components/schemas/Address'
+        AssessorTaxInfo:
+          $ref: '#/components/schemas/AssessorTaxInfo'
+    AlertType:
+      type: object
+      properties:
         Code:
-          example: TaxCode1
+          example: AlertCode
           type: string
-    ActiveForeclosure:
+        Description:
+          example: ALERT - This is an alert description.
+          type: string
+        Status:
+          example: Fired
+          type: string
+        Evidence:
+          type: array
+          items:
+            $ref: '#/components/schemas/EvidenceType'
+    PropertyLocationData:
       type: object
       properties:
-        ForeclosureType:
-          example: ForeclosureType
+        FIPSStateCountyCode:
+          example: FIPSStateCountyCode
           type: string
-        Count:
-          example: Count
+        RefId:
+          example: RefId
           type: string
+        County:
+          example: County
+          type: string
+        APN:
+          example: APN
+          type: string
+        OldorAlternateAPN:
+          example: OldorAlternateAPN
+          type: string
+        Address:
+          $ref: '#/components/schemas/Address'
+        AddressStandardized:
+          example: AddressStandardized
+          type: string
+        AddressGeoMatchCode:
+          example: AddressGeoMatchCode
+          type: string
+        AddressGeoMatchCodeDesc:
+          example: AddressGeoMatchCodeDesc
+          type: string
+        CarrierRoute:
+          example: CarrierRoute
+          type: string
+        Latitude:
+          example: Latitude
+          type: string
+        Longitude:
+          example: Longitude
+          type: string
+        CensusTract:
+          example: CensusTract
+          type: string
+        Zoning:
+          example: Zoning
+          type: string
+        LandUse:
+          example: LandUse
+          type: string
+        LandUseDesc:
+          example: LandUseDesc
+          type: string
+        LegalDescription:
+          example: LegalDescription
+          type: string
+        ThomasBrosPage:
+          example: ThomasBrosPage
+          type: string
+        ThomasBrosGrid:
+          example: ThomasBrosGrid
+          type: string
+        TimeShare:
+          example: TimeShare
+          type: string
+    ActiveForeclosureByZip:
+      type: object
+      properties:
+        MonthYear:
+          example: MonthYear
+          type: string
+        ActiveForeclosures:
+          type: array
+          items:
+            $ref: '#/components/schemas/ActiveForeclosure'
