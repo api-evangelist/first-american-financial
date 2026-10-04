@@ -601,6 +601,9 @@ apis:
   - type: Documentation
     url: https://developer.firstam.io/api/regulatorycompliance
 common:
+- type: CapabilityMap
+  url: capabilities/first-american-financial-capability-edges.yml
+  name: First American Financial Business Capability Map
 - type: Overlay
   url: overlays/first-american-financial-title-settlement-overlay.yaml
 - type: Overlay
