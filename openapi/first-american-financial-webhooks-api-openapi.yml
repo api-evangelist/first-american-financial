@@ -533,29 +533,6 @@ paths:
                 Status: integrator's secret
 components:
   schemas:
-    EventType:
-      enum:
-      - OrderCreated
-      - DocumentDelivery
-      - CurativeCleared
-      - FundsDisbursed
-      - MessageAdded
-      - OrderRejected
-      - OrderCancelled
-      - OrderClosed
-      - AppointmentScheduled
-      - TitleProductDelivered
-      - FinalPolicyDelivered
-      - CDDraft
-      - FundingApproved
-      - DisburseHold
-      - CurativePending
-      - RecordingCompleted
-      - SigningOrdered
-      - SigningBorrowerNotified
-      - SigningCompleted
-      - CDBalanced
-      type: string
     Webhooks:
       type: array
       items:
@@ -603,6 +580,29 @@ components:
               - 5
               description: retry count properties property/value pair
           description: list of properties key/value pairs
+    EventType:
+      enum:
+      - OrderCreated
+      - DocumentDelivery
+      - CurativeCleared
+      - FundsDisbursed
+      - MessageAdded
+      - OrderRejected
+      - OrderCancelled
+      - OrderClosed
+      - AppointmentScheduled
+      - TitleProductDelivered
+      - FinalPolicyDelivered
+      - CDDraft
+      - FundingApproved
+      - DisburseHold
+      - CurativePending
+      - RecordingCompleted
+      - SigningOrdered
+      - SigningBorrowerNotified
+      - SigningCompleted
+      - CDBalanced
+      type: string
   securitySchemes:
     bearerAuth:
       type: http

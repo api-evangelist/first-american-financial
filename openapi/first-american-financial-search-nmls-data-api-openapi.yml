@@ -167,6 +167,25 @@ paths:
       x-operation-id-original: post
 components:
   schemas:
+    Name:
+      type: object
+      properties:
+        Full:
+          type: string
+        First:
+          type: string
+        Middle:
+          type: string
+        Last:
+          type: string
+        Suffix:
+          type: string
+        Prefix:
+          type: string
+        LastOrCompanyName:
+          type: string
+        FirstAndMiddleName:
+          type: string
     ServiceRequest:
       type: object
       properties:
@@ -191,23 +210,21 @@ components:
         Address:
           State: CO
         ConfidenceScore: 90
-    IndividualSearchResponse:
+    Location:
       type: object
       properties:
-        ConfidenceScore:
-          type: integer
-        IsFederallyRegulated:
-          type: boolean
-        EntityType:
+        CompanyName:
           type: string
-        Name:
-          $ref: '#/components/schemas/Name'
-        NMLSID:
-          type: integer
-        Locations:
-          type: array
-          items:
-            $ref: '#/components/schemas/Location'
+        LocationNMLSID:
+          type: string
+        LocationType:
+          type: string
+        Street:
+          type: string
+        StartDate:
+          type: string
+        Address:
+          $ref: '#/components/schemas/Address'
     Address:
       type: object
       properties:
@@ -255,6 +272,23 @@ components:
           type: string
         FullAddress:
           type: string
+    CompanySearchResponse:
+      type: object
+      properties:
+        ConfidenceScore:
+          type: integer
+        IsAuthorizedToConductBusiness:
+          type: boolean
+        IsFederallyRegulated:
+          type: boolean
+        EntityType:
+          type: string
+        Name:
+          $ref: '#/components/schemas/Name'
+        NMLSID:
+          type: integer
+        Address:
+          $ref: '#/components/schemas/Address'
     SearchResponse:
       type: object
       properties:
@@ -276,13 +310,11 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/Location'
-    CompanySearchResponse:
+    IndividualSearchResponse:
       type: object
       properties:
         ConfidenceScore:
           type: integer
-        IsAuthorizedToConductBusiness:
-          type: boolean
         IsFederallyRegulated:
           type: boolean
         EntityType:
@@ -291,39 +323,7 @@ components:
           $ref: '#/components/schemas/Name'
         NMLSID:
           type: integer
-        Address:
-          $ref: '#/components/schemas/Address'
-    Name:
-      type: object
-      properties:
-        Full:
-          type: string
-        First:
-          type: string
-        Middle:
-          type: string
-        Last:
-          type: string
-        Suffix:
-          type: string
-        Prefix:
-          type: string
-        LastOrCompanyName:
-          type: string
-        FirstAndMiddleName:
-          type: string
-    Location:
-      type: object
-      properties:
-        CompanyName:
-          type: string
-        LocationNMLSID:
-          type: string
-        LocationType:
-          type: string
-        Street:
-          type: string
-        StartDate:
-          type: string
-        Address:
-          $ref: '#/components/schemas/Address'
+        Locations:
+          type: array
+          items:
+            $ref: '#/components/schemas/Location'

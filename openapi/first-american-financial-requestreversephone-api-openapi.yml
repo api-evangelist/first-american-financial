@@ -53,31 +53,24 @@ paths:
         description: Request for Reverse Phone
 components:
   schemas:
-    AssociatedPerson:
+    Alert:
       type: object
       properties:
-        Relationship:
+        Code:
           type: string
-        Full:
+        Description:
           type: string
-          example: Mark M Marsupial
-        First:
-          type: string
-          example: Mark
-        Middle:
-          type: string
-          example: M
-        Last:
-          type: string
-          example: Marsupial
-        Suffix:
-          type: string
-        Prefix:
-          type: string
-        LastOrCompanyName:
-          type: string
-        FirstAndMiddleName:
-          type: string
+        Status:
+          format: int32
+          enum:
+          - NotEvaluated
+          - Fired
+          - NotFired
+          type: integer
+        Evidence:
+          type: array
+          items:
+            $ref: '#/components/schemas/SerializableDictionary_String_Object'
     SubscriberAddress:
       type: object
       properties:
@@ -139,6 +132,33 @@ components:
           type: string
         StateFIPSCode:
           type: string
+    ReversePhoneServiceRequest:
+      type: object
+      properties:
+        RequestorID:
+          type: string
+        PhoneNumber:
+          type: string
+        IncludeAnalytics:
+          type: boolean
+      example:
+        RequestorID: ID123
+        PhoneNumber: '0001234567'
+    ParsedDate:
+      type: object
+      properties:
+        Year:
+          format: int32
+          type: integer
+          example: 2017
+        Month:
+          format: int32
+          type: integer
+          example: 10
+        Day:
+          format: int32
+          type: integer
+          example: 21
     Subscriber:
       type: object
       properties:
@@ -171,42 +191,34 @@ components:
           type: string
         FirstAndMiddleName:
           type: string
-    Alert:
-      type: object
-      properties:
-        Code:
-          type: string
-        Description:
-          type: string
-        Status:
-          format: int32
-          enum:
-          - NotEvaluated
-          - Fired
-          - NotFired
-          type: integer
-        Evidence:
-          type: array
-          items:
-            $ref: '#/components/schemas/SerializableDictionary_String_Object'
     SerializableDictionary_String_Object:
       type: object
       properties: {}
-    ParsedDate:
+    AssociatedPerson:
       type: object
       properties:
-        Year:
-          format: int32
-          type: integer
-          example: 2017
-        Month:
-          format: int32
-          type: integer
-          example: 10
-        Day:
-          format: int32
-          type: integer
-          example: 21
+        Relationship:
+          type: string
+        Full:
+          type: string
+          example: Mark M Marsupial
+        First:
+          type: string
+          example: Mark
+        Middle:
+          type: string
+          example: M
+        Last:
+          type: string
+          example: Marsupial
+        Suffix:
+          type: string
+        Prefix:
+          type: string
+        LastOrCompanyName:
+          type: string
+        FirstAndMiddleName:
+          type: string
     ReversePhoneServiceResponse:
       type: object
       properties:
@@ -274,15 +286,3 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/Alert'
-    ReversePhoneServiceRequest:
-      type: object
-      properties:
-        RequestorID:
-          type: string
-        PhoneNumber:
-          type: string
-        IncludeAnalytics:
-          type: boolean
-      example:
-        RequestorID: ID123
-        PhoneNumber: '0001234567'

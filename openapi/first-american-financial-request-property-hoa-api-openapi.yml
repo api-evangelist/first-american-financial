@@ -100,6 +100,46 @@ components:
           type: boolean
           example: false
           description: Option to run analytics on data set.
+    Contact:
+      properties:
+        ContactType:
+          example: ContactType
+          type: string
+        ContactName:
+          example: ContactName
+          type: string
+        Address:
+          $ref: '#/components/schemas/Address'
+        Phone:
+          $ref: '#/components/schemas/Phone'
+    HoaInfoDefinition:
+      properties:
+        Name:
+          example: Name
+          type: string
+        HoaType:
+          example: Hoatype
+          type: string
+        City:
+          example: City
+          type: string
+        Amount:
+          example: Amount
+          type: string
+        MinAmount:
+          example: MinAmount
+          type: string
+        MaxAmount:
+          example: MaxAmount
+          type: string
+        FeeFrequency:
+          example: FeeFrequency
+          type: string
+        FeeType:
+          example: FeeType
+          type: string
+        Contacts:
+          $ref: '#/components/schemas/Contact'
     Address:
       type: object
       required:
@@ -179,18 +219,6 @@ components:
           description: LoanNumber or TransactionID
         HoaInfo:
           $ref: '#/components/schemas/HoaInfoDefinition'
-    Contact:
-      properties:
-        ContactType:
-          example: ContactType
-          type: string
-        ContactName:
-          example: ContactName
-          type: string
-        Address:
-          $ref: '#/components/schemas/Address'
-        Phone:
-          $ref: '#/components/schemas/Phone'
     Phone:
       properties:
         PhoneType:
@@ -199,31 +227,3 @@ components:
         PhoneNumber:
           example: PhoneNumber
           type: string
-    HoaInfoDefinition:
-      properties:
-        Name:
-          example: Name
-          type: string
-        HoaType:
-          example: Hoatype
-          type: string
-        City:
-          example: City
-          type: string
-        Amount:
-          example: Amount
-          type: string
-        MinAmount:
-          example: MinAmount
-          type: string
-        MaxAmount:
-          example: MaxAmount
-          type: string
-        FeeFrequency:
-          example: FeeFrequency
-          type: string
-        FeeType:
-          example: FeeType
-          type: string
-        Contacts:
-          $ref: '#/components/schemas/Contact'

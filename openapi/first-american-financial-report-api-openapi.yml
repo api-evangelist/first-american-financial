@@ -33,66 +33,46 @@ paths:
           description: Missing/Invalid TransactionID
 components:
   schemas:
-    DocumentType:
-      type: string
-      enum:
-      - Affidavit
-      - Agreement
-      - AgreementContractForDeed
-      - Assignment
-      - Bond
-      - Certificate
-      - CertifiedCopyOfJudgment
-      - CondominiumDeclarationOf
-      - CourtPaper
-      - DeathCertificate
-      - Deed
-      - DeedTransfer
-      - Easement
-      - FinancingStatementUCC
-      - GovernmentRelated
-      - Judgment
-      - Lien
-      - LisPendens
-      - MarriageRecord
-      - MilitaryDischarge
-      - Modification
-      - Mortgage
-      - Notice
-      - NoticeOfCommencement
-      - NoticeOfContestOfLien
-      - NoticeOfDefault
-      - NoticeOfSale
-      - NoticeOfTrusteeSale
-      - Order
-      - Other
-      - PartialRelease
-      - Plat
-      - PlatMap
-      - PlatRelated
-      - PowerOfAttorney
-      - ProbateDocuments
-      - RecisionOfLisPendensNoticeOfSaleNoticeOfDefault
-      - RescissionOfNoticeOfDefault
-      - RescissionOfNoticeOfTrusteeSale
-      - Rescission
-      - Release
-      - ReleaseOrSatisfaction
-      - Restrictions
-      - Subordination
-      - Termination
-      - Transfer
-      - TrustDeedMortgage
-      - Unknown
-    TitleOptions:
+    ComplexityIndicator:
       type: object
       properties:
-        AttorneyTitleOpinion:
+        Result:
+          type: string
+          example: Streamlined
+          enum:
+          - Streamlined
+          - Traditional
+          - Exam
+          - Curative
+          - Search
+        Level:
+          type: integer
+          example: 1
+          minimum: 1
+        RequiresDocPull:
           type: boolean
           example: false
-        TwentyFourMonthChain:
+        RequiresPlatMap:
           type: boolean
           example: true
+    Loan:
+      type: object
+      properties:
+        LoanNumber:
+          type: string
+          example: ABD123
+        LoanAmount:
+          type: number
+          format: double
+          example: 300000
+        CashOutAmount:
+          type: number
+          format: double
+          example: 300000
+        LoanType:
+          type: string
+          enum:
+          - Refinance
     Address:
       type: object
       properties:
@@ -114,6 +94,28 @@ components:
         County:
           type: string
           example: Some County
+    OrderStatus:
+      type: object
+      properties:
+        StatusCode:
+          type: string
+          enum:
+          - Complete
+          - Failed
+          - Processing
+          - Queued
+        Description:
+          type: string
+          example: Order successfully processed
+        Errors:
+          type: array
+          items:
+            type: object
+            properties:
+              Code:
+                type: string
+              Description:
+                type: string
     Report:
       type: object
       properties:
@@ -202,6 +204,57 @@ components:
               AlertDescription:
                 type: string
                 example: The DNA-Clear add-on will be added to workflow results when there is no hit on a consumer name in the do not associate list.
+    DocumentType:
+      type: string
+      enum:
+      - Affidavit
+      - Agreement
+      - AgreementContractForDeed
+      - Assignment
+      - Bond
+      - Certificate
+      - CertifiedCopyOfJudgment
+      - CondominiumDeclarationOf
+      - CourtPaper
+      - DeathCertificate
+      - Deed
+      - DeedTransfer
+      - Easement
+      - FinancingStatementUCC
+      - GovernmentRelated
+      - Judgment
+      - Lien
+      - LisPendens
+      - MarriageRecord
+      - MilitaryDischarge
+      - Modification
+      - Mortgage
+      - Notice
+      - NoticeOfCommencement
+      - NoticeOfContestOfLien
+      - NoticeOfDefault
+      - NoticeOfSale
+      - NoticeOfTrusteeSale
+      - Order
+      - Other
+      - PartialRelease
+      - Plat
+      - PlatMap
+      - PlatRelated
+      - PowerOfAttorney
+      - ProbateDocuments
+      - RecisionOfLisPendensNoticeOfSaleNoticeOfDefault
+      - RescissionOfNoticeOfDefault
+      - RescissionOfNoticeOfTrusteeSale
+      - Rescission
+      - Release
+      - ReleaseOrSatisfaction
+      - Restrictions
+      - Subordination
+      - Termination
+      - Transfer
+      - TrustDeedMortgage
+      - Unknown
     PropertyType:
       type: string
       enum:
@@ -224,68 +277,6 @@ components:
       - Apartment
       - Agriculture
       - Other
-    ComplexityIndicator:
-      type: object
-      properties:
-        Result:
-          type: string
-          example: Streamlined
-          enum:
-          - Streamlined
-          - Traditional
-          - Exam
-          - Curative
-          - Search
-        Level:
-          type: integer
-          example: 1
-          minimum: 1
-        RequiresDocPull:
-          type: boolean
-          example: false
-        RequiresPlatMap:
-          type: boolean
-          example: true
-    Loan:
-      type: object
-      properties:
-        LoanNumber:
-          type: string
-          example: ABD123
-        LoanAmount:
-          type: number
-          format: double
-          example: 300000
-        CashOutAmount:
-          type: number
-          format: double
-          example: 300000
-        LoanType:
-          type: string
-          enum:
-          - Refinance
-    OrderStatus:
-      type: object
-      properties:
-        StatusCode:
-          type: string
-          enum:
-          - Complete
-          - Failed
-          - Processing
-          - Queued
-        Description:
-          type: string
-          example: Order successfully processed
-        Errors:
-          type: array
-          items:
-            type: object
-            properties:
-              Code:
-                type: string
-              Description:
-                type: string
     Consumer:
       type: object
       properties:
@@ -322,3 +313,12 @@ components:
           - Individual
           - Company
           - Trust
+    TitleOptions:
+      type: object
+      properties:
+        AttorneyTitleOpinion:
+          type: boolean
+          example: false
+        TwentyFourMonthChain:
+          type: boolean
+          example: true
