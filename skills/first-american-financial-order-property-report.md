@@ -2,7 +2,7 @@
 name: Order a First American property or ownership report
 description: Use the Digital Gateway order-then-retrieve pattern to request property, ownership, occupancy and FEMA flood data and fetch the resulting report.
 api: openapi/first-american-financial-property-openapi.yml
-operations: [reqPropertyBasic, reqPropertyExtended, reqPropertyOverview, reqListingHistory, reqLocalMarketTrend, reqNearbyActiveListings, reqPropertyHOA, reqPropertyFEMA, retrieveProperty, get, reqOwnership, reqAddress, reqDetails, reqForeclosure, reqPreforeclosure, reqScheduleREO, reqPrevForeclsoure, retreiveOwnership, Order, Report, ReportPDF]
+operations: [reqPropertyBasic, reqPropertyExtended, reqPropertyOverview, reqListingHistory, reqLocalMarketTrend, reqNearbyActiveListings, reqPropertyHOA, reqPropertyFEMA, retrieveProperty, getWatchlistReport, postOwnershipOrderPrime, reqAddress, reqDetails, reqForeclosure, reqPreforeclosure, reqScheduleREO, reqPrevForeclsoure, getOwnershipReportPreviousforeclosure, Order, Report, ReportPDF]
 ---
 
 # Order a First American property or ownership report

@@ -2,7 +2,7 @@
 name: Screen a borrower with First American verification and compliance APIs
 description: Run identity, watchlist, SCRA, NMLS, bankruptcy, liens and 4506-C checks through the Digital Gateway, respecting the FCRA / non-FCRA split.
 api: openapi/first-american-financial-watchlist-openapi.yml
-operations: [post, get, reqssnsearch, reqSsnVerification, reqSsnReport, reqSsnPlus, retrieveIdentity, postOrder, postConsentForm, getTranscript, getTranscriptPDF, getStatus]
+operations: [postNmlsSearchIndividual, getWatchlistReport, reqssnsearch, reqSsnVerification, reqSsnReport, reqSsnPlus, retrieveIdentity, postOrder, postConsentForm, getTranscript, getTranscriptPDF, getStatus]
 ---
 
 # Screen a borrower with First American verification and compliance APIs
