@@ -2,15 +2,15 @@
   "repo": "first-american-financial",
   "feeds": [
     {
-      "source": "https://www.firstam.com/privacy-policy/",
-      "feed_url": "https://www.firstam.com/privacy-policy/",
+      "source": "https://www.firstam.com/news/",
+      "feed_url": "https://www.firstam.com/news/",
       "title": "",
       "saved": 0,
       "method": "none"
     },
     {
-      "source": "https://www.firstam.com/news/",
-      "feed_url": "https://www.firstam.com/news/",
+      "source": "https://www.firstam.com/privacy-policy/",
+      "feed_url": "https://www.firstam.com/privacy-policy/",
       "title": "",
       "saved": 0,
       "method": "none"
@@ -23,7 +23,7 @@
       "method": "none"
     }
   ],
-  "fetched": "2026-10-03T12:30:02Z",
+  "fetched": "2026-10-10T13:15:00Z",
   "post_count": 5,
   "feed_nature": "vendor-blog",
   "feed_nature_basis": "path_blog",
