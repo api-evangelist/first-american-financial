@@ -33,6 +33,64 @@ paths:
         description: Order request
 components:
   schemas:
+    Consumer:
+      type: object
+      properties:
+        IndividualName:
+          type: object
+          properties:
+            First:
+              type: string
+              example: John
+            Middle:
+              type: string
+              example: R
+            Last:
+              type: string
+              example: Doe
+            Suffix:
+              type: string
+              example: IV
+        CompanyName:
+          type: string
+          example: ABC Mortgage
+        MailingAddress:
+          $ref: '#/components/schemas/Address'
+        TaxId:
+          type: string
+          example: '999999990'
+        ConsumerId:
+          type: integer
+          minimum: 1
+          example: 1
+        ConsumerType:
+          type: string
+          enum:
+          - Individual
+          - Company
+          - Trust
+    OrderStatus:
+      type: object
+      properties:
+        StatusCode:
+          type: string
+          enum:
+          - Complete
+          - Failed
+          - Processing
+          - Queued
+        Description:
+          type: string
+          example: Order successfully processed
+        Errors:
+          type: array
+          items:
+            type: object
+            properties:
+              Code:
+                type: string
+              Description:
+                type: string
     Order:
       type: object
       properties:
@@ -110,49 +168,6 @@ components:
           type: string
           enum:
           - Refinance
-    Address:
-      type: object
-      properties:
-        StreetAddress1:
-          type: string
-          example: 1234 Main Street
-        StreetAddress2:
-          type: string
-          example: Unit 5
-        City:
-          type: string
-          example: AnyTown
-        State:
-          type: string
-          example: CA
-        ZipCode:
-          type: string
-          example: 12345
-        County:
-          type: string
-          example: Some County
-    OrderStatus:
-      type: object
-      properties:
-        StatusCode:
-          type: string
-          enum:
-          - Complete
-          - Failed
-          - Processing
-          - Queued
-        Description:
-          type: string
-          example: Order successfully processed
-        Errors:
-          type: array
-          items:
-            type: object
-            properties:
-              Code:
-                type: string
-              Description:
-                type: string
     PropertyType:
       type: string
       enum:
@@ -175,42 +190,27 @@ components:
       - Apartment
       - Agriculture
       - Other
-    Consumer:
+    Address:
       type: object
       properties:
-        IndividualName:
-          type: object
-          properties:
-            First:
-              type: string
-              example: John
-            Middle:
-              type: string
-              example: R
-            Last:
-              type: string
-              example: Doe
-            Suffix:
-              type: string
-              example: IV
-        CompanyName:
+        StreetAddress1:
           type: string
-          example: ABC Mortgage
-        MailingAddress:
-          $ref: '#/components/schemas/Address'
-        TaxId:
+          example: 1234 Main Street
+        StreetAddress2:
           type: string
-          example: '999999990'
-        ConsumerId:
-          type: integer
-          minimum: 1
-          example: 1
-        ConsumerType:
+          example: Unit 5
+        City:
           type: string
-          enum:
-          - Individual
-          - Company
-          - Trust
+          example: AnyTown
+        State:
+          type: string
+          example: CA
+        ZipCode:
+          type: string
+          example: 12345
+        County:
+          type: string
+          example: Some County
     TitleOptions:
       type: object
       properties:

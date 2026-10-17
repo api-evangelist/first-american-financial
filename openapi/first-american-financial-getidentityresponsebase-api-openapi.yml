@@ -51,60 +51,6 @@ paths:
           description: No data found.
 components:
   schemas:
-    DeceasedInfo:
-      type: object
-      properties:
-        Name:
-          $ref: '#/components/schemas/ConsumerName'
-        LastResidency:
-          $ref: '#/components/schemas/ConsumerAddress'
-        DateOfBirth:
-          $ref: '#/components/schemas/ParsedDate'
-        DateOfDeath:
-          $ref: '#/components/schemas/ParsedDate'
-        AgeAtDeath:
-          type: integer
-          example: 72
-        DeathLocation:
-          $ref: '#/components/schemas/ConsumerAddress'
-    FileSummary:
-      type: object
-      properties:
-        FileHitIndicator:
-          type: string
-        FileMatchIndicator:
-          type: string
-        SSNMatchIndicator:
-          type: string
-        InFileSinceDate:
-          $ref: '#/components/schemas/ParsedDate'
-        CreditDataStatus:
-          $ref: '#/components/schemas/CreditDataStatus'
-    Position:
-      type: object
-      properties:
-        Title:
-          type: string
-          example: Engineer
-        Department:
-          type: string
-          example: Tech
-        DateFirstReported:
-          $ref: '#/components/schemas/ParsedDate'
-        DateLastReported:
-          $ref: '#/components/schemas/ParsedDate'
-      xml:
-        name: Position
-    ConsumerStatement:
-      type: object
-      properties:
-        Type:
-          type: string
-          example: regular
-        Text:
-          type: string
-      xml:
-        name: ConsumerStatement
     ConsumerName:
       allOf:
       - $ref: '#/components/schemas/Name'
@@ -128,46 +74,121 @@ components:
             $ref: '#/components/schemas/ParsedDate'
       xml:
         name: Name
-    License:
+    SSNInfo:
       type: object
+      xml:
+        name: SSNInfo
+      properties:
+        SSN:
+          type: string
+          example: 999-99-9990
+          description: Individual's SSN
+        IdentificationType:
+          type: string
+          example: ssn
+          description: Identifies the type of identification returned.
+        AgeObtainedRangeStart:
+          type: integer
+          example: 1980
+          description: Identifies the beginning year of the age range in which the SSN was issued
+        AgeObtainedRangeEnd:
+          type: integer
+          example: 1990
+          description: Identifies the endining year of the age range in which the SSN was issued
+        IssuanceAlertCode:
+          type: string
+          example: '5503'
+        FirstPossibleIssuanceYear:
+          type: string
+          example: 1974
+          description: Year of first issuance of SSN
+        LastPossibleIssuanceYear:
+          type: string
+          example: 1980
+          description: Year of the last issuance of SSN
+        IssuanceExpirationDate:
+          $ref: '#/components/schemas/ParsedDate'
+        IssuanceStatus:
+          type: string
+          example: clear
+        IssuanceYearsCovered:
+          type: integer
+          example: 2
+          description: Specifies the number of years covered by this transaction
+        IssuedStartDate:
+          $ref: '#/components/schemas/ParsedDate'
+        IssuedEndDate:
+          $ref: '#/components/schemas/ParsedDate'
+        StateOfIssuance:
+          type: string
+          example: MO
+          description: State of SSN issuance
+        DateFirstReported:
+          $ref: '#/components/schemas/ParsedDate'
+        DateLastReported:
+          $ref: '#/components/schemas/ParsedDate'
+        Valid:
+          type: string
+    ConsumerStatement:
+      type: object
+      properties:
+        Type:
+          type: string
+          example: regular
+        Text:
+          type: string
+      xml:
+        name: ConsumerStatement
+    DoNotPromote:
+      type: object
+      properties:
+        PromotionIndicator:
+          type: boolean
+          example: true
+        PromotionDateOfExpiration:
+          $ref: '#/components/schemas/ParsedDate'
+    DeceasedInfo:
+      type: object
+      properties:
+        Name:
+          $ref: '#/components/schemas/ConsumerName'
+        LastResidency:
+          $ref: '#/components/schemas/ConsumerAddress'
+        DateOfBirth:
+          $ref: '#/components/schemas/ParsedDate'
+        DateOfDeath:
+          $ref: '#/components/schemas/ParsedDate'
+        AgeAtDeath:
+          type: integer
+          example: 72
+        DeathLocation:
+          $ref: '#/components/schemas/ConsumerAddress'
+    Name:
       required:
-      - State
+      - Last
       properties:
-        LicenseState:
-          example: CA
+        First:
+          example: Mark
           type: string
-          minLength: 0
-          maxLength: 2
-          pattern: '[A-Za-z]+'
-        LicenseNumber:
-          example: ABC1234
+          maxLength: 32
+        Middle:
           type: string
-          minLength: 0
-          maxLength: 21
-          pattern: '[A-Za-z0-9@#\*\+\s]+'
-        ExpirationDate:
-          $ref: '#/components/schemas/ParsedDate'
-        IssuedDate:
-          $ref: '#/components/schemas/ParsedDate'
-    IdentityResponseBase:
+          example: M
+          maxLength: 32
+        Last:
+          type: string
+          example: Marsupial
+          maxLength: 65
+    CreditDataStatus:
       type: object
       properties:
-        RequestorID:
-          example: loannumber1234
-          type: string
-          minLength: 1
-          maxLength: 100
-          description: LoanNumber or TransactionID
-        TransactionID:
-          example: 82d9762b-70c3-4801-bd4b-8ffc8d358f77
-          type: string
-          description: TransactionID can be used to fetch data at later stage
-        PrimaryIdentity:
-          $ref: '#/components/schemas/ConsumerIdentity'
-        Alerts:
-          type: array
-          items:
-            $ref: '#/components/schemas/AlertType'
+        CreditDataSuppressed:
+          type: boolean
+          example: 'true'
+        Freeze:
+          $ref: '#/components/schemas/Freeze'
+        DoNotPromote:
+          $ref: '#/components/schemas/DoNotPromote'
     ConsumerAddress:
       allOf:
       - $ref: '#/components/schemas/Address'
@@ -216,6 +237,19 @@ components:
               wrapped: true
       xml:
         name: Address
+    FileSummary:
+      type: object
+      properties:
+        FileHitIndicator:
+          type: string
+        FileMatchIndicator:
+          type: string
+        SSNMatchIndicator:
+          type: string
+        InFileSinceDate:
+          $ref: '#/components/schemas/ParsedDate'
+        CreditDataStatus:
+          $ref: '#/components/schemas/CreditDataStatus'
     Employer:
       type: object
       properties:
@@ -261,6 +295,125 @@ components:
             wrapped: true
       xml:
         name: Employer
+    AlertType:
+      type: object
+      properties:
+        Code:
+          example: AlertCode
+          type: string
+        Description:
+          example: ALERT - This is an alert description.
+          type: string
+        Status:
+          example: Fired
+          type: string
+        Evidence:
+          description: Collection of evidence fields that caused the alert to fire.
+          type: array
+          items:
+            $ref: '#/components/schemas/EvidenceType'
+    Address:
+      type: object
+      properties:
+        StreetNumber:
+          type: string
+          example: '108'
+        StreetPreDirection:
+          type: string
+          example: W
+        StreetName:
+          type: string
+          example: 2nd St
+        StreetSuffix:
+          type: string
+          example: A
+        StreetPostDirection:
+          type: string
+          example: South
+        UnitDesignation:
+          type: string
+          example: Apt
+        UnitNumber:
+          type: string
+          example: '801'
+        StreetAddress1:
+          type: string
+          example: ''
+        StreetAddress2:
+          type: string
+          example: ''
+        City:
+          type: string
+          example: St. Louis
+        State:
+          type: string
+          example: MO
+        ZipCode:
+          type: string
+          example: '63101'
+        ZipFour:
+          type: string
+          example: '1423'
+        StateCityZip:
+          type: string
+          example: ''
+        FullAddress:
+          type: string
+          example: ''
+    Position:
+      type: object
+      properties:
+        Title:
+          type: string
+          example: Engineer
+        Department:
+          type: string
+          example: Tech
+        DateFirstReported:
+          $ref: '#/components/schemas/ParsedDate'
+        DateLastReported:
+          $ref: '#/components/schemas/ParsedDate'
+      xml:
+        name: Position
+    IdentityResponseBase:
+      type: object
+      properties:
+        RequestorID:
+          example: loannumber1234
+          type: string
+          minLength: 1
+          maxLength: 100
+          description: LoanNumber or TransactionID
+        TransactionID:
+          example: 82d9762b-70c3-4801-bd4b-8ffc8d358f77
+          type: string
+          description: TransactionID can be used to fetch data at later stage
+        PrimaryIdentity:
+          $ref: '#/components/schemas/ConsumerIdentity'
+        Alerts:
+          type: array
+          items:
+            $ref: '#/components/schemas/AlertType'
+    Freeze:
+      type: object
+      properties:
+        FreezeIndicator:
+          type: boolean
+          example: true
+        FreezeType:
+          type: string
+          example: exempt
+    RiskIndicator:
+      type: object
+      properties:
+        RiskCode:
+          type: string
+          example: 1111
+        RiskMessage:
+          type: string
+          example: Risk found
+      xml:
+        name: RiskIndicator
     ConsumerIdentity:
       type: object
       properties:
@@ -331,180 +484,27 @@ components:
             $ref: '#/components/schemas/RiskIndicator'
           xml:
             wrapped: true
-    AlertType:
+    License:
       type: object
-      properties:
-        Code:
-          example: AlertCode
-          type: string
-        Description:
-          example: ALERT - This is an alert description.
-          type: string
-        Status:
-          example: Fired
-          type: string
-        Evidence:
-          description: Collection of evidence fields that caused the alert to fire.
-          type: array
-          items:
-            $ref: '#/components/schemas/EvidenceType'
-    CreditDataStatus:
-      type: object
-      properties:
-        CreditDataSuppressed:
-          type: boolean
-          example: 'true'
-        Freeze:
-          $ref: '#/components/schemas/Freeze'
-        DoNotPromote:
-          $ref: '#/components/schemas/DoNotPromote'
-    DoNotPromote:
-      type: object
-      properties:
-        PromotionIndicator:
-          type: boolean
-          example: true
-        PromotionDateOfExpiration:
-          $ref: '#/components/schemas/ParsedDate'
-    Name:
       required:
-      - Last
+      - State
       properties:
-        First:
-          example: Mark
+        LicenseState:
+          example: CA
           type: string
-          maxLength: 32
-        Middle:
+          minLength: 0
+          maxLength: 2
+          pattern: '[A-Za-z]+'
+        LicenseNumber:
+          example: ABC1234
           type: string
-          example: M
-          maxLength: 32
-        Last:
-          type: string
-          example: Marsupial
-          maxLength: 65
-    SSNInfo:
-      type: object
-      xml:
-        name: SSNInfo
-      properties:
-        SSN:
-          type: string
-          example: 999-99-9990
-          description: Individual's SSN
-        IdentificationType:
-          type: string
-          example: ssn
-          description: Identifies the type of identification returned.
-        AgeObtainedRangeStart:
-          type: integer
-          example: 1980
-          description: Identifies the beginning year of the age range in which the SSN was issued
-        AgeObtainedRangeEnd:
-          type: integer
-          example: 1990
-          description: Identifies the endining year of the age range in which the SSN was issued
-        IssuanceAlertCode:
-          type: string
-          example: '5503'
-        FirstPossibleIssuanceYear:
-          type: string
-          example: 1974
-          description: Year of first issuance of SSN
-        LastPossibleIssuanceYear:
-          type: string
-          example: 1980
-          description: Year of the last issuance of SSN
-        IssuanceExpirationDate:
+          minLength: 0
+          maxLength: 21
+          pattern: '[A-Za-z0-9@#\*\+\s]+'
+        ExpirationDate:
           $ref: '#/components/schemas/ParsedDate'
-        IssuanceStatus:
-          type: string
-          example: clear
-        IssuanceYearsCovered:
-          type: integer
-          example: 2
-          description: Specifies the number of years covered by this transaction
-        IssuedStartDate:
+        IssuedDate:
           $ref: '#/components/schemas/ParsedDate'
-        IssuedEndDate:
-          $ref: '#/components/schemas/ParsedDate'
-        StateOfIssuance:
-          type: string
-          example: MO
-          description: State of SSN issuance
-        DateFirstReported:
-          $ref: '#/components/schemas/ParsedDate'
-        DateLastReported:
-          $ref: '#/components/schemas/ParsedDate'
-        Valid:
-          type: string
-    Address:
-      type: object
-      properties:
-        StreetNumber:
-          type: string
-          example: '108'
-        StreetPreDirection:
-          type: string
-          example: W
-        StreetName:
-          type: string
-          example: 2nd St
-        StreetSuffix:
-          type: string
-          example: A
-        StreetPostDirection:
-          type: string
-          example: South
-        UnitDesignation:
-          type: string
-          example: Apt
-        UnitNumber:
-          type: string
-          example: '801'
-        StreetAddress1:
-          type: string
-          example: ''
-        StreetAddress2:
-          type: string
-          example: ''
-        City:
-          type: string
-          example: St. Louis
-        State:
-          type: string
-          example: MO
-        ZipCode:
-          type: string
-          example: '63101'
-        ZipFour:
-          type: string
-          example: '1423'
-        StateCityZip:
-          type: string
-          example: ''
-        FullAddress:
-          type: string
-          example: ''
-    Freeze:
-      type: object
-      properties:
-        FreezeIndicator:
-          type: boolean
-          example: true
-        FreezeType:
-          type: string
-          example: exempt
-    RiskIndicator:
-      type: object
-      properties:
-        RiskCode:
-          type: string
-          example: 1111
-        RiskMessage:
-          type: string
-          example: Risk found
-      xml:
-        name: RiskIndicator
     ParsedDate:
       type: object
       properties:

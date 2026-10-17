@@ -33,6 +33,42 @@ paths:
           description: Missing/Invalid TransactionID
 components:
   schemas:
+    Consumer:
+      type: object
+      properties:
+        IndividualName:
+          type: object
+          properties:
+            First:
+              type: string
+              example: John
+            Middle:
+              type: string
+              example: R
+            Last:
+              type: string
+              example: Doe
+            Suffix:
+              type: string
+              example: IV
+        CompanyName:
+          type: string
+          example: ABC Mortgage
+        MailingAddress:
+          $ref: '#/components/schemas/Address'
+        TaxId:
+          type: string
+          example: '999999990'
+        ConsumerId:
+          type: integer
+          minimum: 1
+          example: 1
+        ConsumerType:
+          type: string
+          enum:
+          - Individual
+          - Company
+          - Trust
     ComplexityIndicator:
       type: object
       properties:
@@ -55,45 +91,6 @@ components:
         RequiresPlatMap:
           type: boolean
           example: true
-    Loan:
-      type: object
-      properties:
-        LoanNumber:
-          type: string
-          example: ABD123
-        LoanAmount:
-          type: number
-          format: double
-          example: 300000
-        CashOutAmount:
-          type: number
-          format: double
-          example: 300000
-        LoanType:
-          type: string
-          enum:
-          - Refinance
-    Address:
-      type: object
-      properties:
-        StreetAddress1:
-          type: string
-          example: 1234 Main Street
-        StreetAddress2:
-          type: string
-          example: Unit 5
-        City:
-          type: string
-          example: AnyTown
-        State:
-          type: string
-          example: CA
-        ZipCode:
-          type: string
-          example: 12345
-        County:
-          type: string
-          example: Some County
     OrderStatus:
       type: object
       properties:
@@ -204,6 +201,67 @@ components:
               AlertDescription:
                 type: string
                 example: The DNA-Clear add-on will be added to workflow results when there is no hit on a consumer name in the do not associate list.
+    Loan:
+      type: object
+      properties:
+        LoanNumber:
+          type: string
+          example: ABD123
+        LoanAmount:
+          type: number
+          format: double
+          example: 300000
+        CashOutAmount:
+          type: number
+          format: double
+          example: 300000
+        LoanType:
+          type: string
+          enum:
+          - Refinance
+    PropertyType:
+      type: string
+      enum:
+      - SingleFamilyResidential
+      - Condo
+      - Townhouse
+      - Rowhouse
+      - PlannedUnitDevelopment
+      - MultiFamilyResidential24
+      - Duplex
+      - Triplex
+      - Quadraplex
+      - Cabin
+      - VacantLand
+      - MobileHome
+      - Commercial
+      - MultiFamilyResidential
+      - CoOp
+      - Unimproved
+      - Apartment
+      - Agriculture
+      - Other
+    Address:
+      type: object
+      properties:
+        StreetAddress1:
+          type: string
+          example: 1234 Main Street
+        StreetAddress2:
+          type: string
+          example: Unit 5
+        City:
+          type: string
+          example: AnyTown
+        State:
+          type: string
+          example: CA
+        ZipCode:
+          type: string
+          example: 12345
+        County:
+          type: string
+          example: Some County
     DocumentType:
       type: string
       enum:
@@ -255,64 +313,6 @@ components:
       - Transfer
       - TrustDeedMortgage
       - Unknown
-    PropertyType:
-      type: string
-      enum:
-      - SingleFamilyResidential
-      - Condo
-      - Townhouse
-      - Rowhouse
-      - PlannedUnitDevelopment
-      - MultiFamilyResidential24
-      - Duplex
-      - Triplex
-      - Quadraplex
-      - Cabin
-      - VacantLand
-      - MobileHome
-      - Commercial
-      - MultiFamilyResidential
-      - CoOp
-      - Unimproved
-      - Apartment
-      - Agriculture
-      - Other
-    Consumer:
-      type: object
-      properties:
-        IndividualName:
-          type: object
-          properties:
-            First:
-              type: string
-              example: John
-            Middle:
-              type: string
-              example: R
-            Last:
-              type: string
-              example: Doe
-            Suffix:
-              type: string
-              example: IV
-        CompanyName:
-          type: string
-          example: ABC Mortgage
-        MailingAddress:
-          $ref: '#/components/schemas/Address'
-        TaxId:
-          type: string
-          example: '999999990'
-        ConsumerId:
-          type: integer
-          minimum: 1
-          example: 1
-        ConsumerType:
-          type: string
-          enum:
-          - Individual
-          - Company
-          - Trust
     TitleOptions:
       type: object
       properties:

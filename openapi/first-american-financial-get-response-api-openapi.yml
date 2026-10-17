@@ -444,6 +444,127 @@ paths:
     - url: https://api-w2.firstam.io/v1
 components:
   schemas:
+    PhoneNumber:
+      type: object
+      properties:
+        PhoneType:
+          type: string
+        PhoneNumber:
+          type: string
+    Name:
+      type: object
+      properties:
+        Full:
+          type: string
+        First:
+          type: string
+        Middle:
+          type: string
+        LastOrCompanyName:
+          type: string
+        Suffix:
+          type: string
+    BankruptcyRecord:
+      properties:
+        ActionType:
+          type: string
+        AliasType:
+          type: string
+        AssociationCode:
+          type: string
+        AssetsIndicator:
+          type: string
+        Attorney:
+          $ref: '#/components/schemas/Person'
+        CaseNumber:
+          type: string
+        CaseNumberOther:
+          type: string
+        CaseNumberUnique:
+          type: string
+        CaseType:
+          type: string
+        ClosedDate:
+          $ref: '#/components/schemas/ParsedDate'
+        CourtId:
+          type: string
+        CourtName:
+          type: string
+        CourtLocation:
+          type: string
+        CurrentChapter:
+          type: string
+        Defendant:
+          $ref: '#/components/schemas/Person'
+        DefinitionType:
+          type: string
+        DischargeDate:
+          $ref: '#/components/schemas/ParsedDate'
+        FilingDate:
+          $ref: '#/components/schemas/ParsedDate'
+        OriginalFilingDate:
+          $ref: '#/components/schemas/ParsedDate'
+        FilingType:
+          type: string
+        FilerType:
+          type: string
+        IsBankruptcyValid:
+          type: string
+        JudgeInitials:
+          type: string
+        MeetingDate:
+          $ref: '#/components/schemas/ParsedDate'
+        MeetingTime:
+          type: string
+        OriginalChapter:
+          type: string
+        POCDate:
+          $ref: '#/components/schemas/ParsedDate'
+        PreviousChapter:
+          type: string
+        RecordDate:
+          $ref: '#/components/schemas/ParsedDate'
+        RMSId:
+          type: string
+        Trustee:
+          $ref: '#/components/schemas/Person'
+        UpdatedDate:
+          $ref: '#/components/schemas/ParsedDate'
+        AssetsForUnsecured:
+          type: string
+        Assets:
+          type: string
+        JudgeName:
+          type: string
+        Liabilities:
+          type: string
+        ReOpenDate:
+          $ref: '#/components/schemas/ParsedDate'
+    Person:
+      type: object
+      properties:
+        Name:
+          $ref: '#/components/schemas/Name'
+        Address:
+          $ref: '#/components/schemas/Address'
+        SSN:
+          type: string
+        PhoneNumbers:
+          type: array
+          items:
+            $ref: '#/components/schemas/PhoneNumber'
+    ParsedDate:
+      properties:
+        Year:
+          type: number
+        Month:
+          type: number
+        Day:
+          type: number
+    EvidenceType:
+      type: object
+      example:
+        Key: Value
     BankruptcyServiceResponse:
       type: object
       properties:
@@ -548,117 +669,6 @@ components:
           Status: Fired
           Evidence:
           - Key: Value
-    BankruptcyRecord:
-      properties:
-        ActionType:
-          type: string
-        AliasType:
-          type: string
-        AssociationCode:
-          type: string
-        AssetsIndicator:
-          type: string
-        Attorney:
-          $ref: '#/components/schemas/Person'
-        CaseNumber:
-          type: string
-        CaseNumberOther:
-          type: string
-        CaseNumberUnique:
-          type: string
-        CaseType:
-          type: string
-        ClosedDate:
-          $ref: '#/components/schemas/ParsedDate'
-        CourtId:
-          type: string
-        CourtName:
-          type: string
-        CourtLocation:
-          type: string
-        CurrentChapter:
-          type: string
-        Defendant:
-          $ref: '#/components/schemas/Person'
-        DefinitionType:
-          type: string
-        DischargeDate:
-          $ref: '#/components/schemas/ParsedDate'
-        FilingDate:
-          $ref: '#/components/schemas/ParsedDate'
-        OriginalFilingDate:
-          $ref: '#/components/schemas/ParsedDate'
-        FilingType:
-          type: string
-        FilerType:
-          type: string
-        IsBankruptcyValid:
-          type: string
-        JudgeInitials:
-          type: string
-        MeetingDate:
-          $ref: '#/components/schemas/ParsedDate'
-        MeetingTime:
-          type: string
-        OriginalChapter:
-          type: string
-        POCDate:
-          $ref: '#/components/schemas/ParsedDate'
-        PreviousChapter:
-          type: string
-        RecordDate:
-          $ref: '#/components/schemas/ParsedDate'
-        RMSId:
-          type: string
-        Trustee:
-          $ref: '#/components/schemas/Person'
-        UpdatedDate:
-          $ref: '#/components/schemas/ParsedDate'
-        AssetsForUnsecured:
-          type: string
-        Assets:
-          type: string
-        JudgeName:
-          type: string
-        Liabilities:
-          type: string
-        ReOpenDate:
-          $ref: '#/components/schemas/ParsedDate'
-    Name:
-      type: object
-      properties:
-        Full:
-          type: string
-        First:
-          type: string
-        Middle:
-          type: string
-        LastOrCompanyName:
-          type: string
-        Suffix:
-          type: string
-    Address:
-      type: object
-      properties:
-        StreetAddress1:
-          type: string
-          example: 123 Main St
-        City:
-          type: string
-          example: Agoura Hills
-        State:
-          type: string
-          example: CA
-        ZipCode:
-          type: string
-          example: '91301'
-    PhoneNumber:
-      type: object
-      properties:
-        PhoneType:
-          type: string
-        PhoneNumber:
-          type: string
     AlertType:
       type: object
       properties:
@@ -676,42 +686,21 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/EvidenceType'
-    ParsedDate:
-      properties:
-        Year:
-          type: number
-        Month:
-          type: number
-        Day:
-          type: number
-    EvidenceType:
-      type: object
-      example:
-        Key: Value
-    Person:
+    Address:
       type: object
       properties:
-        Name:
-          $ref: '#/components/schemas/Name'
-        Address:
-          $ref: '#/components/schemas/Address'
-        SSN:
+        StreetAddress1:
           type: string
-        PhoneNumbers:
-          type: array
-          items:
-            $ref: '#/components/schemas/PhoneNumber'
-    ServiceResponse:
-      type: object
-      properties:
-        TransactionID:
+          example: 123 Main St
+        City:
           type: string
-        RequestorID:
+          example: Agoura Hills
+        State:
           type: string
-        Error:
+          example: CA
+        ZipCode:
           type: string
-        Result:
-          $ref: '#/components/schemas/Result'
+          example: '91301'
     Result:
       type: object
       properties:
@@ -735,90 +724,17 @@ components:
         Percentile75:
           type: integer
           description: 'Percentile75  '
-    LnJAttribute:
+    ServiceResponse:
+      type: object
       properties:
-        Name:
+        TransactionID:
           type: string
-          example: LnJLienTaxCount
-        Value:
+        RequestorID:
           type: string
-          example: '1'
-      example:
-        Name: LnJLienTaxCount
-        Value: '1'
-    Judgment:
-      properties:
-        Seq:
+        Error:
           type: string
-          example: '1'
-        DateFiled:
-          $ref: '#/components/schemas/ParsedDate_2'
-        JudgmentType:
-          type: string
-          example: Civil Judgment
-        Amount:
-          type: string
-          example: '5000'
-        ReleaseDate:
-          $ref: '#/components/schemas/ParsedDate_2'
-        FilingDescription:
-          type: string
-          example: Released
-        DateLastSeen:
-          $ref: '#/components/schemas/ParsedDate_2'
-        Defendant:
-          type: string
-          example: John Doe
-        Plaintiff:
-          type: string
-          example: ABC Corp
-        FilingNumber:
-          type: string
-          example: 99DJ1687715
-        FilingBook:
-          type: string
-          example: '7688'
-        FilingPage:
-          type: string
-          example: '9789'
-        Eviction:
-          type: string
-          example: N
-        Agency:
-          type: string
-          example: CALIFORNIA SUPERIOR COURT
-        AgencyCounty:
-          type: string
-          example: VENTURA
-        AgencyState:
-          type: string
-          example: CA
-      example:
-        FilingBook: '7688'
-        FilingPage: '9789'
-        FilingNumber: 99DJ1687715
-        Amount: '5000'
-        Plaintiff: ABC Corp
-        JudgmentType: Civil Judgment
-        Agency: CALIFORNIA SUPERIOR COURT
-        ReleaseDate:
-          Month: 1
-          Year: 2017
-          Day: 1
-        AgencyCounty: VENTURA
-        AgencyState: CA
-        DateLastSeen:
-          Month: 1
-          Year: 2017
-          Day: 1
-        FilingDescription: Released
-        Eviction: N
-        Defendant: John Doe
-        Seq: '1'
-        DateFiled:
-          Month: 1
-          Year: 2017
-          Day: 1
+        Result:
+          $ref: '#/components/schemas/Result'
     LiensJudgmentsFCRAServiceResponse:
       type: object
       required:
@@ -955,6 +871,17 @@ components:
           Value: '1'
         - Name: LnJLienTaxCount
           Value: '1'
+    LnJAttribute:
+      properties:
+        Name:
+          type: string
+          example: LnJLienTaxCount
+        Value:
+          type: string
+          example: '1'
+      example:
+        Name: LnJLienTaxCount
+        Value: '1'
     ParsedDate_2:
       properties:
         Year:
@@ -1027,6 +954,167 @@ components:
           Month: 1
           Year: 2017
           Day: 1
+    Judgment:
+      properties:
+        Seq:
+          type: string
+          example: '1'
+        DateFiled:
+          $ref: '#/components/schemas/ParsedDate_2'
+        JudgmentType:
+          type: string
+          example: Civil Judgment
+        Amount:
+          type: string
+          example: '5000'
+        ReleaseDate:
+          $ref: '#/components/schemas/ParsedDate_2'
+        FilingDescription:
+          type: string
+          example: Released
+        DateLastSeen:
+          $ref: '#/components/schemas/ParsedDate_2'
+        Defendant:
+          type: string
+          example: John Doe
+        Plaintiff:
+          type: string
+          example: ABC Corp
+        FilingNumber:
+          type: string
+          example: 99DJ1687715
+        FilingBook:
+          type: string
+          example: '7688'
+        FilingPage:
+          type: string
+          example: '9789'
+        Eviction:
+          type: string
+          example: N
+        Agency:
+          type: string
+          example: CALIFORNIA SUPERIOR COURT
+        AgencyCounty:
+          type: string
+          example: VENTURA
+        AgencyState:
+          type: string
+          example: CA
+      example:
+        FilingBook: '7688'
+        FilingPage: '9789'
+        FilingNumber: 99DJ1687715
+        Amount: '5000'
+        Plaintiff: ABC Corp
+        JudgmentType: Civil Judgment
+        Agency: CALIFORNIA SUPERIOR COURT
+        ReleaseDate:
+          Month: 1
+          Year: 2017
+          Day: 1
+        AgencyCounty: VENTURA
+        AgencyState: CA
+        DateLastSeen:
+          Month: 1
+          Year: 2017
+          Day: 1
+        FilingDescription: Released
+        Eviction: N
+        Defendant: John Doe
+        Seq: '1'
+        DateFiled:
+          Month: 1
+          Year: 2017
+          Day: 1
+    Filing:
+      properties:
+        Number:
+          type: string
+          example: BK131312
+        Type:
+          type: string
+          example: FEDERAL TAX LIEN
+        Date:
+          $ref: '#/components/schemas/ParsedDate_3'
+        OriginalFilingDate:
+          $ref: '#/components/schemas/ParsedDate_3'
+        Book:
+          type: string
+          example: '567657'
+        Page:
+          type: string
+          example: '43545'
+        Agency:
+          type: string
+          example: REGISTER OF DEEDS
+        AgencyCity:
+          type: string
+          example: LOS ANGELES
+        AgencyState:
+          type: string
+          example: CA
+        AgencyCounty:
+          type: string
+          example: LOS ANGELES
+        Status:
+          type: string
+          example: In Progress
+        Description:
+          type: string
+          example: This is a description.
+        Time:
+          type: string
+          example: 01082008
+      example:
+        Date:
+          Month: 1
+          Year: 2017
+          Day: 1
+        Agency: REGISTER OF DEEDS
+        Book: '567657'
+        AgencyCity: LOS ANGELES
+        type: FEDERAL TAX LIEN
+        AgencyState: CA
+        AgencyCounty: LOS ANGELES
+        FilingTime: 01082008
+        Number: BK131312
+        Status: In Progress
+        Description: This is a description.
+        OriginalFilingDate:
+          Month: 1
+          Year: 2017
+          Day: 1
+        Page: '43545'
+    Company:
+      type: object
+      properties:
+        Name:
+          type: string
+          example: ABC Company
+        Address:
+          $ref: '#/components/schemas/Address_2'
+        FEIN:
+          type: string
+          example: '999999990'
+      example:
+        Address:
+          StreetNumber: '123'
+          City: Agoura Hills
+          StreetPostDirection: E
+          StreetAddress1: 123 Main St
+          County: Los Angeles
+          UnitNumber: '110'
+          StreetAddress2: Apt 504
+          ZipFour: '1212'
+          ZipCode: '91301'
+          StreetPreDirection: S
+          StreetName: Main
+          UnitDesignation: APT
+          StreetSuffix: St
+          State: CA
+        Name: ABC Company
+        FEIN: '999999990'
     Name_2:
       type: object
       properties:
@@ -1055,6 +1143,75 @@ components:
         Suffix: Sr.
         First: John
         Full: John C Doe.
+    Record:
+      properties:
+        Amount:
+          type: number
+          example: 0.0
+        FilingJurisdictionName:
+          type: string
+          example: Name
+        FilingStatus:
+          type: string
+          example: Filed
+        CertificateNumber:
+          type: string
+          example: ABC123
+        MultipleDefendant:
+          type: boolean
+        JudgeSatisfiedDate:
+          $ref: '#/components/schemas/ParsedDate_3'
+        JudgeVacatedDate:
+          $ref: '#/components/schemas/ParsedDate_3'
+        ReleaseDate:
+          $ref: '#/components/schemas/ParsedDate_3'
+        Debtors:
+          type: array
+          items:
+            $ref: '#/components/schemas/Party'
+        Creditors:
+          type: array
+          items:
+            $ref: '#/components/schemas/Party'
+        Filings:
+          type: array
+          items:
+            $ref: '#/components/schemas/Filing'
+      example:
+        Amount: 0.0
+        FilingJurisdictionName: CALIFORNIA
+        MultipleDefendant: false
+        Debtors:
+        - Name:
+            Full: JOE K TEST
+            First: JOE
+            Middle: K
+            Last: TEST
+            Prefix: MR
+          SSN: 99911xxxx
+          Addresses:
+          - StreetNumber: '123'
+            StreetName: MAIN
+            StreetSuffix: AVE
+            StreetAddress1: 123 MAIN AVE
+            City: LOS ANGELES
+            State: CA
+            ZipCode: '90001'
+            ZipFour: '1234'
+            County: OAKLAND
+            FullAddress: 123 MAIN AVE LOS ANGELES, CA 90001-1234
+        Filings:
+        - Number: BK40499PG874
+          Type: STATE TAX LIEN
+          OriginalFilingDate:
+            Year: 2008
+            Month: 12
+            Day: 9
+          Book: '40499'
+          Page: '874'
+          Agency: OAKLAND COUNTY REGISTER OF DEEDS
+          AgencyState: CA
+          AgencyCounty: OAKLAND
     LiensJudgmentsServiceResponse:
       type: object
       required:
@@ -1321,65 +1478,79 @@ components:
             Agency: OAKLAND COUNTY REGISTER OF DEEDS
             AgencyState: CA
             AgencyCounty: OAKLAND
-    Filing:
+    Party:
       properties:
-        Number:
+        Name:
+          $ref: '#/components/schemas/Name_2'
+        SSN:
           type: string
-          example: BK131312
-        Type:
-          type: string
-          example: FEDERAL TAX LIEN
-        Date:
-          $ref: '#/components/schemas/ParsedDate_3'
-        OriginalFilingDate:
-          $ref: '#/components/schemas/ParsedDate_3'
-        Book:
-          type: string
-          example: '567657'
-        Page:
-          type: string
-          example: '43545'
-        Agency:
-          type: string
-          example: REGISTER OF DEEDS
-        AgencyCity:
-          type: string
-          example: LOS ANGELES
-        AgencyState:
-          type: string
-          example: CA
-        AgencyCounty:
-          type: string
-          example: LOS ANGELES
-        Status:
-          type: string
-          example: In Progress
-        Description:
-          type: string
-          example: This is a description.
-        Time:
-          type: string
-          example: 01082008
+          example: '999999990'
+        Company:
+          $ref: '#/components/schemas/Company'
+        Addresses:
+          type: array
+          items:
+            $ref: '#/components/schemas/Address_2'
+        Phones:
+          type: array
+          items:
+            $ref: '#/components/schemas/PhoneTimeZone'
       example:
-        Date:
-          Month: 1
-          Year: 2017
-          Day: 1
-        Agency: REGISTER OF DEEDS
-        Book: '567657'
-        AgencyCity: LOS ANGELES
-        type: FEDERAL TAX LIEN
-        AgencyState: CA
-        AgencyCounty: LOS ANGELES
-        FilingTime: 01082008
-        Number: BK131312
-        Status: In Progress
-        Description: This is a description.
-        OriginalFilingDate:
-          Month: 1
-          Year: 2017
-          Day: 1
-        Page: '43545'
+        Addresses:
+        - StreetNumber: '123'
+          City: Agoura Hills
+          StreetPostDirection: E
+          StreetAddress1: 123 Main St
+          County: Los Angeles
+          UnitNumber: '110'
+          StreetAddress2: Apt 504
+          ZipFour: '1212'
+          ZipCode: '91301'
+          StreetPreDirection: S
+          StreetName: Main
+          UnitDesignation: APT
+          StreetSuffix: St
+          State: CA
+        Phones:
+        - TimeZone: PST
+          Phone10: '8058675309'
+          Fax: '8055672341'
+        Name:
+          Full: JOE K TEST
+          First: JOE
+          Middle: K
+          Last: TEST
+          Prefix: MR
+    PhoneTimeZone:
+      properties:
+        Phone10:
+          type: string
+          example: '8058675309'
+        Fax:
+          type: string
+          example: '8055672341'
+        TimeZone:
+          type: string
+          example: PST
+      example:
+        TimeZone: PST
+        Phone10: '8058675309'
+        Fax: '8055672341'
+    ParsedDate_3:
+      properties:
+        Year:
+          type: number
+          example: 2017
+        Month:
+          type: number
+          example: 1
+        Day:
+          type: number
+          example: 1
+      example:
+        Month: 1
+        Year: 2017
+        Day: 1
     Address_2:
       type: object
       properties:
@@ -1440,202 +1611,192 @@ components:
         UnitDesignation: APT
         StreetSuffix: St
         State: CA
-    Record:
+    FEMADisasterRecord:
       properties:
-        Amount:
+        DisasterNumber:
           type: number
-          example: 0.0
-        FilingJurisdictionName:
-          type: string
-          example: Name
-        FilingStatus:
-          type: string
-          example: Filed
-        CertificateNumber:
-          type: string
-          example: ABC123
-        MultipleDefendant:
+        IHProgramDeclared:
           type: boolean
-        JudgeSatisfiedDate:
-          $ref: '#/components/schemas/ParsedDate_3'
-        JudgeVacatedDate:
-          $ref: '#/components/schemas/ParsedDate_3'
-        ReleaseDate:
-          $ref: '#/components/schemas/ParsedDate_3'
-        Debtors:
-          type: array
-          items:
-            $ref: '#/components/schemas/Party'
-        Creditors:
-          type: array
-          items:
-            $ref: '#/components/schemas/Party'
-        Filings:
-          type: array
-          items:
-            $ref: '#/components/schemas/Filing'
-      example:
-        Amount: 0.0
-        FilingJurisdictionName: CALIFORNIA
-        MultipleDefendant: false
-        Debtors:
-        - Name:
-            Full: JOE K TEST
-            First: JOE
-            Middle: K
-            Last: TEST
-            Prefix: MR
-          SSN: 99911xxxx
-          Addresses:
-          - StreetNumber: '123'
-            StreetName: MAIN
-            StreetSuffix: AVE
-            StreetAddress1: 123 MAIN AVE
-            City: LOS ANGELES
-            State: CA
-            ZipCode: '90001'
-            ZipFour: '1234'
-            County: OAKLAND
-            FullAddress: 123 MAIN AVE LOS ANGELES, CA 90001-1234
-        Filings:
-        - Number: BK40499PG874
-          Type: STATE TAX LIEN
-          OriginalFilingDate:
-            Year: 2008
-            Month: 12
-            Day: 9
-          Book: '40499'
-          Page: '874'
-          Agency: OAKLAND COUNTY REGISTER OF DEEDS
-          AgencyState: CA
-          AgencyCounty: OAKLAND
-    ParsedDate_3:
-      properties:
-        Year:
-          type: number
-          example: 2017
-        Month:
-          type: number
-          example: 1
-        Day:
-          type: number
-          example: 1
-      example:
-        Month: 1
-        Year: 2017
-        Day: 1
-    PhoneTimeZone:
-      properties:
-        Phone10:
+        IAProgramDeclared:
+          type: boolean
+        PAProgramDeclared:
+          type: boolean
+        HMProgramDeclared:
+          type: boolean
+        State:
           type: string
-          example: '8058675309'
-        Fax:
+        DeclarationDate:
+          $ref: '#/components/schemas/ParsedDate_4'
+        DisasterType:
           type: string
-          example: '8055672341'
-        TimeZone:
+        IncidentType:
           type: string
-          example: PST
+        Title:
+          type: string
+        IncidentBeginDate:
+          $ref: '#/components/schemas/ParsedDate_4'
+        IncidentEndDate:
+          $ref: '#/components/schemas/ParsedDate_4'
+        DisasterCloseOutDate:
+          type: string
+        PlaceCode:
+          type: number
+        DeclaredCountyArea:
+          type: string
       example:
-        TimeZone: PST
-        Phone10: '8058675309'
-        Fax: '8055672341'
-    Company:
+        DisasterNumber: 217
+        IHProgramDeclared: false
+        IAProgramDeclared: true
+        PAProgramDeclared: true
+        HMProgramDeclared: false
+        State: State
+        DeclarationDate:
+          Year: 1966
+          Month: 4
+          Day: 30
+        DisasterType: DisasterType
+        IncidentType: IncidentType
+        Title: Title
+        IncidentBeginDate:
+          Year: 1966
+          Month: 4
+          Day: 30
+        IncidentEndDate:
+          Year: 1966
+          Month: 4
+          Day: 30
+        DisasterCloseOutDate:
+          Year: 1968
+          Month: 5
+          Day: 23
+        PlaceCode: 99013
+        DeclaredCountyArea: DeclaredCountyArea
+    SchoolTaxDistrict:
       type: object
       properties:
-        Name:
+        Description:
+          example: Description
           type: string
-          example: ABC Company
-        Address:
-          $ref: '#/components/schemas/Address_2'
-        FEIN:
+        Code:
+          example: Code
           type: string
-          example: '999999990'
-      example:
-        Address:
-          StreetNumber: '123'
-          City: Agoura Hills
-          StreetPostDirection: E
-          StreetAddress1: 123 Main St
-          County: Los Angeles
-          UnitNumber: '110'
-          StreetAddress2: Apt 504
-          ZipFour: '1212'
-          ZipCode: '91301'
-          StreetPreDirection: S
-          StreetName: Main
-          UnitDesignation: APT
-          StreetSuffix: St
-          State: CA
-        Name: ABC Company
-        FEIN: '999999990'
-    Party:
+        Value:
+          example: Value
+          type: string
+    ListingDataDefinition:
       properties:
-        Name:
-          $ref: '#/components/schemas/Name_2'
-        SSN:
-          type: string
-          example: '999999990'
-        Company:
-          $ref: '#/components/schemas/Company'
-        Addresses:
+        ListingHistory:
           type: array
           items:
-            $ref: '#/components/schemas/Address_2'
-        Phones:
+            $ref: '#/components/schemas/ListingHistoryDefinition'
+        NearbyActiveListings:
           type: array
           items:
-            $ref: '#/components/schemas/PhoneTimeZone'
-      example:
-        Addresses:
-        - StreetNumber: '123'
-          City: Agoura Hills
-          StreetPostDirection: E
-          StreetAddress1: 123 Main St
-          County: Los Angeles
-          UnitNumber: '110'
-          StreetAddress2: Apt 504
-          ZipFour: '1212'
-          ZipCode: '91301'
-          StreetPreDirection: S
-          StreetName: Main
-          UnitDesignation: APT
-          StreetSuffix: St
-          State: CA
-        Phones:
-        - TimeZone: PST
-          Phone10: '8058675309'
-          Fax: '8055672341'
-        Name:
-          Full: JOE K TEST
-          First: JOE
-          Middle: K
-          Last: TEST
-          Prefix: MR
-    ProductMessage:
-      properties:
-        MessageCode:
-          example: S
-          type: string
-        MessageDescription:
-          example: Complete
-          type: string
-        Reason:
-          example: Reason
-          type: string
-        MatchCode:
-          example: OK
-          type: string
-    ActiveDefault:
+            $ref: '#/components/schemas/ListingHistoryDefinition'
+        LocalMarketTrends:
+          type: array
+          items:
+            $ref: '#/components/schemas/LocalMarketTrendDefinition'
+    NameDefinition:
       type: object
       properties:
-        IsActiveDefault:
-          example: IsActiveDefault
+        Full:
+          example: Full
           type: string
-        LatestStatus:
-          example: LatestStatus
+        First:
+          example: First
           type: string
-        RecordingDate:
-          example: RecordingDate
+        FirstAndMiddleName:
+          example: FirstAndMiddleName
+          type: string
+        LastOrCompanyName:
+          example: LastOrCompanyName
+          type: string
+    PropertyTransactionHistory:
+      type: array
+      items:
+        $ref: '#/components/schemas/Transaction'
+    PropertyOverviewResponse:
+      properties:
+        TransactionID:
+          example: 82d9762b-70c3-4801-bd4b-8ffc8d358f77
+          type: string
+          description: TransactionID can be used to fetch data at later stage.
+        RequestorID:
+          example: RequestorID
+          type: string
+          minLength: 1
+          maxLength: 100
+          description: LoanNumber or TransactionID
+        PropertyDataResponse:
+          $ref: '#/components/schemas/PropertyOverviewResponseDefinition'
+        ListingResponse:
+          $ref: '#/components/schemas/ListingDataDefinition'
+        HOAServiceResponse:
+          $ref: '#/components/schemas/HOAServiceResponseDefinition'
+        FEMAServiceResponse:
+          $ref: '#/components/schemas/FEMAServiceResponse'
+    PropertyLocationData:
+      type: object
+      properties:
+        FIPSStateCountyCode:
+          example: FIPSStateCountyCode
+          type: string
+        RefId:
+          example: RefId
+          type: string
+        County:
+          example: County
+          type: string
+        APN:
+          example: APN
+          type: string
+        OldorAlternateAPN:
+          example: OldorAlternateAPN
+          type: string
+        Address:
+          $ref: '#/components/schemas/Address_3'
+        AddressStandardized:
+          example: AddressStandardized
+          type: string
+        AddressGeoMatchCode:
+          example: AddressGeoMatchCode
+          type: string
+        AddressGeoMatchCodeDesc:
+          example: AddressGeoMatchCodeDesc
+          type: string
+        CarrierRoute:
+          example: CarrierRoute
+          type: string
+        Latitude:
+          example: Latitude
+          type: string
+        Longitude:
+          example: Longitude
+          type: string
+        CensusTract:
+          example: CensusTract
+          type: string
+        Zoning:
+          example: Zoning
+          type: string
+        LandUse:
+          example: LandUse
+          type: string
+        LandUseDesc:
+          example: LandUseDesc
+          type: string
+        LegalDescription:
+          example: LegalDescription
+          type: string
+        ThomasBrosPage:
+          example: ThomasBrosPage
+          type: string
+        ThomasBrosGrid:
+          example: ThomasBrosGrid
+          type: string
+        TimeShare:
+          example: TimeShare
           type: string
     PropertyTaxInformation:
       type: object
@@ -1729,29 +1890,27 @@ components:
         MarketImprovedPercentage:
           example: MarketImprovedPercentage
           type: string
-    FEMAServiceResponse:
-      type: object
+    Contact:
       properties:
-        TransactionID:
+        ContactType:
+          example: ContactType
           type: string
-          description: Unique identifier for the transaction
-        RequestorID:
+        ContactName:
+          example: ContactName
           type: string
         Address:
           $ref: '#/components/schemas/Address_3'
-        Result:
+        Phone:
+          $ref: '#/components/schemas/Phone'
+    TaxExemptionCode:
+      type: object
+      properties:
+        Description:
+          example: TaxDesc1
           type: string
-          enum:
-          - NoDisastersFound
-          - DisastersFound
-        Disasters:
-          type: array
-          items:
-            $ref: '#/components/schemas/FEMADisasterRecord'
-        Alerts:
-          type: array
-          items:
-            $ref: '#/components/schemas/AlertType'
+        Code:
+          example: TaxCode1
+          type: string
     AssesseeContactInformation:
       type: object
       properties:
@@ -1782,77 +1941,124 @@ components:
         AssessorTapeCutDate:
           example: AssessorTapeCutDate
           type: string
-    TaxExemptionCode:
+    LoanTransactionHistory:
+      type: array
+      items:
+        $ref: '#/components/schemas/LoanTransaction'
+    AssessorLegal:
+      properties:
+        BriefDescription:
+          example: BriefDescription
+          type: string
+        FullDescription:
+          example: FullDescription
+          type: string
+        CityMuniTownship:
+          example: CityMuniTownship
+          type: string
+        District:
+          example: District
+          type: string
+        Section:
+          example: Section
+          type: string
+        SecTwnRngMer:
+          example: SecTwnRngMer
+          type: string
+        BlockNumber:
+          example: BlockNumber
+          type: string
+        LotNumber:
+          example: LotNumber
+          type: string
+        LandLot:
+          example: LandLot
+          type: string
+        LotCodeDesc:
+          example: LotCodeDesc
+          type: string
+        SubdivisionCode:
+          example: SubdivisionCode
+          type: string
+        SubdivisonName:
+          example: SubdivisonName
+          type: string
+        TractNumber:
+          example: TractNumber
+          type: string
+        PhaseNumber:
+          example: PhaseNumber
+          type: string
+        Unit:
+          example: Unit
+          type: string
+        RecordersMapRef:
+          example: RecordersMapRef
+          type: string
+    LoanTransaction:
       type: object
       properties:
         Description:
-          example: TaxDesc1
+          example: Description
           type: string
         Code:
-          example: TaxCode1
+          example: Code
           type: string
-    PropertyLocationData:
+        Value:
+          example: Value
+          type: string
+    PropertyValueRange:
       type: object
       properties:
-        FIPSStateCountyCode:
-          example: FIPSStateCountyCode
+        EstimatedRangeMin:
+          example: EstimatedRangeMin
           type: string
-        RefId:
-          example: RefId
+        EstimatedRangeMax:
+          example: EstimatedRangeMax
           type: string
-        County:
-          example: County
+        ConfidenceScore:
+          example: ConfidenceScore
           type: string
-        APN:
-          example: APN
+        ConfidenceLevel:
+          example: ConfidenceLevel
           type: string
-        OldorAlternateAPN:
-          example: OldorAlternateAPN
+        NeighborhoodAverage:
+          example: NeighborhoodAverage
           type: string
-        Address:
-          $ref: '#/components/schemas/Address_3'
-        AddressStandardized:
-          example: AddressStandardized
+        NeighborhoodMin:
+          example: NeighborhoodMin
           type: string
-        AddressGeoMatchCode:
-          example: AddressGeoMatchCode
+        NeighborhoodMax:
+          example: NeighborhoodMax
           type: string
-        AddressGeoMatchCodeDesc:
-          example: AddressGeoMatchCodeDesc
+    HoaInfoDefinition:
+      properties:
+        Name:
+          example: Name
           type: string
-        CarrierRoute:
-          example: CarrierRoute
+        HoaType:
+          example: Hoatype
           type: string
-        Latitude:
-          example: Latitude
+        City:
+          example: City
           type: string
-        Longitude:
-          example: Longitude
+        Amount:
+          example: Amount
           type: string
-        CensusTract:
-          example: CensusTract
+        MinAmount:
+          example: MinAmount
           type: string
-        Zoning:
-          example: Zoning
+        MaxAmount:
+          example: MaxAmount
           type: string
-        LandUse:
-          example: LandUse
+        FeeFrequency:
+          example: FeeFrequency
           type: string
-        LandUseDesc:
-          example: LandUseDesc
+        FeeType:
+          example: FeeType
           type: string
-        LegalDescription:
-          example: LegalDescription
-          type: string
-        ThomasBrosPage:
-          example: ThomasBrosPage
-          type: string
-        ThomasBrosGrid:
-          example: ThomasBrosGrid
-          type: string
-        TimeShare:
-          example: TimeShare
-          type: string
+        Contacts:
+          $ref: '#/components/schemas/Contact'
     PropertyCharacteristics:
       type: object
       properties:
@@ -2109,319 +2315,29 @@ components:
         AssessorParcelComments:
           example: AssessorParcelComments
           type: string
-    LoanTransactionHistory:
-      type: array
-      items:
-        $ref: '#/components/schemas/LoanTransaction'
-    ActiveForeclosure:
+    FEMAServiceResponse:
       type: object
       properties:
-        ForeclosureType:
-          example: ForeclosureType
+        TransactionID:
           type: string
-        Count:
-          example: Count
-          type: string
-    ListingDataDefinition:
-      properties:
-        ListingHistory:
-          type: array
-          items:
-            $ref: '#/components/schemas/ListingHistoryDefinition'
-        NearbyActiveListings:
-          type: array
-          items:
-            $ref: '#/components/schemas/ListingHistoryDefinition'
-        LocalMarketTrends:
-          type: array
-          items:
-            $ref: '#/components/schemas/LocalMarketTrendDefinition'
-    Contact:
-      properties:
-        ContactType:
-          example: ContactType
-          type: string
-        ContactName:
-          example: ContactName
+          description: Unique identifier for the transaction
+        RequestorID:
           type: string
         Address:
           $ref: '#/components/schemas/Address_3'
-        Phone:
-          $ref: '#/components/schemas/Phone'
-    HoaInfoDefinition:
-      properties:
-        Name:
-          example: Name
+        Result:
           type: string
-        HoaType:
-          example: Hoatype
-          type: string
-        City:
-          example: City
-          type: string
-        Amount:
-          example: Amount
-          type: string
-        MinAmount:
-          example: MinAmount
-          type: string
-        MaxAmount:
-          example: MaxAmount
-          type: string
-        FeeFrequency:
-          example: FeeFrequency
-          type: string
-        FeeType:
-          example: FeeType
-          type: string
-        Contacts:
-          $ref: '#/components/schemas/Contact'
-    PropertyOverviewResponse:
-      properties:
-        TransactionID:
-          example: 82d9762b-70c3-4801-bd4b-8ffc8d358f77
-          type: string
-          description: TransactionID can be used to fetch data at later stage.
-        RequestorID:
-          example: RequestorID
-          type: string
-          minLength: 1
-          maxLength: 100
-          description: LoanNumber or TransactionID
-        PropertyDataResponse:
-          $ref: '#/components/schemas/PropertyOverviewResponseDefinition'
-        ListingResponse:
-          $ref: '#/components/schemas/ListingDataDefinition'
-        HOAServiceResponse:
-          $ref: '#/components/schemas/HOAServiceResponseDefinition'
-        FEMAServiceResponse:
-          $ref: '#/components/schemas/FEMAServiceResponse'
-    ListingHistoryDefinition:
-      type: object
-      properties:
-        ListingID:
-          example: ListingID
-          type: string
-        ListingDate:
-          example: ListingDate
-          type: string
-        Status:
-          example: Status
-          type: string
-        Price:
-          example: Price
-          type: string
-        SoldPrice:
-          example: SoldPrice
-          type: string
-        SoldDate:
-          example: SoldDate
-          type: string
-        PricePerSqFt:
-          example: PricePerSqFt
-          type: string
-        ResidenceType:
-          example: ResidenceType
-          type: string
-        PropertySubType:
-          example: PropertySubType
-          type: string
-        Beds:
-          example: Beds
-          type: string
-        Baths:
-          example: Baths
-          type: string
-        ResidenceSqFt:
-          example: ResidenceSqFt
-          type: string
-        LotSqFt:
-          example: LotSqFt
-          type: string
-        LotFeatures:
-          example: LotFeatures
-          type: string
-        YearBuilt:
-          example: YearBuilt
-          type: string
-        DaysOnMarket:
-          example: DaysOnMarket
-          type: string
-        Address:
-          $ref: '#/components/schemas/Address_3'
-        Latitude:
-          example: Latitude
-          type: string
-        Longitude:
-          example: Longitude
-          type: string
-        APN:
-          example: APN
-          type: string
-        Style:
-          example: Style
-          type: string
-        NumberOfStories:
-          example: NumberOfStories
-          type: string
-        SchoolDistrict:
-          example: SchoolDistrict
-          type: string
-        ElementarySchool:
-          example: ElementarySchool
-          type: string
-        MiddleSchool:
-          example: MiddleSchool
-          type: string
-        HighSchool:
-          example: HighSchool
-          type: string
-        FireplaceFeatures:
-          example: FireplaceFeatures
-          type: string
-        HeatingFeatures:
-          example: HeatingFeatures
-          type: string
-        Roofing:
-          example: Roofing
-          type: string
-        Topography:
-          example: Topography
-          type: string
-        Subdivision:
-          example: Subdivision
-          type: string
-        ParkingFeatures:
-          example: ParkingFeatures
-          type: string
-        PoolFeatures:
-          example: PoolFeatures
-          type: string
-        WaterFrontFeatures:
-          example: WaterFrontFeatures
-          type: string
-        AirConditioners:
-          example: AirConditioners
-          type: string
-        View:
-          example: View
-          type: string
-        Appliances:
-          example: Appliances
-          type: string
-        Water:
-          example: Water
-          type: string
-        WaterAccess:
-          example: WaterAccess
-          type: string
-        MD_CensusTract:
-          example: MD_CensusTract
-          type: string
-        IsCurrent:
-          example: IsCurrent
-          type: string
-        Distance:
-          example: Distance
-          type: string
-        PricePerSqft:
-          example: PricePerSqft
-          type: string
-    PropertyOverviewResponseDefinition:
-      properties:
-        StatusCode:
-          example: Success
-          type: string
-        ProductMessage:
-          $ref: '#/components/schemas/ProductMessage'
-        PropertyLocationData:
-          $ref: '#/components/schemas/PropertyLocationData'
-        Locations:
+          enum:
+          - NoDisastersFound
+          - DisastersFound
+        Disasters:
           type: array
           items:
-            $ref: '#/components/schemas/PropertyLocationData'
-        PropertyTaxInformation:
-          $ref: '#/components/schemas/PropertyTaxInformation'
-        PropertyOwnerInformation:
-          $ref: '#/components/schemas/PropertyOwnerInformation'
-        AssesseeContactInformation:
-          $ref: '#/components/schemas/AssesseeContactInformation'
-        PropertyCharacteristics:
-          $ref: '#/components/schemas/PropertyCharacteristics'
-        AssessorLegal:
-          $ref: '#/components/schemas/AssessorLegal'
-        PropertyTransactionHistory:
-          $ref: '#/components/schemas/PropertyTransactionHistory'
-        LoanTransactionHistory:
-          $ref: '#/components/schemas/LoanTransactionHistory'
-        NearbyComparableSales:
+            $ref: '#/components/schemas/FEMADisasterRecord'
+        Alerts:
           type: array
           items:
-            $ref: '#/components/schemas/ComparableSale'
-        AVMInformation:
-          $ref: '#/components/schemas/AVMInformation'
-        PropertyValueRange:
-          $ref: '#/components/schemas/PropertyValueRange'
-        ActiveDefault:
-          $ref: '#/components/schemas/ActiveDefault'
-        ActiveForeclosuresByZip:
-          type: array
-          items:
-            $ref: '#/components/schemas/ActiveForeclosureByZip'
-    HOAServiceResponseDefinition:
-      properties:
-        TransactionID:
-          example: 82d9762b-70c3-4801-bd4b-8ffc8d358f77
-          type: string
-          description: TransactionID can be used to fetch data at later stage.
-        RequestorID:
-          example: RequestorID
-          type: string
-          minLength: 1
-          maxLength: 100
-          description: LoanNumber or TransactionID
-        HoaInfo:
-          $ref: '#/components/schemas/HoaInfoDefinition'
-    PropertyValueRange:
-      type: object
-      properties:
-        EstimatedRangeMin:
-          example: EstimatedRangeMin
-          type: string
-        EstimatedRangeMax:
-          example: EstimatedRangeMax
-          type: string
-        ConfidenceScore:
-          example: ConfidenceScore
-          type: string
-        ConfidenceLevel:
-          example: ConfidenceLevel
-          type: string
-        NeighborhoodAverage:
-          example: NeighborhoodAverage
-          type: string
-        NeighborhoodMin:
-          example: NeighborhoodMin
-          type: string
-        NeighborhoodMax:
-          example: NeighborhoodMax
-          type: string
-    SchoolTaxDistrict:
-      type: object
-      properties:
-        Description:
-          example: Description
-          type: string
-        Code:
-          example: Code
-          type: string
-        Value:
-          example: Value
-          type: string
-    PropertyTransactionHistory:
-      type: array
-      items:
-        $ref: '#/components/schemas/Transaction'
+            $ref: '#/components/schemas/AlertType'
     LocalMarketTrendDefinition:
       type: object
       properties:
@@ -2900,6 +2816,219 @@ components:
           type: string
         ActiveDefault:
           $ref: '#/components/schemas/ActiveDefault'
+    EntityInfo:
+      type: object
+      properties:
+        EntityCodeDesc:
+          example: EntityCodeDesc
+          type: string
+        EntityCode:
+          example: EntityCode
+          type: string
+        Name:
+          $ref: '#/components/schemas/NameDefinition'
+    Address_3:
+      type: object
+      required:
+      - StreetAddress1
+      - City
+      - State
+      - Zip5
+      properties:
+        StreetNumber:
+          example: StreetNumber
+          type: string
+        StreetPreDirection:
+          example: StreetPreDirection
+          type: string
+        StreetName:
+          example: StreetName
+          type: string
+        StreetSuffix:
+          example: StreetSuffix
+          type: string
+        StreetPostDirection:
+          example: StreetPostDirection
+          type: string
+        UnitDesignation:
+          example: UnitDesignation
+          type: string
+        UnitNumber:
+          example: UnitNumber
+          type: string
+        StreetAddress1:
+          example: StreetAddress1
+          type: string
+        StreetAddress2:
+          example: StreetAddress2
+          type: string
+        City:
+          example: City
+          type: string
+        State:
+          example: State
+          type: string
+        ZipCode:
+          example: ZipCode
+          type: string
+        ZipFour:
+          example: ZipFour
+          type: string
+        County:
+          example: County
+          type: string
+        PostalCode:
+          example: PostalCode
+          type: string
+        StateCityZip:
+          example: StateCityZip
+          type: string
+        Latitude:
+          example: Latitude
+          type: string
+        Longitude:
+          example: Longitude
+          type: string
+        APN:
+          example: APN
+          type: string
+    PropertyOwnerInformation:
+      type: object
+      properties:
+        OwnerNames:
+          example: OwnerNames
+          type: string
+        OwnerName1:
+          example: OwnerName1
+          type: string
+        OwnerName2:
+          example: OwnerName2
+          type: string
+        OwnerName3:
+          example: OwnerName3
+          type: string
+        OwnerName4:
+          example: OwnerName4
+          type: string
+        AdditionalBuyerNameCount:
+          example: AdditionalBuyerNameCount
+          type: string
+        Buyer1IDCode:
+          example: Buyer1IDCode
+          type: string
+        Buyer1IDCodeDesc:
+          example: Buyer1IDCodeDesc
+          type: string
+        Buyer2IDCode:
+          example: Buyer2IDCode
+          type: string
+        Buyer2IDCodeDesc:
+          example: Buyer2IDCodeDesc
+          type: string
+        Vesting:
+          example: Vesting
+          type: string
+        VestingCodeDesc:
+          example: VestingCodeDesc
+          type: string
+        CurrentOwnerAsOf:
+          example: CurrentOwnerAsOf
+          type: string
+        OwnerOccupiedFlag:
+          example: OwnerOccupiedFlag
+          type: string
+        MailingCareOfName:
+          example: MailingCareOfName
+          type: string
+        MailingAddress:
+          $ref: '#/components/schemas/Address_3'
+        MailingCarrierRoute:
+          example: MailingCarrierRoute
+          type: string
+        MailingAddressStandardized:
+          example: MailingAddressStandardized
+          type: string
+        PhoneNumber:
+          example: PhoneNumber
+          type: string
+        YearsOwned:
+          example: YearsOwned
+          type: string
+        AssessorThroughDate:
+          example: AssessorThroughDate
+          type: string
+    Phone:
+      properties:
+        PhoneType:
+          example: PhoneType
+          type: string
+        PhoneNumber:
+          example: PhoneNumber
+          type: string
+    PropertyOverviewResponseDefinition:
+      properties:
+        StatusCode:
+          example: Success
+          type: string
+        ProductMessage:
+          $ref: '#/components/schemas/ProductMessage'
+        PropertyLocationData:
+          $ref: '#/components/schemas/PropertyLocationData'
+        Locations:
+          type: array
+          items:
+            $ref: '#/components/schemas/PropertyLocationData'
+        PropertyTaxInformation:
+          $ref: '#/components/schemas/PropertyTaxInformation'
+        PropertyOwnerInformation:
+          $ref: '#/components/schemas/PropertyOwnerInformation'
+        AssesseeContactInformation:
+          $ref: '#/components/schemas/AssesseeContactInformation'
+        PropertyCharacteristics:
+          $ref: '#/components/schemas/PropertyCharacteristics'
+        AssessorLegal:
+          $ref: '#/components/schemas/AssessorLegal'
+        PropertyTransactionHistory:
+          $ref: '#/components/schemas/PropertyTransactionHistory'
+        LoanTransactionHistory:
+          $ref: '#/components/schemas/LoanTransactionHistory'
+        NearbyComparableSales:
+          type: array
+          items:
+            $ref: '#/components/schemas/ComparableSale'
+        AVMInformation:
+          $ref: '#/components/schemas/AVMInformation'
+        PropertyValueRange:
+          $ref: '#/components/schemas/PropertyValueRange'
+        ActiveDefault:
+          $ref: '#/components/schemas/ActiveDefault'
+        ActiveForeclosuresByZip:
+          type: array
+          items:
+            $ref: '#/components/schemas/ActiveForeclosureByZip'
+    ActiveForeclosure:
+      type: object
+      properties:
+        ForeclosureType:
+          example: ForeclosureType
+          type: string
+        Count:
+          example: Count
+          type: string
+    HOAServiceResponseDefinition:
+      properties:
+        TransactionID:
+          example: 82d9762b-70c3-4801-bd4b-8ffc8d358f77
+          type: string
+          description: TransactionID can be used to fetch data at later stage.
+        RequestorID:
+          example: RequestorID
+          type: string
+          minLength: 1
+          maxLength: 100
+          description: LoanNumber or TransactionID
+        HoaInfo:
+          $ref: '#/components/schemas/HoaInfoDefinition'
     ActiveForeclosureByZip:
       type: object
       properties:
@@ -2910,90 +3039,6 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/ActiveForeclosure'
-    FEMADisasterRecord:
-      properties:
-        DisasterNumber:
-          type: number
-        IHProgramDeclared:
-          type: boolean
-        IAProgramDeclared:
-          type: boolean
-        PAProgramDeclared:
-          type: boolean
-        HMProgramDeclared:
-          type: boolean
-        State:
-          type: string
-        DeclarationDate:
-          $ref: '#/components/schemas/ParsedDate_4'
-        DisasterType:
-          type: string
-        IncidentType:
-          type: string
-        Title:
-          type: string
-        IncidentBeginDate:
-          $ref: '#/components/schemas/ParsedDate_4'
-        IncidentEndDate:
-          $ref: '#/components/schemas/ParsedDate_4'
-        DisasterCloseOutDate:
-          type: string
-        PlaceCode:
-          type: number
-        DeclaredCountyArea:
-          type: string
-      example:
-        DisasterNumber: 217
-        IHProgramDeclared: false
-        IAProgramDeclared: true
-        PAProgramDeclared: true
-        HMProgramDeclared: false
-        State: State
-        DeclarationDate:
-          Year: 1966
-          Month: 4
-          Day: 30
-        DisasterType: DisasterType
-        IncidentType: IncidentType
-        Title: Title
-        IncidentBeginDate:
-          Year: 1966
-          Month: 4
-          Day: 30
-        IncidentEndDate:
-          Year: 1966
-          Month: 4
-          Day: 30
-        DisasterCloseOutDate:
-          Year: 1968
-          Month: 5
-          Day: 23
-        PlaceCode: 99013
-        DeclaredCountyArea: DeclaredCountyArea
-    AVMInformation:
-      type: object
-      properties:
-        AVMType:
-          example: AVMType
-          type: string
-        AVMLow:
-          example: AVMLow
-          type: string
-        ConfiAVMHigh:
-          example: ConfiAVMHigh
-          type: string
-        AVMValue:
-          example: AVMValue
-          type: string
-        AVMConfidenceDescr:
-          example: AVMConfidenceDescr
-          type: string
-        AVMConfScore:
-          example: AVMConfScore
-          type: string
-        AVMFSD:
-          example: AVMFSD
-          type: string
     Building:
       type: object
       properties:
@@ -3006,40 +3051,43 @@ components:
         Value:
           example: Value
           type: string
-    LoanTransaction:
+    ParsedDate_4:
+      properties:
+        Year:
+          type: number
+        Month:
+          type: number
+        Day:
+          type: number
+      example:
+        Month: 1
+        Year: 2017
+        Day: 1
+    ActiveDefault:
       type: object
       properties:
-        Description:
-          example: Description
+        IsActiveDefault:
+          example: IsActiveDefault
           type: string
-        Code:
-          example: Code
+        LatestStatus:
+          example: LatestStatus
           type: string
-        Value:
-          example: Value
+        RecordingDate:
+          example: RecordingDate
           type: string
-    Phone:
+    ProductMessage:
       properties:
-        PhoneType:
-          example: PhoneType
+        MessageCode:
+          example: S
           type: string
-        PhoneNumber:
-          example: PhoneNumber
+        MessageDescription:
+          example: Complete
           type: string
-    NameDefinition:
-      type: object
-      properties:
-        Full:
-          example: Full
+        Reason:
+          example: Reason
           type: string
-        First:
-          example: First
-          type: string
-        FirstAndMiddleName:
-          example: FirstAndMiddleName
-          type: string
-        LastOrCompanyName:
-          example: LastOrCompanyName
+        MatchCode:
+          example: OK
           type: string
     Transaction:
       type: object
@@ -3686,112 +3734,59 @@ components:
           type: string
         BorrowerMailingAddress:
           $ref: '#/components/schemas/Address_3'
-    AssessorLegal:
-      properties:
-        BriefDescription:
-          example: BriefDescription
-          type: string
-        FullDescription:
-          example: FullDescription
-          type: string
-        CityMuniTownship:
-          example: CityMuniTownship
-          type: string
-        District:
-          example: District
-          type: string
-        Section:
-          example: Section
-          type: string
-        SecTwnRngMer:
-          example: SecTwnRngMer
-          type: string
-        BlockNumber:
-          example: BlockNumber
-          type: string
-        LotNumber:
-          example: LotNumber
-          type: string
-        LandLot:
-          example: LandLot
-          type: string
-        LotCodeDesc:
-          example: LotCodeDesc
-          type: string
-        SubdivisionCode:
-          example: SubdivisionCode
-          type: string
-        SubdivisonName:
-          example: SubdivisonName
-          type: string
-        TractNumber:
-          example: TractNumber
-          type: string
-        PhaseNumber:
-          example: PhaseNumber
-          type: string
-        Unit:
-          example: Unit
-          type: string
-        RecordersMapRef:
-          example: RecordersMapRef
-          type: string
-    Address_3:
+    ListingHistoryDefinition:
       type: object
-      required:
-      - StreetAddress1
-      - City
-      - State
-      - Zip5
       properties:
-        StreetNumber:
-          example: StreetNumber
+        ListingID:
+          example: ListingID
           type: string
-        StreetPreDirection:
-          example: StreetPreDirection
+        ListingDate:
+          example: ListingDate
           type: string
-        StreetName:
-          example: StreetName
+        Status:
+          example: Status
           type: string
-        StreetSuffix:
-          example: StreetSuffix
+        Price:
+          example: Price
           type: string
-        StreetPostDirection:
-          example: StreetPostDirection
+        SoldPrice:
+          example: SoldPrice
           type: string
-        UnitDesignation:
-          example: UnitDesignation
+        SoldDate:
+          example: SoldDate
           type: string
-        UnitNumber:
-          example: UnitNumber
+        PricePerSqFt:
+          example: PricePerSqFt
           type: string
-        StreetAddress1:
-          example: StreetAddress1
+        ResidenceType:
+          example: ResidenceType
           type: string
-        StreetAddress2:
-          example: StreetAddress2
+        PropertySubType:
+          example: PropertySubType
           type: string
-        City:
-          example: City
+        Beds:
+          example: Beds
           type: string
-        State:
-          example: State
+        Baths:
+          example: Baths
           type: string
-        ZipCode:
-          example: ZipCode
+        ResidenceSqFt:
+          example: ResidenceSqFt
           type: string
-        ZipFour:
-          example: ZipFour
+        LotSqFt:
+          example: LotSqFt
           type: string
-        County:
-          example: County
+        LotFeatures:
+          example: LotFeatures
           type: string
-        PostalCode:
-          example: PostalCode
+        YearBuilt:
+          example: YearBuilt
           type: string
-        StateCityZip:
-          example: StateCityZip
+        DaysOnMarket:
+          example: DaysOnMarket
           type: string
+        Address:
+          $ref: '#/components/schemas/Address_3'
         Latitude:
           example: Latitude
           type: string
@@ -3801,94 +3796,99 @@ components:
         APN:
           example: APN
           type: string
-    PropertyOwnerInformation:
+        Style:
+          example: Style
+          type: string
+        NumberOfStories:
+          example: NumberOfStories
+          type: string
+        SchoolDistrict:
+          example: SchoolDistrict
+          type: string
+        ElementarySchool:
+          example: ElementarySchool
+          type: string
+        MiddleSchool:
+          example: MiddleSchool
+          type: string
+        HighSchool:
+          example: HighSchool
+          type: string
+        FireplaceFeatures:
+          example: FireplaceFeatures
+          type: string
+        HeatingFeatures:
+          example: HeatingFeatures
+          type: string
+        Roofing:
+          example: Roofing
+          type: string
+        Topography:
+          example: Topography
+          type: string
+        Subdivision:
+          example: Subdivision
+          type: string
+        ParkingFeatures:
+          example: ParkingFeatures
+          type: string
+        PoolFeatures:
+          example: PoolFeatures
+          type: string
+        WaterFrontFeatures:
+          example: WaterFrontFeatures
+          type: string
+        AirConditioners:
+          example: AirConditioners
+          type: string
+        View:
+          example: View
+          type: string
+        Appliances:
+          example: Appliances
+          type: string
+        Water:
+          example: Water
+          type: string
+        WaterAccess:
+          example: WaterAccess
+          type: string
+        MD_CensusTract:
+          example: MD_CensusTract
+          type: string
+        IsCurrent:
+          example: IsCurrent
+          type: string
+        Distance:
+          example: Distance
+          type: string
+        PricePerSqft:
+          example: PricePerSqft
+          type: string
+    AVMInformation:
       type: object
       properties:
-        OwnerNames:
-          example: OwnerNames
+        AVMType:
+          example: AVMType
           type: string
-        OwnerName1:
-          example: OwnerName1
+        AVMLow:
+          example: AVMLow
           type: string
-        OwnerName2:
-          example: OwnerName2
+        ConfiAVMHigh:
+          example: ConfiAVMHigh
           type: string
-        OwnerName3:
-          example: OwnerName3
+        AVMValue:
+          example: AVMValue
           type: string
-        OwnerName4:
-          example: OwnerName4
+        AVMConfidenceDescr:
+          example: AVMConfidenceDescr
           type: string
-        AdditionalBuyerNameCount:
-          example: AdditionalBuyerNameCount
+        AVMConfScore:
+          example: AVMConfScore
           type: string
-        Buyer1IDCode:
-          example: Buyer1IDCode
+        AVMFSD:
+          example: AVMFSD
           type: string
-        Buyer1IDCodeDesc:
-          example: Buyer1IDCodeDesc
-          type: string
-        Buyer2IDCode:
-          example: Buyer2IDCode
-          type: string
-        Buyer2IDCodeDesc:
-          example: Buyer2IDCodeDesc
-          type: string
-        Vesting:
-          example: Vesting
-          type: string
-        VestingCodeDesc:
-          example: VestingCodeDesc
-          type: string
-        CurrentOwnerAsOf:
-          example: CurrentOwnerAsOf
-          type: string
-        OwnerOccupiedFlag:
-          example: OwnerOccupiedFlag
-          type: string
-        MailingCareOfName:
-          example: MailingCareOfName
-          type: string
-        MailingAddress:
-          $ref: '#/components/schemas/Address_3'
-        MailingCarrierRoute:
-          example: MailingCarrierRoute
-          type: string
-        MailingAddressStandardized:
-          example: MailingAddressStandardized
-          type: string
-        PhoneNumber:
-          example: PhoneNumber
-          type: string
-        YearsOwned:
-          example: YearsOwned
-          type: string
-        AssessorThroughDate:
-          example: AssessorThroughDate
-          type: string
-    ParsedDate_4:
-      properties:
-        Year:
-          type: number
-        Month:
-          type: number
-        Day:
-          type: number
-      example:
-        Month: 1
-        Year: 2017
-        Day: 1
-    EntityInfo:
-      type: object
-      properties:
-        EntityCodeDesc:
-          example: EntityCodeDesc
-          type: string
-        EntityCode:
-          example: EntityCode
-          type: string
-        Name:
-          $ref: '#/components/schemas/NameDefinition'
     ServiceResponse_2:
       type: object
       properties:
@@ -5060,6 +5060,13 @@ components:
                 default: 0
                 examples:
                 - 0
+    AffiliationResponse:
+      type: object
+      properties:
+        Name:
+          type: string
+        Description:
+          type: string
     ServiceResponse_3:
       type: object
       properties:
@@ -5075,13 +5082,6 @@ components:
           type: boolean
         Affiliation:
           $ref: '#/components/schemas/AffiliationResponse'
-    AffiliationResponse:
-      type: object
-      properties:
-        Name:
-          type: string
-        Description:
-          type: string
     ErrorResponse:
       type: object
       properties:
@@ -5089,6 +5089,33 @@ components:
           type: string
         Message:
           type: string
+    NFPD:
+      type: object
+      properties:
+        ConfidenceScore:
+          type: integer
+        EntityType:
+          type: string
+        Name:
+          $ref: '#/components/schemas/Name_3'
+        CompanyName:
+          type: string
+        Title:
+          type: string
+        Address:
+          $ref: '#/components/schemas/Address_4'
+        SSN:
+          type: string
+        RefDate:
+          type: string
+        Document:
+          type: string
+        Source:
+          type: string
+        Party:
+          $ref: '#/components/schemas/NFPDParty'
+        Incident:
+          $ref: '#/components/schemas/NFPDIncident'
     NFPDIncident:
       type: object
       properties:
@@ -5124,6 +5151,45 @@ components:
           type: string
         IncidentText:
           type: string
+    HUDEPLS:
+      type: object
+      properties:
+        ConfidenceScore:
+          type: integer
+        EntityType:
+          type: string
+        Name:
+          $ref: '#/components/schemas/Name_3'
+        Address:
+          $ref: '#/components/schemas/Address_4'
+        DUNS:
+          type: string
+        ExclusionProgram:
+          type: string
+        ExcludingAgency:
+          type: string
+        CTCode:
+          type: string
+        ExclusionType:
+          type: string
+        AdditionalComments:
+          type: string
+        ActiveDate:
+          type: string
+        TerminationDate:
+          type: string
+        CrossReference:
+          type: string
+        SAMNumber:
+          type: string
+        RecordStatus:
+          type: string
+        Cage:
+          type: string
+        NPI:
+          type: string
+        CreationDate:
+          type: string
     Name_3:
       type: object
       required:
@@ -5135,6 +5201,137 @@ components:
           type: string
         LastOrCompanyName:
           type: string
+    License:
+      properties:
+        LicenseNumber:
+          type: string
+        LicenseState:
+          type: string
+        LicenseType:
+          type: string
+        ExpirationDate:
+          type: string
+        IssuedDate:
+          type: string
+    FreddieMac:
+      type: object
+      properties:
+        ConfidenceScore:
+          type: integer
+        Name:
+          $ref: '#/components/schemas/Name_3'
+        EntityType:
+          type: string
+        AKAorDBA:
+          type: string
+        DateofInclusion:
+          type: string
+        DateofLastUpdate:
+          type: string
+        AddressType:
+          type: string
+        Address:
+          $ref: '#/components/schemas/Address_4'
+        Comments:
+          type: string
+        License:
+          $ref: '#/components/schemas/License'
+        IssuingState:
+          type: string
+        DateRemoved:
+          type: string
+    Ineligible:
+      type: object
+      properties:
+        ConfidenceScore:
+          type: integer
+        EntityType:
+          type: string
+        Name:
+          $ref: '#/components/schemas/Name_3'
+        SSN:
+          type: string
+        Role:
+          type: string
+        Address:
+          $ref: '#/components/schemas/Address_4'
+        MPNumber:
+          type: string
+        Comments:
+          type: string
+        DateRecorded:
+          type: string
+        EffectiveStartDate:
+          type: string
+        EffectiveEndDate:
+          type: string
+        LicenseNumber:
+          type: string
+        LenderIdentifier:
+          type: string
+        BrokerID:
+          type: string
+        NMLSID:
+          type: string
+    FHFASCP:
+      type: object
+      properties:
+        ConfidenceScore:
+          type: integer
+        Name:
+          $ref: '#/components/schemas/Name_3'
+        Address:
+          $ref: '#/components/schemas/Address_4'
+        EffectiveDate:
+          type: string
+        SuspensionEndDate:
+          $ref: '#/components/schemas/License'
+        OrderLink:
+          type: string
+    ServiceResponseFull:
+      type: object
+      properties:
+        TransactionID:
+          type: string
+        RequestorID:
+          type: string
+        Result:
+          type: string
+          enum:
+          - RecordsFound
+          - NoRecordsFound
+        OFAC:
+          type: array
+          items:
+            $ref: '#/components/schemas/OFAC'
+        FreddieMac:
+          type: array
+          items:
+            $ref: '#/components/schemas/FreddieMac'
+        Ineligible:
+          type: array
+          items:
+            $ref: '#/components/schemas/Ineligible'
+        HUDLDP:
+          type: array
+          items:
+            $ref: '#/components/schemas/HUDLDP'
+        HUDEPLS:
+          type: array
+          items:
+            $ref: '#/components/schemas/HUDEPLS'
+        FHFASCP:
+          type: array
+          items:
+            $ref: '#/components/schemas/FHFASCP'
+        NFPD:
+          type: array
+          items:
+            $ref: '#/components/schemas/NFPD'
+        Alerts:
+          type: array
+          items:
+            $ref: '#/components/schemas/AlertType'
     HUDLDP:
       type: object
       properties:
@@ -5158,33 +5355,60 @@ components:
           type: string
         AddressInfo:
           $ref: '#/components/schemas/Address_4'
-    NFPD:
-      type: object
+    Address_4:
       properties:
-        ConfidenceScore:
-          type: integer
-        EntityType:
+        Type:
           type: string
-        Name:
-          $ref: '#/components/schemas/Name_3'
-        CompanyName:
+        StreetAddress1:
           type: string
-        Title:
+        StreetAddress2:
           type: string
-        Address:
-          $ref: '#/components/schemas/Address_4'
-        SSN:
+        StreetAddress3:
           type: string
-        RefDate:
+        StreetAddress4:
           type: string
-        Document:
+        UnitNumber:
           type: string
-        Source:
+        UnitDesignation:
           type: string
-        Party:
-          $ref: '#/components/schemas/NFPDParty'
-        Incident:
-          $ref: '#/components/schemas/NFPDIncident'
+        StreetPostDirection:
+          type: string
+        StreetSuffix:
+          type: string
+        StreetName:
+          type: string
+        StreetPreDirection:
+          type: string
+        StreetNumber:
+          type: string
+        City:
+          type: string
+        FullAddress:
+          type: string
+        APN:
+          type: string
+        Longitude:
+          type: string
+        Latitude:
+          type: string
+        StateCityZip:
+          type: string
+        PostalCode:
+          type: string
+        Country:
+          type: string
+        County:
+          type: string
+        ZipFour:
+          type: string
+        ZipCode:
+          type: string
+        Hash:
+          type: string
+        State:
+          type: string
+        Province:
+          type: string
     OFAC:
       type: object
       properties:
@@ -5260,230 +5484,6 @@ components:
         SuffixField:
           type: string
         PartyText:
-          type: string
-    Address_4:
-      properties:
-        Type:
-          type: string
-        StreetAddress1:
-          type: string
-        StreetAddress2:
-          type: string
-        StreetAddress3:
-          type: string
-        StreetAddress4:
-          type: string
-        UnitNumber:
-          type: string
-        UnitDesignation:
-          type: string
-        StreetPostDirection:
-          type: string
-        StreetSuffix:
-          type: string
-        StreetName:
-          type: string
-        StreetPreDirection:
-          type: string
-        StreetNumber:
-          type: string
-        City:
-          type: string
-        FullAddress:
-          type: string
-        APN:
-          type: string
-        Longitude:
-          type: string
-        Latitude:
-          type: string
-        StateCityZip:
-          type: string
-        PostalCode:
-          type: string
-        Country:
-          type: string
-        County:
-          type: string
-        ZipFour:
-          type: string
-        ZipCode:
-          type: string
-        Hash:
-          type: string
-        State:
-          type: string
-        Province:
-          type: string
-    FreddieMac:
-      type: object
-      properties:
-        ConfidenceScore:
-          type: integer
-        Name:
-          $ref: '#/components/schemas/Name_3'
-        EntityType:
-          type: string
-        AKAorDBA:
-          type: string
-        DateofInclusion:
-          type: string
-        DateofLastUpdate:
-          type: string
-        AddressType:
-          type: string
-        Address:
-          $ref: '#/components/schemas/Address_4'
-        Comments:
-          type: string
-        License:
-          $ref: '#/components/schemas/License'
-        IssuingState:
-          type: string
-        DateRemoved:
-          type: string
-    HUDEPLS:
-      type: object
-      properties:
-        ConfidenceScore:
-          type: integer
-        EntityType:
-          type: string
-        Name:
-          $ref: '#/components/schemas/Name_3'
-        Address:
-          $ref: '#/components/schemas/Address_4'
-        DUNS:
-          type: string
-        ExclusionProgram:
-          type: string
-        ExcludingAgency:
-          type: string
-        CTCode:
-          type: string
-        ExclusionType:
-          type: string
-        AdditionalComments:
-          type: string
-        ActiveDate:
-          type: string
-        TerminationDate:
-          type: string
-        CrossReference:
-          type: string
-        SAMNumber:
-          type: string
-        RecordStatus:
-          type: string
-        Cage:
-          type: string
-        NPI:
-          type: string
-        CreationDate:
-          type: string
-    FHFASCP:
-      type: object
-      properties:
-        ConfidenceScore:
-          type: integer
-        Name:
-          $ref: '#/components/schemas/Name_3'
-        Address:
-          $ref: '#/components/schemas/Address_4'
-        EffectiveDate:
-          type: string
-        SuspensionEndDate:
-          $ref: '#/components/schemas/License'
-        OrderLink:
-          type: string
-    Ineligible:
-      type: object
-      properties:
-        ConfidenceScore:
-          type: integer
-        EntityType:
-          type: string
-        Name:
-          $ref: '#/components/schemas/Name_3'
-        SSN:
-          type: string
-        Role:
-          type: string
-        Address:
-          $ref: '#/components/schemas/Address_4'
-        MPNumber:
-          type: string
-        Comments:
-          type: string
-        DateRecorded:
-          type: string
-        EffectiveStartDate:
-          type: string
-        EffectiveEndDate:
-          type: string
-        LicenseNumber:
-          type: string
-        LenderIdentifier:
-          type: string
-        BrokerID:
-          type: string
-        NMLSID:
-          type: string
-    ServiceResponseFull:
-      type: object
-      properties:
-        TransactionID:
-          type: string
-        RequestorID:
-          type: string
-        Result:
-          type: string
-          enum:
-          - RecordsFound
-          - NoRecordsFound
-        OFAC:
-          type: array
-          items:
-            $ref: '#/components/schemas/OFAC'
-        FreddieMac:
-          type: array
-          items:
-            $ref: '#/components/schemas/FreddieMac'
-        Ineligible:
-          type: array
-          items:
-            $ref: '#/components/schemas/Ineligible'
-        HUDLDP:
-          type: array
-          items:
-            $ref: '#/components/schemas/HUDLDP'
-        HUDEPLS:
-          type: array
-          items:
-            $ref: '#/components/schemas/HUDEPLS'
-        FHFASCP:
-          type: array
-          items:
-            $ref: '#/components/schemas/FHFASCP'
-        NFPD:
-          type: array
-          items:
-            $ref: '#/components/schemas/NFPD'
-        Alerts:
-          type: array
-          items:
-            $ref: '#/components/schemas/AlertType'
-    License:
-      properties:
-        LicenseNumber:
-          type: string
-        LicenseState:
-          type: string
-        LicenseType:
-          type: string
-        ExpirationDate:
-          type: string
-        IssuedDate:
           type: string
 x-refined-from:
 - first-american-financial-bankruptcy-openapi.json

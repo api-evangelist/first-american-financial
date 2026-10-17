@@ -167,6 +167,23 @@ paths:
       x-operation-id-original: post
 components:
   schemas:
+    IndividualSearchResponse:
+      type: object
+      properties:
+        ConfidenceScore:
+          type: integer
+        IsFederallyRegulated:
+          type: boolean
+        EntityType:
+          type: string
+        Name:
+          $ref: '#/components/schemas/Name'
+        NMLSID:
+          type: integer
+        Locations:
+          type: array
+          items:
+            $ref: '#/components/schemas/Location'
     Name:
       type: object
       properties:
@@ -272,23 +289,6 @@ components:
           type: string
         FullAddress:
           type: string
-    CompanySearchResponse:
-      type: object
-      properties:
-        ConfidenceScore:
-          type: integer
-        IsAuthorizedToConductBusiness:
-          type: boolean
-        IsFederallyRegulated:
-          type: boolean
-        EntityType:
-          type: string
-        Name:
-          $ref: '#/components/schemas/Name'
-        NMLSID:
-          type: integer
-        Address:
-          $ref: '#/components/schemas/Address'
     SearchResponse:
       type: object
       properties:
@@ -310,11 +310,13 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/Location'
-    IndividualSearchResponse:
+    CompanySearchResponse:
       type: object
       properties:
         ConfidenceScore:
           type: integer
+        IsAuthorizedToConductBusiness:
+          type: boolean
         IsFederallyRegulated:
           type: boolean
         EntityType:
@@ -323,7 +325,5 @@ components:
           $ref: '#/components/schemas/Name'
         NMLSID:
           type: integer
-        Locations:
-          type: array
-          items:
-            $ref: '#/components/schemas/Location'
+        Address:
+          $ref: '#/components/schemas/Address'

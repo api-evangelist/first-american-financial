@@ -113,114 +113,338 @@ paths:
               $ref: '#/components/schemas/OccupancyServiceRequest'
 components:
   schemas:
-    Borrower:
+    Mers:
       type:
       - object
       - 'null'
       properties:
-        BorrowerID:
-          type: integer
-        Name:
-          $ref: '#/components/schemas/Name'
-        Addresses:
+        MERS_MINNumber:
+          type:
+          - string
+          - 'null'
+        MERSOriginalMortgageeOfRecordIndicator:
+          type:
+          - string
+          - 'null'
+        MERSRegistrationDate:
+          type:
+          - string
+          - 'null'
+      required:
+      - MERS_MINNumber
+      - MERSOriginalMortgageeOfRecordIndicator
+      - MERSRegistrationDate
+    OccupancyServiceResponse:
+      type: object
+      properties:
+        RequestorID:
+          type:
+          - string
+          - 'null'
+        TransactionID:
+          type:
+          - string
+          - 'null'
+        Status:
+          type:
+          - string
+          - 'null'
+        Message:
+          type:
+          - string
+          - 'null'
+        IdentityDetails:
           type:
           - array
           - 'null'
           items:
-            $ref: '#/components/schemas/ContactAddress'
-        DOB:
+            $ref: '#/components/schemas/IdentityDetails'
+        PropertyOwnerInformation:
+          $ref: '#/components/schemas/OwnerInformation'
+        PropertyCharacteristics:
+          $ref: '#/components/schemas/RealtyCharacteristics'
+        PropertyTransaction:
+          $ref: '#/components/schemas/PropertyTransaction'
+        PropertyAssessorTaxInfo:
+          $ref: '#/components/schemas/PropertyAssessorTaxInfo'
+        MERSLoans:
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/InquiryData'
+        FlexLoans:
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/FLEXData'
+        RentalData:
+          $ref: '#/components/schemas/RentalData'
+        Alerts:
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/Alert'
+        Errors:
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/Error'
+        PDFS3SignedURL:
+          type:
+          - string
+          - 'null'
+    FLEXData:
+      type:
+      - object
+      - 'null'
+      properties:
+        CompanyInventory:
+          type: boolean
+        LoanNumber:
+          type:
+          - string
+          - 'null'
+        MatchedSSN:
+          type:
+          - string
+          - 'null'
+        SubjectProperty:
+          $ref: '#/components/schemas/Location'
+        ScheduleofRealEstateOwned:
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/Location'
+        Borrowers:
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/Borrower'
+        LoanData:
+          $ref: '#/components/schemas/LoanData'
+      required:
+      - CompanyInventory
+      - LoanNumber
+      - MatchedSSN
+      - SubjectProperty
+      - ScheduleofRealEstateOwned
+      - Borrowers
+      - LoanData
+    ConsumerNameInfo:
+      type:
+      - object
+      - 'null'
+      properties:
+        Qualifier:
+          type:
+          - string
+          - 'null'
+        DateFirstReported:
           $ref: '#/components/schemas/ParsedDate'
-        SSN:
+        DateLastReported:
+          $ref: '#/components/schemas/ParsedDate'
+        TypesOfSources:
+          type:
+          - array
+          - 'null'
+          items:
+            type:
+            - string
+            - 'null'
+        Full:
           type:
           - string
           - 'null'
-        RentorOwn:
+          minLength: 0
+          maxLength: 1000
+        First:
           type:
           - string
           - 'null'
-        RentOrOwnNbrOfYrs:
-          type: integer
-        HomePhone:
+          minLength: 0
+          maxLength: 150
+        Middle:
           type:
           - string
           - 'null'
-        Citizenship:
+          minLength: 0
+          maxLength: 100
+        Last:
           type:
           - string
           - 'null'
-        PermanentResidentAlien:
+          minLength: 0
+          maxLength: 300
+        Suffix:
           type:
           - string
           - 'null'
-        NonPermanentResident:
+          minLength: 0
+          maxLength: 20
+        Prefix:
           type:
           - string
           - 'null'
-        FICOScore:
-          type: integer
-        MonthlyBaseIncome:
+          minLength: 0
+          maxLength: 20
+        LastOrCompanyName:
           type:
-          - number
+          - string
           - 'null'
-        MonthlyTotalIncome:
+          minLength: 0
+          maxLength: 500
+        FirstAndMiddleName:
           type:
-          - number
+          - string
           - 'null'
+          minLength: 0
+          maxLength: 250
       required:
-      - BorrowerID
-      - Name
-      - Addresses
-      - DOB
-      - SSN
-      - RentorOwn
-      - RentOrOwnNbrOfYrs
-      - HomePhone
-      - Citizenship
-      - PermanentResidentAlien
-      - NonPermanentResident
-      - FICOScore
-      - MonthlyBaseIncome
-      - MonthlyTotalIncome
-    MersBorrower:
+      - Qualifier
+      - DateFirstReported
+      - DateLastReported
+      - TypesOfSources
+      - Full
+      - First
+      - Middle
+      - Last
+      - Suffix
+      - Prefix
+      - LastOrCompanyName
+      - FirstAndMiddleName
+    OccupancyServiceRequest:
+      required:
+      - Persons
+      - LoanData
+      - SubjectAddress
+      type: object
+      properties:
+        RequestorID:
+          type:
+          - string
+          - 'null'
+        Persons:
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/Person'
+        LoanData:
+          $ref: '#/components/schemas/LoanData'
+        SubjectAddress:
+          $ref: '#/components/schemas/Address'
+        MERSInfo:
+          $ref: '#/components/schemas/MERSInfo'
+        IncludeAnalytics:
+          type: boolean
+    Person:
+      type: object
+      properties:
+        name:
+          $ref: '#/components/schemas/Name'
+        address:
+          $ref: '#/components/schemas/Address'
+        dob:
+          $ref: '#/components/schemas/ParsedDate'
+        ssn:
+          type: string
+        phoneNumbers:
+          uniqueItems: false
+          type: array
+          items:
+            $ref: '#/components/schemas/Phone'
+        driversLicense:
+          $ref: '#/components/schemas/License'
+        akAs:
+          uniqueItems: false
+          type: array
+          items:
+            $ref: '#/components/schemas/Name'
+        id:
+          format: int32
+          type: integer
+    OwnerInformation:
       type:
       - object
       - 'null'
       properties:
-        FirstName:
+        OwnerNames:
           type:
           - string
           - 'null'
-        LastName:
+        OwnerName1:
           type:
           - string
           - 'null'
-        UnParsedName:
+        OwnerName2:
           type:
           - string
           - 'null'
-        SSN:
+        OwnerName3:
           type:
           - string
           - 'null'
-        NonPersonEntityIndicator:
+        OwnerName4:
           type:
           - string
           - 'null'
+        Buyer1IDCodeDesc:
+          type:
+          - string
+          - 'null'
+        Buyer2IDCodeDesc:
+          type:
+          - string
+          - 'null'
+        Vesting:
+          type:
+          - string
+          - 'null'
+        VestingCodeDesc:
+          type:
+          - string
+          - 'null'
+        CurrentOwnerAsOf:
+          type:
+          - string
+          - 'null'
+        OwnerOccupiedFlag:
+          type:
+          - string
+          - 'null'
+        MailingCareOfName:
+          type:
+          - string
+          - 'null'
+        MailingAddress:
+          $ref: '#/components/schemas/Location'
       required:
-      - FirstName
-      - LastName
-      - UnParsedName
-      - SSN
-      - NonPersonEntityIndicator
-    ContactAddress:
+      - OwnerNames
+      - OwnerName1
+      - OwnerName2
+      - OwnerName3
+      - OwnerName4
+      - Buyer1IDCodeDesc
+      - Buyer2IDCodeDesc
+      - Vesting
+      - VestingCodeDesc
+      - CurrentOwnerAsOf
+      - OwnerOccupiedFlag
+      - MailingCareOfName
+      - MailingAddress
+    Location:
       type:
       - object
       - 'null'
       properties:
-        AddressType:
-          type:
-          - string
-          - 'null'
+        GeoDistance:
+          type: number
         StreetNumber:
           type:
           - string
@@ -372,7 +596,7 @@ components:
           minLength: 0
           maxLength: 20
       required:
-      - AddressType
+      - GeoDistance
       - StreetNumber
       - StreetPreDirection
       - StreetName
@@ -399,75 +623,140 @@ components:
       - StateFIPSCode
       - AddressStandardized
       - RefID
-    OwnerInformation:
+    Error:
       type:
       - object
       - 'null'
       properties:
-        OwnerNames:
+        Code:
           type:
           - string
           - 'null'
-        OwnerName1:
+          minLength: 0
+          maxLength: 10
+        Description:
           type:
           - string
           - 'null'
-        OwnerName2:
-          type:
-          - string
-          - 'null'
-        OwnerName3:
-          type:
-          - string
-          - 'null'
-        OwnerName4:
-          type:
-          - string
-          - 'null'
-        Buyer1IDCodeDesc:
-          type:
-          - string
-          - 'null'
-        Buyer2IDCodeDesc:
-          type:
-          - string
-          - 'null'
-        Vesting:
-          type:
-          - string
-          - 'null'
-        VestingCodeDesc:
-          type:
-          - string
-          - 'null'
-        CurrentOwnerAsOf:
-          type:
-          - string
-          - 'null'
-        OwnerOccupiedFlag:
-          type:
-          - string
-          - 'null'
-        MailingCareOfName:
-          type:
-          - string
-          - 'null'
-        MailingAddress:
-          $ref: '#/components/schemas/Location'
+          minLength: 0
+          maxLength: 500
       required:
-      - OwnerNames
-      - OwnerName1
-      - OwnerName2
-      - OwnerName3
-      - OwnerName4
-      - Buyer1IDCodeDesc
-      - Buyer2IDCodeDesc
-      - Vesting
-      - VestingCodeDesc
-      - CurrentOwnerAsOf
-      - OwnerOccupiedFlag
-      - MailingCareOfName
-      - MailingAddress
+      - Code
+      - Description
+    Status:
+      type:
+      - object
+      - 'null'
+      properties:
+        Code:
+          type:
+          - string
+          - 'null'
+        Condition:
+          type:
+          - string
+          - 'null'
+        Description:
+          type:
+          - string
+          - 'null'
+        Name:
+          type:
+          - string
+          - 'null'
+      required:
+      - Code
+      - Condition
+      - Description
+      - Name
+    RentalData:
+      type:
+      - object
+      - 'null'
+      properties:
+        Accommodation:
+          type:
+          - string
+          - 'null'
+        Type:
+          type:
+          - string
+          - 'null'
+        OccupancyRate:
+          type:
+          - string
+          - 'null'
+        Price:
+          type:
+          - string
+          - 'null'
+      required:
+      - Accommodation
+      - Type
+      - OccupancyRate
+      - Price
+    Name:
+      type:
+      - object
+      - 'null'
+      properties:
+        Full:
+          type:
+          - string
+          - 'null'
+          minLength: 0
+          maxLength: 1000
+        First:
+          type:
+          - string
+          - 'null'
+          minLength: 0
+          maxLength: 150
+        Middle:
+          type:
+          - string
+          - 'null'
+          minLength: 0
+          maxLength: 100
+        Last:
+          type:
+          - string
+          - 'null'
+          minLength: 0
+          maxLength: 300
+        Suffix:
+          type:
+          - string
+          - 'null'
+          minLength: 0
+          maxLength: 20
+        Prefix:
+          type:
+          - string
+          - 'null'
+          minLength: 0
+          maxLength: 20
+        LastOrCompanyName:
+          type:
+          - string
+          - 'null'
+          minLength: 0
+          maxLength: 500
+        FirstAndMiddleName:
+          type:
+          - string
+          - 'null'
+          minLength: 0
+          maxLength: 250
+      required:
+      - Full
+      - First
+      - Middle
+      - Last
+      - Suffix
+      - Prefix
+      - LastOrCompanyName
+      - FirstAndMiddleName
     LoanData:
       type: object
       properties:
@@ -496,91 +785,6 @@ components:
           - SecondHome
           - Other
           type: integer
-    ConsumerSSNInfo:
-      type:
-      - object
-      - 'null'
-      properties:
-        SSN:
-          type:
-          - string
-          - 'null'
-        IdentificationType:
-          type:
-          - string
-          - 'null'
-        AgeObtainedRangeStart:
-          type:
-          - string
-          - 'null'
-        AgeObtainedRangeEnd:
-          type:
-          - string
-          - 'null'
-        IssuanceAlertCode:
-          type:
-          - string
-          - 'null'
-        FirstPossibleIssuanceYear:
-          type:
-          - integer
-          - 'null'
-        LastPossibleIssuanceYear:
-          type:
-          - integer
-          - 'null'
-        IssuedStartDate:
-          $ref: '#/components/schemas/ParsedDate'
-        IssuedEndDate:
-          $ref: '#/components/schemas/ParsedDate'
-        DateFirstReported:
-          $ref: '#/components/schemas/ParsedDate'
-        DateLastReported:
-          $ref: '#/components/schemas/ParsedDate'
-        IssuanceExpirationDate:
-          $ref: '#/components/schemas/ParsedDate'
-        IssuanceStatus:
-          type:
-          - string
-          - 'null'
-        IssuanceYearsCovered:
-          type:
-          - integer
-          - 'null'
-        StateOfIssuance:
-          type:
-          - string
-          - 'null'
-        Valid:
-          type:
-          - boolean
-          - 'null'
-        TypesOfSources:
-          type:
-          - array
-          - 'null'
-          items:
-            type:
-            - string
-            - 'null'
-      required:
-      - SSN
-      - IdentificationType
-      - AgeObtainedRangeStart
-      - AgeObtainedRangeEnd
-      - IssuanceAlertCode
-      - FirstPossibleIssuanceYear
-      - LastPossibleIssuanceYear
-      - IssuedStartDate
-      - IssuedEndDate
-      - DateFirstReported
-      - DateLastReported
-      - IssuanceExpirationDate
-      - IssuanceStatus
-      - IssuanceYearsCovered
-      - StateOfIssuance
-      - Valid
-      - TypesOfSources
     PropertyAssessorTaxInfo:
       type:
       - object
@@ -596,188 +800,6 @@ components:
             - 'null'
       required:
       - TaxExemptions
-    Status:
-      type:
-      - object
-      - 'null'
-      properties:
-        Code:
-          type:
-          - string
-          - 'null'
-        Condition:
-          type:
-          - string
-          - 'null'
-        Description:
-          type:
-          - string
-          - 'null'
-        Name:
-          type:
-          - string
-          - 'null'
-      required:
-      - Code
-      - Condition
-      - Description
-      - Name
-    Key:
-      type:
-      - object
-      - 'null'
-      properties:
-        Name:
-          type:
-          - string
-          - 'null'
-        Value:
-          type:
-          - string
-          - 'null'
-      required:
-      - Name
-      - Value
-    OccupancyServiceRequest:
-      required:
-      - Persons
-      - LoanData
-      - SubjectAddress
-      type: object
-      properties:
-        RequestorID:
-          type:
-          - string
-          - 'null'
-        Persons:
-          type:
-          - array
-          - 'null'
-          items:
-            $ref: '#/components/schemas/Person'
-        LoanData:
-          $ref: '#/components/schemas/LoanData'
-        SubjectAddress:
-          $ref: '#/components/schemas/Address'
-        MERSInfo:
-          $ref: '#/components/schemas/MERSInfo'
-        IncludeAnalytics:
-          type: boolean
-    FLEXData:
-      type:
-      - object
-      - 'null'
-      properties:
-        CompanyInventory:
-          type: boolean
-        LoanNumber:
-          type:
-          - string
-          - 'null'
-        MatchedSSN:
-          type:
-          - string
-          - 'null'
-        SubjectProperty:
-          $ref: '#/components/schemas/Location'
-        ScheduleofRealEstateOwned:
-          type:
-          - array
-          - 'null'
-          items:
-            $ref: '#/components/schemas/Location'
-        Borrowers:
-          type:
-          - array
-          - 'null'
-          items:
-            $ref: '#/components/schemas/Borrower'
-        LoanData:
-          $ref: '#/components/schemas/LoanData'
-      required:
-      - CompanyInventory
-      - LoanNumber
-      - MatchedSSN
-      - SubjectProperty
-      - ScheduleofRealEstateOwned
-      - Borrowers
-      - LoanData
-    PropertyTransaction:
-      type:
-      - object
-      - 'null'
-      properties:
-        TypeofSale:
-          type:
-          - string
-          - 'null'
-        SalesPrice:
-          type: number
-        PurchaseDate:
-          $ref: '#/components/schemas/ParsedDate'
-        Buyers:
-          type:
-          - array
-          - 'null'
-          items:
-            $ref: '#/components/schemas/EntityInfo'
-      required:
-      - TypeofSale
-      - SalesPrice
-      - PurchaseDate
-      - Buyers
-    RentalData:
-      type:
-      - object
-      - 'null'
-      properties:
-        Accommodation:
-          type:
-          - string
-          - 'null'
-        Type:
-          type:
-          - string
-          - 'null'
-        OccupancyRate:
-          type:
-          - string
-          - 'null'
-        Price:
-          type:
-          - string
-          - 'null'
-      required:
-      - Accommodation
-      - Type
-      - OccupancyRate
-      - Price
-    Person:
-      type: object
-      properties:
-        name:
-          $ref: '#/components/schemas/Name'
-        address:
-          $ref: '#/components/schemas/Address'
-        dob:
-          $ref: '#/components/schemas/ParsedDate'
-        ssn:
-          type: string
-        phoneNumbers:
-          uniqueItems: false
-          type: array
-          items:
-            $ref: '#/components/schemas/Phone'
-        driversLicense:
-          $ref: '#/components/schemas/License'
-        akAs:
-          uniqueItems: false
-          type: array
-          items:
-            $ref: '#/components/schemas/Name'
-        id:
-          format: int32
-          type: integer
     ConsumerAddress:
       type:
       - object
@@ -1005,6 +1027,409 @@ components:
       - StateFIPSCode
       - AddressStandardized
       - RefID
+    PropertyTransaction:
+      type:
+      - object
+      - 'null'
+      properties:
+        TypeofSale:
+          type:
+          - string
+          - 'null'
+        SalesPrice:
+          type: number
+        PurchaseDate:
+          $ref: '#/components/schemas/ParsedDate'
+        Buyers:
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/EntityInfo'
+      required:
+      - TypeofSale
+      - SalesPrice
+      - PurchaseDate
+      - Buyers
+    Key:
+      type:
+      - object
+      - 'null'
+      properties:
+        Name:
+          type:
+          - string
+          - 'null'
+        Value:
+          type:
+          - string
+          - 'null'
+      required:
+      - Name
+      - Value
+    MersBorrower:
+      type:
+      - object
+      - 'null'
+      properties:
+        FirstName:
+          type:
+          - string
+          - 'null'
+        LastName:
+          type:
+          - string
+          - 'null'
+        UnParsedName:
+          type:
+          - string
+          - 'null'
+        SSN:
+          type:
+          - string
+          - 'null'
+        NonPersonEntityIndicator:
+          type:
+          - string
+          - 'null'
+      required:
+      - FirstName
+      - LastName
+      - UnParsedName
+      - SSN
+      - NonPersonEntityIndicator
+    Alert:
+      type:
+      - object
+      - 'null'
+      properties:
+        Code:
+          type:
+          - string
+          - 'null'
+        Description:
+          type:
+          - string
+          - 'null'
+        Status:
+          type: string
+          enum:
+          - NotEvaluated
+          - Fired
+          - NotFired
+        Evidence:
+          type:
+          - array
+          - 'null'
+          items:
+            type:
+            - object
+            - 'null'
+            additionalProperties: {}
+      required:
+      - Code
+      - Description
+      - Status
+      - Evidence
+    Borrower:
+      type:
+      - object
+      - 'null'
+      properties:
+        BorrowerID:
+          type: integer
+        Name:
+          $ref: '#/components/schemas/Name'
+        Addresses:
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/ContactAddress'
+        DOB:
+          $ref: '#/components/schemas/ParsedDate'
+        SSN:
+          type:
+          - string
+          - 'null'
+        RentorOwn:
+          type:
+          - string
+          - 'null'
+        RentOrOwnNbrOfYrs:
+          type: integer
+        HomePhone:
+          type:
+          - string
+          - 'null'
+        Citizenship:
+          type:
+          - string
+          - 'null'
+        PermanentResidentAlien:
+          type:
+          - string
+          - 'null'
+        NonPermanentResident:
+          type:
+          - string
+          - 'null'
+        FICOScore:
+          type: integer
+        MonthlyBaseIncome:
+          type:
+          - number
+          - 'null'
+        MonthlyTotalIncome:
+          type:
+          - number
+          - 'null'
+      required:
+      - BorrowerID
+      - Name
+      - Addresses
+      - DOB
+      - SSN
+      - RentorOwn
+      - RentOrOwnNbrOfYrs
+      - HomePhone
+      - Citizenship
+      - PermanentResidentAlien
+      - NonPermanentResident
+      - FICOScore
+      - MonthlyBaseIncome
+      - MonthlyTotalIncome
+    EntityInfo:
+      type:
+      - object
+      - 'null'
+      properties:
+        EntityCode:
+          type:
+          - string
+          - 'null'
+        EntityCodeDesc:
+          type:
+          - string
+          - 'null'
+        Name:
+          $ref: '#/components/schemas/Name'
+      required:
+      - EntityCode
+      - EntityCodeDesc
+      - Name
+    Address:
+      type: object
+      properties:
+        streetNumber:
+          type: string
+        streetPreDirection:
+          type: string
+        streetName:
+          type: string
+        streetSuffix:
+          type: string
+        streetPostDirection:
+          type: string
+        unitDesignation:
+          type: string
+        unitNumber:
+          type: string
+        streetAddress1:
+          type: string
+        streetAddress2:
+          type: string
+        city:
+          type: string
+        state:
+          type: string
+        zipCode:
+          type: string
+        zipFour:
+          type: string
+        county:
+          type: string
+        country:
+          type: string
+        postalCode:
+          type: string
+        stateCityZip:
+          type: string
+        latitude:
+          type: string
+        longitude:
+          type: string
+        apn:
+          type: string
+        hash:
+          type: string
+        fullAddress:
+          type: string
+        countyFIPSCode:
+          type: string
+        stateFIPSCode:
+          type: string
+    ConsumerSSNInfo:
+      type:
+      - object
+      - 'null'
+      properties:
+        SSN:
+          type:
+          - string
+          - 'null'
+        IdentificationType:
+          type:
+          - string
+          - 'null'
+        AgeObtainedRangeStart:
+          type:
+          - string
+          - 'null'
+        AgeObtainedRangeEnd:
+          type:
+          - string
+          - 'null'
+        IssuanceAlertCode:
+          type:
+          - string
+          - 'null'
+        FirstPossibleIssuanceYear:
+          type:
+          - integer
+          - 'null'
+        LastPossibleIssuanceYear:
+          type:
+          - integer
+          - 'null'
+        IssuedStartDate:
+          $ref: '#/components/schemas/ParsedDate'
+        IssuedEndDate:
+          $ref: '#/components/schemas/ParsedDate'
+        DateFirstReported:
+          $ref: '#/components/schemas/ParsedDate'
+        DateLastReported:
+          $ref: '#/components/schemas/ParsedDate'
+        IssuanceExpirationDate:
+          $ref: '#/components/schemas/ParsedDate'
+        IssuanceStatus:
+          type:
+          - string
+          - 'null'
+        IssuanceYearsCovered:
+          type:
+          - integer
+          - 'null'
+        StateOfIssuance:
+          type:
+          - string
+          - 'null'
+        Valid:
+          type:
+          - boolean
+          - 'null'
+        TypesOfSources:
+          type:
+          - array
+          - 'null'
+          items:
+            type:
+            - string
+            - 'null'
+      required:
+      - SSN
+      - IdentificationType
+      - AgeObtainedRangeStart
+      - AgeObtainedRangeEnd
+      - IssuanceAlertCode
+      - FirstPossibleIssuanceYear
+      - LastPossibleIssuanceYear
+      - IssuedStartDate
+      - IssuedEndDate
+      - DateFirstReported
+      - DateLastReported
+      - IssuanceExpirationDate
+      - IssuanceStatus
+      - IssuanceYearsCovered
+      - StateOfIssuance
+      - Valid
+      - TypesOfSources
+    IdentityDetails:
+      type:
+      - object
+      - 'null'
+      properties:
+        ID:
+          type: integer
+        Name:
+          $ref: '#/components/schemas/ConsumerNameInfo'
+        SSNInfo:
+          $ref: '#/components/schemas/ConsumerSSNInfo'
+        Address:
+          $ref: '#/components/schemas/ConsumerAddress'
+      required:
+      - ID
+      - Name
+      - SSNInfo
+      - Address
+    MERSInfo:
+      type: object
+      properties:
+        organizationIdentifier:
+          type: string
+        organizationPassword:
+          type: string
+        requestingParty:
+          $ref: '#/components/schemas/Party'
+    RealtyCharacteristics:
+      type:
+      - object
+      - 'null'
+      properties:
+        LandUseStandardizedDesc:
+          type:
+          - string
+          - 'null'
+        BuildingCount:
+          type:
+          - string
+          - 'null'
+        UnitCount:
+          type:
+          - string
+          - 'null'
+        BuildingAreaTotal:
+          type:
+          - string
+          - 'null'
+      required:
+      - LandUseStandardizedDesc
+      - BuildingCount
+      - UnitCount
+      - BuildingAreaTotal
+    RiskIndicator:
+      type:
+      - object
+      - 'null'
+      properties:
+        RiskCode:
+          type:
+          - string
+          - 'null'
+        RiskMessage:
+          type:
+          - string
+          - 'null'
+      required:
+      - RiskCode
+      - RiskMessage
+    Party:
+      type: object
+      properties:
+        identifier:
+          type: string
+        name:
+          type: string
     InquiryData:
       type:
       - object
@@ -1178,180 +1603,36 @@ components:
       - CustodianOrganizationName
       - InterimFunderOrganizationIdentifier
       - InterimFunderOrganizationName
-    MERSInfo:
-      type: object
-      properties:
-        organizationIdentifier:
-          type: string
-        organizationPassword:
-          type: string
-        requestingParty:
-          $ref: '#/components/schemas/Party'
-    Party:
-      type: object
-      properties:
-        identifier:
-          type: string
-        name:
-          type: string
-    RealtyCharacteristics:
+    ParsedDate:
       type:
       - object
       - 'null'
       properties:
-        LandUseStandardizedDesc:
+        Year:
           type:
-          - string
+          - integer
           - 'null'
-        BuildingCount:
+        Month:
           type:
-          - string
+          - integer
           - 'null'
-        UnitCount:
+        Day:
           type:
-          - string
-          - 'null'
-        BuildingAreaTotal:
-          type:
-          - string
+          - integer
           - 'null'
       required:
-      - LandUseStandardizedDesc
-      - BuildingCount
-      - UnitCount
-      - BuildingAreaTotal
-    Name:
+      - Year
+      - Month
+      - Day
+    ContactAddress:
       type:
       - object
       - 'null'
       properties:
-        Full:
+        AddressType:
           type:
           - string
           - 'null'
-          minLength: 0
-          maxLength: 1000
-        First:
-          type:
-          - string
-          - 'null'
-          minLength: 0
-          maxLength: 150
-        Middle:
-          type:
-          - string
-          - 'null'
-          minLength: 0
-          maxLength: 100
-        Last:
-          type:
-          - string
-          - 'null'
-          minLength: 0
-          maxLength: 300
-        Suffix:
-          type:
-          - string
-          - 'null'
-          minLength: 0
-          maxLength: 20
-        Prefix:
-          type:
-          - string
-          - 'null'
-          minLength: 0
-          maxLength: 20
-        LastOrCompanyName:
-          type:
-          - string
-          - 'null'
-          minLength: 0
-          maxLength: 500
-        FirstAndMiddleName:
-          type:
-          - string
-          - 'null'
-          minLength: 0
-          maxLength: 250
-      required:
-      - Full
-      - First
-      - Middle
-      - Last
-      - Suffix
-      - Prefix
-      - LastOrCompanyName
-      - FirstAndMiddleName
-    OccupancyServiceResponse:
-      type: object
-      properties:
-        RequestorID:
-          type:
-          - string
-          - 'null'
-        TransactionID:
-          type:
-          - string
-          - 'null'
-        Status:
-          type:
-          - string
-          - 'null'
-        Message:
-          type:
-          - string
-          - 'null'
-        IdentityDetails:
-          type:
-          - array
-          - 'null'
-          items:
-            $ref: '#/components/schemas/IdentityDetails'
-        PropertyOwnerInformation:
-          $ref: '#/components/schemas/OwnerInformation'
-        PropertyCharacteristics:
-          $ref: '#/components/schemas/RealtyCharacteristics'
-        PropertyTransaction:
-          $ref: '#/components/schemas/PropertyTransaction'
-        PropertyAssessorTaxInfo:
-          $ref: '#/components/schemas/PropertyAssessorTaxInfo'
-        MERSLoans:
-          type:
-          - array
-          - 'null'
-          items:
-            $ref: '#/components/schemas/InquiryData'
-        FlexLoans:
-          type:
-          - array
-          - 'null'
-          items:
-            $ref: '#/components/schemas/FLEXData'
-        RentalData:
-          $ref: '#/components/schemas/RentalData'
-        Alerts:
-          type:
-          - array
-          - 'null'
-          items:
-            $ref: '#/components/schemas/Alert'
-        Errors:
-          type:
-          - array
-          - 'null'
-          items:
-            $ref: '#/components/schemas/Error'
-        PDFS3SignedURL:
-          type:
-          - string
-          - 'null'
-    Location:
-      type:
-      - object
-      - 'null'
-      properties:
-        GeoDistance:
-          type: number
         StreetNumber:
           type:
           - string
@@ -1503,7 +1784,7 @@ components:
           minLength: 0
           maxLength: 20
       required:
-      - GeoDistance
+      - AddressType
       - StreetNumber
       - StreetPreDirection
       - StreetName
@@ -1530,284 +1811,3 @@ components:
       - StateFIPSCode
       - AddressStandardized
       - RefID
-    Mers:
-      type:
-      - object
-      - 'null'
-      properties:
-        MERS_MINNumber:
-          type:
-          - string
-          - 'null'
-        MERSOriginalMortgageeOfRecordIndicator:
-          type:
-          - string
-          - 'null'
-        MERSRegistrationDate:
-          type:
-          - string
-          - 'null'
-      required:
-      - MERS_MINNumber
-      - MERSOriginalMortgageeOfRecordIndicator
-      - MERSRegistrationDate
-    Alert:
-      type:
-      - object
-      - 'null'
-      properties:
-        Code:
-          type:
-          - string
-          - 'null'
-        Description:
-          type:
-          - string
-          - 'null'
-        Status:
-          type: string
-          enum:
-          - NotEvaluated
-          - Fired
-          - NotFired
-        Evidence:
-          type:
-          - array
-          - 'null'
-          items:
-            type:
-            - object
-            - 'null'
-            additionalProperties: {}
-      required:
-      - Code
-      - Description
-      - Status
-      - Evidence
-    Address:
-      type: object
-      properties:
-        streetNumber:
-          type: string
-        streetPreDirection:
-          type: string
-        streetName:
-          type: string
-        streetSuffix:
-          type: string
-        streetPostDirection:
-          type: string
-        unitDesignation:
-          type: string
-        unitNumber:
-          type: string
-        streetAddress1:
-          type: string
-        streetAddress2:
-          type: string
-        city:
-          type: string
-        state:
-          type: string
-        zipCode:
-          type: string
-        zipFour:
-          type: string
-        county:
-          type: string
-        country:
-          type: string
-        postalCode:
-          type: string
-        stateCityZip:
-          type: string
-        latitude:
-          type: string
-        longitude:
-          type: string
-        apn:
-          type: string
-        hash:
-          type: string
-        fullAddress:
-          type: string
-        countyFIPSCode:
-          type: string
-        stateFIPSCode:
-          type: string
-    ConsumerNameInfo:
-      type:
-      - object
-      - 'null'
-      properties:
-        Qualifier:
-          type:
-          - string
-          - 'null'
-        DateFirstReported:
-          $ref: '#/components/schemas/ParsedDate'
-        DateLastReported:
-          $ref: '#/components/schemas/ParsedDate'
-        TypesOfSources:
-          type:
-          - array
-          - 'null'
-          items:
-            type:
-            - string
-            - 'null'
-        Full:
-          type:
-          - string
-          - 'null'
-          minLength: 0
-          maxLength: 1000
-        First:
-          type:
-          - string
-          - 'null'
-          minLength: 0
-          maxLength: 150
-        Middle:
-          type:
-          - string
-          - 'null'
-          minLength: 0
-          maxLength: 100
-        Last:
-          type:
-          - string
-          - 'null'
-          minLength: 0
-          maxLength: 300
-        Suffix:
-          type:
-          - string
-          - 'null'
-          minLength: 0
-          maxLength: 20
-        Prefix:
-          type:
-          - string
-          - 'null'
-          minLength: 0
-          maxLength: 20
-        LastOrCompanyName:
-          type:
-          - string
-          - 'null'
-          minLength: 0
-          maxLength: 500
-        FirstAndMiddleName:
-          type:
-          - string
-          - 'null'
-          minLength: 0
-          maxLength: 250
-      required:
-      - Qualifier
-      - DateFirstReported
-      - DateLastReported
-      - TypesOfSources
-      - Full
-      - First
-      - Middle
-      - Last
-      - Suffix
-      - Prefix
-      - LastOrCompanyName
-      - FirstAndMiddleName
-    ParsedDate:
-      type:
-      - object
-      - 'null'
-      properties:
-        Year:
-          type:
-          - integer
-          - 'null'
-        Month:
-          type:
-          - integer
-          - 'null'
-        Day:
-          type:
-          - integer
-          - 'null'
-      required:
-      - Year
-      - Month
-      - Day
-    IdentityDetails:
-      type:
-      - object
-      - 'null'
-      properties:
-        ID:
-          type: integer
-        Name:
-          $ref: '#/components/schemas/ConsumerNameInfo'
-        SSNInfo:
-          $ref: '#/components/schemas/ConsumerSSNInfo'
-        Address:
-          $ref: '#/components/schemas/ConsumerAddress'
-      required:
-      - ID
-      - Name
-      - SSNInfo
-      - Address
-    Error:
-      type:
-      - object
-      - 'null'
-      properties:
-        Code:
-          type:
-          - string
-          - 'null'
-          minLength: 0
-          maxLength: 10
-        Description:
-          type:
-          - string
-          - 'null'
-          minLength: 0
-          maxLength: 500
-      required:
-      - Code
-      - Description
-    RiskIndicator:
-      type:
-      - object
-      - 'null'
-      properties:
-        RiskCode:
-          type:
-          - string
-          - 'null'
-        RiskMessage:
-          type:
-          - string
-          - 'null'
-      required:
-      - RiskCode
-      - RiskMessage
-    EntityInfo:
-      type:
-      - object
-      - 'null'
-      properties:
-        EntityCode:
-          type:
-          - string
-          - 'null'
-        EntityCodeDesc:
-          type:
-          - string
-          - 'null'
-        Name:
-          $ref: '#/components/schemas/Name'
-      required:
-      - EntityCode
-      - EntityCodeDesc
-      - Name
